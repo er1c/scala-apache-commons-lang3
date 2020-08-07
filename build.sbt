@@ -65,9 +65,9 @@ def defaultPlugins: Project ⇒ Project = pr => {
 lazy val sharedSettings = Seq(
   projectTitle := "Scala Apache Commons Lang",
   projectWebsiteRootURL := "https://er1c.github.io/",
-  projectWebsiteBasePath := "/scala-apache-commons-lang/",
+  projectWebsiteBasePath := "/scala-apache-commons-lang3/",
   githubOwnerID := "er1c",
-  githubRelativeRepositoryID := "scala-apache-commons-lang",
+  githubRelativeRepositoryID := "scala-apache-commons-lang3",
 
   organization := "io.github.er1c",
   //scalaVersion := "2.13.3",
@@ -275,7 +275,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .in(file("core"))
   .configureCross(defaultCrossProjectConfiguration)
   .settings(
-    name := "scala-apache-commons-lang",
+    name := "scala-apache-commons-lang3",
     scalacOptions --= (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, v)) if v >= 13 =>
         Seq(

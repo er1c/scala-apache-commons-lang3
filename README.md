@@ -1,6 +1,6 @@
 # Scala Apache Commons Lang
 
-[![Build](https://github.com/er1c/scala-apache-commons-lang/workflows/build/badge.svg?branch=main)](https://github.com/er1c/scala-apache-commons-lang/actions?query=branch%3Amain+workflow%3Abuild) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.er1c/scala-apache-commons-lang_2.13/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.er1c/scala-apache-commons-lang_2.13)
+[![Build](https://github.com/er1c/scala-apache-commons-lang3/workflows/build/badge.svg?branch=main)](https://github.com/er1c/scala-apache-commons-lang3/actions?query=branch%3Amain+workflow%3Abuild) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.er1c/scala-apache-commons-lang3_2.13/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.er1c/scala-apache-commons-lang3_2.13)
 
 Collection of Scala String Helpers
 
@@ -9,15 +9,15 @@ Collection of Scala String Helpers
 The packages are published on Maven Central.
 
 ```scala
-libraryDependencies += "io.github.er1c" %% "scala-apache-commons-lang" % "<version>"
+libraryDependencies += "io.github.er1c" %% "scala-apache-commons-lang3" % "<version>"
 ```
 
 ## Documentation
 
 Links:
 
-- [Website](https://er1c.github.io/scala-apache-commons-lang/)
-- [API documentation](https://er1c.github.io/scala-apache-commons-lang/api/)
+- [Website](https://er1c.github.io/scala-apache-commons-lang3/)
+- [API documentation](https://er1c.github.io/scala-apache-commons-lang3/api/)
 
 ## Contributing
 
