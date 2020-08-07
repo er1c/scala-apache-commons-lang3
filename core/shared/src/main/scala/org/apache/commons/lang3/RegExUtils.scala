@@ -71,7 +71,7 @@ object RegExUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>Unlike in the {@link #removePattern ( String, String)} method, the {@link Pattern# DOTALL} option
+    * <p>Unlike in the {@link #removePattern ( String, String)} method, the {@link java.util.regex.Pattern#DOTALL} option
     * is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
@@ -149,7 +149,7 @@ object RegExUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>The {@link Pattern# DOTALL} option is NOT automatically added.
+    * <p>The {@link java.util.regex.Pattern#DOTALL} option is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
     *
@@ -235,7 +235,7 @@ object RegExUtils {
     * StringUtils.replaceAll("ABCabc123", Pattern.compile("[a-z]"), "_")       = "ABC___123"
     * StringUtils.replaceAll("ABCabc123", Pattern.compile("[^A-Z0-9]+"), "_")  = "ABC_123"
     * StringUtils.replaceAll("ABCabc123", Pattern.compile("[^A-Z0-9]+"), "")   = "ABC123"
-    * StringUtils.replaceAll("Lorem ipsum  dolor   sit", Pattern.compile("( +)([a-z]+)"), "_$2")  = "Lorem_ipsum_dolor_sit"
+    * StringUtils.replaceAll("Lorem ipsum  dolor   sit", Pattern.compile("( +)([a-z]+)"), "_$$2")  = "Lorem_ipsum_dolor_sit"
     * </pre>
     *
     *
@@ -263,7 +263,7 @@ object RegExUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>Unlike in the {@link #replacePattern ( String, String, String)} method, the {@link Pattern# DOTALL} option
+    * <p>Unlike in the {@link #replacePattern ( String, String, String)} method, the {@link java.util.regex.Pattern#DOTALL} option
     * is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
@@ -281,7 +281,7 @@ object RegExUtils {
     * StringUtils.replaceAll("ABCabc123", "[a-z]", "_")       = "ABC___123"
     * StringUtils.replaceAll("ABCabc123", "[^A-Z0-9]+", "_")  = "ABC_123"
     * StringUtils.replaceAll("ABCabc123", "[^A-Z0-9]+", "")   = "ABC123"
-    * StringUtils.replaceAll("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$2")  = "Lorem_ipsum_dolor_sit"
+    * StringUtils.replaceAll("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_\$2")  = "Lorem_ipsum_dolor_sit"
     * </pre>
     *
     *
@@ -325,7 +325,7 @@ object RegExUtils {
     * StringUtils.replaceFirst("ABCabc123", Pattern.compile("[a-z]"), "_")          = "ABC_bc123"
     * StringUtils.replaceFirst("ABCabc123abc", Pattern.compile("[^A-Z0-9]+"), "_")  = "ABC_123abc"
     * StringUtils.replaceFirst("ABCabc123abc", Pattern.compile("[^A-Z0-9]+"), "")   = "ABC123abc"
-    * StringUtils.replaceFirst("Lorem ipsum  dolor   sit", Pattern.compile("( +)([a-z]+)"), "_$2")  = "Lorem_ipsum  dolor   sit"
+    * StringUtils.replaceFirst("Lorem ipsum  dolor   sit", Pattern.compile("( +)([a-z]+)"), "_$$2")  = "Lorem_ipsum  dolor   sit"
     * </pre>
     *
     *
@@ -353,7 +353,7 @@ object RegExUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>The {@link Pattern# DOTALL} option is NOT automatically added.
+    * <p>The {@link java.util.regex.Pattern#DOTALL} option is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
     *
@@ -370,7 +370,7 @@ object RegExUtils {
     * StringUtils.replaceFirst("ABCabc123", "[a-z]", "_")          = "ABC_bc123"
     * StringUtils.replaceFirst("ABCabc123abc", "[^A-Z0-9]+", "_")  = "ABC_123abc"
     * StringUtils.replaceFirst("ABCabc123abc", "[^A-Z0-9]+", "")   = "ABC123abc"
-    * StringUtils.replaceFirst("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$2")  = "Lorem_ipsum  dolor   sit"
+    * StringUtils.replaceFirst("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$$2")  = "Lorem_ipsum  dolor   sit"
     * </pre>
     *
     *
@@ -391,7 +391,7 @@ object RegExUtils {
 
   /**
     * <p>Replaces each substring of the source String that matches the given regular expression with the given
-    * replacement using the {@link Pattern# DOTALL} option. DOTALL is also known as single-line mode in Perl.</p>
+    * replacement using the {@link java.util.regex.Pattern#DOTALL} option. DOTALL is also known as single-line mode in Perl.</p>
     *
     * This call is a {@code null} safe equivalent to:
     * <ul>
@@ -412,7 +412,7 @@ object RegExUtils {
     * StringUtils.replacePattern("ABCabc123", "[a-z]", "_")       = "ABC___123"
     * StringUtils.replacePattern("ABCabc123", "[^A-Z0-9]+", "_")  = "ABC_123"
     * StringUtils.replacePattern("ABCabc123", "[^A-Z0-9]+", "")   = "ABC123"
-    * StringUtils.replacePattern("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$2")  = "Lorem_ipsum_dolor_sit"
+    * StringUtils.replacePattern("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$$2")  = "Lorem_ipsum_dolor_sit"
     * </pre>
     *
     *

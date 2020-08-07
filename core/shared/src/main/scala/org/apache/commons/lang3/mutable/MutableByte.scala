@@ -29,15 +29,13 @@ object MutableJavaByte {
   * <p>
   * Note that as MutableJavaByte does not extend JavaByte, it is not treated by String.format as a JavaByte parameter.
   *
+  * Constructs a new MutableJavaByte with the default value of zero.
+  *
   * @see JavaByte
   * @since 2.1
   */
 @SerialVersionUID(-1585823265L)
 class MutableJavaByte()
-
-/**
-  * Constructs a new MutableJavaByte with the default value of zero.
-  */
   extends Number with Comparable[MutableJavaByte] with Mutable[Number] {
   import MutableJavaByte.{ONE, ZERO}
   /** The mutable value. */
@@ -57,7 +55,7 @@ class MutableJavaByte()
     * Constructs a new MutableJavaByte with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: Number) = {
     this()
@@ -68,7 +66,7 @@ class MutableJavaByte()
     * Constructs a new MutableJavaByte parsing the given string.
     *
     * @param value the string to parse, not null
-    * @throws NumberFormatException if the string cannot be parsed into a byte
+    * @throws java.lang.NumberFormatException if the string cannot be parsed into a byte
     * @since 2.5
     */
   def this(value: String) = {
@@ -96,7 +94,7 @@ class MutableJavaByte()
     * Sets the value from any Number instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: Number): Unit = {
     this.value = value.byteValue
@@ -184,7 +182,7 @@ class MutableJavaByte()
     * Adds a value to the value of this instance.
     *
     * @param operand the value to add, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def add(operand: Number): Unit = {
@@ -205,7 +203,7 @@ class MutableJavaByte()
     * Subtracts a value from the value of this instance.
     *
     * @param operand the value to subtract, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def subtract(operand: Number): Unit = {
@@ -230,7 +228,7 @@ class MutableJavaByte()
     * immediately after the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance after adding the operand
     * @since 3.5
     */
@@ -258,7 +256,7 @@ class MutableJavaByte()
     * immediately prior to the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance immediately before the operand was added
     * @since 3.5
     */

@@ -135,7 +135,7 @@ object ToStringStyle {
     * </pre>
     *
     * <strong>Note:</strong> Since field names are mandatory in JSON, this
-    * ToStringStyle will throw an {@link UnsupportedOperationException} if no
+    * ToStringStyle will throw an {@link java.lang.UnsupportedOperationException} if no
     * field name is passed in while appending. Furthermore This ToStringStyle
     * will only generate valid JSON if referenced objects also produce JSON
     * when calling {@code toString()} on them.
@@ -1614,7 +1614,7 @@ abstract class ToStringStyle protected ()
   }
 
   /**
-    * <p>Append the {@link System# identityHashCode ( java.lang.Object )}.</p>
+    * <p>Append the {@link java.lang.System# identityHashCode ( java.lang.Object )}.</p>
     *
     * @param buffer the {@code StringBuffer} to populate
     * @param object the {@code Object} whose id to output

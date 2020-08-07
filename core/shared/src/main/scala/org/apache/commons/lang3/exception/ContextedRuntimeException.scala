@@ -39,13 +39,12 @@ import org.apache.commons.lang3.tuple.Pair
   * </p>
   * <pre>
   * try {
-  * ...
+  *   ...
   * } catch (Exception e) {
-  * throw new ContextedRuntimeException("Error posting account transaction", e)
-  * .addContextValue("Account Number", accountNumber)
-  * .addContextValue("Amount Posted", amountPosted)
-  * .addContextValue("Previous Balance", previousBalance)
-  * }
+  *   throw new ContextedRuntimeException("Error posting account transaction", e)
+  *     .addContextValue("Account Number", accountNumber)
+  *     .addContextValue("Amount Posted", amountPosted)
+  *     .addContextValue("Previous Balance", previousBalance)
   * }
   * </pre>
   * <p>
@@ -53,15 +52,14 @@ import org.apache.commons.lang3.tuple.Pair
   * </p>
   * <pre>
   * try {
-  * ...
+  *   ...
   * } catch (ContextedRuntimeException e) {
-  * throw e.setContextValue("Transaction Id", transactionId);
+  *   throw e.setContextValue("Transaction Id", transactionId);
   * } catch (Exception e) {
-  * if (e instanceof ExceptionContext) {
-  * e.setContextValue("Transaction Id", transactionId);
-  * }
-  * throw e;
-  * }
+  *   if (e instanceof ExceptionContext) {
+  *     e.setContextValue("Transaction Id", transactionId);
+  *   }
+  *   throw e;
   * }
   * </pre>
   * <p>
@@ -80,20 +78,17 @@ import org.apache.commons.lang3.tuple.Pair
   * ..... (rest of trace)
   * </pre>
   *
-  * @see ContextedException
-  * @since 3.0
-  */
-@SerialVersionUID(20110706L)
-class ContextedRuntimeException
-/**
   * Instantiates ContextedRuntimeException with cause and message.
   * <p>
   * The context information is stored using a default implementation.
   *
   * @param message the exception message, may be null
   * @param cause   the underlying cause of the exception, may be null
+  * @see ContextedException
+  * @since 3.0
   */
-(message: String, cause: Throwable)
+@SerialVersionUID(20110706L)
+class ContextedRuntimeException(message: String, cause: Throwable)
   extends RuntimeException(message, cause) with ExceptionContext {
   /** The context where the data is stored. */
   final private var exceptionContext: ExceptionContext = new DefaultExceptionContext

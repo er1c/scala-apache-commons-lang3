@@ -22,23 +22,21 @@ import java.lang.{Float => JavaFloat}
 /**
   * A mutable {@code float} wrapper.
   * <p>
-  * Note that as MutableJavaFloat does not extend JavaFloat, it is not treated by String.format as a JavaFloat parameter.
+  * Note that as MutableFloat does not extend Float, it is not treated by String.format as a Float parameter.
   *
-  * @see JavaFloat
+  * Constructs a new MutableFloat with the default value of zero.
+  *
+  * @see Float
   * @since 2.1
   */
 @SerialVersionUID(5787169186L)
-class MutableJavaFloat()
-
-/**
-  * Constructs a new MutableJavaFloat with the default value of zero.
-  */
-  extends Number with Comparable[MutableJavaFloat] with Mutable[Number] {
+class MutableFloat()
+  extends Number with Comparable[MutableFloat] with Mutable[Number] {
   /** The mutable value. */
   private var value: JavaFloat = 0.0f
 
   /**
-    * Constructs a new MutableJavaFloat with the specified value.
+    * Constructs a new MutableFloat with the specified value.
     *
     * @param value the initial value to store
     */
@@ -48,10 +46,10 @@ class MutableJavaFloat()
   }
 
   /**
-    * Constructs a new MutableJavaFloat with the specified value.
+    * Constructs a new MutableFloat with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: Number) = {
     this()
@@ -59,10 +57,10 @@ class MutableJavaFloat()
   }
 
   /**
-    * Constructs a new MutableJavaFloat parsing the given string.
+    * Constructs a new MutableFloat parsing the given string.
     *
     * @param value the string to parse, not null
-    * @throws NumberFormatException if the string cannot be parsed into a float
+    * @throws java.lang.NumberFormatException if the string cannot be parsed into a float
     * @since 2.5
     */
   def this(value: String) = {
@@ -90,7 +88,7 @@ class MutableJavaFloat()
     * Sets the value from any Number instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: Number): Unit = {
     this.value = value.floatValue
@@ -192,7 +190,7 @@ class MutableJavaFloat()
     * Adds a value to the value of this instance.
     *
     * @param operand the value to add, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def add(operand: Number): Unit = {
@@ -213,7 +211,7 @@ class MutableJavaFloat()
     * Subtracts a value from the value of this instance.
     *
     * @param operand the value to subtract, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def subtract(operand: Number): Unit = {
@@ -238,7 +236,7 @@ class MutableJavaFloat()
     * immediately after the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance after adding the operand
     * @since 3.5
     */
@@ -266,7 +264,7 @@ class MutableJavaFloat()
     * immediately prior to the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance immediately before the operand was added
     * @since 3.5
     */
@@ -277,28 +275,28 @@ class MutableJavaFloat()
   }
 
   /**
-    * Returns the value of this MutableJavaFloat as an int.
+    * Returns the value of this MutableFloat as an int.
     *
     * @return the numeric value represented by this object after conversion to type int.
     */
   override def intValue: Int = value.toInt
 
   /**
-    * Returns the value of this MutableJavaFloat as a long.
+    * Returns the value of this MutableFloat as a long.
     *
     * @return the numeric value represented by this object after conversion to type long.
     */
   override def longValue: Long = value.toLong
 
   /**
-    * Returns the value of this MutableJavaFloat as a float.
+    * Returns the value of this MutableFloat as a float.
     *
     * @return the numeric value represented by this object after conversion to type float.
     */
   override def floatValue: Float = value
 
   /**
-    * Returns the value of this MutableJavaFloat as a double.
+    * Returns the value of this MutableFloat as a double.
     *
     * @return the numeric value represented by this object after conversion to type double.
     */
@@ -313,12 +311,12 @@ class MutableJavaFloat()
 
   /**
     * Compares this object against some other object. The result is {@code true} if and only if the argument is
-    * not {@code null} and is a {@code JavaFloat} object that represents a {@code float} that has the
+    * not {@code null} and is a {@code java.lang.Float} object that represents a {@code float} that has the
     * identical bit pattern to the bit pattern of the {@code float} represented by this object. For this
     * purpose, two float values are considered to be the same if and only if the method
-    * {@link JavaFloat# floatToIntBits ( float )}returns the same int value when applied to each.
+    * {@link java.lang.Float# floatToIntBits ( Float )}returns the same int value when applied to each.
     * <p>
-    * Note that in most cases, for two instances of class {@code JavaFloat},{@code f1} and {@code f2},
+    * Note that in most cases, for two instances of class {@code java.lang.Float},{@code f1} and {@code f2},
     * the value of {@code f1.equals(f2)} is {@code true} if and only if <blockquote>
     *
     * <pre>
@@ -329,8 +327,8 @@ class MutableJavaFloat()
     * <p>
     * also has the value {@code true}. However, there are two exceptions:
     * <ul>
-    * <li>If {@code f1} and {@code f2} both represent {@code JavaFloat.NaN}, then the
-    * {@code equals} method returns {@code true}, even though {@code JavaFloat.NaN==JavaFloat.NaN} has
+    * <li>If {@code f1} and {@code f2} both represent {@code java.lang.Float.NaN}, then the
+    * {@code equals} method returns {@code true}, even though {@code java.lang.Float.NaN==java.lang.Float.NaN} has
     * the value {@code false}.
     * <li>If {@code f1} represents {@code +0.0f} while {@code f2} represents {@code -0.0f},
     * or vice versa, the {@code equal} test has the value {@code false}, even though
@@ -340,11 +338,11 @@ class MutableJavaFloat()
     *
     * @param obj the object to compare with, null returns false
     * @return {@code true} if the objects are the same; {@code false} otherwise.
-    * @see java.lang.JavaFloat#floatToIntBits(float)
+    * @see java.lang.Float#floatToIntBits(float)
     */
   override def equals(obj: Any): Boolean =
-    obj.isInstanceOf[MutableJavaFloat] &&
-      JavaFloat.floatToIntBits(obj.asInstanceOf[MutableJavaFloat].value) == JavaFloat.floatToIntBits(value)
+    obj.isInstanceOf[MutableFloat] &&
+      JavaFloat.floatToIntBits(obj.asInstanceOf[MutableFloat].value) == JavaFloat.floatToIntBits(value)
 
   /**
     * Returns a suitable hash code for this mutable.
@@ -359,7 +357,7 @@ class MutableJavaFloat()
     * @param other the other mutable to compare to, not null
     * @return negative if this is less, zero if equal, positive if greater
     */
-  override def compareTo(other: MutableJavaFloat): Int = JavaFloat.compare(this.value, other.value)
+  override def compareTo(other: MutableFloat): Int = JavaFloat.compare(this.value, other.value)
 
   /**
     * Returns the String value of this mutable.

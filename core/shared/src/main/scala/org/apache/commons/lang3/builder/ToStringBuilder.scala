@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Validate
 import java.lang.{Boolean => JavaBoolean}
 
 /**
-  * <p>Assists in implementing {@link Object# toString ( )} methods.</p>
+  * <p>Assists in implementing {@link java.lang.Object# toString ( )} methods.</p>
   *
   * <p>This class enables a good and consistent {@code toString()} to be built for any
   * class or object. This class aims to simplify the process by:</p>
@@ -58,9 +58,9 @@ import java.lang.{Boolean => JavaBoolean}
   * <p>This will produce a toString of the format:
   * {@code Person@7f54[name=Stephen,age=29,smoker=false]}</p>
   *
-  * <p>To add the superclass {@code toString}, use {@link #appendSuper}.
+  * <p>To add the superclass {@code toString}, use {@link ToStringBuilder!#appendSuper}.
   * To append the {@code toString} from an object that is delegated
-  * to (or any other object), use {@link #appendToString}.</p>
+  * to (or any other object), use {@link ToStringBuilder!#appendToString}.</p>
   *
   * <p>Alternatively, there is a method that uses reflection to determine
   * the fields to test. Because these fields are usually private, the method,
@@ -124,10 +124,10 @@ object ToStringBuilder {
     *
     * <p>This method is not intended for use from multiple threads.
     * Internally, a {@code volatile} variable is used to provide the guarantee
-    * that the latest value set is the value returned from {@link #getDefaultStyle}.</p>
+    * that the latest value set is the value returned from {@link ToStringBuilder#getDefaultStyle }.</p>
     *
     * @param style the default {@code ToStringStyle}
-    * @throws IllegalArgumentException if the style is {@code null}
+    * @throws java.lang.IllegalArgumentException if the style is {@code null}
     */
   def setDefaultStyle(style: ToStringStyle): Unit = {
     defaultStyle = Validate.notNull(style, "The style must not be null")
@@ -172,7 +172,7 @@ object ToStringBuilder {
     * <p>Uses {@code ReflectionToStringBuilder} to generate a
     * {@code toString} for the specified object.</p>
     *
-    * @param <                T> the type of the object
+    * @tparam T               the type of the object
     * @param object           the Object to be output
     * @param style            the style of the {@code toString} to create, may be {@code null}
     * @param outputTransients whether to include transient fields
@@ -209,7 +209,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
   /**
     * <p>Constructs a builder for the specified object using the default output style.</p>
     *
-    * <p>This default style is obtained from {@link #getDefaultStyle ( )}.</p>
+    * <p>This default style is obtained from {@link ToStringBuilder#getDefaultStyle}.</p>
     *
     * @param object the Object to build a {@code toString} for, not recommended to be null
     */
@@ -876,7 +876,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
   /**
     * <p>Appends with the same format as the default <code>Object toString()
     * </code> method. Appends the class name followed by
-    * {@link System# identityHashCode ( java.lang.Object )}.</p>
+    * {@link java.lang.System# identityHashCode ( java.lang.Object )}.</p>
     *
     * @param srcObject the {@code Object} whose class name and id to output
     * @return this

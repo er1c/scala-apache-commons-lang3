@@ -117,7 +117,23 @@ object Boilerplate {
     scalacOptions in (ScalaUnidoc, unidoc) ++=
       Seq("-doc-root-content", file("rootdoc.txt").getAbsolutePath),
     scalacOptions in (ScalaUnidoc, unidoc) ++=
-      Opts.doc.version(version.value)
+      Opts.doc.version(version.value),
+    apiMappings ++= {
+      Map(
+        scalaInstance.value.libraryJar
+          -> url(s"https://www.scala-lang.org/api/${scalaVersion.value}/")
+      ) ++ Map(
+        file("/modules/java.base")
+          -> url("https://docs.oracle.com/javase/8/docs/api/java.base"),
+        file("/modules/java.lang")
+          -> url("https://docs.oracle.com/javase/8/docs/api/java.lang"),
+
+          //-> url("https://docs.oracle.com/en/java/javase/11/docs/api/java.base"),
+        file("/modules/java.xml")
+          -> url("https://docs.oracle.com/javase/8/docs/api/java.xml")
+          //-> url("https://docs.oracle.com/en/java/javase/11/docs/api/java.xml")
+      )
+    }
   )
 
   /**

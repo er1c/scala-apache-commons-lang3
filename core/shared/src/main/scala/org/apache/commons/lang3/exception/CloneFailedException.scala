@@ -19,7 +19,7 @@ package org.apache.commons.lang3.exception
 
 /**
   * Exception thrown when a clone cannot be created. In contrast to
-  * {@link CloneNotSupportedException} this is a {@link RuntimeException}.
+  * {@link java.lang.CloneNotSupportedException} this is a {@link java.lang.RuntimeException}.
   *
   * @param message description of the exception
   * @param cause   cause of the exception

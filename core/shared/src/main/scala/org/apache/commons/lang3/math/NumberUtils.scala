@@ -543,7 +543,7 @@ object NumberUtils {
     *
     * @param str String containing a number, may be null
     * @return Number created from the string (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createNumber(str: String): Number = {
     if (str == null) return null
@@ -742,7 +742,7 @@ object NumberUtils {
     *
     * @param str a {@code String} to convert, may be null
     * @return converted {@code Float} (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createFloat(str: String): Float = {
     if (str == null) return null.asInstanceOf[Float]
@@ -756,7 +756,7 @@ object NumberUtils {
     *
     * @param str a {@code String} to convert, may be null
     * @return converted {@code Double} (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createDouble(str: String): Double = {
     if (str == null) return null.asInstanceOf[Double]
@@ -772,7 +772,7 @@ object NumberUtils {
     *
     * @param str a {@code String} to convert, may be null
     * @return converted {@code Integer} (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createInteger(str: String): Integer = {
     if (str == null) return null
@@ -789,7 +789,7 @@ object NumberUtils {
     *
     * @param str a {@code String} to convert, may be null
     * @return converted {@code Long} (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createLong(str: String): Long = {
     if (str == null) return null.asInstanceOf[Long]
@@ -804,7 +804,7 @@ object NumberUtils {
     *
     * @param str a {@code String} to convert, may be null
     * @return converted {@code BigInteger} (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createBigInteger(str: String): BigInteger = {
     if (str == null) return null
@@ -843,7 +843,7 @@ object NumberUtils {
     *
     * @param str a {@code String} to convert, may be null
     * @return converted {@code BigDecimal} (or null if the input is null)
-    * @throws NumberFormatException if the value cannot be converted
+    * @throws java.lang.NumberFormatException if the value cannot be converted
     */
   def createBigDecimal(str: String): BigDecimal = {
     if (str == null) return null
@@ -857,8 +857,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the minimum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(long[]) to min(long...)
     */
   def min(array: Long*) = { // Validates input
@@ -876,8 +875,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the minimum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(int[]) to min(int...)
     */
   def min(array: Int*) = {
@@ -894,8 +892,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the minimum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(short[]) to min(short...)
     */
   def min(array: Short*) = {
@@ -912,8 +909,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the minimum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(byte[]) to min(byte...)
     */
   def min(array: Byte*) = {
@@ -930,8 +926,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the minimum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @see IEEE754rUtils#min(double[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from min(double[]) to min(double...)
     */
@@ -950,8 +945,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the minimum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @see IEEE754rUtils#min(float[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from min(float[]) to min(float...)
     */
@@ -970,8 +964,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the maximum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(long[]) to max(long...)
     */
   def max(array: Long*) = {
@@ -989,8 +982,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the maximum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(int[]) to max(int...)
     */
   def max(array: Int*) = {
@@ -1007,8 +999,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the maximum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(short[]) to max(short...)
     */
   def max(array: Short*) = {
@@ -1025,8 +1016,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the maximum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(byte[]) to max(byte...)
     */
   def max(array: Byte*) = {
@@ -1043,8 +1033,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the maximum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @see IEEE754rUtils#max(double[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from max(double[]) to max(double...)
     */
@@ -1063,8 +1052,7 @@ object NumberUtils {
     *
     * @param array an array, must not be null or empty
     * @return the maximum value in the array
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @see IEEE754rUtils#max(float[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from max(float[]) to max(float...)
     */
@@ -1082,7 +1070,7 @@ object NumberUtils {
     * Checks if the specified array is neither null nor empty.
     *
     * @param array the array to check
-    * @throws IllegalArgumentException if {@code array} is either {@code null} or empty
+    * @throws java.lang.IllegalArgumentException if {@code array} is either {@code null} or empty
     */
   private def validateArray(array: Any): Unit = {
     Validate.notNull(array, "The Array must not be null")
@@ -1426,9 +1414,9 @@ object NumberUtils {
   /**
     * <p>Checks whether the given String is a parsable number.</p>
     *
-    * <p>Parsable numbers include those Strings understood by {@link Integer# parseInt ( String )},
-    * {@link Long# parseLong ( String )}, {@link Float# parseFloat ( String )} or
-    * {@link Double# parseDouble ( String )}. This method can be used instead of catching {@link java.text.ParseException}
+    * <p>Parsable numbers include those Strings understood by {@link java.lang.Integer# parseInt ( String )},
+    * {@link java.lang.Long# parseLong ( String )}, {@link java.lang.Float# parseFloat ( String )} or
+    * {@link java.lang.Double# parseDouble ( String )}. This method can be used instead of catching {@link java.text.ParseException}
     * when calling one of those methods.</p>
     *
     * <p>Hexadecimal and scientific notations are <strong>not</strong> considered parsable.

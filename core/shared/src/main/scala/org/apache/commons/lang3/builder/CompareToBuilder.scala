@@ -43,21 +43,21 @@ import org.apache.commons.lang3.ArrayUtils
   *
   * <pre>
   * public class MyClass {
-  * String field1;
-  * int field2;
-  * boolean field3;
+  *   String field1;
+  *   int field2;
+  *   boolean field3;
   *
-  * ...
+  *   ...
   *
-  * public int compareTo(Object o) {
-  * MyClass myClass = (MyClass) o;
-  * return new CompareToBuilder()
-  * .appendSuper(super.compareTo(o)
-  * .append(this.field1, myClass.field1)
-  * .append(this.field2, myClass.field2)
-  * .append(this.field3, myClass.field3)
-  * .toComparison();
-  * }
+  *   public int compareTo(Object o) {
+  *     MyClass myClass = (MyClass) o;
+  *     return new CompareToBuilder()
+  *       .appendSuper(super.compareTo(o)
+  *       .append(this.field1, myClass.field1)
+  *       .append(this.field2, myClass.field2)
+  *       .append(this.field3, myClass.field3)
+  *       .toComparison();
+  *   }
   * }
   * </pre>
   *
@@ -65,7 +65,7 @@ import org.apache.commons.lang3.ArrayUtils
   * a non-zero result, then that value will be the result returned by {@code toComparison()} and all
   * subsequent comparisons are skipped.</p>
   *
-  * <p>Alternatively, there are {@link #reflectionCompare ( Object, Object) reflectionCompare} methods that use
+  * <p>Alternatively, there are {@link #reflectionCompare(lhs:Any,rhs:Any)* reflectionCompare} methods that use
   * reflection to determine the fields to append. Because fields can be private,
   * {@code reflectionCompare} uses {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} to
   * bypass normal access control checks. This will fail under a security manager,
@@ -77,12 +77,12 @@ import org.apache.commons.lang3.ArrayUtils
   *
   * <pre>
   * public int compareTo(Object o) {
-  * return CompareToBuilder.reflectionCompare(this, o);
+  *   return CompareToBuilder.reflectionCompare(this, o);
   * }
   * </pre>
   *
   * <p>The reflective methods compare object fields in the order returned by
-  * {@link Class# getDeclaredFields ( )}. The fields of the class are compared first, followed by those
+  * {@link java.lang.Class# getDeclaredFields ( )}. The fields of the class are compared first, followed by those
   * of its parent classes (in order from the bottom to the top of the class hierarchy).</p>
   *
   * @see java.lang.Comparable
@@ -114,9 +114,9 @@ object CompareToBuilder {
     * @param rhs right-hand object
     * @return a negative integer, zero, or a positive integer as {@code lhs}
     *         is less than, equal to, or greater than {@code rhs}
-    * @throws NullPointerException if either (but not both) parameters are
+    * @throws java.lang.NullPointerException if either (but not both) parameters are
     *                              {@code null}
-    * @throws ClassCastException   if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException   if {@code rhs} is not assignment-compatible
     *                              with {@code lhs}
     */
   def reflectionCompare(lhs: Any, rhs: Any): Int = reflectionCompare(lhs, rhs, false, null)
@@ -144,9 +144,9 @@ object CompareToBuilder {
     * @param compareTransients whether to compare transient fields
     * @return a negative integer, zero, or a positive integer as {@code lhs}
     *         is less than, equal to, or greater than {@code rhs}
-    * @throws NullPointerException if either {@code lhs} or {@code rhs}
+    * @throws java.lang.NullPointerException if either {@code lhs} or {@code rhs}
     *                              (but not both) is {@code null}
-    * @throws ClassCastException   if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException   if {@code rhs} is not assignment-compatible
     *                              with {@code lhs}
     */
   def reflectionCompare(lhs: Any, rhs: Any, compareTransients: Boolean): Int =
@@ -175,9 +175,9 @@ object CompareToBuilder {
     * @param excludeFields Collection of String fields to exclude
     * @return a negative integer, zero, or a positive integer as {@code lhs}
     *         is less than, equal to, or greater than {@code rhs}
-    * @throws NullPointerException if either {@code lhs} or {@code rhs}
+    * @throws java.lang.NullPointerException if either {@code lhs} or {@code rhs}
     *                              (but not both) is {@code null}
-    * @throws ClassCastException   if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException   if {@code rhs} is not assignment-compatible
     *                              with {@code lhs}
     * @since 2.2
     */
@@ -207,9 +207,9 @@ object CompareToBuilder {
     * @param excludeFields array of fields to exclude
     * @return a negative integer, zero, or a positive integer as {@code lhs}
     *         is less than, equal to, or greater than {@code rhs}
-    * @throws NullPointerException if either {@code lhs} or {@code rhs}
+    * @throws java.lang.NullPointerException if either {@code lhs} or {@code rhs}
     *                              (but not both) is {@code null}
-    * @throws ClassCastException   if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException   if {@code rhs} is not assignment-compatible
     *                              with {@code lhs}
     * @since 2.2
     */
@@ -242,9 +242,9 @@ object CompareToBuilder {
     * @param excludeFields     fields to exclude
     * @return a negative integer, zero, or a positive integer as {@code lhs}
     *         is less than, equal to, or greater than {@code rhs}
-    * @throws NullPointerException if either {@code lhs} or {@code rhs}
+    * @throws java.lang.NullPointerException if either {@code lhs} or {@code rhs}
     *                              (but not both) is {@code null}
-    * @throws ClassCastException   if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException   if {@code rhs} is not assignment-compatible
     *                              with {@code lhs}
     * @since 2.2 (2.0 as {@code reflectionCompare(Object, Object, boolean, Class)})
     */
@@ -313,8 +313,6 @@ object CompareToBuilder {
   }
 }
 
-class CompareToBuilder()
-
 /**
   * <p>Constructor for CompareToBuilder.</p>
   *
@@ -322,7 +320,7 @@ class CompareToBuilder()
   * then made to the various append methods, followed by a call to
   * {@link #toComparison} to get the result.</p>
   */
-  extends Builder[Integer] {
+class CompareToBuilder() extends Builder[Integer] {
   /**
     * Current state of the comparison as appended fields are checked.
     */
@@ -353,12 +351,12 @@ class CompareToBuilder()
     * <li>Check the object contents</li>
     * </ol>
     *
-    * <p>{@code lhs} must either be an array or implement {@link Comparable}.</p>
+    * <p>{@code lhs} must either be an array or implement {@link java.lang.Comparable}.</p>
     *
     * @param lhs left-hand object
     * @param rhs right-hand object
     * @return this - used to chain append calls
-    * @throws ClassCastException if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException if {@code rhs} is not assignment-compatible
     *                            with {@code lhs}
     */
   def append(lhs: Any, rhs: Any): CompareToBuilder =
@@ -378,14 +376,14 @@ class CompareToBuilder()
     * <p>If {@code lhs} is an array, array comparison methods will be used.
     * Otherwise {@code comparator} will be used to compare the objects.
     * If {@code comparator} is {@code null}, {@code lhs} must
-    * implement {@link Comparable} instead.</p>
+    * implement {@link java.lang.Comparable} instead.</p>
     *
     * @param lhs        left-hand object
     * @param rhs        right-hand object
     * @param comparator {@code Comparator} used to compare the objects,
     *                   {@code null} means treat lhs as {@code Comparable}
     * @return this - used to chain append calls
-    * @throws ClassCastException if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException if {@code rhs} is not assignment-compatible
     *                            with {@code lhs}
     * @since 2.0
     */
@@ -564,7 +562,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a short length array is less than a long length array</li>
-    * <li>Check array contents element by element using {@link #append ( Object, Object, Comparator)}</li>
+    * <li>Check array contents element by element using {@code append(Array[Any], Array[Any], Comparator)}</li>
     * </ol>
     *
     * <p>This method will also will be called for the top level of multi-dimensional,
@@ -573,10 +571,10 @@ class CompareToBuilder()
     * @param lhs left-hand array
     * @param rhs right-hand array
     * @return this - used to chain append calls
-    * @throws ClassCastException if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException if {@code rhs} is not assignment-compatible
     *                            with {@code lhs}
     */
-  def append(lhs: Array[AnyRef], rhs: Array[AnyRef]): CompareToBuilder = append(lhs, rhs, null)
+  def append(lhs: Array[Any], rhs: Array[Any]): CompareToBuilder = append(lhs, rhs, null)
 
   /**
     * <p>Appends to the {@code builder} the deep comparison of
@@ -586,7 +584,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a short length array is less than a long length array</li>
-    * <li>Check array contents element by element using {@link #append ( Object, Object, Comparator)}</li>
+    * <li>Check array contents element by element using {@code append(Any, Any, Comparator)}</li>
     * </ol>
     *
     * <p>This method will also will be called for the top level of multi-dimensional,
@@ -597,11 +595,11 @@ class CompareToBuilder()
     * @param comparator {@code Comparator} to use to compare the array elements,
     *                   {@code null} means to treat {@code lhs} elements as {@code Comparable}.
     * @return this - used to chain append calls
-    * @throws ClassCastException if {@code rhs} is not assignment-compatible
+    * @throws java.lang.ClassCastException if {@code rhs} is not assignment-compatible
     *                            with {@code lhs}
     * @since 2.0
     */
-  def append(lhs: Array[AnyRef], rhs: Array[AnyRef], comparator: Comparator[_]): CompareToBuilder = {
+  def append(lhs: Array[Any], rhs: Array[Any], comparator: Comparator[_]): CompareToBuilder = {
     if (comparison != 0) return this
     if (lhs eq rhs) return this
     if (lhs == null) {
@@ -637,7 +635,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( long, long)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Long,rhs:Long)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -680,7 +678,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( int, int)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Int,rhs:Int)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -723,7 +721,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( short, short)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Short,rhs:Short)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -766,7 +764,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( char, char)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Char,rhs:Char)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -809,7 +807,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( byte, byte)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Byte,rhs:Byte)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -852,7 +850,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( double, double)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Double,rhs:Double)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -895,7 +893,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( float, float)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Float,rhs:Float)*}</li>
     * </ol>
     *
     * @param lhs left-hand array
@@ -938,7 +936,7 @@ class CompareToBuilder()
     * <li>Check if arrays are the same using {@code ==}</li>
     * <li>Check if for {@code null}, {@code null} is less than non-{@code null}</li>
     * <li>Check array length, a shorter length array is less than a longer length array</li>
-    * <li>Check array contents element by element using {@link #append ( boolean, boolean)}</li>
+    * <li>Check array contents element by element using {@link #append(lhs:Boolean,rhs:Boolean)*}</li>
     * </ol>
     *
     * @param lhs left-hand array

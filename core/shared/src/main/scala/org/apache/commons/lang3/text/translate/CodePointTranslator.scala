@@ -47,8 +47,8 @@ import java.io.Writer
     *
     * @param codepoint int character input to translate
     * @param out       Writer to optionally push the translated output to
-    * @return boolean as to whether translation occurred or not
-    * @throws IOException if and only if the Writer produces an IOException
+    * @return Boolean as to whether translation occurred or not
+    * @throws java.io.IOException if and only if the Writer produces an IOException
     */
   @throws[IOException]
   def translate(codepoint: Int, out: Writer): Boolean

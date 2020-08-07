@@ -29,15 +29,13 @@ object MutableShort {
   * <p>
   * Note that as MutableShort does not extend Short, it is not treated by String.format as a Short parameter.
   *
+  * Constructs a new MutableShort with the default value of zero.
+  *
   * @see Short
   * @since 2.1
   */
 @SerialVersionUID(-2135791679L)
 class MutableShort()
-
-/**
-  * Constructs a new MutableShort with the default value of zero.
-  */
   extends Number with Comparable[MutableShort] with Mutable[Number] {
   import MutableShort.{ONE, ZERO}
 
@@ -58,7 +56,7 @@ class MutableShort()
     * Constructs a new MutableShort with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: Number) = {
     this()
@@ -69,7 +67,7 @@ class MutableShort()
     * Constructs a new MutableShort parsing the given string.
     *
     * @param value the string to parse, not null
-    * @throws NumberFormatException if the string cannot be parsed into a short
+    * @throws java.lang.NumberFormatException if the string cannot be parsed into a short
     * @since 2.5
     */
   def this(value: String) = {
@@ -97,7 +95,7 @@ class MutableShort()
     * Sets the value from any Number instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: Number): Unit = {
     this.value = value.shortValue
@@ -185,7 +183,7 @@ class MutableShort()
     * Adds a value to the value of this instance.
     *
     * @param operand the value to add, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def add(operand: Number): Unit = {
@@ -206,7 +204,7 @@ class MutableShort()
     * Subtracts a value from the value of this instance.
     *
     * @param operand the value to subtract, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def subtract(operand: Number): Unit = {
@@ -231,7 +229,7 @@ class MutableShort()
     * immediately after the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance after adding the operand
     * @since 3.5
     */
@@ -259,7 +257,7 @@ class MutableShort()
     * immediately prior to the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance immediately before the operand was added
     * @since 3.5
     */

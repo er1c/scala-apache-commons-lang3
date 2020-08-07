@@ -22,10 +22,10 @@ import java.nio.charset.Charset
 /**
   * Internal use only.
   * <p>
-  * Provides utilities for {@link Charset}.
+  * Provides utilities for {@link java.nio.charset.Charset}.
   * </p>
   * <p>
-  * Package private since Apache Commons IO already provides a Charsets because {@link Charset} is in
+  * Package private since Apache Commons IO already provides a Charsets because {@link java.nio.charset.Charset} is in
   * {@code java.nio.charset}.
   * </p>
   *

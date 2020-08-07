@@ -26,15 +26,13 @@ import java.lang.{Boolean => JavaBoolean}
   * <p>
   * Note that as MutableJavaBoolean does not extend JavaBoolean, it is not treated by String.format as a JavaBoolean parameter.
   *
+  * Constructs a new MutableJavaBoolean with the default value of false.
+  *
   * @see JavaBoolean
   * @since 2.2
   */
 @SerialVersionUID(-4830728138360036487L)
 class MutableBoolean()
-
-/**
-  * Constructs a new MutableJavaBoolean with the default value of false.
-  */
   extends Mutable[JavaBoolean] with Serializable with Comparable[MutableBoolean] {
   /** The mutable value. */
   private var value: Boolean = false
@@ -53,7 +51,7 @@ class MutableBoolean()
     * Constructs a new MutableJavaBoolean with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: JavaBoolean) = {
     this()
@@ -98,7 +96,7 @@ class MutableBoolean()
     * Sets the value from any JavaBoolean instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: JavaBoolean): Unit = {
     this.value = value.booleanValue

@@ -25,7 +25,7 @@ import org.apache.commons.lang3.ClassUtils
 import org.apache.commons.lang3.tuple.Pair
 
 /**
-  * <p>Assists in implementing {@link Object# equals ( Object )} methods.</p>
+  * <p>Assists in implementing {@link java.lang.Object# equals ( Object )} methods.</p>
   *
   * <p> This class provides methods to build a good equals method for any
   * class. It follows rules laid out in
@@ -46,18 +46,18 @@ import org.apache.commons.lang3.tuple.Pair
   * <p>Typical use for the code is as follows:</p>
   * <pre>
   * public boolean equals(Object obj) {
-  * if (obj == null) { return false; }
-  * if (obj == this) { return true; }
-  * if (obj.getClass() != getClass()) {
-  * return false;
+  *   if (obj == null) { return false; }
+  *   if (obj == this) { return true; }
+  *   if (obj.getClass() != getClass()) {
+  *   return false;
   * }
   * MyClass rhs = (MyClass) obj;
   * return new EqualsBuilder()
-  * .appendSuper(super.equals(obj))
-  * .append(field1, rhs.field1)
-  * .append(field2, rhs.field2)
-  * .append(field3, rhs.field3)
-  * ._isEquals();
+  *   .appendSuper(super.equals(obj))
+  *   .append(field1, rhs.field1)
+  *   .append(field2, rhs.field2)
+  *   .append(field3, rhs.field3)
+  *   .isEquals();
   * }
   * </pre>
   *
@@ -343,16 +343,15 @@ object EqualsBuilder {
   }
 }
 
-class EqualsBuilder()
-
 /**
   * <p>Constructor for EqualsBuilder.</p>
   *
   * <p>Starts off assuming that equals is {@code true}.</p>
   *
-  * @see Object#equals(Object)
+  * @see java.util.Object#equals(Object)
   */
-  extends Builder[Boolean] { // set up default classes to bypass reflection for
+class EqualsBuilder() extends Builder[Boolean] {
+  // set up default classes to bypass reflection for
   private var bypassReflectionClasses: util.List[Class[_]] = new util.ArrayList[Class[_]]()
   bypassReflectionClasses.add(classOf[String]) //hashCode field being lazy but not transient
 
@@ -398,7 +397,7 @@ class EqualsBuilder()
     * although being in recursive mode. So the fields of theses classes will not be compared recursively by reflection.</p>
     *
     * <p>Here you should name classes having non-transient fields which are cache fields being set lazily.<br>
-    * Prominent example being {@link String} class with its hash code cache field. Due to the importance
+    * Prominent example being {@link java.lang.String} class with its hash code cache field. Due to the importance
     * of the {@code String} class, it is included in the default bypasses classes. Usually, if you use
     * your own set of classes here, remember to include {@code String} class, too.</p>
     *
@@ -785,7 +784,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code long}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( long, long)} is used.</p>
+    * <p>The method {@link #append(lhs:Long,rhs:Long):*} is used.</p>
     *
     * @param lhs the left hand {@code long[]}
     * @param rhs the right hand {@code long[]}
@@ -817,7 +816,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code int}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( int, int)} is used.</p>
+    * <p>The method {@link #append(lhs:Int,rhs:Int)*} is used.</p>
     *
     * @param lhs the left hand {@code int[]}
     * @param rhs the right hand {@code int[]}
@@ -849,7 +848,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code short}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( short, short)} is used.</p>
+    * <p>The method {@link #append(lhs:Short,rhs:Short)*} is used.</p>
     *
     * @param lhs the left hand {@code short[]}
     * @param rhs the right hand {@code short[]}
@@ -881,7 +880,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code char}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( char, char)} is used.</p>
+    * <p>The method {@link #append(lhs:Char,rhs:Char)*} is used.</p>
     *
     * @param lhs the left hand {@code char[]}
     * @param rhs the right hand {@code char[]}
@@ -913,7 +912,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code byte}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( byte, byte)} is used.</p>
+    * <p>The method {@link #append(lhs:Byte,rhs:Byte)*} is used.</p>
     *
     * @param lhs the left hand {@code byte[]}
     * @param rhs the right hand {@code byte[]}
@@ -945,7 +944,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code double}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( double, double)} is used.</p>
+    * <p>The method {@link #append(lhs:Double,rhs:Double)*} is used.</p>
     *
     * @param lhs the left hand {@code double[]}
     * @param rhs the right hand {@code double[]}
@@ -977,7 +976,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code float}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( float, float)} is used.</p>
+    * <p>The method {@link #append(lhs:Float,rhs:Float)*} is used.</p>
     *
     * @param lhs the left hand {@code float[]}
     * @param rhs the right hand {@code float[]}
@@ -1009,7 +1008,7 @@ class EqualsBuilder()
     * <p>Deep comparison of array of {@code boolean}. Length and all
     * values are compared.</p>
     *
-    * <p>The method {@link #append ( boolean, boolean)} is used.</p>
+    * <p>The method {@link #append(lhs:Boolean,rhs:Boolean)*} is used.</p>
     *
     * @param lhs the left hand {@code boolean[]}
     * @param rhs the right hand {@code boolean[]}

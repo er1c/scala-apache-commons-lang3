@@ -26,9 +26,9 @@ import java.util.regex.Pattern
   * <p>This class assists in validating arguments. The validation methods are
   * based along the following principles:
   * <ul>
-  * <li>An invalid {@code null} argument causes a {@link NullPointerException}.</li>
-  * <li>A non-{@code null} argument causes an {@link IllegalArgumentException}.</li>
-  * <li>An invalid index into an array/collection/map/string causes an {@link IndexOutOfBoundsException}.</li>
+  * <li>An invalid {@code null} argument causes a {@link java.lang.NullPointerException}.</li>
+  * <li>A non-{@code null} argument causes an {@link java.lang.IllegalArgumentException}.</li>
+  * <li>An invalid index into an array/collection/map/string causes an {@link java.lang.IndexOutOfBoundsException}.</li>
   * </ul>
   *
   * <p>All exceptions messages are
@@ -80,9 +80,9 @@ object Validate {
     * appended to the exception message only in the case of an error.</p>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param value      the value to append to the message when invalid
-    * @throws IllegalArgumentException if expression is {@code false}
+    * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean)
     * @see #isTrue(boolean, String, double)
     * @see #isTrue(boolean, String, Object...)
@@ -103,9 +103,9 @@ object Validate {
     * appended to the exception message only in the case of an error.</p>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param value      the value to append to the message when invalid
-    * @throws IllegalArgumentException if expression is {@code false}
+    * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean)
     * @see #isTrue(boolean, String, long)
     * @see #isTrue(boolean, String, Object...)
@@ -125,9 +125,9 @@ object Validate {
     * Validate.isTrue(myObject.isOk(), "The object is not okay");</pre>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values     the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalArgumentException if expression is {@code false}
+    * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean)
     * @see #isTrue(boolean, String, long)
     * @see #isTrue(boolean, String, double)
@@ -150,7 +150,7 @@ object Validate {
     * false&quot;.</p>
     *
     * @param expression the boolean expression to check
-    * @throws IllegalArgumentException if expression is {@code false}
+    * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean, String, long)
     * @see #isTrue(boolean, String, double)
     * @see #isTrue(boolean, String, Object...)
@@ -171,7 +171,7 @@ object Validate {
     * @tparam T     the object type
     * @param object the object to check
     * @return the validated object (never {@code null} for method chaining)
-    * @throws NullPointerException if the object is {@code null}
+    * @throws java.lang.NullPointerException if the object is {@code null}
     * @see #notNull(Object, String, Object...)
     */
   def notNull[T](`object`: T): T = notNull(`object`, DEFAULT_IS_NULL_EX_MESSAGE)
@@ -184,10 +184,10 @@ object Validate {
     *
     * @tparam T      the object type
     * @param object  the object to check
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message
     * @return the validated object (never {@code null} for method chaining)
-    * @throws NullPointerException if the object is {@code null}
+    * @throws java.lang.NullPointerException if the object is {@code null}
     * @see #notNull(Object)
     */
   def notNull[T](`object`: T, message: String, values: Any*): T = {
@@ -204,11 +204,11 @@ object Validate {
     *
     * @tparam T      the array type
     * @param array   the array to check, validated not null by this method
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated array (never {@code null} method for chaining)
-    * @throws NullPointerException     if the array is {@code null}
-    * @throws IllegalArgumentException if the array is empty
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if the array is empty
     * @see #notEmpty(Object[])
     */
   def notEmpty[T](array: Array[T], message: String, values: Any*): Array[T] = {
@@ -230,8 +230,8 @@ object Validate {
     * @tparam T    the array type
     * @param array the array to check, validated not null by this method
     * @return the validated array (never {@code null} method for chaining)
-    * @throws NullPointerException     if the array is {@code null}
-    * @throws IllegalArgumentException if the array is empty
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if the array is empty
     * @see #notEmpty(Object[], String, Object...)
     */
   def notEmpty[T](array: Array[T]): Array[T] =
@@ -246,11 +246,11 @@ object Validate {
     *
     * @tparam T         the collection type
     * @param collection the collection to check, validated not null by this method
-    * @param message    the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values     the optional values for the formatted exception message, null array not recommended
     * @return the validated collection (never {@code null} method for chaining)
-    * @throws NullPointerException     if the collection is {@code null}
-    * @throws IllegalArgumentException if the collection is empty
+    * @throws java.lang.NullPointerException     if the collection is {@code null}
+    * @throws java.lang.IllegalArgumentException if the collection is empty
     * @see #notEmpty(Object[])
     */
   def notEmpty[T <: util.Collection[_]](collection: T, message: String, values: Any*): T = {
@@ -272,8 +272,8 @@ object Validate {
     * @tparam T         the collection type
     * @param collection the collection to check, validated not null by this method
     * @return the validated collection (never {@code null} method for chaining)
-    * @throws NullPointerException     if the collection is {@code null}
-    * @throws IllegalArgumentException if the collection is empty
+    * @throws java.lang.NullPointerException     if the collection is {@code null}
+    * @throws java.lang.IllegalArgumentException if the collection is empty
     * @see #notEmpty(Collection, String, Object...)
     */
   def notEmpty[T <: util.Collection[Any]](collection: T): T =
@@ -288,11 +288,11 @@ object Validate {
     *
     * @tparam T      the map type
     * @param map     the map to check, validated not null by this method
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated map (never {@code null} method for chaining)
-    * @throws NullPointerException     if the map is {@code null}
-    * @throws IllegalArgumentException if the map is empty
+    * @throws java.lang.NullPointerException     if the map is {@code null}
+    * @throws java.lang.IllegalArgumentException if the map is empty
     * @see #notEmpty(Object[])
     */
   def notEmpty[T <: util.Map[_, _]](map: T, message: String, values: Any*)(implicit ev: DummyImplicit): T = {
@@ -314,8 +314,8 @@ object Validate {
     * @tparam T  the map type
     * @param map the map to check, validated not null by this method
     * @return the validated map (never {@code null} method for chaining)
-    * @throws NullPointerException     if the map is {@code null}
-    * @throws IllegalArgumentException if the map is empty
+    * @throws java.lang.NullPointerException     if the map is {@code null}
+    * @throws java.lang.IllegalArgumentException if the map is empty
     * @see #notEmpty(Map, String, Object...)
     */
   def notEmpty[T <: util.Map[_, _]](map: T)(implicit ev: DummyImplicit, ev2: DummyImplicit): T =
@@ -330,11 +330,11 @@ object Validate {
     *
     * @tparam T      the character sequence type
     * @param chars   the character sequence to check, validated not null by this method
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated character sequence (never {@code null} method for chaining)
-    * @throws NullPointerException     if the character sequence is {@code null}
-    * @throws IllegalArgumentException if the character sequence is empty
+    * @throws java.lang.NullPointerException     if the character sequence is {@code null}
+    * @throws java.lang.IllegalArgumentException if the character sequence is empty
     * @see #notEmpty(CharSequence)
     */
   def notEmpty[T <: CharSequence](chars: T, message: String, values: AnyRef*): T = {
@@ -357,8 +357,8 @@ object Validate {
     * @tparam T    the character sequence type
     * @param chars the character sequence to check, validated not null by this method
     * @return the validated character sequence (never {@code null} method for chaining)
-    * @throws NullPointerException     if the character sequence is {@code null}
-    * @throws IllegalArgumentException if the character sequence is empty
+    * @throws java.lang.NullPointerException     if the character sequence is {@code null}
+    * @throws java.lang.IllegalArgumentException if the character sequence is empty
     * @see #notEmpty(CharSequence, String, Object...)
     */
   def notEmpty[T <: CharSequence](chars: T)(implicit ev: DummyImplicit): T =
@@ -374,11 +374,11 @@ object Validate {
     *
     * @tparam T      the character sequence type
     * @param chars   the character sequence to check, validated not null by this method
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated character sequence (never {@code null} method for chaining)
-    * @throws NullPointerException     if the character sequence is {@code null}
-    * @throws IllegalArgumentException if the character sequence is blank
+    * @throws java.lang.NullPointerException     if the character sequence is {@code null}
+    * @throws java.lang.IllegalArgumentException if the character sequence is blank
     * @see #notBlank(CharSequence)
     * @since 3.0
     */
@@ -402,8 +402,8 @@ object Validate {
     * @tparam T    the character sequence type
     * @param chars the character sequence to check, validated not null by this method
     * @return the validated character sequence (never {@code null} method for chaining)
-    * @throws NullPointerException     if the character sequence is {@code null}
-    * @throws IllegalArgumentException if the character sequence is blank
+    * @throws java.lang.NullPointerException     if the character sequence is {@code null}
+    * @throws java.lang.IllegalArgumentException if the character sequence is blank
     * @see #notBlank(CharSequence, String, Object...)
     * @since 3.0
     */
@@ -425,11 +425,11 @@ object Validate {
     *
     * @tparam T      the array type
     * @param array   the array to check, validated not null by this method
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated array (never {@code null} method for chaining)
-    * @throws NullPointerException     if the array is {@code null}
-    * @throws IllegalArgumentException if an element is {@code null}
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if an element is {@code null}
     * @see #noNullElements(Object[])
     */
   def noNullElements[T](array: Array[T], message: String, values: Any*): Array[T] = {
@@ -460,8 +460,8 @@ object Validate {
     * @tparam T    the array type
     * @param array the array to check, validated not null by this method
     * @return the validated array (never {@code null} method for chaining)
-    * @throws NullPointerException     if the array is {@code null}
-    * @throws IllegalArgumentException if an element is {@code null}
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if an element is {@code null}
     * @see #noNullElements(Object[], String, Object...)
     */
   def noNullElements[T](array: Array[T]): Array[T] = noNullElements(array, DEFAULT_NO_NULL_ELEMENTS_ARRAY_EX_MESSAGE)
@@ -482,11 +482,11 @@ object Validate {
     *
     * @tparam T       the iterable type
     * @param iterable the iterable to check, validated not null by this method
-    * @param message  the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message  the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values   the optional values for the formatted exception message, null array not recommended
     * @return the validated iterable (never {@code null} method for chaining)
-    * @throws NullPointerException     if the array is {@code null}
-    * @throws IllegalArgumentException if an element is {@code null}
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if an element is {@code null}
     * @see #noNullElements(Iterable)
     */
   def noNullElements[T <: Iterable[Any]](iterable: T, message: String, values: Any*): T = {
@@ -523,8 +523,8 @@ object Validate {
     * @tparam T       the iterable type
     * @param iterable the iterable to check, validated not null by this method
     * @return the validated iterable (never {@code null} method for chaining)
-    * @throws NullPointerException     if the array is {@code null}
-    * @throws IllegalArgumentException if an element is {@code null}
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if an element is {@code null}
     * @see #noNullElements(Iterable, String, Object...)
     */
   def noNullElements[T <: Iterable[Any]](iterable: T): T =
@@ -542,11 +542,11 @@ object Validate {
     * @tparam T      the array type
     * @param array   the array to check, validated not null by this method
     * @param index   the index to check
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated array (never {@code null} for method chaining)
-    * @throws NullPointerException      if the array is {@code null}
-    * @throws IndexOutOfBoundsException if the index is invalid
+    * @throws java.lang.NullPointerException      if the array is {@code null}
+    * @throws java.lang.IndexOutOfBoundsException if the index is invalid
     * @see #validIndex(Object[], int)
     * @since 3.0
     */
@@ -573,8 +573,8 @@ object Validate {
     * @param array the array to check, validated not null by this method
     * @param index the index to check
     * @return the validated array (never {@code null} for method chaining)
-    * @throws NullPointerException      if the array is {@code null}
-    * @throws IndexOutOfBoundsException if the index is invalid
+    * @throws java.lang.NullPointerException      if the array is {@code null}
+    * @throws java.lang.IndexOutOfBoundsException if the index is invalid
     * @see #validIndex(Object[], int, String, Object...)
     * @since 3.0
     */
@@ -593,11 +593,11 @@ object Validate {
     * @tparam T         the collection type
     * @param collection the collection to check, validated not null by this method
     * @param index      the index to check
-    * @param message    the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values     the optional values for the formatted exception message, null array not recommended
     * @return the validated collection (never {@code null} for chaining)
-    * @throws NullPointerException      if the collection is {@code null}
-    * @throws IndexOutOfBoundsException if the index is invalid
+    * @throws java.lang.NullPointerException      if the collection is {@code null}
+    * @throws java.lang.IndexOutOfBoundsException if the index is invalid
     * @see #validIndex(Collection, int)
     * @since 3.0
     */
@@ -621,8 +621,8 @@ object Validate {
     * @param collection the collection to check, validated not null by this method
     * @param index      the index to check
     * @return the validated collection (never {@code null} for method chaining)
-    * @throws NullPointerException      if the collection is {@code null}
-    * @throws IndexOutOfBoundsException if the index is invalid
+    * @throws java.lang.NullPointerException      if the collection is {@code null}
+    * @throws java.lang.IndexOutOfBoundsException if the index is invalid
     * @see #validIndex(Collection, int, String, Object...)
     * @since 3.0
     */
@@ -642,11 +642,11 @@ object Validate {
     * @tparam T      the character sequence type
     * @param chars   the character sequence to check, validated not null by this method
     * @param index   the index to check
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated character sequence (never {@code null} for method chaining)
-    * @throws NullPointerException      if the character sequence is {@code null}
-    * @throws IndexOutOfBoundsException if the index is invalid
+    * @throws java.lang.NullPointerException      if the character sequence is {@code null}
+    * @throws java.lang.IndexOutOfBoundsException if the index is invalid
     * @see #validIndex(CharSequence, int)
     * @since 3.0
     */
@@ -675,8 +675,8 @@ object Validate {
     * @param chars the character sequence to check, validated not null by this method
     * @param index the index to check
     * @return the validated character sequence (never {@code null} for method chaining)
-    * @throws NullPointerException      if the character sequence is {@code null}
-    * @throws IndexOutOfBoundsException if the index is invalid
+    * @throws java.lang.NullPointerException      if the character sequence is {@code null}
+    * @throws java.lang.IndexOutOfBoundsException if the index is invalid
     * @see #validIndex(CharSequence, int, String, Object...)
     * @since 3.0
     */
@@ -697,7 +697,7 @@ object Validate {
     * false&quot;.</p>
     *
     * @param expression the boolean expression to check
-    * @throws IllegalStateException if expression is {@code false}
+    * @throws java.lang.IllegalStateException if expression is {@code false}
     * @see #validState(boolean, String, Object...)
     * @since 3.0
     */
@@ -714,9 +714,9 @@ object Validate {
     * <pre>Validate.validState(this.isOk(), "The state is not OK: %s", myObject);</pre>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values     the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalStateException if expression is {@code false}
+    * @throws java.lang.IllegalStateException if expression is {@code false}
     * @see #validState(boolean)
     * @since 3.0
     */
@@ -730,11 +730,11 @@ object Validate {
     *
     * <pre>Validate.matchesPattern("hi", "[a-z]*");</pre>
     *
-    * <p>The syntax of the pattern is the one used in the {@link Pattern} class.</p>
+    * <p>The syntax of the pattern is the one used in the {@link java.util.regex.Pattern} class.</p>
     *
     * @param input   the character sequence to validate, not null
     * @param pattern the regular expression pattern, not null
-    * @throws IllegalArgumentException if the character sequence does not match the pattern
+    * @throws java.lang.IllegalArgumentException if the character sequence does not match the pattern
     * @see #matchesPattern(CharSequence, String, String, Object...)
     * @since 3.0
     */
@@ -749,13 +749,13 @@ object Validate {
     *
     * <pre>Validate.matchesPattern("hi", "[a-z]*", "%s does not match %s", "hi" "[a-z]*");</pre>
     *
-    * <p>The syntax of the pattern is the one used in the {@link Pattern} class.</p>
+    * <p>The syntax of the pattern is the one used in the {@link java.util.regex.Pattern} class.</p>
     *
     * @param input   the character sequence to validate, not null
     * @param pattern the regular expression pattern, not null
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalArgumentException if the character sequence does not match the pattern
+    * @throws java.lang.IllegalArgumentException if the character sequence does not match the pattern
     * @see #matchesPattern(CharSequence, String)
     * @since 3.0
     */
@@ -773,7 +773,7 @@ object Validate {
     * number&quot;.</p>
     *
     * @param value the value to validate
-    * @throws IllegalArgumentException if the value is not a number
+    * @throws java.lang.IllegalArgumentException if the value is not a number
     * @see #notNaN(double, java.lang.String, java.lang.Object...)
     * @since 3.5
     */
@@ -788,9 +788,9 @@ object Validate {
     * <pre>Validate.notNaN(myDouble, "The value must be a number");</pre>
     *
     * @param value   the value to validate
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message
-    * @throws IllegalArgumentException if the value is not a number
+    * @throws java.lang.IllegalArgumentException if the value is not a number
     * @see #notNaN(double)
     * @since 3.5
     */
@@ -807,7 +807,7 @@ object Validate {
     * <p>The message of the exception is &quot;The value is invalid: %f&quot;.</p>
     *
     * @param value the value to validate
-    * @throws IllegalArgumentException if the value is infinite or {@code NaN}
+    * @throws java.lang.IllegalArgumentException if the value is infinite or {@code NaN}
     * @see #finite(double, java.lang.String, java.lang.Object...)
     * @since 3.5
     */
@@ -822,9 +822,9 @@ object Validate {
     * <pre>Validate.finite(myDouble, "The argument must contain a numeric value");</pre>
     *
     * @param value   the value to validate
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message
-    * @throws IllegalArgumentException if the value is infinite or {@code NaN}
+    * @throws java.lang.IllegalArgumentException if the value is infinite or {@code NaN}
     * @see #finite(double)
     * @since 3.5
     */
@@ -843,7 +843,7 @@ object Validate {
     * @param start the inclusive start value, not null
     * @param end   the inclusive end value, not null
     * @param value the object to validate, not null
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @see #inclusiveBetween(Object, Object, Comparable, String, Object...)
     * @since 3.0
     */
@@ -863,9 +863,9 @@ object Validate {
     * @param start   the inclusive start value, not null
     * @param end     the inclusive end value, not null
     * @param value   the object to validate, not null
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @see #inclusiveBetween(Object, Object, Comparable)
     * @since 3.0
     */
@@ -883,7 +883,7 @@ object Validate {
     * @param start the inclusive start value
     * @param end   the inclusive end value
     * @param value the value to validate
-    * @throws IllegalArgumentException if the value falls outside the boundaries (inclusive)
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries (inclusive)
     * @since 3.3
     */
   @SuppressWarnings(Array("boxing")) def inclusiveBetween(start: Long, `end`: Long, value: Long): Unit = {
@@ -902,7 +902,7 @@ object Validate {
     * @param end     the inclusive end value
     * @param value   the value to validate
     * @param message the exception message if invalid, not null
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @since 3.3
     */
   def inclusiveBetween(start: Long, `end`: Long, value: Long, message: String): Unit = {
@@ -918,7 +918,7 @@ object Validate {
     * @param start the inclusive start value
     * @param end   the inclusive end value
     * @param value the value to validate
-    * @throws IllegalArgumentException if the value falls outside the boundaries (inclusive)
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries (inclusive)
     * @since 3.3
     */
   @SuppressWarnings(Array("boxing")) def inclusiveBetween(start: Double, `end`: Double, value: Double): Unit = {
@@ -937,7 +937,7 @@ object Validate {
     * @param end     the inclusive end value
     * @param value   the value to validate
     * @param message the exception message if invalid, not null
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @since 3.3
     */
   def inclusiveBetween(start: Double, `end`: Double, value: Double, message: String): Unit = {
@@ -954,7 +954,7 @@ object Validate {
     * @param start the exclusive start value, not null
     * @param end   the exclusive end value, not null
     * @param value the object to validate, not null
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @see #exclusiveBetween(Object, Object, Comparable, String, Object...)
     * @since 3.0
     */
@@ -974,9 +974,9 @@ object Validate {
     * @param start   the exclusive start value, not null
     * @param end     the exclusive end value, not null
     * @param value   the object to validate, not null
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @see #exclusiveBetween(Object, Object, Comparable)
     * @since 3.0
     */
@@ -994,7 +994,7 @@ object Validate {
     * @param start the exclusive start value
     * @param end   the exclusive end value
     * @param value the value to validate
-    * @throws IllegalArgumentException if the value falls out of the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls out of the boundaries
     * @since 3.3
     */
   @SuppressWarnings(Array("boxing")) def exclusiveBetween(start: Long, `end`: Long, value: Long): Unit = {
@@ -1013,7 +1013,7 @@ object Validate {
     * @param end     the exclusive end value
     * @param value   the value to validate
     * @param message the exception message if invalid, not null
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @since 3.3
     */
   def exclusiveBetween(start: Long, `end`: Long, value: Long, message: String): Unit = {
@@ -1029,7 +1029,7 @@ object Validate {
     * @param start the exclusive start value
     * @param end   the exclusive end value
     * @param value the value to validate
-    * @throws IllegalArgumentException if the value falls out of the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls out of the boundaries
     * @since 3.3
     */
   @SuppressWarnings(Array("boxing")) def exclusiveBetween(start: Double, `end`: Double, value: Double): Unit = {
@@ -1048,7 +1048,7 @@ object Validate {
     * @param end     the exclusive end value
     * @param value   the value to validate
     * @param message the exception message if invalid, not null
-    * @throws IllegalArgumentException if the value falls outside the boundaries
+    * @throws java.lang.IllegalArgumentException if the value falls outside the boundaries
     * @since 3.3
     */
   def exclusiveBetween(start: Double, `end`: Double, value: Double, message: String): Unit = {
@@ -1066,7 +1066,7 @@ object Validate {
     *
     * @param type the class the object must be validated against, not null
     * @param obj  the object to check, null throws an exception
-    * @throws IllegalArgumentException if argument is not of specified class
+    * @throws java.lang.IllegalArgumentException if argument is not of specified class
     * @see #isInstanceOf(Class, Object, String, Object...)
     * @since 3.0
     */
@@ -1090,9 +1090,9 @@ object Validate {
     *
     * @param type    the class the object must be validated against, not null
     * @param obj     the object to check, null throws an exception
-    * @param message the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalArgumentException if argument is not of specified class
+    * @throws java.lang.IllegalArgumentException if argument is not of specified class
     * @see #isInstanceOf(Class, Object)
     * @since 3.0
     */
@@ -1111,7 +1111,7 @@ object Validate {
     *
     * @param superType the class the class must be validated against, not null
     * @param type      the class to check, not null
-    * @throws IllegalArgumentException if type argument is not assignable to the specified superType
+    * @throws java.lang.IllegalArgumentException if type argument is not assignable to the specified superType
     * @see #isAssignableFrom(Class, Class, String, Object...)
     * @since 3.0
     */
@@ -1137,9 +1137,9 @@ object Validate {
     *
     * @param superType the class the class must be validated against, not null
     * @param type      the class to check, not null
-    * @param message   the {@link String# format ( String, Object...)} exception message if invalid, not null
+    * @param message   the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
     * @param values    the optional values for the formatted exception message, null array not recommended
-    * @throws IllegalArgumentException if argument can not be converted to the specified class
+    * @throws java.lang.IllegalArgumentException if argument can not be converted to the specified class
     * @see #isAssignableFrom(Class, Class)
     */
   def isAssignableFrom(superType: Class[_], `type`: Class[_], message: String, values: Any*): Unit = {

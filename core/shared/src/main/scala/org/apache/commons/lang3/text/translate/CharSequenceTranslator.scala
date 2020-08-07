@@ -59,7 +59,7 @@ import java.util.Locale
     * @param index int representing the current point of translation
     * @param out   Writer to translate the text to
     * @return int count of codepoints consumed
-    * @throws IOException if and only if the Writer produces an IOException
+    * @throws java.io.IOException if and only if the Writer produces an IOException
     */
   @throws[IOException]
   def translate(input: CharSequence, index: Int, out: Writer): Int
@@ -89,7 +89,7 @@ import java.util.Locale
     *
     * @param input CharSequence that is being translated
     * @param out   Writer to translate the text to
-    * @throws IOException if and only if the Writer produces an IOException
+    * @throws java.io.IOException if and only if the Writer produces an IOException
     */
   @throws[IOException]
   final def translate(input: CharSequence, out: Writer): Unit = {

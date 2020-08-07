@@ -69,7 +69,7 @@ object CharUtils {
     * CharUtils.toCharacterObject('A')  = 'A'
     * </pre>
     *
-    * @deprecated Java 5 introduced {@link Character# valueOf ( char )} which caches chars 0 through 127.
+    * @deprecated Java 5 introduced {@link java.lang.Character# valueOf ( char )} which caches chars 0 through 127.
     * @param ch the character to convert
     * @return a Character of the specified character
     */
@@ -108,7 +108,7 @@ object CharUtils {
     *
     * @param ch the character to convert
     * @return the char value of the Character
-    * @throws NullPointerException if the Character is null
+    * @throws java.lang.NullPointerException if the Character is null
     */
   def toChar(ch: Character): Char = {
     Validate.notNull(ch, "The Character must not be null")
@@ -146,8 +146,8 @@ object CharUtils {
     *
     * @param str the character to convert
     * @return the char value of the first letter of the String
-    * @throws NullPointerException     if the string is null
-    * @throws IllegalArgumentException if the String is empty
+    * @throws java.lang.NullPointerException     if the string is null
+    * @throws java.lang.IllegalArgumentException if the String is empty
     */
   def toChar(str: String): Char = {
     Validate.notEmpty(str, "The String must not be empty")
@@ -187,7 +187,7 @@ object CharUtils {
     *
     * @param ch the character to convert
     * @return the int value of the character
-    * @throws IllegalArgumentException if the character is not ASCII numeric
+    * @throws java.lang.IllegalArgumentException if the character is not ASCII numeric
     */
   def toIntValue(ch: Char): Int = {
     if (!isAsciiNumeric(ch))
@@ -229,8 +229,8 @@ object CharUtils {
     *
     * @param ch the character to convert, not null
     * @return the int value of the character
-    * @throws NullPointerException     if the Character is null
-    * @throws IllegalArgumentException if the Character is not ASCII numeric
+    * @throws java.lang.NullPointerException     if the Character is null
+    * @throws java.lang.IllegalArgumentException if the Character is not ASCII numeric
     */
   def toIntValue(ch: Character): Int = {
     Validate.notNull(ch, "The character must not be null")

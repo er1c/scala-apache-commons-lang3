@@ -204,7 +204,7 @@ object ObjectUtils {
 //  /**
 //    * <p>Clone an object.</p>
 //    *
-//    * @param <   T> the type of the object
+//    * @tparam T the type of the object
 //    * @param obj the object to clone, null returns null
 //    * @return the clone if the object implements {@link Cloneable} otherwise {@code null}
 //    * @throws CloneFailedException if the object is cloneable and the clone operation fails
@@ -253,7 +253,7 @@ object ObjectUtils {
 //    * processing or have state. In such cases the implementation can simply provide a proper
 //    * clone implementation and the caller's code does not have to change.</p>
 //    *
-//    * @param <   T> the type of the object
+//    * @tparam T the type of the object
 //    * @param obj the object to clone, null returns null
 //    * @return the clone if the object implements {@link Cloneable} otherwise the object itself
 //    * @throws CloneFailedException if the object is cloneable and the clone operation fails
@@ -269,7 +269,7 @@ object ObjectUtils {
 //    * <p>Null safe comparison of Comparables.
 //    * {@code null} is assumed to be less than a non-{@code null} value.</p>
 //    *
-//    * @param <  T> type of the values processed by this method
+//    * @tparam T type of the values processed by this method
 //    * @param c1 the first comparable, may be null
 //    * @param c2 the second comparable, may be null
 //    * @return a negative value if c1 &lt; c2, zero if c1 = c2
@@ -280,7 +280,7 @@ object ObjectUtils {
 //  /**
 //    * <p>Null safe comparison of Comparables.</p>
 //    *
-//    * @param <           T> type of the values processed by this method
+//    * @tparam T type of the values processed by this method
 //    * @param c1          the first comparable, may be null
 //    * @param c2          the second comparable, may be null
 //    * @param nullGreater if true {@code null} is considered greater
@@ -464,9 +464,9 @@ object ObjectUtils {
 //    * have to recompile themselves if the field's value
 //    * changes at some future date.
 //    *
-//    * @param < T> the Object type
-//    * @param v the genericized Object value to return (typically a String).
-//    * @return the genericized Object v, unchanged (typically a String).
+//    * @tparam T the Object type
+//    * @param v  the genericized Object value to return (typically a String).
+//    * @return   the genericized Object v, unchanged (typically a String).
 //    * @since 3.2
 //    */
 //  def CONST[T](v: T): T = v
@@ -485,7 +485,7 @@ object ObjectUtils {
 //    * changes at some future date.
 //    *
 //    * @param v the byte literal (as an int) value to return
-//    * @throws IllegalArgumentException if the value passed to v
+//    * @throws java.lang.IllegalArgumentException if the value passed to v
 //    *                                  is larger than a byte, that is, smaller than -128 or
 //    *                                  larger than 127.
 //    * @return the byte v, unchanged
@@ -510,7 +510,7 @@ object ObjectUtils {
 //    * changes at some future date.
 //    *
 //    * @param v the short literal (as an int) value to return
-//    * @throws IllegalArgumentException if the value passed to v
+//    * @throws java.lang.IllegalArgumentException if the value passed to v
 //    *                                  is larger than a short, that is, smaller than -32768 or
 //    *                                  larger than 32767.
 //    * @return the byte v, unchanged
@@ -532,7 +532,7 @@ object ObjectUtils {
 //    * ObjectUtils.defaultIfNull(Boolean.TRUE, *) = Boolean.TRUE
 //    * </pre>
 //    *
-//    * @param <            T> the type of the object
+//    * @tparam T           the type of the object
 //    * @param object       the {@code Object} to test, may be {@code null}
 //    * @param defaultValue the default value to return, may be {@code null}
 //    * @return {@code object} if it is not {@code null}, defaultValue otherwise
@@ -613,7 +613,7 @@ object ObjectUtils {
 //    * ObjectUtils.firstNonNullLazy() = null
 //    * </pre>
 //    *
-//    * @param <         T> the type of the return values
+//    * @tparam T        the type of the return values
 //    * @param suppliers the suppliers returning the values to test.
 //    *                  {@code null} values are ignored.
 //    *                  Suppliers may return {@code null} or a value of type @{code T}
@@ -650,7 +650,7 @@ object ObjectUtils {
 //    * ObjectUtils.getIfNull(Boolean.TRUE, *)         = Boolean.TRUE
 //    * </pre>
 //    *
-//    * @param <               T> the type of the object
+//    * @tparam T              the type of the object
 //    * @param object          the {@code Object} to test, may be {@code null}
 //    * @param defaultSupplier the default value to return, may be {@code null}
 //    * @return {@code object} if it is not {@code null}, {@code defaultValueSupplier.get()} otherwise
@@ -725,7 +725,7 @@ object ObjectUtils {
     *
     * @param appendable the appendable to append to
     * @param object     the object to create a toString for
-    * @throws IOException if an I/O error occurs
+    * @throws java.io.IOException if an I/O error occurs
     * @since 3.2
     */
   @throws[IOException]
@@ -900,7 +900,7 @@ object ObjectUtils {
 //  /**
 //    * <p>Null safe comparison of Comparables.</p>
 //    *
-//    * @param <      T> type of the values processed by this method
+//    * @tparam T     type of the values processed by this method
 //    * @param values the set of comparable values, may be null
 //    * @return
 //    * <ul>
@@ -922,12 +922,12 @@ object ObjectUtils {
 //    * Find the "best guess" middle value among comparables. If there is an even
 //    * number of total values, the lower of the two middle values will be returned.
 //    *
-//    * @param <          T> type of values processed by this method
+//    * @tparam T         type of values processed by this method
 //    * @param comparator to use for comparisons
 //    * @param items      to compare
 //    * @return T at middle position
-//    * @throws NullPointerException     if items or comparator is {@code null}
-//    * @throws IllegalArgumentException if items is empty or contains {@code null} values
+//    * @throws java.lang.NullPointerException     if items or comparator is {@code null}
+//    * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
 //    * @since 3.0.1
 //    */
 //  @SafeVarargs def median[T](comparator: Comparator[T], items: T*): T = {
@@ -945,11 +945,11 @@ object ObjectUtils {
 //    * Find the "best guess" middle value among comparables. If there is an even
 //    * number of total values, the lower of the two middle values will be returned.
 //    *
-//    * @param <     T> type of values processed by this method
+//    * @tparam T    type of values processed by this method
 //    * @param items to compare
-//    * @return T at middle position
-//    * @throws NullPointerException     if items is {@code null}
-//    * @throws IllegalArgumentException if items is empty or contains {@code null} values
+//    * @return T    at middle position
+//    * @throws java.lang.NullPointerException     if items is {@code null}
+//    * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
 //    * @since 3.0.1
 //    */
 //  @SafeVarargs def median[T <: Comparable[Any]](items: T*): T = {
@@ -964,7 +964,7 @@ object ObjectUtils {
 //  /**
 //    * <p>Null safe comparison of Comparables.</p>
 //    *
-//    * @param <      T> type of the values processed by this method
+//    * @tparam T     type of the values processed by this method
 //    * @param values the set of comparable values, may be null
 //    * @return
 //    * <ul>
@@ -985,7 +985,7 @@ object ObjectUtils {
 //  /**
 //    * Find the most frequently occurring item.
 //    *
-//    * @param <     T> type of values processed by this method
+//    * @tparam T    type of values processed by this method
 //    * @param items to check
 //    * @return most populous T, {@code null} if non-unique or no items supplied
 //    * @since 3.0.1

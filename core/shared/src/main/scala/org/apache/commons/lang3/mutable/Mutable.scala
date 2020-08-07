@@ -26,7 +26,7 @@ package org.apache.commons.lang3.mutable
   * effectively change the value of the primitive/string. Another use case is to store a frequently changing primitive in
   * a collection (for example a total in a map) without needing to create new Integer/Long wrapper objects.
   *
-  * @param < T> the type to set and get
+  * @tparam T the type to set and get
   * @since 2.1
   */
 trait Mutable[T] {
@@ -42,9 +42,9 @@ trait Mutable[T] {
     *
     * @param value
     * the value to store
-    * @throws NullPointerException
+    * @throws java.lang.NullPointerException
     * if the object is null and null is invalid
-    * @throws ClassCastException
+    * @throws java.lang.ClassCastException
     * if the type is invalid
     */
   def setValue(value: T): Unit

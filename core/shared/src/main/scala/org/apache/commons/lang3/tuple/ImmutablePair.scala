@@ -19,20 +19,6 @@ package org.apache.commons.lang3.tuple
 
 import java.util
 
-/**
-  * <p>An immutable pair consisting of two {@code Object} elements.</p>
-  *
-  * <p>Although the implementation is immutable, there is no restriction on the objects
-  * that may be stored. If mutable objects are stored in the pair, then the pair
-  * itself effectively becomes mutable. The class is also {@code final}, so a subclass
-  * can not add undesirable behavior.</p>
-  *
-  * <p>#ThreadSafe# if both paired objects are thread-safe</p>
-  *
-  * @param < L> the left element type
-  * @param < R> the right element type
-  * @since 3.0
-  */
 @SerialVersionUID(4954918890077093841L)
 object ImmutablePair {
   /**
@@ -53,9 +39,9 @@ object ImmutablePair {
   /**
     * Returns the empty array singleton that can be assigned without compiler warning.
     *
-    * @param < L> the left element type
-    * @param < R> the right element type
-    * @return the empty array singleton that can be assigned without compiler warning.
+    * @tparam L the left element type
+    * @tparam R the right element type
+    * @return   the empty array singleton that can be assigned without compiler warning.
     * @since 3.10.
     */
   @SuppressWarnings(Array("unchecked")) def emptyArray[L, R]: Array[ImmutablePair[L, R]] =
@@ -67,8 +53,8 @@ object ImmutablePair {
     * <p>This factory allows the pair to be created using inference to
     * obtain the generic types.</p>
     *
-    * @param <    L> the left element type
-    * @param <    R> the right element type
+    * @tparam L   the left element type
+    * @tparam R   the right element type
     * @param left the left element, may be null
     * @return a pair formed from the two parameters, not null
     * @since 3.11
@@ -78,9 +64,9 @@ object ImmutablePair {
   /**
     * Returns an immutable pair of nulls.
     *
-    * @param < L> the left element of this pair. Value is {@code null}.
-    * @param < R> the right element of this pair. Value is {@code null}.
-    * @return an immutable pair of nulls.
+    * @tparam L the left element of this pair. Value is {@code null}.
+    * @tparam R the right element of this pair. Value is {@code null}.
+    * @return   an immutable pair of nulls.
     * @since 3.6
     */
   def nullPair[L, R]: ImmutablePair[L, R] = NULL.asInstanceOf[ImmutablePair[L, R]]
@@ -91,8 +77,8 @@ object ImmutablePair {
     * <p>This factory allows the pair to be created using inference to
     * obtain the generic types.</p>
     *
-    * @param <     L> the left element type
-    * @param <     R> the right element type
+    * @tparam L    the left element type
+    * @tparam R    the right element type
     * @param left  the left element, may be null
     * @param right the right element, may be null
     * @return a pair formed from the two parameters, not null
@@ -105,10 +91,10 @@ object ImmutablePair {
     * <p>This factory allows the pair to be created using inference to
     * obtain the generic types.</p>
     *
-    * @param <    L> the left element type
-    * @param <    R> the right element type
+    * @tparam L   the left element type
+    * @tparam R   the right element type
     * @param pair the existing pair.
-    * @return a pair formed from the two parameters, not null
+    * @return     a pair formed from the two parameters, not null
     * @since 3.10
     */
   def of[L, R](pair: util.Map.Entry[L, R]): ImmutablePair[L, R] = {
@@ -129,29 +115,36 @@ object ImmutablePair {
     * <p>This factory allows the pair to be created using inference to
     * obtain the generic types.</p>
     *
-    * @param <     L> the left element type
-    * @param <     R> the right element type
+    * @tparam L    the left element type
+    * @tparam R    the right element type
     * @param right the right element, may be null
-    * @return a pair formed from the two parameters, not null
+    * @return      a pair formed from the two parameters, not null
     * @since 3.11
     */
   def right[L, R](right: R): Pair[L, R] = ImmutablePair.of(null.asInstanceOf[L], right)
 }
 
-@SerialVersionUID(4954918890077093841L)
-final class ImmutablePair[L, R](
-  /** Left object */
-  val left: L,
-  /** Right object */
-  val right: R)
-
 /**
-  * Create a new pair instance.
+  * <p>An immutable pair consisting of two {@code Object} elements.</p>
   *
+  * <p>Although the implementation is immutable, there is no restriction on the objects
+  * that may be stored. If mutable objects are stored in the pair, then the pair
+  * itself effectively becomes mutable. The class is also {@code final}, so a subclass
+  * can not add undesirable behavior.</p>
+  *
+  * <p>#ThreadSafe# if both paired objects are thread-safe</p>
+  *
+  * @tparam L the left element type
+  * @tparam R the right element type
   * @param left  the left value, may be null
   * @param right the right value, may be null
+  * @since 3.0
   */
-  extends Pair[L, R] {
+@SerialVersionUID(4954918890077093841L)
+final class ImmutablePair[L, R](
+  val left: L,
+  val right: R
+) extends Pair[L, R] {
   /**
     * {@inheritDoc }
     */
@@ -160,13 +153,13 @@ final class ImmutablePair[L, R](
   override def getRight: R = right
 
   /**
-    * <p>Throws {@code UnsupportedOperationException}.</p>
+    * <p>Throws {@code java.lang.UnsupportedOperationException}.</p>
     *
     * <p>This pair is immutable, so this operation is not supported.</p>
     *
     * @param value the value to set
     * @return never
-    * @throws UnsupportedOperationException as this operation is not supported
+    * @throws java.lang.UnsupportedOperationException as this operation is not supported
     */
   override def setValue(value: R) = throw new UnsupportedOperationException
 }

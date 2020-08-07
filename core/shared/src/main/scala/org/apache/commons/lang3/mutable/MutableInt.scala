@@ -22,17 +22,15 @@ import org.apache.commons.lang3.math.NumberUtils
 /**
   * A mutable {@code int} wrapper.
   * <p>
-  * Note that as MutableInteger does not extend Integereger, it is not treated by String.format as an Integereger parameter.
+  * Note that as MutableInteger does not extend Integer, it is not treated by String.format as an Integer parameter.
+  *
+  * Constructs a new MutableInteger with the default value of zero.
   *
   * @see Integereger
   * @since 2.1
   */
 @SerialVersionUID(512176391864L)
 class MutableInt()
-
-/**
-  * Constructs a new MutableInteger with the default value of zero.
-  */
   extends Number with Comparable[MutableInt] with Mutable[Number] {
   /** The mutable value. */
   private var value: Integer = 0
@@ -51,7 +49,7 @@ class MutableInt()
     * Constructs a new MutableInteger with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: Number) = {
     this()
@@ -62,7 +60,7 @@ class MutableInt()
     * Constructs a new MutableInteger parsing the given string.
     *
     * @param value the string to parse, not null
-    * @throws NumberFormatException if the string cannot be parsed into an int
+    * @throws java.lang.NumberFormatException if the string cannot be parsed into an int
     * @since 2.5
     */
   def this(value: String) = {
@@ -90,7 +88,7 @@ class MutableInt()
     * Sets the value from any Number instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: Number): Unit = {
     this.value = value.intValue
@@ -178,7 +176,7 @@ class MutableInt()
     * Adds a value to the value of this instance.
     *
     * @param operand the value to add, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def add(operand: Number): Unit = {
@@ -199,7 +197,7 @@ class MutableInt()
     * Subtracts a value from the value of this instance.
     *
     * @param operand the value to subtract, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def subtract(operand: Number): Unit = {
@@ -224,7 +222,7 @@ class MutableInt()
     * immediately after the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance after adding the operand
     * @since 3.5
     */
@@ -252,7 +250,7 @@ class MutableInt()
     * immediately prior to the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance immediately before the operand was added
     * @since 3.5
     */

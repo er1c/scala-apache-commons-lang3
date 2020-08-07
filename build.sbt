@@ -71,7 +71,7 @@ lazy val sharedSettings = Seq(
 
   organization := "io.github.er1c",
   //scalaVersion := "2.13.3",
-  scalaVersion := "2.12.12",
+  scalaVersion := "2.13.3",
   crossScalaVersions := Seq("2.11.12", "2.12.12", "2.13.3"),
 
   // More version specific compiler options
@@ -85,6 +85,19 @@ lazy val sharedSettings = Seq(
     case _ =>
       Seq.empty
   }),
+
+  scalacOptions --= (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, v)) if v >= 13 =>
+      Seq(
+        "-Xlint:deprecation"
+      )
+    case _ =>
+      Seq(
+        "-deprecation",
+        "-Xfatal-warnings"
+      )
+  }),
+
 
   // Turning off fatal warnings for doc generation
   scalacOptions.in(Compile, doc) ~= filterConsoleScalacOptions,
@@ -276,16 +289,6 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .configureCross(defaultCrossProjectConfiguration)
   .settings(
     name := "scala-apache-commons-lang3",
-    scalacOptions --= (CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, v)) if v >= 13 =>
-        Seq(
-          "-Xlint:deprecation"
-        )
-      case _ =>
-        Seq(
-          "-Xfatal-warnings"
-        )
-    }),
     libraryDependencies ++= Seq(
       // For testing
       "org.scalatest"     %%% "scalatest"        % ScalaTestVersion % Test,

@@ -232,8 +232,8 @@ object BooleanUtils {
     * @param trueValue  the value to match for {@code true}
     * @param falseValue the value to match for {@code false}
     * @return {@code true} or {@code false}
-    * @throws IllegalArgumentException if {@code value} does not match neither
-    *                                  {@code trueValue} no {@code falseValue}
+    * @throws java.lang.IllegalArgumentException if {@code value} does not match neither
+    *                                            {@code trueValue} no {@code falseValue}
     */
   def toJavaBoolean(value: Int, trueValue: Int, falseValue: Int): JavaBoolean = {
     if (value == trueValue) return true
@@ -256,7 +256,7 @@ object BooleanUtils {
     * @param trueValue  the value to match for {@code true}, may be {@code null}
     * @param falseValue the value to match for {@code false}, may be {@code null}
     * @return {@code true} or {@code false}
-    * @throws IllegalArgumentException if no match
+    * @throws java.lang.IllegalArgumentException if no match
     */
   def toJavaBoolean(value: Integer, trueValue: Integer, falseValue: Integer): JavaBoolean = {
     if (value == null) {
@@ -290,7 +290,7 @@ object BooleanUtils {
     * @param falseValue the value to match for {@code false}
     * @param nullValue  the value to to match for {@code null}
     * @return JavaBoolean.TRUE, JavaBoolean.FALSE, or {@code null}
-    * @throws IllegalArgumentException if no match
+    * @throws java.lang.IllegalArgumentException if no match
     */
   def toJavaBooleanObject(value: Int, trueValue: Int, falseValue: Int, nullValue: Int): JavaBoolean = {
     if (value == trueValue) return JavaBoolean.TRUE
@@ -322,7 +322,7 @@ object BooleanUtils {
     * @param falseValue the value to match for {@code false}, may be {@code null}
     * @param nullValue  the value to to match for {@code null}, may be {@code null}
     * @return JavaBoolean.TRUE, JavaBoolean.FALSE, or {@code null}
-    * @throws IllegalArgumentException if no match
+    * @throws java.lang.IllegalArgumentException if no match
     */
   def toJavaBooleanObject(value: Integer, trueValue: Integer, falseValue: Integer, nullValue: Integer): JavaBoolean = {
     if (value == null) {
@@ -575,7 +575,7 @@ object BooleanUtils {
     * @param nullString  the String to match for {@code null} (case sensitive), may be {@code null}
     * @return the JavaBoolean value of the string, {@code null} if either the String matches {@code nullString}
     *         or if {@code null} input and {@code nullString} is {@code null}
-    * @throws IllegalArgumentException if the String doesn't match
+    * @throws java.lang.IllegalArgumentException if the String doesn't match
     */
   def toJavaBooleanObject(str: String, trueString: String, falseString: String, nullString: String): JavaBoolean = {
     if (str == null) {
@@ -632,7 +632,7 @@ object BooleanUtils {
     * @param trueString  the String to match for {@code true} (case sensitive), may be {@code null}
     * @param falseString the String to match for {@code false} (case sensitive), may be {@code null}
     * @return the boolean value of the string
-    * @throws IllegalArgumentException if the String doesn't match
+    * @throws java.lang.IllegalArgumentException if the String doesn't match
     */
   def toJavaBoolean(str: String, trueString: String, falseString: String): JavaBoolean = {
     if (str eq trueString) return true
@@ -782,8 +782,8 @@ object BooleanUtils {
     * @param array an array of {@code boolean}s
     * @return the result of the logical 'and' operation. That is {@code false}
     *         if any of the parameters is {@code false} and {@code true} otherwise.
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty.
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null}
+    *                                            if {@code array} is empty.
     * @since 3.0.1
     */
   def and(array: Boolean*): Boolean = { // Validates input
@@ -812,9 +812,9 @@ object BooleanUtils {
     * @param array an array of {@code JavaBoolean}s
     * @return the result of the logical 'and' operation. That is {@code false}
     *         if any of the parameters is {@code false} and {@code true} otherwise.
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty.
-    * @throws IllegalArgumentException if {@code array} contains a {@code null}
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null}
+    *                                            if {@code array} is empty.
+    *                                            if {@code array} contains a {@code null}
     * @since 3.0.1
     */
   def and(array: JavaBoolean*): JavaBoolean = {
@@ -845,8 +845,8 @@ object BooleanUtils {
     *
     * @param array an array of {@code boolean}s
     * @return {@code true} if any of the arguments is {@code true}, and it returns {@code false} otherwise.
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty.
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null}
+    *                                            if {@code array} is empty.
     * @since 3.0.1
     */
   def or(array: Boolean*): Boolean = {
@@ -875,9 +875,9 @@ object BooleanUtils {
     *
     * @param array an array of {@code JavaBoolean}s
     * @return {@code true} if any of the arguments is {@code true}, and it returns {@code false} otherwise.
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty.
-    * @throws IllegalArgumentException if {@code array} contains a {@code null}
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null}
+    *                                            if {@code array} is empty.
+    *                                            if {@code array} contains a {@code null}
     * @since 3.0.1
     */
   def or(array: JavaBoolean*): JavaBoolean = {
@@ -905,8 +905,8 @@ object BooleanUtils {
     *
     * @param array an array of {@code boolean}s
     * @return the result of the xor operations
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty.
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null}
+    *                                            if {@code array} is empty.
     */
   def xor(array: Boolean*): Boolean = {
     if (array == null) throw new IllegalArgumentException("The Array must not be null")
@@ -933,9 +933,9 @@ object BooleanUtils {
     *
     * @param array an array of {@code JavaBoolean}s
     * @return the result of the xor operations
-    * @throws IllegalArgumentException if {@code array} is {@code null}
-    * @throws IllegalArgumentException if {@code array} is empty.
-    * @throws IllegalArgumentException if {@code array} contains a {@code null}
+    * @throws java.lang.IllegalArgumentException if {@code array} is {@code null}
+    *                                            if {@code array} is empty.
+    *                                            if {@code array} contains a {@code null}
     */
   def xor(array: JavaBoolean*): JavaBoolean = {
     if (array == null) throw new IllegalArgumentException("The Array must not be null")

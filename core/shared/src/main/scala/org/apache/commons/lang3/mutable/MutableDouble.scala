@@ -22,23 +22,21 @@ import java.lang.{Double => JavaDouble}
 /**
   * A mutable {@code double} wrapper.
   * <p>
-  * Note that as MutableJavaDouble does not extend JavaDouble, it is not treated by String.format as a JavaDouble parameter.
+  * Note that as MutableDouble does not extend JavaDouble, it is not treated by String.format as a Double parameter.
   *
-  * @see JavaDouble
+  * Constructs a new MutableDouble with the default value of zero.
+  *
+  * @see Double
   * @since 2.1
   */
 @SerialVersionUID(1587163916L)
-class MutableJavaDouble()
-
-/**
-  * Constructs a new MutableJavaDouble with the default value of zero.
-  */
-  extends Number with Comparable[MutableJavaDouble] with Mutable[Number] {
+class MutableDouble()
+  extends Number with Comparable[MutableDouble] with Mutable[Number] {
   /** The mutable value. */
   private var value: Double = 0.0d
 
   /**
-    * Constructs a new MutableJavaDouble with the specified value.
+    * Constructs a new MutableDouble with the specified value.
     *
     * @param value the initial value to store
     */
@@ -48,10 +46,10 @@ class MutableJavaDouble()
   }
 
   /**
-    * Constructs a new MutableJavaDouble with the specified value.
+    * Constructs a new MutableDouble with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: Number) = {
     this()
@@ -59,10 +57,10 @@ class MutableJavaDouble()
   }
 
   /**
-    * Constructs a new MutableJavaDouble parsing the given string.
+    * Constructs a new MutableDouble parsing the given string.
     *
     * @param value the string to parse, not null
-    * @throws NumberFormatException if the string cannot be parsed into a double
+    * @throws java.lang.NumberFormatException if the string cannot be parsed into a double
     * @since 2.5
     */
   def this(value: String) = {
@@ -90,7 +88,7 @@ class MutableJavaDouble()
     * Sets the value from any Number instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: Number): Unit = {
     this.value = value.doubleValue
@@ -192,7 +190,7 @@ class MutableJavaDouble()
     * Adds a value to the value of this instance.
     *
     * @param operand the value to add, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def add(operand: Number): Unit = {
@@ -213,7 +211,7 @@ class MutableJavaDouble()
     * Subtracts a value from the value of this instance.
     *
     * @param operand the value to subtract, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def subtract(operand: Number): Unit = {
@@ -238,7 +236,7 @@ class MutableJavaDouble()
     * immediately after the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance after adding the operand
     * @since 3.5
     */
@@ -266,7 +264,7 @@ class MutableJavaDouble()
     * immediately prior to the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance immediately before the operand was added
     * @since 3.5
     */
@@ -277,28 +275,28 @@ class MutableJavaDouble()
   }
 
   /**
-    * Returns the value of this MutableJavaDouble as an int.
+    * Returns the value of this MutableDouble as an int.
     *
     * @return the numeric value represented by this object after conversion to type int.
     */
   override def intValue: Int = value.toInt
 
   /**
-    * Returns the value of this MutableJavaDouble as a long.
+    * Returns the value of this MutableDouble as a long.
     *
     * @return the numeric value represented by this object after conversion to type long.
     */
   override def longValue: Long = value.toLong
 
   /**
-    * Returns the value of this MutableJavaDouble as a float.
+    * Returns the value of this MutableDouble as a float.
     *
     * @return the numeric value represented by this object after conversion to type float.
     */
   override def floatValue: Float = value.toFloat
 
   /**
-    * Returns the value of this MutableJavaDouble as a double.
+    * Returns the value of this MutableDouble as a double.
     *
     * @return the numeric value represented by this object after conversion to type double.
     */
@@ -313,12 +311,12 @@ class MutableJavaDouble()
 
   /**
     * Compares this object against the specified object. The result is {@code true} if and only if the argument
-    * is not {@code null} and is a {@code JavaDouble} object that represents a double that has the identical
+    * is not {@code null} and is a {@code java.lang.Double} object that represents a double that has the identical
     * bit pattern to the bit pattern of the double represented by this object. For this purpose, two
-    * {@code double} values are considered to be the same if and only if the method
-    * {@link JavaDouble# doubleToLongBits ( double )}returns the same long value when applied to each.
+    * {@code Double} values are considered to be the same if and only if the method
+    * {@link java.lang.Double# doubleToLongBits ( Double )}returns the same long value when applied to each.
     * <p>
-    * Note that in most cases, for two instances of class {@code JavaDouble},{@code d1} and {@code d2},
+    * Note that in most cases, for two instances of class {@code java.lang.Double},{@code d1} and {@code d2},
     * the value of {@code d1.equals(d2)} is {@code true} if and only if <blockquote>
     *
     * <pre>
@@ -329,8 +327,8 @@ class MutableJavaDouble()
     * <p>
     * also has the value {@code true}. However, there are two exceptions:
     * <ul>
-    * <li>If {@code d1} and {@code d2} both represent {@code JavaDouble.NaN}, then the
-    * {@code equals} method returns {@code true}, even though {@code JavaDouble.NaN==JavaDouble.NaN} has
+    * <li>If {@code d1} and {@code d2} both represent {@code java.lang.Double.NaN}, then the
+    * {@code equals} method returns {@code true}, even though {@code java.lang.Double.NaN==Double.NaN} has
     * the value {@code false}.
     * <li>If {@code d1} represents {@code +0.0} while {@code d2} represents {@code -0.0},
     * or vice versa, the {@code equal} test has the value {@code false}, even though
@@ -341,8 +339,8 @@ class MutableJavaDouble()
     * @return {@code true} if the objects are the same; {@code false} otherwise.
     */
   override def equals(obj: Any): Boolean =
-    obj.isInstanceOf[MutableJavaDouble] &&
-      JavaDouble.doubleToLongBits(obj.asInstanceOf[MutableJavaDouble].value) == JavaDouble.doubleToLongBits(value)
+    obj.isInstanceOf[MutableDouble] &&
+      JavaDouble.doubleToLongBits(obj.asInstanceOf[MutableDouble].value) == JavaDouble.doubleToLongBits(value)
 
   /**
     * Returns a suitable hash code for this mutable.
@@ -360,7 +358,7 @@ class MutableJavaDouble()
     * @param other the other mutable to compare to, not null
     * @return negative if this is less, zero if equal, positive if greater
     */
-  override def compareTo(other: MutableJavaDouble): Int = JavaDouble.compare(this.value, other.value)
+  override def compareTo(other: MutableDouble): Int = JavaDouble.compare(this.value, other.value)
 
   /**
     * Returns the String value of this mutable.

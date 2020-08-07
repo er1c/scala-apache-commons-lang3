@@ -24,10 +24,12 @@ import java.util
 import java.util.Locale
 import scala.util.control.Breaks
 import java.util.Objects
+import java.util.function.Supplier
 //import java.util.function.Supplier
 import java.util.regex.Pattern
 import scala.collection.JavaConverters._
 
+// TODO: @link java.lang.Character#isWhitespace(Char)
 /**
   * <p>Operations on {@link java.lang.String} that are
   * {@code null} safe.</p>
@@ -94,8 +96,8 @@ import scala.collection.JavaConverters._
   * <li>null - {@code null}</li>
   * <li>empty - a zero-length string ({@code ""})</li>
   * <li>space - the space character ({@code ' '}, char 32)</li>
-  * <li>whitespace - the characters defined by {@link Character# isWhitespace ( char )}</li>
-  * <li>trim - the characters &lt;= 32 as in {@link String# trim ( )}</li>
+  * <li>whitespace - the characters defined by {@code java.lang.Character#isWhitespace(Char)}</li>
+  * <li>trim - the characters &lt;= 32 as in {@link java.lang.String#trim}</li>
   * </ul>
   *
   * <p>{@code StringUtils} handles {@code null} input Strings quietly.
@@ -164,7 +166,7 @@ object StringUtils {
     */
   private val PAD_LIMIT = 8192
   /**
-    * Pattern used in {@link #stripAccents ( String )}.
+    * Pattern used in {@link #stripAccents}.
     */
   private val STRIP_ACCENTS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+") //$NON-NLS-1$
 
@@ -196,7 +198,7 @@ object StringUtils {
     * @param str      the String to check, may be null
     * @param maxWidth maximum length of result String, must be at least 4
     * @return abbreviated String, {@code null} if null String input
-    * @throws IllegalArgumentException if the width is too small
+    * @throws java.lang.IllegalArgumentException if the width is too small
     * @since 2.0
     */
   def abbreviate(str: String, maxWidth: Int): String = abbreviate(str, "...", 0, maxWidth)
@@ -233,7 +235,7 @@ object StringUtils {
     * @param offset   left edge of source String
     * @param maxWidth maximum length of result String, must be at least 4
     * @return abbreviated String, {@code null} if null String input
-    * @throws IllegalArgumentException if the width is too small
+    * @throws java.lang.IllegalArgumentException if the width is too small
     * @since 2.0
     */
   def abbreviate(str: String, offset: Int, maxWidth: Int): String = abbreviate(str, "...", offset, maxWidth)
@@ -271,7 +273,7 @@ object StringUtils {
     * @param abbrevMarker the String used as replacement marker
     * @param maxWidth     maximum length of result String, must be at least {@code abbrevMarker.length + 1}
     * @return abbreviated String, {@code null} if null String input
-    * @throws IllegalArgumentException if the width is too small
+    * @throws java.lang.IllegalArgumentException if the width is too small
     * @since 3.6
     */
   def abbreviate(str: String, abbrevMarker: String, maxWidth: Int): String = abbreviate(str, abbrevMarker, 0, maxWidth)
@@ -310,7 +312,7 @@ object StringUtils {
     * @param offset       left edge of source String
     * @param maxWidth     maximum length of result String, must be at least 4
     * @return abbreviated String, {@code null} if null String input
-    * @throws IllegalArgumentException if the width is too small
+    * @throws java.lang.IllegalArgumentException if the width is too small
     * @since 3.6
     */
   def abbreviate(str: String, abbrevMarker: String, offset: Int, maxWidth: Int): String = {
@@ -466,11 +468,12 @@ object StringUtils {
   def appendIfMissingIgnoreCase(str: String, suffix: CharSequence, suffixes: CharSequence*): String =
     appendIfMissing(str, suffix, true, suffixes: _*)
 
+  // TODO: @link java.lang.Character#toTitleCase
   /**
     * <p>Capitalizes a String changing the first character to title case as
-    * per {@link Character# toTitleCase ( int )}. No other characters are changed.</p>
+    * per {@code java.lang.Character#toTitleCase}. No other characters are changed.</p>
     *
-    * <p>For a word based algorithm, see {@link org.apache.commons.lang3.text.WordUtils# capitalize ( String )}.
+    * <p>For a word based algorithm, see {@link org.apache.commons.lang3.text.WordUtils#capitalize}.
     * A {@code null} input String returns {@code null}.</p>
     *
     * <pre>
@@ -483,7 +486,7 @@ object StringUtils {
     *
     * @param str the String to capitalize, may be null
     * @return the capitalized String, {@code null} if null String input
-    * @see org.apache.commons.lang3.text.WordUtils#capitalize(String)
+    * @see org.apache.commons.lang3.text.WordUtils#capitalize
     * @see #uncapitalize(String)
     * @since 2.0
     */
@@ -595,7 +598,7 @@ object StringUtils {
     * @param size   the int size of new String, negative treated as zero
     * @param padStr the String to pad the new String with, must not be null or empty
     * @return centered String, {@code null} if null String input
-    * @throws IllegalArgumentException if padStr is {@code null} or empty
+    * @throws java.lang.IllegalArgumentException if padStr is {@code null} or empty
     */
   def center(str: String, size: Int, padStr: String): String = {
     if (str == null || size <= 0) return str
@@ -660,7 +663,7 @@ object StringUtils {
     * <p>NOTE: This method changed in version 2.0.
     * It now more closely matches Perl chomp.
     * For the previous behavior, use {@link #substringBeforeLast ( String, String)}.
-    * This method uses {@link String# endsWith ( String )}.</p>
+    * This method uses {@link java.lang.String# endsWith ( String )}.</p>
     *
     * <pre>
     * StringUtils.chomp(null, *)         = null
@@ -720,7 +723,7 @@ object StringUtils {
   }
 
   /**
-    * <p>Compare two Strings lexicographically, as per {@link String# compareTo ( String )}, returning :</p>
+    * <p>Compare two Strings lexicographically, as per {@link java.lang.String# compareTo ( String )}, returning :</p>
     * <ul>
     * <li>{@code int = 0}, if {@code str1} is equal to {@code str2} (or both {@code null})</li>
     * <li>{@code int < 0}, if {@code str1} is less than {@code str2}</li>
@@ -754,7 +757,7 @@ object StringUtils {
   def compare(str1: String, str2: String): Int = compare(str1, str2, true)
 
   /**
-    * <p>Compare two Strings lexicographically, as per {@link String# compareTo ( String )}, returning :</p>
+    * <p>Compare two Strings lexicographically, as per {@link java.lang.String# compareTo ( String )}, returning :</p>
     * <ul>
     * <li>{@code int = 0}, if {@code str1} is equal to {@code str2} (or both {@code null})</li>
     * <li>{@code int < 0}, if {@code str1} is less than {@code str2}</li>
@@ -805,7 +808,7 @@ object StringUtils {
 
   /**
     * <p>Compare two Strings lexicographically, ignoring case differences,
-    * as per {@link String# compareToIgnoreCase ( String )}, returning :</p>
+    * as per {@link java.lang.String# compareToIgnoreCase ( String )}, returning :</p>
     * <ul>
     * <li>{@code int = 0}, if {@code str1} is equal to {@code str2} (or both {@code null})</li>
     * <li>{@code int < 0}, if {@code str1} is less than {@code str2}</li>
@@ -844,7 +847,7 @@ object StringUtils {
 
   /**
     * <p>Compare two Strings lexicographically, ignoring case differences,
-    * as per {@link String# compareToIgnoreCase ( String )}, returning :</p>
+    * as per {@link java.lang.String# compareToIgnoreCase ( String )}, returning :</p>
     * <ul>
     * <li>{@code int = 0}, if {@code str1} is equal to {@code str2} (or both {@code null})</li>
     * <li>{@code int < 0}, if {@code str1} is less than {@code str2}</li>
@@ -894,7 +897,7 @@ object StringUtils {
 
   /**
     * <p>Checks if CharSequence contains a search CharSequence, handling {@code null}.
-    * This method uses {@link String# indexOf ( String )} if possible.</p>
+    * This method uses {@link java.lang.String# indexOf ( String )} if possible.</p>
     *
     * <p>A {@code null} CharSequence will return {@code false}.</p>
     *
@@ -912,7 +915,7 @@ object StringUtils {
     * @return true if the CharSequence contains the search CharSequence,
     *         false if not or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from contains(String, String) to contains(CharSequence, CharSequence)
+    *        3.0 Changed signature from contains(String, String) to contains(CharSequence, CharSequence)
     */
   def contains(seq: CharSequence, searchSeq: CharSequence): Boolean =
     if (seq == null || searchSeq == null) false
@@ -920,7 +923,7 @@ object StringUtils {
 
   /**
     * <p>Checks if CharSequence contains a search character, handling {@code null}.
-    * This method uses {@link String# indexOf ( int )} if possible.</p>
+    * This method uses {@link java.lang.String# indexOf ( int )} if possible.</p>
     *
     * <p>A {@code null} or empty ("") CharSequence will return {@code false}.</p>
     *
@@ -936,7 +939,7 @@ object StringUtils {
     * @return true if the CharSequence contains the search character,
     *         false if not or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from contains(String, int) to contains(CharSequence, int)
+    *        3.0 Changed signature from contains(String, int) to contains(CharSequence, int)
     */
   def contains(seq: CharSequence, searchChar: Int): Boolean =
     if (isEmpty(seq)) false
@@ -965,7 +968,7 @@ object StringUtils {
     * @return the {@code true} if any of the chars are found,
     *         {@code false} if no match or null input
     * @since 2.4
-    * @since 3.0 Changed signature from containsAny(String, char[]) to containsAny(CharSequence, char...)
+    *        3.0 Changed signature from containsAny(String, char[]) to containsAny(CharSequence, char...)
     */
   def containsAny(cs: CharSequence, searchChars: Char*): Boolean = {
     if (isEmpty(cs) || searchChars.isEmpty) return false
@@ -1018,7 +1021,7 @@ object StringUtils {
     * the chars to search for, may be null
     * @return the {@code true} if any of the chars are found, {@code false} if no match or null input
     * @since 2.4
-    * @since 3.0 Changed signature from containsAny(String, String) to containsAny(CharSequence, CharSequence)
+    *        3.0 Changed signature from containsAny(String, String) to containsAny(CharSequence, CharSequence)
     */
   def containsAny(cs: CharSequence, searchChars: CharSequence): Boolean =
     if (searchChars == null) false
@@ -1059,7 +1062,7 @@ object StringUtils {
   /**
     * <p>Checks if CharSequence contains a search CharSequence irrespective of case,
     * handling {@code null}. Case-insensitivity is defined as by
-    * {@link String# equalsIgnoreCase ( String )}.
+    * {@link java.lang.String# equalsIgnoreCase ( String )}.
     *
     * <p>A {@code null} CharSequence will return {@code false}.</p>
     *
@@ -1112,7 +1115,7 @@ object StringUtils {
     * @param searchChars an array of invalid chars, may be null
     * @return true if it contains none of the invalid chars, or is null
     * @since 2.0
-    * @since 3.0 Changed signature from containsNone(String, char[]) to containsNone(CharSequence, char...)
+    *        3.0 Changed signature from containsNone(String, char[]) to containsNone(CharSequence, char...)
     */
   def containsNone(cs: CharSequence, searchChars: Char*): Boolean = {
     if (cs == null || searchChars == null) return true
@@ -1153,7 +1156,7 @@ object StringUtils {
     * @param invalidChars a String of invalid chars, may be null
     * @return true if it contains none of the invalid chars, or is null
     * @since 2.0
-    * @since 3.0 Changed signature from containsNone(String, String) to containsNone(CharSequence, String)
+    *        3.0 Changed signature from containsNone(String, String) to containsNone(CharSequence, String)
     */
   def containsNone(cs: CharSequence, invalidChars: String): Boolean = {
     if (cs == null || invalidChars == null) return true
@@ -1211,7 +1214,7 @@ object StringUtils {
     * @param validChars a String of valid chars, may be null
     * @return true if it only contains valid chars and is non-null
     * @since 2.0
-    * @since 3.0 Changed signature from containsOnly(String, String) to containsOnly(CharSequence, String)
+    *        3.0 Changed signature from containsOnly(String, String) to containsOnly(CharSequence, String)
     */
   def containsOnly(cs: CharSequence, validChars: String): Boolean =
     if (cs == null || validChars == null) false
@@ -1220,7 +1223,7 @@ object StringUtils {
   /**
     * <p>Check whether the given CharSequence contains any whitespace characters.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * @param seq the CharSequence to check (may be {@code null})
     * @return {@code true} if the CharSequence is not empty and
@@ -1308,7 +1311,7 @@ object StringUtils {
     * <p>Returns either the passed in CharSequence, or if the CharSequence is
     * whitespace, empty ("") or {@code null}, the value of {@code defaultStr}.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.defaultIfBlank(null, "NULL")  = "NULL"
@@ -1318,7 +1321,7 @@ object StringUtils {
     * StringUtils.defaultIfBlank("", null)      = null
     * </pre>
     *
-    * @param <          T> the specific kind of CharSequence
+    * @tparam T         the specific kind of CharSequence
     * @param str        the CharSequence to check, may be null
     * @param defaultStr the default CharSequence to return
     *                   if the input is whitespace, empty ("") or {@code null}, may be null
@@ -1341,7 +1344,7 @@ object StringUtils {
     * StringUtils.defaultIfEmpty("", null)      = null
     * </pre>
     *
-    * @param <          T> the specific kind of CharSequence
+    * @tparam T         the specific kind of CharSequence
     * @param str        the CharSequence to check, may be null
     * @param defaultStr the default CharSequence to return
     *                   if the input is empty ("") or {@code null}, may be null
@@ -1393,7 +1396,7 @@ object StringUtils {
 
   /**
     * <p>Deletes all whitespaces from a String as defined by
-    * {@link Character# isWhitespace ( char )}.</p>
+    * {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.deleteWhitespace(null)         = null
@@ -1477,7 +1480,7 @@ object StringUtils {
     * @return {@code true} if the CharSequence ends with the suffix, case sensitive, or
     *         both {@code null}
     * @since 2.4
-    * @since 3.0 Changed signature from endsWith(String, String) to endsWith(CharSequence, CharSequence)
+    *        3.0 Changed signature from endsWith(String, String) to endsWith(CharSequence, CharSequence)
     */
   def endsWith(str: CharSequence, suffix: CharSequence): Boolean = endsWith(str, suffix, false)
 
@@ -1549,7 +1552,7 @@ object StringUtils {
     * @return {@code true} if the CharSequence ends with the suffix, case insensitive, or
     *         both {@code null}
     * @since 2.4
-    * @since 3.0 Changed signature from endsWithIgnoreCase(String, String) to endsWithIgnoreCase(CharSequence, CharSequence)
+    *        3.0 Changed signature from endsWithIgnoreCase(String, String) to endsWithIgnoreCase(CharSequence, CharSequence)
     */
   def endsWithIgnoreCase(str: CharSequence, suffix: CharSequence): Boolean =
     endsWith(str, suffix, true)
@@ -1673,7 +1676,7 @@ object StringUtils {
     * <p>Returns the first value in the array which is not empty (""),
     * {@code null} or whitespace only.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <p>If all values are blank or the array is {@code null}
     * or empty then {@code null} is returned.</p>
@@ -1688,7 +1691,7 @@ object StringUtils {
     * StringUtils.firstNonBlank()                     = null
     * </pre>
     *
-    * @param <      T> the specific kind of CharSequence
+    * @tparam T     the specific kind of CharSequence
     * @param values the values to test, may be {@code null} or empty
     * @return the first value from {@code values} which is not blank,
     *         or {@code null} if there are no non-blank values
@@ -1719,7 +1722,7 @@ object StringUtils {
     * StringUtils.firstNonEmpty()                   = null
     * </pre>
     *
-    * @param <      T> the specific kind of CharSequence
+    * @tparam T     the specific kind of CharSequence
     * @param values the values to test, may be {@code null} or empty
     * @return the first value from {@code values} which is not empty,
     *         or {@code null} if there are no non-empty values
@@ -1733,11 +1736,11 @@ object StringUtils {
   }
 //
 //  /**
-//    * Calls {@link String# getBytes ( Charset )} in a null-safe manner.
+//    * Calls {@link java.lang.String# getBytes ( Charset )} in a null-safe manner.
 //    *
 //    * @param string  input string
 //    * @param charset The {@link Charset} to encode the {@code String}. If null, then use the default Charset.
-//    * @return The empty byte[] if {@code string} is null, the result of {@link String# getBytes ( Charset )} otherwise.
+//    * @return The empty byte[] if {@code string} is null, the result of {@link java.lang.String# getBytes ( Charset )} otherwise.
 //    * @see String#getBytes(Charset)
 //    * @since 3.10
 //    */
@@ -1745,11 +1748,11 @@ object StringUtils {
 //  else string.getBytes(Charsets.toCharset(charset))
 //
 //  /**
-//    * Calls {@link String# getBytes ( String )} in a null-safe manner.
+//    * Calls {@link java.lang.String# getBytes ( String )} in a null-safe manner.
 //    *
 //    * @param string  input string
 //    * @param charset The {@link Charset} name to encode the {@code String}. If null, then use the default Charset.
-//    * @return The empty byte[] if {@code string} is null, the result of {@link String# getBytes ( String )} otherwise.
+//    * @return The empty byte[] if {@code string} is null, the result of {@link java.lang.String# getBytes ( String )} otherwise.
 //    * @throws UnsupportedEncodingException Thrown when the named charset is not supported.
 //    * @see String#getBytes(String)
 //    * @since 3.10
@@ -1862,7 +1865,7 @@ object StringUtils {
 //    * @param locale This string matching logic is case insensitive. A locale is necessary to normalize
 //    *               both Strings to lower case.
 //    * @return result score
-//    * @throws IllegalArgumentException if either String input {@code null} or Locale input {@code null}
+//    * @throws java.lang.IllegalArgumentException if either String input {@code null} or Locale input {@code null}
 //    * @since 3.4
 //    * @deprecated as of 3.6, use commons-text
 //    *             <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/similarity/FuzzyScore.html">
@@ -1909,37 +1912,37 @@ object StringUtils {
 //    score
 //  }
 //
-//  /**
-//    * <p>Returns either the passed in CharSequence, or if the CharSequence is
-//    * whitespace, empty ("") or {@code null}, the value supplied by {@code defaultStrSupplier}.</p>
-//    *
-//    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
-//    *
-//    * <p>Caller responsible for thread-safety and exception handling of default value supplier</p>
-//    *
-//    * <pre>
-//    * {@code
-//    * StringUtils.getIfBlank(null, () -> "NULL")   = "NULL"
-//    * StringUtils.getIfBlank("", () -> "NULL")     = "NULL"
-//    * StringUtils.getIfBlank(" ", () -> "NULL")    = "NULL"
-//    * StringUtils.getIfBlank("bat", () -> "NULL")  = "bat"
-//    * StringUtils.getIfBlank("", () -> null)       = null
-//    * StringUtils.getIfBlank("", null)             = null
-//    * }</pre>
-//    * @param <T> the specific kind of CharSequence
-//    * @param str the CharSequence to check, may be null
-//    * @param defaultSupplier the supplier of default CharSequence to return
-//    * if the input is whitespace, empty ("") or {@code null}, may be null
-//    *
-//    * @return the passed in CharSequence, or the default
-//    * @see StringUtils#defaultString(String, String)
-//    * @since 3.10
-//    */
-//  def getIfBlank[T <: CharSequence](str: T, defaultSupplier: Supplier[T]): T =
-//    if (isBlank(str))
-//      if (defaultSupplier == null) null
-//      else defaultSupplier.get
-//    else str
+  /**
+    * <p>Returns either the passed in CharSequence, or if the CharSequence is
+    * whitespace, empty ("") or {@code null}, the value supplied by {@code defaultStrSupplier}.</p>
+    *
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
+    *
+    * <p>Caller responsible for thread-safety and exception handling of default value supplier</p>
+    *
+    * <pre>
+    * {@code
+    * StringUtils.getIfBlank(null, () -> "NULL")   = "NULL"
+    * StringUtils.getIfBlank("", () -> "NULL")     = "NULL"
+    * StringUtils.getIfBlank(" ", () -> "NULL")    = "NULL"
+    * StringUtils.getIfBlank("bat", () -> "NULL")  = "bat"
+    * StringUtils.getIfBlank("", () -> null)       = null
+    * StringUtils.getIfBlank("", null)             = null
+    * }</pre>
+    * @tparam T  the specific kind of CharSequence
+    * @param str the CharSequence to check, may be null
+    * @param defaultSupplier the supplier of default CharSequence to return
+    * if the input is whitespace, empty ("") or {@code null}, may be null
+    *
+    * @return the passed in CharSequence, or the default
+    * @see StringUtils#defaultString(String, String)
+    * @since 3.10
+    */
+  def getIfBlank[T <: CharSequence](str: T, defaultSupplier: Supplier[T]): T =
+    if (isBlank(str))
+      if (defaultSupplier == null) null.asInstanceOf[T]
+      else defaultSupplier.get
+    else str
 //
 //  /**
 //    * <p>Returns either the passed in CharSequence, or if the CharSequence is
@@ -1957,7 +1960,7 @@ object StringUtils {
 //    * StringUtils.getIfEmpty("", null)              = null
 //    * }
 //    * </pre>
-//    * @param <T> the specific kind of CharSequence
+//    * @tparam T   the specific kind of CharSequence
 //    * @param str  the CharSequence to check, may be null
 //    * @param defaultSupplier  the supplier of default CharSequence to return
 //    * if the input is empty ("") or {@code null}, may be null
@@ -1999,7 +2002,7 @@ object StringUtils {
 //    * @param first  the first String, must not be null
 //    * @param second the second String, must not be null
 //    * @return result distance
-//    * @throws IllegalArgumentException if either String input {@code null}
+//    * @throws java.lang.IllegalArgumentException if either String input {@code null}
 //    * @since 3.3
 //    * @deprecated as of 3.6, use commons-text
 //    *             <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/similarity/JaroWinklerDistance.html">
@@ -2045,7 +2048,7 @@ object StringUtils {
 //    * @param s the first String, must not be null
 //    * @param t the second String, must not be null
 //    * @return result distance
-//    * @throws IllegalArgumentException if either String input {@code null}
+//    * @throws java.lang.IllegalArgumentException if either String input {@code null}
 //    * @since 3.0 Changed signature from getLevenshteinDistance(String, String) to
 //    *        getLevenshteinDistance(CharSequence, CharSequence)
 //    * @deprecated as of 3.6, use commons-text
@@ -2137,7 +2140,7 @@ object StringUtils {
 //    * @param t         the second String, must not be null
 //    * @param threshold the target threshold, must not be negative
 //    * @return result distance, or {@code -1} if the distance would be greater than the threshold
-//    * @throws IllegalArgumentException if either String input {@code null} or negative threshold
+//    * @throws java.lang.IllegalArgumentException if either String input {@code null} or negative threshold
 //    * @deprecated as of 3.6, use commons-text
 //    *             <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/similarity/LevenshteinDistance.html">
 //    *             LevenshteinDistance</a> instead
@@ -2250,7 +2253,7 @@ object StringUtils {
 //
   /**
     * <p>Finds the first index within a CharSequence, handling {@code null}.
-    * This method uses {@link String# indexOf ( String, int)} if possible.</p>
+    * This method uses {@link java.lang.String# indexOf ( String, int)} if possible.</p>
     *
     * <p>A {@code null} CharSequence will return {@code -1}.</p>
     *
@@ -2270,7 +2273,7 @@ object StringUtils {
     * @return the first index of the search CharSequence,
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOf(String, String) to indexOf(CharSequence, CharSequence)
+    *        3.0 Changed signature from indexOf(String, String) to indexOf(CharSequence, CharSequence)
     */
   def indexOf(seq: CharSequence, searchSeq: CharSequence): Int = {
     if (seq == null || searchSeq == null) return INDEX_NOT_FOUND
@@ -2279,7 +2282,7 @@ object StringUtils {
 
   /**
     * <p>Finds the first index within a CharSequence, handling {@code null}.
-    * This method uses {@link String# indexOf ( String, int)} if possible.</p>
+    * This method uses {@link java.lang.String# indexOf ( String, int)} if possible.</p>
     *
     * <p>A {@code null} CharSequence will return {@code -1}.
     * A negative start position is treated as zero.
@@ -2308,7 +2311,7 @@ object StringUtils {
     * @return the first index of the search CharSequence (always &ge; startPos),
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOf(String, String, int) to indexOf(CharSequence, CharSequence, int)
+    *        3.0 Changed signature from indexOf(String, String, int) to indexOf(CharSequence, CharSequence, int)
     */
   def indexOf(seq: CharSequence, searchSeq: CharSequence, startPos: Int): Int = {
     if (seq == null || searchSeq == null) return INDEX_NOT_FOUND
@@ -2349,8 +2352,8 @@ object StringUtils {
     * @return the first index of the search character,
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOf(String, int) to indexOf(CharSequence, int)
-    * @since 3.6 Updated {@link CharSequenceUtils} call to behave more like {@code String}
+    *        3.0 Changed signature from indexOf(String, int) to indexOf(CharSequence, int)
+    *        3.6 Updated {@link CharSequenceUtils} call to behave more like {@code String}
     */
   def indexOf(seq: CharSequence, searchChar: Int): Int = {
     if (isEmpty(seq)) return INDEX_NOT_FOUND
@@ -2407,8 +2410,8 @@ object StringUtils {
     * @return the first index of the search character (always &ge; startPos),
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOf(String, int, int) to indexOf(CharSequence, int, int)
-    * @since 3.6 Updated {@link CharSequenceUtils} call to behave more like {@code String}
+    *        3.0 Changed signature from indexOf(String, int, int) to indexOf(CharSequence, int, int)
+    *        3.6 Updated {@link CharSequenceUtils} call to behave more like {@code String}
     */
   def indexOf(seq: CharSequence, searchChar: Int, startPos: Int): Int = {
     if (isEmpty(seq)) return INDEX_NOT_FOUND
@@ -2436,7 +2439,7 @@ object StringUtils {
     * @param searchChars the chars to search for, may be null
     * @return the index of any of the chars, -1 if no match or null input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOfAny(String, char[]) to indexOfAny(CharSequence, char...)
+    *        3.0 Changed signature from indexOfAny(String, char[]) to indexOfAny(CharSequence, char...)
     */
   def indexOfAny(cs: CharSequence, searchChars: Char*): Int = {
     if (isEmpty(cs) || searchChars.isEmpty) return INDEX_NOT_FOUND
@@ -2463,7 +2466,7 @@ object StringUtils {
     * A {@code null} or zero length search array will return {@code -1}.
     * A {@code null} search array entry will be ignored, but a search
     * array containing "" will return {@code 0} if {@code str} is not
-    * null. This method uses {@link String# indexOf ( String )} if possible.</p>
+    * null. This method uses {@link java.lang.String# indexOf ( String )} if possible.</p>
     *
     * <pre>
     * StringUtils.indexOfAny(null, *)                      = -1
@@ -2522,7 +2525,7 @@ object StringUtils {
     * @param searchChars the chars to search for, may be null
     * @return the index of any of the chars, -1 if no match or null input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOfAny(String, String) to indexOfAny(CharSequence, String)
+    *        3.0 Changed signature from indexOfAny(String, String) to indexOfAny(CharSequence, String)
     */
   def indexOfAny(cs: CharSequence, searchChars: String): Int = {
     if (isEmpty(cs) || isEmpty(searchChars)) return INDEX_NOT_FOUND
@@ -2551,7 +2554,7 @@ object StringUtils {
     * @param searchChars the chars to search for, may be null
     * @return the index of any of the chars, -1 if no match or null input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
+    *        3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
     */
   def indexOfAnyBut(cs: CharSequence, searchChars: Char*): Int = {
     if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars.toArray)) return INDEX_NOT_FOUND
@@ -2599,7 +2602,7 @@ object StringUtils {
     * @param searchChars the chars to search for, may be null
     * @return the index of any of the chars, -1 if no match or null input
     * @since 2.0
-    * @since 3.0 Changed signature from indexOfAnyBut(String, String) to indexOfAnyBut(CharSequence, CharSequence)
+    *        3.0 Changed signature from indexOfAnyBut(String, String) to indexOfAnyBut(CharSequence, CharSequence)
     */
   def indexOfAnyBut(seq: CharSequence, searchChars: CharSequence): Int = {
     if (isEmpty(seq) || isEmpty(searchChars)) return INDEX_NOT_FOUND
@@ -2645,7 +2648,7 @@ object StringUtils {
     * @param css array of CharSequences, entries may be null
     * @return the index where the strings begin to differ; -1 if they are all equal
     * @since 2.4
-    * @since 3.0 Changed signature from indexOfDifference(String...) to indexOfDifference(CharSequence...)
+    *        3.0 Changed signature from indexOfDifference(String...) to indexOfDifference(CharSequence...)
     */
   def indexOfDifference(css: CharSequence*): Int = {
     if (ArrayUtils.getLength(css) <= 1) return INDEX_NOT_FOUND
@@ -2721,7 +2724,7 @@ object StringUtils {
     * @param cs2 the second CharSequence, may be null
     * @return the index where cs1 and cs2 begin to differ; -1 if they are equal
     * @since 2.0
-    * @since 3.0 Changed signature from indexOfDifference(String, String) to
+    *        3.0 Changed signature from indexOfDifference(String, String) to
     *        indexOfDifference(CharSequence, CharSequence)
     */
   def indexOfDifference(cs1: CharSequence, cs2: CharSequence): Int = {
@@ -2762,7 +2765,7 @@ object StringUtils {
     * @return the first index of the search CharSequence,
     *         -1 if no match or {@code null} string input
     * @since 2.5
-    * @since 3.0 Changed signature from indexOfIgnoreCase(String, String) to indexOfIgnoreCase(CharSequence, CharSequence)
+    *        3.0 Changed signature from indexOfIgnoreCase(String, String) to indexOfIgnoreCase(CharSequence, CharSequence)
     */
   def indexOfIgnoreCase(str: CharSequence, searchStr: CharSequence): Int = indexOfIgnoreCase(str, searchStr, 0)
 
@@ -2796,7 +2799,7 @@ object StringUtils {
     * @return the first index of the search CharSequence (always &ge; startPos),
     *         -1 if no match or {@code null} string input
     * @since 2.5
-    * @since 3.0 Changed signature from indexOfIgnoreCase(String, String, int) to indexOfIgnoreCase(CharSequence, CharSequence, int)
+    *        3.0 Changed signature from indexOfIgnoreCase(String, String, int) to indexOfIgnoreCase(CharSequence, CharSequence, int)
     */
   def indexOfIgnoreCase(str: CharSequence, searchStr: CharSequence, startPos: Int): Int = {
     if (str == null || searchStr == null) return INDEX_NOT_FOUND
@@ -2814,7 +2817,7 @@ object StringUtils {
   /**
     * <p>Checks if all of the CharSequences are empty (""), null or whitespace only.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.isAllBlank(null)             = true
@@ -2887,7 +2890,7 @@ object StringUtils {
     * @param cs the CharSequence to check, may be null
     * @return {@code true} if only contains lowercase characters, and is non-null
     * @since 2.5
-    * @since 3.0 Changed signature from isAllLowerCase(String) to isAllLowerCase(CharSequence)
+    *        3.0 Changed signature from isAllLowerCase(String) to isAllLowerCase(CharSequence)
     */
   def isAllLowerCase(cs: CharSequence): Boolean = {
     if (isEmpty(cs)) return false
@@ -2918,7 +2921,7 @@ object StringUtils {
     * @param cs the CharSequence to check, may be null
     * @return {@code true} if only contains uppercase characters, and is non-null
     * @since 2.5
-    * @since 3.0 Changed signature from isAllUpperCase(String) to isAllUpperCase(CharSequence)
+    *        3.0 Changed signature from isAllUpperCase(String) to isAllUpperCase(CharSequence)
     */
   def isAllUpperCase(cs: CharSequence): Boolean = {
     if (isEmpty(cs)) return false
@@ -2947,7 +2950,7 @@ object StringUtils {
     * @param cs the CharSequence to check, may be null
     * @return {@code true} if only contains letters, and is non-null
     * @since 3.0 Changed signature from isAlpha(String) to isAlpha(CharSequence)
-    * @since 3.0 Changed "" to return false and not true
+    *        3.0 Changed "" to return false and not true
     */
   def isAlpha(cs: CharSequence): Boolean = {
     if (isEmpty(cs)) return false
@@ -2978,7 +2981,7 @@ object StringUtils {
     * @return {@code true} if only contains letters or digits,
     *         and is non-null
     * @since 3.0 Changed signature from isAlphanumeric(String) to isAlphanumeric(CharSequence)
-    * @since 3.0 Changed "" to return false and not true
+    *        3.0 Changed "" to return false and not true
     */
   def isAlphanumeric(cs: CharSequence): Boolean = {
     if (isEmpty(cs)) return false
@@ -3054,7 +3057,7 @@ object StringUtils {
   /**
     * <p>Checks if any of the CharSequences are empty ("") or null or whitespace only.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.isAnyBlank((String) null)    = true
@@ -3134,7 +3137,7 @@ object StringUtils {
     * @return {@code true} if every character is in the range
     *         32 thru 126
     * @since 2.1
-    * @since 3.0 Changed signature from isAsciiPrintable(String) to isAsciiPrintable(CharSequence)
+    *        3.0 Changed signature from isAsciiPrintable(String) to isAsciiPrintable(CharSequence)
     */
   def isAsciiPrintable(cs: CharSequence): Boolean = {
     if (cs == null) return false
@@ -3148,7 +3151,7 @@ object StringUtils {
   /**
     * <p>Checks if a CharSequence is empty (""), null or whitespace only.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.isBlank(null)      = true
@@ -3161,7 +3164,7 @@ object StringUtils {
     * @param cs the CharSequence to check, may be null
     * @return {@code true} if the CharSequence is null, empty or whitespace only
     * @since 2.0
-    * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
+    *        3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
     */
   def isBlank(cs: CharSequence): Boolean = {
     val strLen = length(cs)
@@ -3231,7 +3234,7 @@ object StringUtils {
   /**
     * <p>Checks if none of the CharSequences are empty (""), null or whitespace only.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.isNoneBlank((String) null)    = false
@@ -3278,7 +3281,7 @@ object StringUtils {
   /**
     * <p>Checks if a CharSequence is not empty (""), not null and not whitespace only.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.isNotBlank(null)      = false
@@ -3292,7 +3295,7 @@ object StringUtils {
     * @return {@code true} if the CharSequence is
     *         not empty and not null and not whitespace only
     * @since 2.0
-    * @since 3.0 Changed signature from isNotBlank(String) to isNotBlank(CharSequence)
+    *        3.0 Changed signature from isNotBlank(String) to isNotBlank(CharSequence)
     */
   def isNotBlank(cs: CharSequence): Boolean = !isBlank(cs)
 
@@ -3342,7 +3345,7 @@ object StringUtils {
     * @param cs the CharSequence to check, may be null
     * @return {@code true} if only contains digits, and is non-null
     * @since 3.0 Changed signature from isNumeric(String) to isNumeric(CharSequence)
-    * @since 3.0 Changed "" to return false and not true
+    *        3.0 Changed "" to return false and not true
     */
   def isNumeric(cs: CharSequence): Boolean = {
     if (isEmpty(cs)) return false
@@ -3391,7 +3394,7 @@ object StringUtils {
   /**
     * <p>Checks if the CharSequence contains only whitespace.</p>
     *
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <p>{@code null} will return {@code false}.
     * An empty CharSequence (length()=0) will return {@code true}.</p>
@@ -3408,7 +3411,7 @@ object StringUtils {
     * @param cs the CharSequence to check, may be null
     * @return {@code true} if only contains whitespace, and is non-null
     * @since 2.0
-    * @since 3.0 Changed signature from isWhitespace(String) to isWhitespace(CharSequence)
+    *        3.0 Changed signature from isWhitespace(String) to isWhitespace(CharSequence)
     */
   def isWhitespace(cs: CharSequence): Boolean = {
     if (cs == null) return false
@@ -3572,7 +3575,7 @@ object StringUtils {
     * <p>No delimiter is added before or after the list. Null objects or empty
     * strings within the iteration are represented by empty strings.</p>
     *
-    * <p>See the examples here: {@link #join ( Object[ ], char )}. </p>
+    * <p>See the examples here: {@link #join(array:Array[Any],separator:Char)*}. </p>
     *
     * @param iterable  the {@code Iterable} providing the values to join together, may be null
     * @param separator the separator character to use
@@ -3591,7 +3594,7 @@ object StringUtils {
     * <p>No delimiter is added before or after the list.
     * A {@code null} separator is the same as an empty String ("").</p>
     *
-    * <p>See the examples here: {@link #join ( Object[ ], String )}. </p>
+    * <p>See the examples here: {@link #join(array:Array[Any],separator:String)*}. </p>
     *
     * @param iterable  the {@code Iterable} providing the values to join together, may be null
     * @param separator the separator character to use, null treated as ""
@@ -3610,7 +3613,7 @@ object StringUtils {
     * <p>No delimiter is added before or after the list. Null objects or empty
     * strings within the iteration are represented by empty strings.</p>
     *
-    * <p>See the examples here: {@link #join ( Object[ ], char )}. </p>
+    * <p>See the examples here: {@link #join(array:Array[Any],separator:Char)*}. </p>
     *
     * @param iterator  the {@code Iterator} of values to join together, may be null
     * @param separator the separator character to use
@@ -3642,7 +3645,7 @@ object StringUtils {
     * <p>No delimiter is added before or after the list.
     * A {@code null} separator is the same as an empty String ("").</p>
     *
-    * <p>See the examples here: {@link #join ( Object[ ], String )}. </p>
+    * <p>See the examples here: {@link #join(array:Array[Any],separator:String)*}. </p>
     *
     * @param iterator  the {@code Iterator} of values to join together, may be null
     * @param separator the separator character to use, null treated as ""
@@ -3651,17 +3654,18 @@ object StringUtils {
   def join(iterator: util.Iterator[_], separator: String): String = {
     if (iterator == null) return null
     if (!iterator.hasNext) return EMPTY
+
     val first = iterator.next
     if (!iterator.hasNext) return Objects.toString(first, "")
     val buf = new StringBuilder(STRING_BUILDER_SIZE)
     if (first != null) buf.append(first)
-    while ({
-      iterator.hasNext
-    }) {
+
+    while (iterator.hasNext) {
       if (separator != null) buf.append(separator)
       val obj = iterator.next
       if (obj != null) buf.append(obj)
     }
+
     buf.toString
   }
 
@@ -3747,7 +3751,7 @@ object StringUtils {
     * @return the joined String, {@code null} if null array input
     * @since 2.0
     */
-  def join(array: Array[AnyRef], separator: Char): String = {
+  def join(array: Array[Any], separator: Char): String = {
     if (array == null) return null
     join(array, separator, 0, array.length)
   }
@@ -3778,7 +3782,7 @@ object StringUtils {
     * @return the joined String, {@code null} if null array input
     * @since 2.0
     */
-  def join(array: Array[AnyRef], separator: Char, startIndex: Int, endIndex: Int): String = {
+  def join(array: Array[Any], separator: Char, startIndex: Int, endIndex: Int): String = {
     if (array == null) return null
     val noOfItems = endIndex - startIndex
     if (noOfItems <= 0) return EMPTY
@@ -3815,7 +3819,7 @@ object StringUtils {
     * @param separator the separator character to use, null treated as ""
     * @return the joined String, {@code null} if null array input
     */
-  def join(array: Array[AnyRef], separator: String): String = {
+  def join(array: Array[Any], separator: String): String = {
     if (array == null) return null
     join(array, separator, 0, array.length)
   }
@@ -3850,7 +3854,7 @@ object StringUtils {
     * @return the joined String, {@code null} if null array input; or the empty string
     *         if {@code endIndex - startIndex <= 0}. The number of joined entries is given by
     *         {@code endIndex - startIndex}
-    * @throws ArrayIndexOutOfBoundsException ife<br>
+    * @throws java.lang.ArrayIndexOutOfBoundsException ife<br>
     *                                        {@code startIndex < 0} or <br>
     *                                        {@code startIndex >= array.length()} or <br>
     *                                        {@code endIndex < 0} or <br>
@@ -3916,7 +3920,7 @@ object StringUtils {
     * @param elements the values to join together, may be null
     * @return the joined String, {@code null} if null array input
     * @since 2.0
-    * @since 3.0 Changed signature to use varargs
+    *        3.0 Changed signature to use varargs
     */
   @SafeVarargs def join[T](elements: T*): String = join(elements, null)
 
@@ -3957,7 +3961,7 @@ object StringUtils {
 
   /**
     * <p>Finds the last index within a CharSequence, handling {@code null}.
-    * This method uses {@link String# lastIndexOf ( String )} if possible.</p>
+    * This method uses {@link java.lang.String# lastIndexOf ( String )} if possible.</p>
     *
     * <p>A {@code null} CharSequence will return {@code -1}.</p>
     *
@@ -3976,7 +3980,7 @@ object StringUtils {
     * @return the last index of the search String,
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from lastIndexOf(String, String) to lastIndexOf(CharSequence, CharSequence)
+    *        3.0 Changed signature from lastIndexOf(String, String) to lastIndexOf(CharSequence, CharSequence)
     */
   def lastIndexOf(seq: CharSequence, searchSeq: CharSequence): Int = {
     if (seq == null || searchSeq == null) INDEX_NOT_FOUND
@@ -3985,7 +3989,7 @@ object StringUtils {
 
   /**
     * <p>Finds the last index within a CharSequence, handling {@code null}.
-    * This method uses {@link String# lastIndexOf ( String, int)} if possible.</p>
+    * This method uses {@link java.lang.String# lastIndexOf ( String, int)} if possible.</p>
     *
     * <p>A {@code null} CharSequence will return {@code -1}.
     * A negative start position returns {@code -1}.
@@ -4016,7 +4020,7 @@ object StringUtils {
     * @return the last index of the search CharSequence (always &le; startPos),
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from lastIndexOf(String, String, int) to lastIndexOf(CharSequence, CharSequence, int)
+    *        3.0 Changed signature from lastIndexOf(String, String, int) to lastIndexOf(CharSequence, CharSequence, int)
     */
   def lastIndexOf(seq: CharSequence, searchSeq: CharSequence, startPos: Int): Int = {
     if (seq == null || searchSeq == null) INDEX_NOT_FOUND
@@ -4054,8 +4058,8 @@ object StringUtils {
     * @return the last index of the search character,
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from lastIndexOf(String, int) to lastIndexOf(CharSequence, int)
-    * @since 3.6 Updated {@link CharSequenceUtils} call to behave more like {@code String}
+    *        3.0 Changed signature from lastIndexOf(String, int) to lastIndexOf(CharSequence, int)
+    *        3.6 Updated {@link CharSequenceUtils} call to behave more like {@code String}
     */
   def lastIndexOf(seq: CharSequence, searchChar: Int): Int = {
     if (isEmpty(seq)) INDEX_NOT_FOUND
@@ -4104,7 +4108,7 @@ object StringUtils {
     * @return the last index of the search character (always &le; startPos),
     *         -1 if no match or {@code null} string input
     * @since 2.0
-    * @since 3.0 Changed signature from lastIndexOf(String, int, int) to lastIndexOf(CharSequence, int, int)
+    *        3.0 Changed signature from lastIndexOf(String, int, int) to lastIndexOf(CharSequence, int, int)
     */
   def lastIndexOf(seq: CharSequence, searchChar: Int, startPos: Int): Int = {
     if (isEmpty(seq)) INDEX_NOT_FOUND
@@ -4118,7 +4122,7 @@ object StringUtils {
     * A {@code null} search array will return {@code -1}.
     * A {@code null} or zero length search array entry will be ignored,
     * but a search array containing "" will return the length of {@code str}
-    * if {@code str} is not null. This method uses {@link String# indexOf ( String )} if possible</p>
+    * if {@code str} is not null. This method uses {@link java.lang.String# indexOf ( String )} if possible</p>
     *
     * <pre>
     * StringUtils.lastIndexOfAny(null, *)                    = -1
@@ -4174,7 +4178,7 @@ object StringUtils {
     * @return the first index of the search CharSequence,
     *         -1 if no match or {@code null} string input
     * @since 2.5
-    * @since 3.0 Changed signature from lastIndexOfIgnoreCase(String, String) to lastIndexOfIgnoreCase(CharSequence, CharSequence)
+    *        3.0 Changed signature from lastIndexOfIgnoreCase(String, String) to lastIndexOfIgnoreCase(CharSequence, CharSequence)
     */
   def lastIndexOfIgnoreCase(str: CharSequence, searchStr: CharSequence): Int = {
     if (str == null || searchStr == null) INDEX_NOT_FOUND
@@ -4211,7 +4215,7 @@ object StringUtils {
     * @return the last index of the search CharSequence (always &le; startPos),
     *         -1 if no match or {@code null} input
     * @since 2.5
-    * @since 3.0 Changed signature from lastIndexOfIgnoreCase(String, String, int) to lastIndexOfIgnoreCase(CharSequence, CharSequence, int)
+    *        3.0 Changed signature from lastIndexOfIgnoreCase(String, String, int) to lastIndexOfIgnoreCase(CharSequence, CharSequence, int)
     */
   def lastIndexOfIgnoreCase(str: CharSequence, searchStr: CharSequence, startPos: Int): Int = {
     if (str == null || searchStr == null) return INDEX_NOT_FOUND
@@ -4230,7 +4234,7 @@ object StringUtils {
 
   /**
     * <p>Finds the n-th last index within a String, handling {@code null}.
-    * This method uses {@link String# lastIndexOf ( String )}.</p>
+    * This method uses {@link java.lang.String# lastIndexOf ( String )}.</p>
     *
     * <p>A {@code null} String will return {@code -1}.</p>
     *
@@ -4260,7 +4264,7 @@ object StringUtils {
     * @return the n-th last index of the search CharSequence,
     *         {@code -1} ({@code INDEX_NOT_FOUND}) if no match or {@code null} string input
     * @since 2.5
-    * @since 3.0 Changed signature from lastOrdinalIndexOf(String, String, int) to lastOrdinalIndexOf(CharSequence, CharSequence, int)
+    *        3.0 Changed signature from lastOrdinalIndexOf(String, String, int) to lastOrdinalIndexOf(CharSequence, CharSequence, int)
     */
   def lastOrdinalIndexOf(str: CharSequence, searchStr: CharSequence, ordinal: Int): Int =
     ordinalIndexOf(str, searchStr, ordinal, true)
@@ -4397,14 +4401,16 @@ object StringUtils {
     * @return CharSequence length or {@code 0} if the CharSequence is
     *         {@code null}.
     * @since 2.4
-    * @since 3.0 Changed signature from length(String) to length(CharSequence)
+    *        3.0 Changed signature from length(String) to length(CharSequence)
     */
   def length(cs: CharSequence): Int =
     if (cs == null) 0
     else cs.length
 
+  // TODO: @link java.lang.String#toLowerCase
+  // TODO: @link #lowerCase(String,Locale)
   /**
-    * <p>Converts a String to lower case as per {@link String# toLowerCase ( )}.</p>
+    * <p>Converts a String to lower case as per {@code java.lang.String#toLowerCase()}.</p>
     *
     * <p>A {@code null} input String returns {@code null}.</p>
     *
@@ -4414,10 +4420,10 @@ object StringUtils {
     * StringUtils.lowerCase("aBc") = "abc"
     * </pre>
     *
-    * <p><strong>Note:</strong> As described in the documentation for {@link String# toLowerCase ( )},
+    * <p><strong>Note:</strong> As described in the documentation for {@code java.lang.String#toLowerCase()},
     * the result of this method is affected by the current locale.
-    * For platform-independent case transformations, the method {@link #lowerCase ( String, Locale)}
-    * should be used with a specific locale (e.g. {@link Locale# ENGLISH}).</p>
+    * For platform-independent case transformations, the method {@code #lowerCase(String,Locale)*}
+    * should be used with a specific locale (e.g. {@link java.util.Locale#ENGLISH}).</p>
     *
     * @param str the String to lower case, may be null
     * @return the lower cased String, {@code null} if null String input
@@ -4426,8 +4432,9 @@ object StringUtils {
     if (str == null) null
     else str.toLowerCase
 
+  // TODO: @link java.lang.String#toLowerCase(Locale)
   /**
-    * <p>Converts a String to lower case as per {@link String# toLowerCase ( Locale )}.</p>
+    * <p>Converts a String to lower case as per {@code java.lang.String#toLowerCase(Locale)}.</p>
     *
     * <p>A {@code null} input String returns {@code null}.</p>
     *
@@ -4637,9 +4644,10 @@ object StringUtils {
                else 0)).trim
   }
 
+  // TODO: @lang java.lang.String#indexOf(String)
   /**
     * <p>Finds the n-th index within a CharSequence, handling {@code null}.
-    * This method uses {@link String# indexOf ( String )} if possible.</p>
+    * This method uses {@code java.lang.String#indexOf(String)} if possible.</p>
     * <p><b>Note:</b> The code starts looking for a match at the start of the target,
     * incrementing the starting index by one after each successful match
     * (unless {@code searchStr} is an empty string in which case the position
@@ -4685,14 +4693,14 @@ object StringUtils {
     * @return the n-th index of the search CharSequence,
     *         {@code -1} ({@code INDEX_NOT_FOUND}) if no match or {@code null} string input
     * @since 2.1
-    * @since 3.0 Changed signature from ordinalIndexOf(String, String, int) to ordinalIndexOf(CharSequence, CharSequence, int)
+    *        3.0 Changed signature from ordinalIndexOf(String, String, int) to ordinalIndexOf(CharSequence, CharSequence, int)
     */
   def ordinalIndexOf(str: CharSequence, searchStr: CharSequence, ordinal: Int): Int =
     ordinalIndexOf(str, searchStr, ordinal, false)
 
   /**
     * <p>Finds the n-th index within a String, handling {@code null}.
-    * This method uses {@link String# indexOf ( String )} if possible.</p>
+    * This method uses {@link java.lang.String#indexOf(String)} if possible.</p>
     * <p>Note that matches may overlap<p>
     *
     * <p>A {@code null} CharSequence will return {@code -1}.</p>
@@ -4943,7 +4951,7 @@ object StringUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>Unlike in the {@link #removePattern ( String, String)} method, the {@link Pattern# DOTALL} option
+    * <p>Unlike in the {@link #removePattern(source:String,regex:String)*} method, the {@link java.util.regex.Pattern#DOTALL} option
     * is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
@@ -5049,7 +5057,7 @@ object StringUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>The {@link Pattern# DOTALL} option is NOT automatically added.
+    * <p>The {@link java.util.regex.Pattern#DOTALL} option is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
     *
@@ -5121,39 +5129,40 @@ object StringUtils {
     replaceIgnoreCase(str, remove, EMPTY, -1)
   }
 
-//  /**
-//    * <p>Removes each substring of the source String that matches the given regular expression using the DOTALL option.
-//    * </p>
-//    *
-//    * This call is a {@code null} safe equivalent to:
-//    * <ul>
-//    * <li>{@code source.replaceAll(&quot;(?s)&quot; + regex, StringUtils.EMPTY)}</li>
-//    * <li>{@code Pattern.compile(regex, Pattern.DOTALL).matcher(source).replaceAll(StringUtils.EMPTY)}</li>
-//    * </ul>
-//    *
-//    * <p>A {@code null} reference passed to this method is a no-op.</p>
-//    *
-//    * <pre>
-//    * StringUtils.removePattern(null, *)       = null
-//    * StringUtils.removePattern("any", (String) null)   = "any"
-//    * StringUtils.removePattern("A&lt;__&gt;\n&lt;__&gt;B", "&lt;.*&gt;")  = "AB"
-//    * StringUtils.removePattern("ABCabc123", "[a-z]")    = "ABC123"
-//    * </pre>
-//    *
-//    * @param source
-//    * the source string
-//    * @param regex
-//    * the regular expression to which this string is to be matched
-//    * @return The resulting {@code String}
-//    * @see #replacePattern(String, String, String)
-//    * @see String#replaceAll(String, String)
-//    * @see Pattern#DOTALL
-//    * @since 3.2
-//    * @since 3.5 Changed {@code null} reference passed to this method is a no-op.
-//    * @deprecated Moved to RegExUtils.
-//    */
-//  @deprecated def removePattern(source: String, regex: String): String =
-//    RegExUtils.removePattern(source, regex)
+  /**
+    * <p>Removes each substring of the source String that matches the given regular expression using the DOTALL option.
+    * </p>
+    *
+    * This call is a {@code null} safe equivalent to:
+    * <ul>
+    * <li>{@code source.replaceAll(&quot;(?s)&quot; + regex, StringUtils.EMPTY)}</li>
+    * <li>{@code Pattern.compile(regex, Pattern.DOTALL).matcher(source).replaceAll(StringUtils.EMPTY)}</li>
+    * </ul>
+    *
+    * <p>A {@code null} reference passed to this method is a no-op.</p>
+    *
+    * <pre>
+    * StringUtils.removePattern(null, *)       = null
+    * StringUtils.removePattern("any", (String) null)   = "any"
+    * StringUtils.removePattern("A&lt;__&gt;\n&lt;__&gt;B", "&lt;.*&gt;")  = "AB"
+    * StringUtils.removePattern("ABCabc123", "[a-z]")    = "ABC123"
+    * </pre>
+    *
+    * @param source
+    * the source string
+    * @param regex
+    * the regular expression to which this string is to be matched
+    * @return The resulting {@code String}
+    * @see #replacePattern(source:String,regex:String,replacement:String)
+    * @see java.lang.String#replaceAll
+    *      // java.lang.String#replaceAll(String,String)
+    * @see Pattern#DOTALL
+    * @since 3.2
+    *        3.5 Changed {@code null} reference passed to this method is a no-op.
+    * @deprecated Moved to RegExUtils.
+    */
+  @deprecated def removePattern(source: String, regex: String): String =
+    RegExUtils.removePattern(source, regex)
 
   /**
     * <p>Removes a substring only if it is at the beginning of a source string,
@@ -5230,7 +5239,7 @@ object StringUtils {
     * <a href="http://www.unicode.org/glossary/#supplementary_character">Unicode Supplementary Characters</a>
     * as they require a pair of {@code char}s to be represented.
     * If you are needing to support full I18N of your applications
-    * consider using {@link #repeat ( String, int)} instead.
+    * consider using {@link #repeat(str:String,repeat:Int)*} instead.
     * </p>
     *
     * @param ch     character to repeat
@@ -5467,7 +5476,7 @@ object StringUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>Unlike in the {@link #replacePattern ( String, String, String)} method, the {@link Pattern# DOTALL} option
+    * <p>Unlike in the {@link #replacePattern(source:String,regex:String,replacement:String)*} method, the {@link java.util.regex.Pattern#DOTALL} option
     * is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
@@ -5485,7 +5494,7 @@ object StringUtils {
     * StringUtils.replaceAll("ABCabc123", "[a-z]", "_")       = "ABC___123"
     * StringUtils.replaceAll("ABCabc123", "[^A-Z0-9]+", "_")  = "ABC_123"
     * StringUtils.replaceAll("ABCabc123", "[^A-Z0-9]+", "")   = "ABC123"
-    * StringUtils.replaceAll("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$2")  = "Lorem_ipsum_dolor_sit"
+    * StringUtils.replaceAll("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_\$2")  = "Lorem_ipsum_dolor_sit"
     * </pre>
     *
     *
@@ -5506,9 +5515,10 @@ object StringUtils {
   @deprecated def replaceAll(text: String, regex: String, replacement: String): String =
     RegExUtils.replaceAll(text, regex, replacement)
 
+  // TODO: @link java.lang.String#replace(Char,Char)
   /**
     * <p>Replaces all occurrences of a character in a String with another.
-    * This is a null-safe version of {@link String# replace ( char, char)}.</p>
+    * This is a null-safe version of {@code java.lang.String#replace(Char,Char)}.</p>
     *
     * <p>A {@code null} string input returns {@code null}.
     * An empty ("") string input returns an empty string.</p>
@@ -5627,7 +5637,7 @@ object StringUtils {
     * the Strings to replace them with, no-op if null
     * @return the text with any replacements processed, {@code null} if
     *         null String input
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the lengths of the arrays are not the same (null is ok,
     * and/or size 0)
     * @since 2.4
@@ -5677,10 +5687,10 @@ object StringUtils {
     *               loop
     * @return the text with any replacements processed, {@code null} if
     *         null String input
-    * @throws IllegalStateException
+    * @throws java.lang.IllegalStateException
     * if the search is repeating and there is an endless loop due
     * to outputs of one being inputs to another
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the lengths of the arrays are not the same (null is ok,
     * and/or size 0)
     * @since 2.4
@@ -5825,10 +5835,10 @@ object StringUtils {
     * the Strings to replace them with, no-op if null
     * @return the text with any replacements processed, {@code null} if
     *         null String input
-    * @throws IllegalStateException
+    * @throws java.lang.IllegalStateException
     * if the search is repeating and there is an endless loop due
     * to outputs of one being inputs to another
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the lengths of the arrays are not the same (null is ok,
     * and/or size 0)
     * @since 2.4
@@ -5853,7 +5863,7 @@ object StringUtils {
     *
     * <p>A {@code null} reference passed to this method is a no-op.</p>
     *
-    * <p>The {@link Pattern# DOTALL} option is NOT automatically added.
+    * <p>The {@link java.util.regex.Pattern#DOTALL} option is NOT automatically added.
     * To use the DOTALL option prepend {@code "(?s)"} to the regex.
     * DOTALL is also known as single-line mode in Perl.</p>
     *
@@ -5870,7 +5880,7 @@ object StringUtils {
     * StringUtils.replaceFirst("ABCabc123", "[a-z]", "_")          = "ABC_bc123"
     * StringUtils.replaceFirst("ABCabc123abc", "[^A-Z0-9]+", "_")  = "ABC_123abc"
     * StringUtils.replaceFirst("ABCabc123abc", "[^A-Z0-9]+", "")   = "ABC123abc"
-    * StringUtils.replaceFirst("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$2")  = "Lorem_ipsum  dolor   sit"
+    * StringUtils.replaceFirst("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_\$2")  = "Lorem_ipsum  dolor   sit"
     * </pre>
     *
     *
@@ -5992,7 +6002,7 @@ object StringUtils {
     * StringUtils.replaceOnceIgnoreCase("FoOFoofoo", "foo", "") = "Foofoo"
     * </pre>
     *
-    * @see #replaceIgnoreCase(String text, String searchString, String replacement, int max)
+    * @see #replaceIgnoreCase(text:String,searchString:String,replacement:String,max:Int)
     * @param text         text to search and replace in, may be null
     * @param searchString the String to search for (case insensitive), may be null
     * @param replacement  the String to replace with, may be null
@@ -6005,7 +6015,7 @@ object StringUtils {
 
   /**
     * <p>Replaces each substring of the source String that matches the given regular expression with the given
-    * replacement using the {@link Pattern# DOTALL} option. DOTALL is also known as single-line mode in Perl.</p>
+    * replacement using the {@link java.util.regex.Pattern#DOTALL} option. DOTALL is also known as single-line mode in Perl.</p>
     *
     * This call is a {@code null} safe equivalent to:
     * <ul>
@@ -6026,7 +6036,7 @@ object StringUtils {
     * StringUtils.replacePattern("ABCabc123", "[a-z]", "_")       = "ABC___123"
     * StringUtils.replacePattern("ABCabc123", "[^A-Z0-9]+", "_")  = "ABC_123"
     * StringUtils.replacePattern("ABCabc123", "[^A-Z0-9]+", "")   = "ABC123"
-    * StringUtils.replacePattern("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_$2")  = "Lorem_ipsum_dolor_sit"
+    * StringUtils.replacePattern("Lorem ipsum  dolor   sit", "( +)([a-z]+)", "_\$2")  = "Lorem_ipsum_dolor_sit"
     * </pre>
     *
     *
@@ -6041,14 +6051,14 @@ object StringUtils {
     * @see String#replaceAll(String, String)
     * @see Pattern#DOTALL
     * @since 3.2
-    * @since 3.5 Changed {@code null} reference passed to this method is a no-op.
+    *        3.5 Changed {@code null} reference passed to this method is a no-op.
     * @deprecated Moved to RegExUtils.
     */
   @deprecated def replacePattern(source: String, regex: String, replacement: String): String =
     RegExUtils.replacePattern(source, regex, replacement)
 
   /**
-    * <p>Reverses a String as per {@link StringBuilder# reverse ( )}.</p>
+    * <p>Reverses a String as per {@link java.lang.StringBuilder#reverse}.</p>
     *
     * <p>A {@code null} String returns {@code null}.</p>
     *
@@ -6255,10 +6265,11 @@ object StringUtils {
     builder.toString
   }
 
+  // TODO: @link java.lang.Character#isWhitespace(Char)
   /**
     * <p>Splits the provided text into an array, using whitespace as the
     * separator.
-    * Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * Whitespace is defined by {@code java.lang.Character#isWhitespace(Char)}.</p>
     *
     * <p>The separator is not included in the returned String array.
     * Adjacent separators are treated as one separator.
@@ -6641,7 +6652,7 @@ object StringUtils {
     * <p>Splits the provided text into an array, using whitespace as the
     * separator, preserving all tokens, including empty tokens created by
     * adjacent separators. This is an alternative to using StringTokenizer.
-    * Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <p>The separator is not included in the returned String array.
     * Adjacent separators are treated as separators for empty tokens.
@@ -6935,7 +6946,7 @@ object StringUtils {
     * @return {@code true} if the CharSequence starts with the prefix, case sensitive, or
     *         both {@code null}
     * @since 2.4
-    * @since 3.0 Changed signature from startsWith(String, String) to startsWith(CharSequence, CharSequence)
+    *        3.0 Changed signature from startsWith(String, String) to startsWith(CharSequence, CharSequence)
     */
   def startsWith(str: CharSequence, prefix: CharSequence): Boolean = startsWith(str, prefix, false)
 
@@ -6976,7 +6987,7 @@ object StringUtils {
     * @return {@code true} if the input {@code sequence} is {@code null} AND no {@code searchStrings} are provided, or
     *         the input {@code sequence} begins with any of the provided case-sensitive {@code searchStrings}.
     * @since 2.5
-    * @since 3.0 Changed signature from startsWithAny(String, String[]) to startsWithAny(CharSequence, CharSequence...)
+    *        3.0 Changed signature from startsWithAny(String, String[]) to startsWithAny(CharSequence, CharSequence...)
     */
   def startsWithAny(sequence: CharSequence, searchStrings: CharSequence*): Boolean = {
     if (isEmpty(sequence) || searchStrings.isEmpty) return false
@@ -7006,15 +7017,16 @@ object StringUtils {
     * @return {@code true} if the CharSequence starts with the prefix, case insensitive, or
     *         both {@code null}
     * @since 2.4
-    * @since 3.0 Changed signature from startsWithIgnoreCase(String, String) to startsWithIgnoreCase(CharSequence, CharSequence)
+    *        3.0 Changed signature from startsWithIgnoreCase(String, String) to startsWithIgnoreCase(CharSequence, CharSequence)
     */
   def startsWithIgnoreCase(str: CharSequence, prefix: CharSequence): Boolean = startsWith(str, prefix, true)
 
+  // TODO: @link java.lang.Character#isWhitespace(Char)
   /**
     * <p>Strips whitespace from the start and end of a String.</p>
     *
-    * <p>This is similar to {@link #trim ( String )} but removes whitespace.
-    * Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>This is similar to {@link #trim(str:String)*} but removes whitespace.
+    * Whitespace is defined by {@code java.lang.Character#isWhitespace(Char)}.</p>
     *
     * <p>A {@code null} input String returns {@code null}.</p>
     *
@@ -7034,17 +7046,18 @@ object StringUtils {
     */
   def strip(str: String): String = strip(str, null)
 
+  // TODO: @link java.lang.Character#isWhitespace(Char)
   /**
     * <p>Strips any of a set of characters from the start and end of a String.
-    * This is similar to {@link String# trim ( )} but allows the characters
+    * This is similar to {@link java.lang.String#trim} but allows the characters
     * to be stripped to be controlled.</p>
     *
     * <p>A {@code null} input String returns {@code null}.
     * An empty string ("") input returns the empty string.</p>
     *
     * <p>If the stripChars String is {@code null}, whitespace is
-    * stripped as defined by {@link Character# isWhitespace ( char )}.
-    * Alternatively use {@link #strip ( String )}.</p>
+    * stripped as defined by {@code java.lang.Character#isWhitespace(Char)}.
+    * Alternatively use {@link #strip(str:String)*}.</p>
     *
     * <pre>
     * StringUtils.strip(null, *)          = null
@@ -7094,7 +7107,7 @@ object StringUtils {
 
   /**
     * <p>Strips whitespace from the start and end of every String in an array.
-    * Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <p>A new array is returned each time, except for length zero.
     * A {@code null} array will return {@code null}.
@@ -7116,14 +7129,14 @@ object StringUtils {
   /**
     * <p>Strips any of a set of characters from the start and end of every
     * String in an array.</p>
-    * <p>Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <p>A new array is returned each time, except for length zero.
     * A {@code null} array will return {@code null}.
     * An empty array will return itself.
     * A {@code null} array entry will be ignored.
     * A {@code null} stripChars will strip whitespace as defined by
-    * {@link Character# isWhitespace ( char )}.</p>
+    * {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.stripAll(null, *)                = null
@@ -7155,7 +7168,7 @@ object StringUtils {
     * An empty string ("") input returns the empty string.</p>
     *
     * <p>If the stripChars String is {@code null}, whitespace is
-    * stripped as defined by {@link Character# isWhitespace ( char )}.</p>
+    * stripped as defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.stripEnd(null, *)          = null
@@ -7194,7 +7207,7 @@ object StringUtils {
     * An empty string ("") input returns the empty string.</p>
     *
     * <p>If the stripChars String is {@code null}, whitespace is
-    * stripped as defined by {@link Character# isWhitespace ( char )}.</p>
+    * stripped as defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.stripStart(null, *)          = null
@@ -7231,7 +7244,7 @@ object StringUtils {
     * an empty String if {@code null} input.</p>
     *
     * <p>This is similar to {@link #trimToEmpty ( String )} but removes whitespace.
-    * Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.stripToEmpty(null)     = ""
@@ -7257,7 +7270,7 @@ object StringUtils {
     * {@code null} if the String is empty ("") after the strip.</p>
     *
     * <p>This is similar to {@link #trimToNull ( String )} but removes whitespace.
-    * Whitespace is defined by {@link Character# isWhitespace ( char )}.</p>
+    * Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
     *
     * <pre>
     * StringUtils.stripToNull(null)     = null
@@ -7791,18 +7804,18 @@ object StringUtils {
     * @param charset
     * the encoding to use, if null then use the platform default
     * @return a new String
-    * @throws NullPointerException
+    * @throws java.lang.NullPointerException
     * if {@code bytes} is null
     * @since 3.2
-    * @since 3.3 No longer throws {@link UnsupportedEncodingException}.
+    *        3.3 No longer throws {@link java.io.UnsupportedEncodingException}.
     */
   def toEncodedString(bytes: Array[Byte], charset: Charset) = new String(bytes, Charsets.toCharset(charset))
 
   /**
-    * Converts the given source String as a lower-case using the {@link Locale# ROOT} locale in a null-safe manner.
+    * Converts the given source String as a lower-case using the {@link java.util.Locale# ROOT} locale in a null-safe manner.
     *
     * @param source A source String or null.
-    * @return the given source String as a lower-case using the {@link Locale# ROOT} locale or null.
+    * @return the given source String as a lower-case using the {@link java.util.Locale# ROOT} locale or null.
     * @since 3.10
     */
   def toRootLowerCase(source: String): String =
@@ -7810,10 +7823,10 @@ object StringUtils {
     else source.toLowerCase(Locale.ROOT)
 
   /**
-    * Converts the given source String as a upper-case using the {@link Locale# ROOT} locale in a null-safe manner.
+    * Converts the given source String as a upper-case using the {@link java.util.Locale# ROOT} locale in a null-safe manner.
     *
     * @param source A source String or null.
-    * @return the given source String as a upper-case using the {@link Locale# ROOT} locale or null.
+    * @return the given source String as a upper-case using the {@link java.util.Locale# ROOT} locale or null.
     * @since 3.10
     */
   def toRootUpperCase(source: String): String =
@@ -7828,11 +7841,11 @@ object StringUtils {
     * @param charsetName
     * the encoding to use, if null then use the platform default
     * @return a new String
-    * @throws UnsupportedEncodingException
+    * @throws java.io.UnsupportedEncodingException
     * If the named charset is not supported
-    * @throws NullPointerException
+    * @throws java.lang.NullPointerException
     * if the input is null
-    * @deprecated use {@link StringUtils# toEncodedString ( byte[ ], Charset)} instead of String constants in your code
+    * @deprecated use {@link StringUtils#toEncodedString(bytes:Array[Byte],charset:Charset)*} instead of String constants in your code
     * @since 3.1
     */
   @deprecated
@@ -7846,12 +7859,12 @@ object StringUtils {
     * ends of this String, handling {@code null} by returning
     * {@code null}.</p>
     *
-    * <p>The String is trimmed using {@link String# trim ( )}.
+    * <p>The String is trimmed using {@link java.lang.String#trim}.
     * Trim removes start and end characters &lt;= 32.
-    * To strip whitespace use {@link #strip ( String )}.</p>
+    * To strip whitespace use {@link #strip(str:String)*}.</p>
     *
     * <p>To trim your choice of characters, use the
-    * {@link #strip ( String, String)} methods.</p>
+    * {@link #strip(str:String,stripChars:String)*} methods.</p>
     *
     * <pre>
     * StringUtils.trim(null)          = null
@@ -7873,9 +7886,9 @@ object StringUtils {
     * ends of this String returning an empty String ("") if the String
     * is empty ("") after the trim or if it is {@code null}.
     *
-    * <p>The String is trimmed using {@link String# trim ( )}.
+    * <p>The String is trimmed using {@link java.lang.String#trim}.
     * Trim removes start and end characters &lt;= 32.
-    * To strip whitespace use {@link #stripToEmpty ( String )}.</p>
+    * To strip whitespace use {@link #stripToEmpty}.</p>
     *
     * <pre>
     * StringUtils.trimToEmpty(null)          = ""
@@ -7898,9 +7911,9 @@ object StringUtils {
     * ends of this String returning {@code null} if the String is
     * empty ("") after the trim or if it is {@code null}.
     *
-    * <p>The String is trimmed using {@link String# trim ( )}.
+    * <p>The String is trimmed using {@link java.lang.String#trim}.
     * Trim removes start and end characters &lt;= 32.
-    * To strip whitespace use {@link #stripToNull ( String )}.</p>
+    * To strip whitespace use {@link #stripToNull}.</p>
     *
     * <pre>
     * StringUtils.trimToNull(null)          = null
@@ -7950,7 +7963,7 @@ object StringUtils {
     * @param str      the String to truncate, may be null
     * @param maxWidth maximum length of result String, must be positive
     * @return truncated String, {@code null} if null String input
-    * @throws IllegalArgumentException If {@code maxWidth} is less than {@code 0}
+    * @throws java.lang.IllegalArgumentException If {@code maxWidth} is less than {@code 0}
     * @since 3.5
     */
   def truncate(str: String, maxWidth: Int): String = truncate(str, 0, maxWidth)
@@ -8012,7 +8025,7 @@ object StringUtils {
     * @param offset   left edge of source String
     * @param maxWidth maximum length of result String, must be positive
     * @return truncated String, {@code null} if null String input
-    * @throws IllegalArgumentException If {@code offset} or {@code maxWidth} is less than {@code 0}
+    * @throws java.lang.IllegalArgumentException If {@code offset} or {@code maxWidth} is less than {@code 0}
     * @since 3.5
     */
   def truncate(str: String, offset: Int, maxWidth: Int): String = {
@@ -8029,7 +8042,7 @@ object StringUtils {
 
   /**
     * <p>Uncapitalizes a String, changing the first character to lower case as
-    * per {@link Character# toLowerCase ( int )}. No other characters are changed.</p>
+    * per {@link java.lang.Character# toLowerCase ( int )}. No other characters are changed.</p>
     *
     * <p>For a word based algorithm, see {@link org.apache.commons.lang3.text.WordUtils# uncapitalize ( String )}.
     * A {@code null} input String returns {@code null}.</p>
@@ -8147,8 +8160,10 @@ object StringUtils {
     str
   }
 
+  // TODO: @link java.lang.String#toUpperCase()
+  // TODO: @link #lowerCase(str:String,locale:Locale)
   /**
-    * <p>Converts a String to upper case as per {@link String# toUpperCase ( )}.</p>
+    * <p>Converts a String to upper case as per {@code java.lang.String#toUpperCase()}.</p>
     *
     * <p>A {@code null} input String returns {@code null}.</p>
     *
@@ -8158,10 +8173,10 @@ object StringUtils {
     * StringUtils.upperCase("aBc") = "ABC"
     * </pre>
     *
-    * <p><strong>Note:</strong> As described in the documentation for {@link String# toUpperCase ( )},
+    * <p><strong>Note:</strong> As described in the documentation for {@code java.lang.String#toUpperCase()},
     * the result of this method is affected by the current locale.
-    * For platform-independent case transformations, the method {@link #lowerCase ( String, Locale)}
-    * should be used with a specific locale (e.g. {@link Locale# ENGLISH}).</p>
+    * For platform-independent case transformations, the method {@code #lowerCase(str:String,locale:Locale)*}
+    * should be used with a specific locale (e.g. {@link java.util.Locale#ENGLISH}).</p>
     *
     * @param str the String to upper case, may be null
     * @return the upper cased String, {@code null} if null String input
@@ -8171,8 +8186,9 @@ object StringUtils {
     str.toUpperCase
   }
 
+  // TODO: @link java.lang.String#toUpperCase(Locale)
   /**
-    * <p>Converts a String to upper case as per {@link String# toUpperCase ( Locale )}.</p>
+    * <p>Converts a String to upper case as per {@code java.lang.String#toUpperCase(Locale)}.</p>
     *
     * <p>A {@code null} input String returns {@code null}.</p>
     *

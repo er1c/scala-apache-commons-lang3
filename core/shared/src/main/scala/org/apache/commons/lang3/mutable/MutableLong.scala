@@ -25,16 +25,14 @@ import java.lang.{Long => JavaLong}
   * <p>
   * Note that as MutableJavaLong does not extend JavaLong, it is not treated by String.format as a JavaLong parameter.
   *
+  * Constructs a new MutableLong with the default value of zero.
+  *
   * @see Long
   * @since 2.1
   */
 @SerialVersionUID(62986528375L)
-class MutableJavaLong()
-
-/**
-  * Constructs a new MutableJavaLong with the default value of zero.
-  */
-  extends Number with Comparable[MutableJavaLong] with Mutable[Number] {
+class MutableLong()
+  extends Number with Comparable[MutableLong] with Mutable[Number] {
   /** The mutable value. */
   private var value: Long = 0L
 
@@ -52,7 +50,7 @@ class MutableJavaLong()
     * Constructs a new MutableJavaLong with the specified value.
     *
     * @param value the initial value to store, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   def this(value: Number) = {
     this()
@@ -63,7 +61,7 @@ class MutableJavaLong()
     * Constructs a new MutableJavaLong parsing the given string.
     *
     * @param value the string to parse, not null
-    * @throws NumberFormatException if the string cannot be parsed into a long
+    * @throws java.lang.NumberFormatException if the string cannot be parsed into a long
     * @since 2.5
     */
   def this(value: String) = {
@@ -91,7 +89,7 @@ class MutableJavaLong()
     * Sets the value from any Number instance.
     *
     * @param value the value to set, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     */
   override def setValue(value: Number): Unit = {
     this.value = value.longValue
@@ -179,7 +177,7 @@ class MutableJavaLong()
     * Adds a value to the value of this instance.
     *
     * @param operand the value to add, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def add(operand: Number): Unit = {
@@ -200,7 +198,7 @@ class MutableJavaLong()
     * Subtracts a value from the value of this instance.
     *
     * @param operand the value to subtract, not null
-    * @throws NullPointerException if the object is null
+    * @throws java.lang.NullPointerException if the object is null
     * @since 2.2
     */
   def subtract(operand: Number): Unit = {
@@ -225,7 +223,7 @@ class MutableJavaLong()
     * immediately after the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance after adding the operand
     * @since 3.5
     */
@@ -253,7 +251,7 @@ class MutableJavaLong()
     * immediately prior to the addition operation. This method is not thread safe.
     *
     * @param operand the quantity to add, not null
-    * @throws NullPointerException if {@code operand} is null
+    * @throws java.lang.NullPointerException if {@code operand} is null
     * @return the value associated with this instance immediately before the operand was added
     * @since 3.5
     */
@@ -307,7 +305,7 @@ class MutableJavaLong()
     * @return {@code true} if the objects are the same; {@code false} otherwise.
     */
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[MutableJavaLong]) return value == obj.asInstanceOf[MutableJavaLong].longValue
+    if (obj.isInstanceOf[MutableLong]) return value == obj.asInstanceOf[MutableLong].longValue
     false
   }
 
@@ -324,7 +322,7 @@ class MutableJavaLong()
     * @param other the other mutable to compare to, not null
     * @return negative if this is less, zero if equal, positive if greater
     */
-  override def compareTo(other: MutableJavaLong): Int = NumberUtils.compare(this.value, other.value)
+  override def compareTo(other: MutableLong): Int = NumberUtils.compare(this.value, other.value)
 
   /**
     * Returns the String value of this mutable.

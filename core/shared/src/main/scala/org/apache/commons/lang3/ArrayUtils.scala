@@ -220,7 +220,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &gt; array.length).
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, boolean[], boolean...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
     *             in the new method: inserting {@code X} into a {@code null} array results in {@code null} not {@code X}.
@@ -279,7 +279,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, byte[], byte...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -340,7 +340,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, char[], char...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -379,7 +379,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, double[], double...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -418,7 +418,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, float[], float...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -457,7 +457,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, int[], int...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -490,7 +490,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, long[], long...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -558,7 +558,7 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt; array.length).
     * @deprecated this method has been superseded by {@link #insert ( int, short[], short...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
@@ -599,8 +599,8 @@ object ArrayUtils {
     * @param index   the position of the new object
     * @param element the object to add
     * @return A new array containing the existing elements and the new element
-    * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &gt; array.length).
-    * @throws IllegalArgumentException  if both array and element are null
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &gt; array.length).
+    * @throws java.lang.IllegalArgumentException  if both array and element are null
     * @deprecated this method has been superseded by {@link #insert ( int, Object[], Object...) insert(int, T[], T...)} and
     *             may be removed in a future release. Please note the handling of {@code null} input arrays differs
     *             in the new method: inserting {@code X} into a {@code null} array results in {@code null} not {@code X}.
@@ -643,7 +643,7 @@ object ArrayUtils {
     *         in which case it will have the same type as the element.
     *         If both are null, an IllegalArgumentException is thrown
     * @since 2.1
-    * @throws IllegalArgumentException if both arguments are null
+    * @throws java.lang.IllegalArgumentException if both arguments are null
     */
   def add[T](array: Array[T], element: T): Array[T] = {
     var `type`: Class[_] = null
@@ -901,7 +901,7 @@ object ArrayUtils {
     *         The type of the new array is the type of the first array,
     *         unless the first array is null, in which case the type is the same as the second array.
     * @since 2.1
-    * @throws IllegalArgumentException if the array types are incompatible
+    * @throws java.lang.IllegalArgumentException if the array types are incompatible
     */
   def addAll[T: ClassTag](array1: Array[T], @SuppressWarnings(Array("unchecked")) array2: T*): Array[T] = {
     if (null == array1 || array1.isEmpty) return array2.toArray
@@ -1058,7 +1058,7 @@ object ArrayUtils {
   //    *         the input array (unless null), in which case it will have the same type as the element. If both are null,
   //    *         an IllegalArgumentException is thrown
   //    * @since 3.10
-  //    * @throws IllegalArgumentException if both arguments are null
+  //    * @throws java.lang.IllegalArgumentException if both arguments are null
   //    */
   //  def addFirst[T](array: Array[T], element: T): Array[T] = if (array == null) add(array, element)
   //  else insert(0, array, element)
@@ -1255,7 +1255,7 @@ object ArrayUtils {
     *
     * @param array the array to retrieve the length from, may be null
     * @return The length of the array, or {@code 0} if the array is {@code null}
-    * @throws IllegalArgumentException if the object argument is not an array.
+    * @throws java.lang.IllegalArgumentException if the object argument is not an array.
     * @since 2.1
     */
   def getLength(array: Any): Int = {
@@ -1895,7 +1895,7 @@ object ArrayUtils {
   //    * @param array  the array to insert the values into, may be {@code null}
   //    * @param values the new values to insert, may be {@code null}
   //    * @return The new array.
-  //    * @throws IndexOutOfBoundsException if {@code array} is provided
+  //    * @throws java.lang.IndexOutOfBoundsException if {@code array} is provided
   //    *                                   and either {@code index < 0} or {@code index > array.length}
   //    * @since 3.6
   //    */
@@ -2003,7 +2003,7 @@ object ArrayUtils {
   //    * @param array  the array to insert the values into, may be {@code null}
   //    * @param values the new values to insert, may be {@code null}
   //    * @return The new array.
-  //    * @throws IndexOutOfBoundsException if {@code array} is provided
+  //    * @throws java.lang.IndexOutOfBoundsException if {@code array} is provided
   //    *                                   and either {@code index < 0} or {@code index > array.length}
   //    * @since 3.6
   //    */
@@ -2281,7 +2281,7 @@ object ArrayUtils {
     * @param array1 the first array, must not be {@code null}
     * @param array2 the second array, must not be {@code null}
     * @return {@code true} if type of arrays matches
-    * @throws IllegalArgumentException if either array is {@code null}
+    * @throws java.lang.IllegalArgumentException if either array is {@code null}
     */
   def isSameType(array1: Any, array2: Any): Boolean = {
     if (array1 == null || array2 == null) throw new IllegalArgumentException("The Array must not be null")
@@ -2853,7 +2853,7 @@ object ArrayUtils {
     * @param type  the class representation of the desired array
     * @tparam T    the class type
     * @return the same array, {@code public static} empty array if {@code null}
-    * @throws IllegalArgumentException if the type argument is null
+    * @throws java.lang.IllegalArgumentException if the type argument is null
     * @since 3.5
     */
   def nullToEmpty[T](array: Array[T], `type`: Class[Array[T]]): Array[T] = {
@@ -2886,7 +2886,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -2917,7 +2917,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -2948,7 +2948,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -2979,7 +2979,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -3013,7 +3013,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -3040,7 +3040,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -3081,7 +3081,7 @@ object ArrayUtils {
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
-    * @throws IndexOutOfBoundsException if the index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if the index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 2.1
     */
@@ -3110,7 +3110,7 @@ object ArrayUtils {
     * @param indices the positions of the elements to be removed
     * @return A new array containing the existing elements except those
     *         at the specified positions.
-    * @throws IndexOutOfBoundsException if any index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if any index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 3.0.1
     */
@@ -3142,7 +3142,7 @@ object ArrayUtils {
     * @param indices the positions of the elements to be removed
     * @return A new array containing the existing elements except those
     *         at the specified positions.
-    * @throws IndexOutOfBoundsException if any index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if any index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 3.0.1
     */
@@ -3286,7 +3286,7 @@ object ArrayUtils {
     * @param indices the positions of the elements to be removed
     * @return A new array containing the existing elements except those
     *         at the specified positions.
-    * @throws IndexOutOfBoundsException if any index is out of range
+    * @throws java.lang.IndexOutOfBoundsException if any index is out of range
     *                                   (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
     * @since 3.0.1
     */
@@ -6203,10 +6203,10 @@ object ArrayUtils {
       * @param array an array whose elements are either a {@link java.util.Map.Entry} or
     *              an Array containing at least two elements, may be {@code null}
     * @return a {@code Map} that was created from the array
-    * @throws IllegalArgumentException if one element of this Array is
-    *                                  itself an Array containing less then two elements
-    * @throws IllegalArgumentException if the array contains elements other
-    *                                  than {@link java.util.Map.Entry} and an Array
+    * @throws java.lang.IllegalArgumentException if one element of this Array is
+    *                                            itself an Array containing less then two elements
+    *                                            if the array contains elements other
+    *                                            than {@link java.util.Map.Entry} and an Array
     */
   def toMap(array: Array[Any]): ju.Map[Any, Any] = {
     if (array == null) return null
@@ -6414,7 +6414,7 @@ object ArrayUtils {
     *
     * @param array a {@code Boolean} array, may be {@code null}
     * @return a {@code boolean} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[JavaBoolean]): Array[Boolean] = {
     if (array == null) return null
@@ -6461,7 +6461,7 @@ object ArrayUtils {
     *
     * @param array a {@code Byte} array, may be {@code null}
     * @return a {@code byte} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[JavaByte]): Array[Byte] = {
     if (array == null) return null
@@ -6510,7 +6510,7 @@ object ArrayUtils {
     *
     * @param array a {@code Character} array, may be {@code null}
     * @return a {@code char} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[Character]): Array[Char] = {
     if (array == null) return null
@@ -6555,7 +6555,7 @@ object ArrayUtils {
     *
     * @param array a {@code Double} array, may be {@code null}
     * @return a {@code double} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[JavaDouble]): Array[Double] = {
     if (array == null) return null
@@ -6600,7 +6600,7 @@ object ArrayUtils {
     *
     * @param array a {@code Float} array, may be {@code null}
     * @return a {@code float} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[JavaFloat]): Array[Float] = {
     if (array == null) return null
@@ -6645,7 +6645,7 @@ object ArrayUtils {
     *
     * @param array a {@code Integer} array, may be {@code null}
     * @return an {@code int} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[Integer]): Array[Int] = {
     if (array == null) return null
@@ -6690,7 +6690,7 @@ object ArrayUtils {
     *
     * @param array a {@code Long} array, may be {@code null}
     * @return a {@code long} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[JavaLong]): Array[Long] = {
     if (array == null) return null
@@ -6758,7 +6758,7 @@ object ArrayUtils {
     *
     * @param array a {@code Short} array, may be {@code null}
     * @return a {@code byte} array, {@code null} if null array input
-    * @throws NullPointerException if array content is {@code null}
+    * @throws java.lang.NullPointerException if array content is {@code null}
     */
   def toPrimitive(array: Array[JavaShort]): Array[Short] = {
     if (array == null) return null
@@ -6835,7 +6835,7 @@ object ArrayUtils {
   //    * @param array the {@code Object[]} to be processed, may be null
   //    * @return {@code String[]} of the same size as the source with its element's string representation,
   //    *         {@code null} if null array input
-  //    * @throws NullPointerException if array contains {@code null}
+  //    * @throws java.lang.NullPointerException if array contains {@code null}
   //    * @since 3.6
   //    */
   //  def toStringArray (array: Array[AnyRef] ): Array[String] = {

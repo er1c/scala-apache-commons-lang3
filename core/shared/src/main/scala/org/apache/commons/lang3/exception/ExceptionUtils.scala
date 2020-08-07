@@ -89,7 +89,7 @@ object ExceptionUtils {
     * @return the cause of the {@code Throwable},
     *         {@code null} if none found or null throwable input
     * @since 1.0
-    * @deprecated This feature will be removed in Lang 4.0, use {@link Throwable# getCause} instead
+    * @deprecated This feature will be removed in Lang 4.0, use {@link java.lang.Throwable# getCause} instead
     */
   @deprecated def getCause(throwable: Throwable): Throwable = getCause(throwable, null)
 
@@ -104,7 +104,7 @@ object ExceptionUtils {
     * @return the cause of the {@code Throwable},
     *         {@code null} if none found or null throwable input
     * @since 1.0
-    * @deprecated This feature will be removed in Lang 4.0, use {@link Throwable# getCause} instead
+    * @deprecated This feature will be removed in Lang 4.0, use {@link java.lang.Throwable# getCause} instead
     */
   @deprecated def getCause(throwable: Throwable, methodNames: Array[String]): Throwable = {
     if (throwable == null) return null
@@ -185,7 +185,7 @@ object ExceptionUtils {
     * <p>Introspects the {@code Throwable} to obtain the root cause.</p>
     *
     * <p>This method walks through the exception chain to the last element,
-    * "root" of the tree, using {@link Throwable# getCause ( )}, and
+    * "root" of the tree, using {@link java.lang.Throwable# getCause ( )}, and
     * returns that exception.</p>
     *
     * <p>From version 2.2, this method handles recursive cause structures
@@ -294,7 +294,7 @@ object ExceptionUtils {
   /**
     * <p>Returns an array where each element is a line from the argument.</p>
     *
-    * <p>The end of line is determined by the value of {@link System# lineSeparator ( )}.</p>
+    * <p>The end of line is determined by the value of {@link java.lang.System# lineSeparator ( )}.</p>
     *
     * @param stackTrace a stack trace String
     * @return an array where each element is a line from the argument
@@ -316,7 +316,7 @@ object ExceptionUtils {
     * stack frames.</p>
     *
     * <p>The result of this method vary by JDK version as this method
-    * uses {@link Throwable# printStackTrace ( java.io.PrintWriter )}.
+    * uses {@link java.lang.Throwable# printStackTrace ( java.io.PrintWriter )}.
     * On JDK1.3 and earlier, the cause exception will not be shown
     * unless the specified throwable alters printStackTrace.</p>
     *
@@ -332,7 +332,7 @@ object ExceptionUtils {
     * <p>Gets the stack trace from a Throwable as a String.</p>
     *
     * <p>The result of this method vary by JDK version as this method
-    * uses {@link Throwable# printStackTrace ( java.io.PrintWriter )}.
+    * uses {@link java.lang.Throwable# printStackTrace ( java.io.PrintWriter )}.
     * On JDK1.3 and earlier, the cause exception will not be shown
     * unless the specified throwable alters printStackTrace.</p>
     *
@@ -447,7 +447,7 @@ object ExceptionUtils {
     * @param type      the type to search for, subclasses match, null returns -1
     * @param fromIndex the (zero-based) index of the starting position,
     *                  negative treated as zero, larger than chain size returns -1
-    * @param subclass  if {@code true}, compares with {@link Class# isAssignableFrom ( Class )}, otherwise compares
+    * @param subclass  if {@code true}, compares with {@link java.lang.Class# isAssignableFrom ( Class )}, otherwise compares
     *                  using references
     * @return index of the {@code type} within throwables nested within the specified {@code throwable}
     */
@@ -467,11 +467,13 @@ object ExceptionUtils {
     NOT_FOUND
   }
 
+  // [[Doc.foo[A]:A*]]
+
   /**
     * <p>Returns the (zero-based) index of the first {@code Throwable}
     * that matches the specified class (exactly) in the exception chain.
     * Subclasses of the specified class do not match - see
-    * {@link #indexOfType ( Throwable, Class)} for the opposite.</p>
+    * [[indexOfType(throwable:Throwable,type:Class[_<:Throwable])*]] for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code -1}.
     * A {@code null} type returns {@code -1}.
@@ -481,14 +483,15 @@ object ExceptionUtils {
     * @param clazz     the class to search for, subclasses do not match, null returns -1
     * @return the index into the throwable chain, -1 if no match or null input
     */
-  def indexOfThrowable(throwable: Throwable, clazz: Class[_ <: Throwable]): Int = indexOf(throwable, clazz, 0, false)
+  def indexOfThrowable(throwable: Throwable, clazz: Class[_ <: Throwable]): Int =
+    indexOf(throwable, clazz, 0, false)
 
   /**
     * <p>Returns the (zero-based) index of the first {@code Throwable}
     * that matches the specified type in the exception chain from
     * a specified index.
     * Subclasses of the specified class do not match - see
-    * {@link #indexOfType ( Throwable, Class, int)} for the opposite.</p>
+    * [[indexOfType(throwable:Throwable,type:Class[_<:Throwable],fromIndex:Int)*]] for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code -1}.
     * A {@code null} type returns {@code -1}.
@@ -509,7 +512,7 @@ object ExceptionUtils {
     * <p>Returns the (zero-based) index of the first {@code Throwable}
     * that matches the specified class or subclass in the exception chain.
     * Subclasses of the specified class do match - see
-    * {@link #indexOfThrowable ( Throwable, Class)} for the opposite.</p>
+    * {@link #indexOfThrowable(throwable:Throwable,clazz:Class[_<:Throwable])*} for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code -1}.
     * A {@code null} type returns {@code -1}.
@@ -517,7 +520,7 @@ object ExceptionUtils {
     *
     * @param throwable the throwable to inspect, may be null
     * @param type      the type to search for, subclasses match, null returns -1
-    * @return the index into the throwable chain, -1 if no match or null input
+    * @return          the index into the throwable chain, -1 if no match or null input
     * @since 2.1
     */
   def indexOfType(throwable: Throwable, `type`: Class[_ <: Throwable]): Int = indexOf(throwable, `type`, 0, true)
@@ -527,7 +530,7 @@ object ExceptionUtils {
     * that matches the specified type in the exception chain from
     * a specified index.
     * Subclasses of the specified class do match - see
-    * {@link #indexOfThrowable ( Throwable, Class)} for the opposite.</p>
+    * {@link #indexOfThrowable(throwable:Throwable,clazz:Class[_<:Throwable],fromIndex:Int)*} for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code -1}.
     * A {@code null} type returns {@code -1}.
@@ -583,7 +586,7 @@ object ExceptionUtils {
     *
     * @param throwable   the throwable to output, may be null
     * @param printStream the stream to output to, may not be null
-    * @throws NullPointerException if the printStream is {@code null}
+    * @throws java.lang.NullPointerException if the printStream is {@code null}
     * @since 2.0
     */
   @SuppressWarnings(Array("resource")) def printRootCauseStackTrace(
@@ -614,7 +617,7 @@ object ExceptionUtils {
     *
     * @param throwable   the throwable to output, may be null
     * @param printWriter the writer to output to, may not be null
-    * @throws NullPointerException if the printWriter is {@code null}
+    * @throws java.lang.NullPointerException if the printWriter is {@code null}
     * @since 2.0
     */
   @SuppressWarnings(Array("resource")) def printRootCauseStackTrace(
@@ -634,7 +637,7 @@ object ExceptionUtils {
     *
     * @param causeFrames   stack trace of a cause throwable
     * @param wrapperFrames stack trace of a wrapper throwable
-    * @throws IllegalArgumentException if either argument is null
+    * @throws java.lang.IllegalArgumentException if either argument is null
     * @since 2.0
     */
   def removeCommonFrames(causeFrames: util.List[String], wrapperFrames: util.List[String]): Unit = {
@@ -698,9 +701,10 @@ object ExceptionUtils {
     * Jython, Scala, or Groovy, since these languages do not consider any
     * exceptions as checked.
     *
+    * @tparam R
+    *         The type of the returned value.
     * @param throwable
-    *          The throwable to rethrow.
-    * @param < R> The type of the returned value.
+    *         The throwable to rethrow.
     * @return Never actually returned, this generic type matches any type
     *         which the calling site requires. "Returning" the results of this
     *         method, as done in the propagateExample above, will satisfy the
@@ -715,12 +719,12 @@ object ExceptionUtils {
   /**
     * <p>Worker method for the {@code throwableOfType} methods.</p>
     *
-    * @param <         T> the type of Throwable you are searching.
+    * @tparam T        the type of Throwable you are searching.
     * @param throwable the throwable to inspect, may be null
     * @param type      the type to search, subclasses match, null returns null
     * @param fromIndex the (zero-based) index of the starting position,
     *                  negative treated as zero, larger than chain size returns null
-    * @param subclass  if {@code true}, compares with {@link Class# isAssignableFrom ( Class )}, otherwise compares
+    * @param subclass  if {@code true}, compares with {@link java.lang.Class# isAssignableFrom ( Class )}, otherwise compares
     *                  using references
     * @return throwable of the {@code type} within throwables nested within the specified {@code throwable}
     */
@@ -750,13 +754,13 @@ object ExceptionUtils {
     * <p>Returns the first {@code Throwable}
     * that matches the specified class (exactly) in the exception chain.
     * Subclasses of the specified class do not match - see
-    * {@link #throwableOfType ( Throwable, Class)} for the opposite.</p>
+    * {@link #throwableOfType[T<:Throwable](throwable:Throwable,type:Class[T])*} for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code null}.
     * A {@code null} type returns {@code null}.
     * No match in the chain returns {@code null}.</p>
     *
-    * @param <         T> the type of Throwable you are searching.
+    * @tparam T        the type of Throwable you are searching.
     * @param throwable the throwable to inspect, may be null
     * @param clazz     the class to search for, subclasses do not match, null returns null
     * @return the first matching throwable from the throwable chain, null if no match or null input
@@ -770,7 +774,7 @@ object ExceptionUtils {
     * that matches the specified type in the exception chain from
     * a specified index.
     * Subclasses of the specified class do not match - see
-    * {@link #throwableOfType ( Throwable, Class, int)} for the opposite.</p>
+    * {@link #throwableOfType[T<:Throwable](throwable:Throwable,type:Class[T],fromIndex:Int)*}for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code null}.
     * A {@code null} type returns {@code null}.
@@ -778,7 +782,7 @@ object ExceptionUtils {
     * A negative start index is treated as zero.
     * A start index greater than the number of throwables returns {@code null}.</p>
     *
-    * @param <         T> the type of Throwable you are searching.
+    * @tparam T        the type of Throwable you are searching.
     * @param throwable the throwable to inspect, may be null
     * @param clazz     the class to search for, subclasses do not match, null returns null
     * @param fromIndex the (zero-based) index of the starting position,
@@ -793,13 +797,13 @@ object ExceptionUtils {
     * <p>Returns the throwable of the first {@code Throwable}
     * that matches the specified class or subclass in the exception chain.
     * Subclasses of the specified class do match - see
-    * {@link #throwableOfThrowable ( Throwable, Class)} for the opposite..</p>
+    * {@link #throwableOfThrowable[T<:Throwable](throwable:Throwable,clazz:Class[T])*} for the opposite..</p>
     *
     * <p>A {@code null} throwable returns {@code null}.
     * A {@code null} type returns {@code null}.
     * No match in the chain returns {@code null}.</p>
     *
-    * @param <         T> the type of Throwable you are searching.
+    * @tparam T        the type of Throwable you are searching.
     * @param throwable the throwable to inspect, may be null
     * @param type      the type to search for, subclasses match, null returns null
     * @return the first matching throwable from the throwable chain, null if no match or null input
@@ -808,12 +812,13 @@ object ExceptionUtils {
   def throwableOfType[T <: Throwable](throwable: Throwable, `type`: Class[T]): T =
     throwableOf(throwable, `type`, 0, true)
 
+    // [T <: Throwable](throwable: Throwable, clazz: Class[T])
   /**
     * <p>Returns the first {@code Throwable}
     * that matches the specified type in the exception chain from
     * a specified index.
     * Subclasses of the specified class do match - see
-    * {@link #throwableOfThrowable ( Throwable, Class)} for the opposite.</p>
+    * {@link #throwableOfThrowable[T<:Throwable](throwable:Throwable,clazz:Class[T],fromIndex:Int)*} for the opposite.</p>
     *
     * <p>A {@code null} throwable returns {@code null}.
     * A {@code null} type returns {@code null}.
@@ -821,7 +826,7 @@ object ExceptionUtils {
     * A negative start index is treated as zero.
     * A start index greater than the number of throwables returns {@code null}.</p>
     *
-    * @param <         T> the type of Throwable you are searching.
+    * @tparam T        the type of Throwable you are searching.
     * @param throwable the throwable to inspect, may be null
     * @param type      the type to search for, subclasses match, null returns null
     * @param fromIndex the (zero-based) index of the starting position,
@@ -853,9 +858,10 @@ object ExceptionUtils {
     * handle specific checked exceptions must sniff up the exception chain to
     * determine if the caught exception was caused by the checked exception.
     *
+    * @tparam R
+    *         The type of the returned value.
     * @param throwable
-    *          The throwable to rethrow.
-    * @param < R> The type of the returned value.
+    *         The throwable to rethrow.
     * @return Never actually returned, this generic type matches any type
     *         which the calling site requires. "Returning" the results of this
     *         method will satisfy the java compiler requirement that all code

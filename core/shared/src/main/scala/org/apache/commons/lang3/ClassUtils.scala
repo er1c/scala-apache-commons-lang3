@@ -48,15 +48,16 @@ import scala.collection.JavaConverters._
 object ClassUtils {
 
   /**
-    * Inclusivity literals for {@link #hierarchy ( Class, Interfaces)}.
+    * Inclusivity literals for {@code #hierarchy(cls:Class[_],interfacesBehavior:ClassUtils.Interfaces.Value)*}.
     *
     * @since 3.2
     */
   object Interfaces extends Enumeration {
     type Interfaces = Value
     val
-    /** Includes interfaces. */
-    INCLUDE, /** Excludes interfaces. */
+    // Includes interfaces.
+    INCLUDE,
+    // Excludes interfaces.
     EXCLUDE = Value
   }
 
@@ -68,12 +69,18 @@ object ClassUtils {
     * The package separator String: {@code "&#x2e;"}.
     */
   val PACKAGE_SEPARATOR: String = String.valueOf(PACKAGE_SEPARATOR_CHAR)
+
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //     * The inner class separator character: {@code '$' == {@value}}.
   /**
-    * The inner class separator character: {@code '$' == {@value}}.
+    * The inner class separator character: '$' == {@value}.
     */
   val INNER_CLASS_SEPARATOR_CHAR: Char = '$'
+
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //     * The inner class separator String: {@code "$"}.
   /**
-    * The inner class separator String: {@code "$"}.
+    * The inner class separator String: "$".
     */
   val INNER_CLASS_SEPARATOR: String = String.valueOf(INNER_CLASS_SEPARATOR_CHAR)
   /**
@@ -149,7 +156,7 @@ object ClassUtils {
     * <p>Gets the class name of the {@code object} without the package name or names.</p>
     *
     * <p>The method looks up the class of the object and then converts the name of the class invoking
-    * {@link #getShortClassName ( Class )} (see relevant notes there).</p>
+    * {@link #getShortClassName(cls:Class[_])*} (see relevant notes there).</p>
     *
     * @param object      the class to get the short name for, may be {@code null}
     * @param valueIfNull the value to return if the object is {@code null}
@@ -165,7 +172,7 @@ object ClassUtils {
     * <p>Gets the class name minus the package name from a {@code Class}.</p>
     *
     * <p>This method simply gets the name using {@code Class.getName()} and then calls
-    * {@link #getShortClassName ( Class )}. See relevant notes there.</p>
+    * {@link #getShortClassName(className:String)*}. See relevant notes there.</p>
     *
     * @param cls the class to get the short name for.
     * @return the class name without the package name or an empty string. If the class
@@ -177,6 +184,9 @@ object ClassUtils {
     getShortClassName(cls.getName)
   }
 
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //    * {@code java.util.Map$Entry} (note the {@code $} sign.</p>
+  //    * to be {@code $} (dollar sign) and not {@code .} (dot), as it is returned by {@code Class.getName()}</p>
   /**
     * <p>Gets the class name minus the package name from a String.</p>
     *
@@ -186,15 +196,15 @@ object ClassUtils {
     *
     * <p>The difference is is significant only in case of classes that are inner classes of some other
     * classes. In this case the separator between the outer and inner class (possibly on multiple hierarchy level) has
-    * to be {@code $} (dollar sign) and not {@code .} (dot), as it is returned by {@code Class.getName()}</p>
+    * to be $ (dollar sign) and not {@code .} (dot), as it is returned by {@code Class.getName()}</p>
     *
-    * <p>Note that this method is called from the {@link #getShortClassName ( Class )} method using the string
+    * <p>Note that this method is called from the {@link #getShortClassName(className:String)*} method using the string
     * returned by {@code Class.getName()}.</p>
     *
-    * <p>Note that this method differs from {@link #getSimpleName ( Class )} in that this will
+    * <p>Note that this method differs from {@link #getSimpleName(cls:Class[_])*} in that this will
     * return, for example {@code "Map.Entry"} whilst the {@code java.lang.Class} variant will simply
     * return {@code "Entry"}. In this example the argument {@code className} is the string
-    * {@code java.util.Map$Entry} (note the {@code $} sign.</p>
+    * java.util.Map\\$Entry (note the \\$ sign.</p>
     *
     * @param className the className to get the short name for. It has to be formatted as returned by
     *                  {@code Class.getName()} and not {@code Class.getCanonicalName()}
@@ -260,7 +270,7 @@ object ClassUtils {
     * <p>Null-safe version of {@code object.getClass().getSimpleName()}</p>
     *
     * <p>It is to note that this method is overloaded and in case the argument {@code object} is a
-    * {@code Class} object then the {@link #getSimpleName ( Class )} will be invoked. If this is
+    * {@code Class} object then the {@link #getSimpleName(cls:Class[_])*} will be invoked. If this is
     * a significant possibility then the caller should check this case and call {@code
     * getSimpleName(Class.class)} or just simply use the string literal {@code "Class"}, which
     * is the result of the method in that case.</p>
@@ -383,7 +393,7 @@ object ClassUtils {
     * @param cls        the class to get the abbreviated name for, may be {@code null}
     * @param lengthHint the desired length of the abbreviated name
     * @return the abbreviated name or an empty string
-    * @throws IllegalArgumentException if len &lt;= 0
+    * @throws java.lang.IllegalArgumentException if len &lt;= 0
     * @see #getAbbreviatedName(String, int)
     * @since 3.4
     */
@@ -429,7 +439,7 @@ object ClassUtils {
     * @return the abbreviated name or an empty string if the specified
     *         class name is {@code null} or empty string. The abbreviated name may be
     *         longer than the desired length if it cannot be abbreviated to the desired length.
-    * @throws IllegalArgumentException if {@code len <= 0}
+    * @throws java.lang.IllegalArgumentException if {@code len <= 0}
     * @since 3.4
     */
   def getAbbreviatedName(className: String, lengthHint: Int): String = {
@@ -556,7 +566,7 @@ object ClassUtils {
     * @param classNames the classNames to change
     * @return a {@code List} of Class objects corresponding to the class names,
     *         {@code null} if null input
-    * @throws ClassCastException if classNames contains a non String entry
+    * @throws java.lang.ClassCastException if classNames contains a non String entry
     */
   def convertClassNamesToClasses(classNames: List[String]): List[Class[_]] = {
     if (classNames == null || classNames.isEmpty) return Nil
@@ -583,7 +593,7 @@ object ClassUtils {
     * @param classes the classes to change
     * @return a {@code List} of class names corresponding to the Class objects,
     *         {@code null} if null input
-    * @throws ClassCastException if {@code classes} contains a non-{@code Class} entry
+    * @throws java.lang.ClassCastException if {@code classes} contains a non-{@code Class} entry
     */
   def convertClassesToClassNames(classes: util.List[Class[_]]): util.List[String] = {
     if (classes == null) return null
@@ -600,12 +610,12 @@ object ClassUtils {
   /**
     * <p>Checks if an array of Classes can be assigned to another array of Classes.</p>
     *
-    * <p>This method calls {@link #isAssignable ( Class, Class) isAssignable} for each
+    * <p>This method calls {@link #isAssignable(cls:Class[_],toClass:Class[_])* isAssignable} for each
     * Class pair in the input arrays. It can be used to check if a set of arguments
     * (the first parameter) are suitably compatible with a set of method parameter types
     * (the second parameter).</p>
     *
-    * <p>Unlike the {@link Class# isAssignableFrom ( java.lang.Class )} method, this
+    * <p>Unlike the {@link java.lang.Class#isAssignableFrom} method, this
     * method takes into account widenings of primitive classes and
     * {@code null}s.</p>
     *
@@ -639,12 +649,12 @@ object ClassUtils {
   /**
     * <p>Checks if an array of Classes can be assigned to another array of Classes.</p>
     *
-    * <p>This method calls {@link #isAssignable ( Class, Class) isAssignable} for each
+    * <p>This method calls {@link #isAssignable(cls:Class[_],toClass:Class[_])* isAssignable} for each
     * Class pair in the input arrays. It can be used to check if a set of arguments
     * (the first parameter) are suitably compatible with a set of method parameter types
     * (the second parameter).</p>
     *
-    * <p>Unlike the {@link Class# isAssignableFrom ( java.lang.Class )} method, this
+    * <p>Unlike the {@link java.lang.Class#isAssignableFrom} method, this
     * method takes into account widenings of primitive classes and
     * {@code null}s.</p>
     *
@@ -687,13 +697,13 @@ object ClassUtils {
   }
 
   /**
-    * Returns whether the given {@code type} is a primitive or primitive wrapper ({@link Boolean}, {@link Byte}, {@link Character},
-    * {@link Short}, {@link Integer}, {@link Long}, {@link Double}, {@link Float}).
+    * Returns whether the given {@code type} is a primitive or primitive wrapper ({@link java.lang.Boolean}, {@link java.lang.Byte}, {@link java.lang.Character},
+    * {@link java.lang.Short}, {@link java.lang.Integer}, {@link java.lang.Long}, {@link java.lang.Double}, {@link java.lang.Float}).
     *
     * @param type
     * The class to query or null.
-    * @return true if the given {@code type} is a primitive or primitive wrapper ({@link Boolean}, {@link Byte}, {@link Character},
-    *         {@link Short}, {@link Integer}, {@link Long}, {@link Double}, {@link Float}).
+    * @return true if the given {@code type} is a primitive or primitive wrapper ({@link java.lang.Boolean}, {@link java.lang.Byte}, {@link java.lang.Character},
+    *         {@link java.lang.Short}, {@link java.lang.Integer}, {@link java.lang.Long}, {@link java.lang.Double}, {@link java.lang.Float}).
     * @since 3.1
     */
   def isPrimitiveOrWrapper(`type`: Class[_]): Boolean = {
@@ -702,13 +712,13 @@ object ClassUtils {
   }
 
   /**
-    * Returns whether the given {@code type} is a primitive wrapper ({@link Boolean}, {@link Byte}, {@link Character}, {@link Short},
-    * {@link Integer}, {@link Long}, {@link Double}, {@link Float}).
+    * Returns whether the given {@code type} is a primitive wrapper ({@link java.lang.Boolean}, {@link java.lang.Byte}, {@link java.lang.Character}, {@link java.lang.Short},
+    * {@link java.lang.Integer}, {@link java.lang.Long}, {@link java.lang.Double}, {@link java.lang.Float}).
     *
     * @param type
     * The class to query or null.
-    * @return true if the given {@code type} is a primitive wrapper ({@link Boolean}, {@link Byte}, {@link Character}, {@link Short},
-    *         {@link Integer}, {@link Long}, {@link Double}, {@link Float}).
+    * @return true if the given {@code type} is a primitive wrapper ({@link java.lang.Boolean}, {@link java.lang.Byte}, {@link java.lang.Character}, {@link java.lang.Short},
+    *         {@link java.lang.Integer}, {@link java.lang.Long}, {@link java.lang.Double}, {@link java.lang.Float}).
     * @since 3.1
     */
   def isPrimitiveWrapper(`type`: Class[_]): Boolean = wrapperPrimitiveMap.contains(`type`)
@@ -717,7 +727,7 @@ object ClassUtils {
     * <p>Checks if one {@code Class} can be assigned to a variable of
     * another {@code Class}.</p>
     *
-    * <p>Unlike the {@link Class# isAssignableFrom ( java.lang.Class )} method,
+    * <p>Unlike the {@link java.lang.Class# isAssignableFrom ( java.lang.Class )} method,
     * this method takes into account widenings of primitive classes and
     * {@code null}s.</p>
     *
@@ -750,7 +760,7 @@ object ClassUtils {
     * <p>Checks if one {@code Class} can be assigned to a variable of
     * another {@code Class}.</p>
     *
-    * <p>Unlike the {@link Class# isAssignableFrom ( java.lang.Class )} method,
+    * <p>Unlike the {@link java.lang.Class# isAssignableFrom ( java.lang.Class )} method,
     * this method takes into account widenings of primitive classes and
     * {@code null}s.</p>
     *
@@ -906,17 +916,20 @@ object ClassUtils {
     */
   def isInnerClass(cls: Class[_]): Boolean = cls != null && cls.getEnclosingClass != null
 
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //* "{@code java.util.Map.Entry[]}", "{@code java.util.Map$Entry[]}",
+  //* "{@code [Ljava.util.Map.Entry;}", and "{@code [Ljava.util.Map$Entry;}".
   /**
     * Returns the class represented by {@code className} using the
     * {@code classLoader}.  This implementation supports the syntaxes
-    * "{@code java.util.Map.Entry[]}", "{@code java.util.Map$Entry[]}",
-    * "{@code [Ljava.util.Map.Entry;}", and "{@code [Ljava.util.Map$Entry;}".
+    * "{@code java.util.Map.Entry[]}", "java.util.Map\$Entry[]",
+    * "{@code [Ljava.util.Map.Entry;}", and "Ljava.util.Map\$Entry;".
     *
     * @param classLoader the class loader to use to load the class
     * @param className   the class name
     * @param initialize  whether the class must be initialized
     * @return the class represented by {@code className} using the {@code classLoader}
-    * @throws ClassNotFoundException if the class is not found
+    * @throws java.lang.ClassNotFoundException if the class is not found
     */
   @throws[ClassNotFoundException]
   def getClass(classLoader: ClassLoader, className: String, initialize: Boolean): Class[_] =
@@ -941,46 +954,55 @@ object ClassUtils {
         throw ex
     }
 
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //  * "{@code java.util.Map$Entry[]}", "{@code [Ljava.util.Map.Entry;}",
+  //  * and "{@code [Ljava.util.Map$Entry;}".
   /**
     * Returns the (initialized) class represented by {@code className}
     * using the {@code classLoader}.  This implementation supports
     * the syntaxes "{@code java.util.Map.Entry[]}",
-    * "{@code java.util.Map$Entry[]}", "{@code [Ljava.util.Map.Entry;}",
-    * and "{@code [Ljava.util.Map$Entry;}".
+    * "java.util.Map\$Entry[]", "{@code [Ljava.util.Map.Entry;}",
+    * and "[Ljava.util.Map\$Entry;".
     *
     * @param classLoader the class loader to use to load the class
     * @param className   the class name
     * @return the class represented by {@code className} using the {@code classLoader}
-    * @throws ClassNotFoundException if the class is not found
+    * @throws java.lang.ClassNotFoundException if the class is not found
     */
   @throws[ClassNotFoundException]
   def getClass(classLoader: ClassLoader, className: String): Class[_] =
     getClass(classLoader, className, true)
 
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //  * "{@code java.util.Map$Entry[]}", "{@code [Ljava.util.Map.Entry;}",
+  //  * and "{@code [Ljava.util.Map$Entry;}".
   /**
     * Returns the (initialized) class represented by {@code className}
     * using the current thread's context class loader. This implementation
     * supports the syntaxes "{@code java.util.Map.Entry[]}",
-    * "{@code java.util.Map$Entry[]}", "{@code [Ljava.util.Map.Entry;}",
-    * and "{@code [Ljava.util.Map$Entry;}".
+    * "java.util.Map\$Entry[]", "{@code [Ljava.util.Map.Entry;}",
+    * and "[Ljava.util.Map\$Entry;".
     *
     * @param className the class name
     * @return the class represented by {@code className} using the current thread's context class loader
-    * @throws ClassNotFoundException if the class is not found
+    * @throws java.lang.ClassNotFoundException if the class is not found
     */
   @throws[ClassNotFoundException]
   def getClass(className: String): Class[_] = getClass(className, true)
 
+  // TODO: @code - java.lang.IllegalArgumentException: Illegal group reference
+  //  * syntaxes "{@code java.util.Map.Entry[]}", "{@code java.util.Map$Entry[]}",
+  //  * "{@code [Ljava.util.Map.Entry;}", and "{@code [Ljava.util.Map$Entry;}".
   /**
     * Returns the class represented by {@code className} using the
     * current thread's context class loader. This implementation supports the
-    * syntaxes "{@code java.util.Map.Entry[]}", "{@code java.util.Map$Entry[]}",
-    * "{@code [Ljava.util.Map.Entry;}", and "{@code [Ljava.util.Map$Entry;}".
+    * syntaxes "{@code java.util.Map.Entry[]}", "java.util.Map\$Entry[]",
+    * "{@code [Ljava.util.Map.Entry;}", and "[Ljava.util.Map\$Entry;".
     *
     * @param className  the class name
     * @param initialize whether the class must be initialized
     * @return the class represented by {@code className} using the current thread's context class loader
-    * @throws ClassNotFoundException if the class is not found
+    * @throws java.lang.ClassNotFoundException if the class is not found
     */
   @throws[ClassNotFoundException]
   def getClass(className: String, initialize: Boolean): Class[_] = {
@@ -1009,9 +1031,9 @@ object ClassUtils {
     * @param methodName     the name of the method
     * @param parameterTypes the list of parameters
     * @return the method
-    * @throws NullPointerException  if the class is null
-    * @throws SecurityException     if a security violation occurred
-    * @throws NoSuchMethodException if the method is not found in the given class
+    * @throws java.lang.NullPointerException  if the class is null
+    * @throws java.lang.SecurityException     if a security violation occurred
+    * @throws java.lang.NoSuchMethodException if the method is not found in the given class
     *                               or if the method doesn't conform with the requirements
     */
   @throws[NoSuchMethodException]
@@ -1174,7 +1196,7 @@ object ClassUtils {
     *
     * <p>Note that this method is mainly designed to handle the arrays and primitives properly.
     * If the class is an inner class then the result value will not contain the outer classes.
-    * This way the behavior of this method is different from {@link #getShortClassName ( String )}.
+    * This way the behavior of this method is different from {@link #getShortClassName(className:String)*}.
     * The argument in that case is class name and not canonical name and the return value
     * retains the outer classes.</p>
     *
@@ -1184,7 +1206,7 @@ object ClassUtils {
     * on the class path. Relying on the fact that class names start with capital letter and packages
     * with lower case is heuristic.</p>
     *
-    * <p>It is recommended to use {@link #getShortClassName ( String )} for cases when the class
+    * <p>It is recommended to use {@link #getShortClassName(className:String)*} for cases when the class
     * is an inner class and use this method for cases it is designed for.</p>
     *
     * <table>
@@ -1298,7 +1320,7 @@ object ClassUtils {
   }
 
   /**
-    * Gets an {@link Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order,
+    * Gets an {@link scala.collection.Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order,
     * excluding interfaces.
     *
     * @param type the type to get the class hierarchy from
@@ -1308,7 +1330,7 @@ object ClassUtils {
   def hierarchy(`type`: Class[_]): Iterable[Class[_]] = hierarchy(`type`, Interfaces.EXCLUDE)
 
   /**
-    * Gets an {@link Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order.
+    * Gets an {@link scala.collection.Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order.
     *
     * @param type               the type to get the class hierarchy from
     * @param interfacesBehavior switch indicating whether to include or exclude interfaces

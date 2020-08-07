@@ -26,7 +26,7 @@ import org.apache.commons.lang3.Validate
 
 /**
   * <p>
-  * Assists in implementing {@link Object# hashCode ( )} methods.
+  * Assists in implementing {@link java.lang.Object# hashCode ( )} methods.
   * </p>
   *
   * <p>
@@ -72,7 +72,7 @@ import org.apache.commons.lang3.Validate
   * </pre>
   *
   * <p>
-  * If required, the superclass {@code hashCode()} can be added using {@link #appendSuper}.
+  * If required, the superclass {@code hashCode()} can be added using {@link HashCodeBuilder!#appendSuper}.
   * </p>
   *
   * <p>
@@ -221,10 +221,8 @@ object HashCodeBuilder {
     * @param object
     * the Object to create a {@code hashCode} for
     * @return int hash code
-    * @throws IllegalArgumentException
-    * if the Object is {@code null}
-    * @throws IllegalArgumentException
-    * if the number is zero or even
+    * @throws java.lang.IllegalArgumentException
+    * if the Object is {@code null} or the number is zero or even
     * @see HashCodeExclude
     */
   def reflectionHashCode(initialNonZeroOddNumber: Int, multiplierNonZeroOddNumber: Int, `object`: Any): Int =
@@ -265,10 +263,8 @@ object HashCodeBuilder {
     * @param testTransients
     * whether to include transient fields
     * @return int hash code
-    * @throws IllegalArgumentException
-    * if the Object is {@code null}
-    * @throws IllegalArgumentException
-    * if the number is zero or even
+    * @throws java.lang.IllegalArgumentException
+    * if the Object is {@code null} or the number is zero or even
     * @see HashCodeExclude
     */
   def reflectionHashCode(
@@ -304,7 +300,7 @@ object HashCodeBuilder {
     * however this is not vital. Prime numbers are preferred, especially for the multiplier.
     * </p>
     *
-    * @param < T>
+    * @tparam T
     *          the type of the object involved
     * @param initialNonZeroOddNumber
     *          a non-zero, odd number used as the initial value. This will be the returned
@@ -320,10 +316,8 @@ object HashCodeBuilder {
     * @param excludeFields
     *          array of field names to exclude from use in calculation of hash code
     * @return int hash code
-    * @throws IllegalArgumentException
-    * if the Object is {@code null}
-    * @throws IllegalArgumentException
-    * if the number is zero or even
+    * @throws java.lang.IllegalArgumentException
+    * if the Object is {@code null} or the number is zero or even
     * @see HashCodeExclude
     * @since 2.0
     */
@@ -376,7 +370,7 @@ object HashCodeBuilder {
     * @param testTransients
     * whether to include transient fields
     * @return int hash code
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the object is {@code null}
     * @see HashCodeExclude
     */
@@ -413,7 +407,7 @@ object HashCodeBuilder {
     * @param excludeFields
     * Collection of String field names to exclude from use in calculation of hash code
     * @return int hash code
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the object is {@code null}
     * @see HashCodeExclude
     */
@@ -450,7 +444,7 @@ object HashCodeBuilder {
     * @param excludeFields
     * array of field names to exclude from use in calculation of hash code
     * @return int hash code
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the object is {@code null}
     * @see HashCodeExclude
     */
@@ -496,14 +490,12 @@ object HashCodeBuilder {
   }
 }
 
-class HashCodeBuilder()
-
 /**
   * <p>
   * Uses two hard coded choices for the constants needed to build a {@code hashCode}.
   * </p>
   */
-  extends Builder[Integer] {
+class HashCodeBuilder() extends Builder[Integer] {
   /**
     * Constant to use in building the hashCode.
     */
@@ -527,7 +519,7 @@ class HashCodeBuilder()
     * an odd number used as the initial value
     * @param multiplierOddNumber
     * an odd number used as the multiplier
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the number is even
     */
   def this(initialOddNumber: Int, multiplierOddNumber: Int) = {

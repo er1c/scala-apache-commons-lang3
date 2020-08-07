@@ -22,15 +22,13 @@ import java.io.Serializable
 /**
   * A mutable {@code Object} wrapper.
   *
-  * @param < T> the type to set and get
+  * Constructs a new MutableObject with the default value of {@code null}.
+  *
+  * @tparam T the type to set and get
   * @since 2.1
   */
 @SerialVersionUID(86241875189L)
 class MutableObject[T <: AnyRef]()
-
-/**
-  * Constructs a new MutableObject with the default value of {@code null}.
-  */
   extends Mutable[T] with Serializable {
   /** The mutable value. */
   private var value: T = null.asInstanceOf[T]

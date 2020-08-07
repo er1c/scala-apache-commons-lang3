@@ -27,7 +27,7 @@ import scala.collection.JavaConverters._
 
 /**
   * <p>
-  * Assists in implementing {@link Object# toString ( )} methods using reflection.
+  * Assists in implementing {@link java.lang.Object#toString} methods using reflection.
   * </p>
   * <p>
   * This class uses reflection to determine the fields to append. Because these fields are usually private, the class
@@ -47,7 +47,7 @@ import scala.collection.JavaConverters._
   * </p>
   * <pre>
   * public String toString() {
-  * return ReflectionToStringBuilder.toString(this);
+  *   return ReflectionToStringBuilder.toString(this);
   * }
   * </pre>
   * <p>
@@ -60,19 +60,19 @@ import scala.collection.JavaConverters._
   * A subclass can control field output by overriding the methods:
   * </p>
   * <ul>
-  * <li>{@link #accept ( java.lang.reflect.Field )}</li>
-  * <li>{@link #getValue ( java.lang.reflect.Field )}</li>
+  * <li>{@link ReflectionToStringBuilder!#accept*}</li>
+  * <li>{@link ReflectionToStringBuilder!#getValue*}</li>
   * </ul>
   * <p>
   * For example, this method does <i>not</i> include the {@code password} field in the returned {@code String}:
   * </p>
   * <pre>
   * public String toString() {
-  * return (new ReflectionToStringBuilder(this) {
-  * protected boolean accept(Field f) {
-  * return super.accept(f) &amp;&amp; !f.getName().equals(&quot;password&quot;);
-  * }
-  * }).toString();
+  *   return (new ReflectionToStringBuilder(this) {
+  *     protected boolean accept(Field f) {
+  *       return super.accept(f) &amp;&amp; !f.getName().equals(&quot;password&quot;);
+  *     }
+  *   }).toString();
   * }
   * </pre>
   * <p>
@@ -114,7 +114,7 @@ object ReflectionToStringBuilder {
     * @param object
     * the Object to be output
     * @return the String result
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object is {@code null}
     * @see ToStringExclude
     * @see ToStringSummary
@@ -146,7 +146,7 @@ object ReflectionToStringBuilder {
     * @param style
     * the style of the {@code toString} to create, may be {@code null}
     * @return the String result
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object or {@code ToStringStyle} is {@code null}
     * @see ToStringExclude
     * @see ToStringSummary
@@ -184,7 +184,7 @@ object ReflectionToStringBuilder {
     * @param outputTransients
     * whether to include transient fields
     * @return the String result
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object is {@code null}
     * @see ToStringExclude
     * @see ToStringSummary
@@ -230,7 +230,7 @@ object ReflectionToStringBuilder {
     * @param outputStatics
     * whether to include static fields
     * @return the String result
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object is {@code null}
     * @see ToStringExclude
     * @see ToStringSummary
@@ -269,7 +269,7 @@ object ReflectionToStringBuilder {
     * If the style is {@code null}, the default {@code ToStringStyle} is used.
     * </p>
     *
-    * @param < T>
+    * @tparam T
     *          the type of the object
     * @param object
     *          the Object to be output
@@ -282,7 +282,7 @@ object ReflectionToStringBuilder {
     * @param reflectUpToClass
     *          the superclass to reflect up to (inclusive), may be {@code null}
     * @return the String result
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object is {@code null}
     * @see ToStringExclude
     * @see ToStringSummary
@@ -326,7 +326,7 @@ object ReflectionToStringBuilder {
     * If the style is {@code null}, the default {@code ToStringStyle} is used.
     * </p>
     *
-    * @param < T>
+    * @tparam T
     *          the type of the object
     * @param object
     *          the Object to be output
@@ -341,7 +341,7 @@ object ReflectionToStringBuilder {
     * @param reflectUpToClass
     *          the superclass to reflect up to (inclusive), may be {@code null}
     * @return the String result
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object is {@code null}
     * @see ToStringExclude
     * @see ToStringSummary
@@ -377,7 +377,7 @@ object ReflectionToStringBuilder {
 
   /**
     * Converts the given Collection into an array of Strings. The returned array does not contain {@code null}
-    * entries. Note that {@link Arrays# sort ( Object[ ] )} will throw an {@link NullPointerException} if an array element
+    * entries. Note that {@link java.util.Arrays# sort ( Object[ ] )} will throw an {@link java.lang.NullPointerException} if an array element
     * is {@code null}.
     *
     * @param collection
@@ -391,7 +391,7 @@ object ReflectionToStringBuilder {
 
   /**
     * Returns a new array of Strings without null elements. Internal method used to normalize exclude lists
-    * (arrays and collections). Note that {@link Arrays# sort ( Object[ ] )} will throw an {@link NullPointerException}
+    * (arrays and collections). Note that {@link java.util.Arrays# sort ( Object[ ] )} will throw an {@link java.lang.NullPointerException}
     * if an array element is {@code null}.
     *
     * @param array
@@ -420,7 +420,7 @@ object ReflectionToStringBuilder {
       .setExcludeFieldNames(excludeFieldNames: _*)
       .toString
 
-  private def checkNotNull(obj: Any) = Validate.notNull(obj, "The Object passed in should not be null.")
+  private def checkNotNull(obj: Any): Any = Validate.notNull(obj, "The Object passed in should not be null.")
 }
 
 /**
@@ -444,7 +444,7 @@ object ReflectionToStringBuilder {
   * the style of the {@code toString} to create, may be {@code null}
   * @param buffer
   * the {@code StringBuffer} to populate, may be {@code null}
-  * @throws IllegalArgumentException
+  * @throws java.lang.IllegalArgumentException
   * if the Object passed in is {@code null}
   */
 class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: StringBuffer)
@@ -487,7 +487,7 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
     *
     * @param object
     * the Object to build a {@code toString} for, must not be {@code null}
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object passed in is {@code null}
     */
   def this(`object`: T) = {
@@ -507,7 +507,7 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
     * the Object to build a {@code toString} for, must not be {@code null}
     * @param style
     * the style of the {@code toString} to create, may be {@code null}
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * if the Object passed in is {@code null}
     */
   def this(`object`: T, style: ToStringStyle) = {
@@ -662,9 +662,9 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
     * @param field
     * The Field to query.
     * @return The Object from the given Field.
-    * @throws IllegalArgumentException
+    * @throws java.lang.IllegalArgumentException
     * see {@link java.lang.reflect.Field# get ( Object )}
-    * @throws IllegalAccessException
+    * @throws java.lang.IllegalAccessException
     * see {@link java.lang.reflect.Field# get ( Object )}
     * @see java.lang.reflect.Field#get(Object)
     */
