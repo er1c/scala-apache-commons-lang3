@@ -57,7 +57,7 @@ object ClassUtils {
     val
     // Includes interfaces.
     INCLUDE,
-    // Excludes interfaces.
+      // Excludes interfaces.
     EXCLUDE = Value
   }
 

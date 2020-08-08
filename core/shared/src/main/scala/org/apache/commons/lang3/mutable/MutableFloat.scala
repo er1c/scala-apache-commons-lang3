@@ -30,8 +30,7 @@ import java.lang.{Float => JavaFloat}
   * @since 2.1
   */
 @SerialVersionUID(5787169186L)
-class MutableFloat()
-  extends Number with Comparable[MutableFloat] with Mutable[Number] {
+class MutableFloat() extends Number with Comparable[MutableFloat] with Mutable[Number] {
   /** The mutable value. */
   private var value: JavaFloat = 0.0f
 

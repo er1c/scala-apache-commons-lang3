@@ -36,8 +36,7 @@ import java.util
   *             <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/translate/LookupTranslator.html">
   *             LookupTranslator</a> instead
   */
-@deprecated class LookupTranslator(val lookup: Array[CharSequence]*)
-  extends CharSequenceTranslator {
+@deprecated class LookupTranslator(val lookup: Array[CharSequence]*) extends CharSequenceTranslator {
 
   final private val lookupMap: util.HashMap[String, String] = new util.HashMap[String, String]
   final private val prefixSet: util.HashSet[Character] = new util.HashSet[Character]

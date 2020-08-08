@@ -35,8 +35,7 @@ object MutableShort {
   * @since 2.1
   */
 @SerialVersionUID(-2135791679L)
-class MutableShort()
-  extends Number with Comparable[MutableShort] with Mutable[Number] {
+class MutableShort() extends Number with Comparable[MutableShort] with Mutable[Number] {
   import MutableShort.{ONE, ZERO}
 
   /** The mutable value. */

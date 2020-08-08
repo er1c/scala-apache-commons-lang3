@@ -30,8 +30,7 @@ import org.apache.commons.lang3.math.NumberUtils
   * @since 2.1
   */
 @SerialVersionUID(512176391864L)
-class MutableInt()
-  extends Number with Comparable[MutableInt] with Mutable[Number] {
+class MutableInt() extends Number with Comparable[MutableInt] with Mutable[Number] {
   /** The mutable value. */
   private var value: Integer = 0
 

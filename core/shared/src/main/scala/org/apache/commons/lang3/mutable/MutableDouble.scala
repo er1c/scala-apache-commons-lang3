@@ -30,8 +30,7 @@ import java.lang.{Double => JavaDouble}
   * @since 2.1
   */
 @SerialVersionUID(1587163916L)
-class MutableDouble()
-  extends Number with Comparable[MutableDouble] with Mutable[Number] {
+class MutableDouble() extends Number with Comparable[MutableDouble] with Mutable[Number] {
   /** The mutable value. */
   private var value: Double = 0.0d
 

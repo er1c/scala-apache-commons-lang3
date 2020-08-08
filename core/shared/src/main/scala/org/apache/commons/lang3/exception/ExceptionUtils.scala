@@ -812,7 +812,7 @@ object ExceptionUtils {
   def throwableOfType[T <: Throwable](throwable: Throwable, `type`: Class[T]): T =
     throwableOf(throwable, `type`, 0, true)
 
-    // [T <: Throwable](throwable: Throwable, clazz: Class[T])
+  // [T <: Throwable](throwable: Throwable, clazz: Class[T])
   /**
     * <p>Returns the first {@code Throwable}
     * that matches the specified type in the exception chain from

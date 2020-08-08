@@ -18,7 +18,7 @@
 package org.apache.commons.lang3.builder
 
 import java.util
-import org.apache.commons.lang3.{ClassUtils, void}
+import org.apache.commons.lang3.{void, ClassUtils}
 
 /**
   * <p>Works with {@link ToStringBuilder} to create a "deep" {@code toString}.</p>
@@ -58,11 +58,9 @@ class RecursiveToStringStyle()
   */
   extends ToStringStyle {
   override def appendDetail(buffer: StringBuffer, fieldName: String, value: Any): Unit = {
-    if (
-      !ClassUtils.isPrimitiveWrapper(value.getClass) &&
-        !(classOf[String] == value.getClass) &&
-        accept(value.getClass)
-    ) buffer.append(ReflectionToStringBuilder.toString(value, this))
+    if (!ClassUtils.isPrimitiveWrapper(value.getClass) &&
+      !(classOf[String] == value.getClass) &&
+      accept(value.getClass)) buffer.append(ReflectionToStringBuilder.toString(value, this))
     else super.appendDetail(buffer, fieldName, value)
 
     ()

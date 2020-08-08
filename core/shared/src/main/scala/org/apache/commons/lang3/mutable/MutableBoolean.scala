@@ -32,8 +32,7 @@ import java.lang.{Boolean => JavaBoolean}
   * @since 2.2
   */
 @SerialVersionUID(-4830728138360036487L)
-class MutableBoolean()
-  extends Mutable[JavaBoolean] with Serializable with Comparable[MutableBoolean] {
+class MutableBoolean() extends Mutable[JavaBoolean] with Serializable with Comparable[MutableBoolean] {
   /** The mutable value. */
   private var value: Boolean = false
 

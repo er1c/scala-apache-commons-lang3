@@ -273,7 +273,10 @@ import scala.util.control.Breaks
     breakable {
       while (offset < inputLineLength) {
         var spaceToWrapAt = -1
-        var matcher = patternToWrapOn.matcher(str.substring(offset, Math.min(Math.min(Integer.MAX_VALUE, offset + updatedWrapLength + 1L).toInt, inputLineLength)))
+        var matcher = patternToWrapOn.matcher(
+          str.substring(
+            offset,
+            Math.min(Math.min(Integer.MAX_VALUE, offset + updatedWrapLength + 1L).toInt, inputLineLength)))
         if (matcher.find) {
           if (matcher.start == 0) {
             offset += matcher.`end`
@@ -289,22 +292,19 @@ import scala.util.control.Breaks
           wrappedLine.appendAll(str.toCharArray, offset, spaceToWrapAt)
           wrappedLine.append(updatedNewLineStr)
           offset = spaceToWrapAt + 1
-        }
-        else { // really long word or URL
+        } else { // really long word or URL
           if (wrapLongWords) { // wrap really long word one line at a time
             wrappedLine.appendAll(str.toCharArray, offset, updatedWrapLength + offset)
             wrappedLine.append(updatedNewLineStr)
             offset += updatedWrapLength
-          }
-          else { // do not wrap really long word, just extend beyond limit
+          } else { // do not wrap really long word, just extend beyond limit
             matcher = patternToWrapOn.matcher(str.substring(offset + updatedWrapLength))
             if (matcher.find) spaceToWrapAt = matcher.start + offset + updatedWrapLength
             if (spaceToWrapAt >= 0) {
               wrappedLine.appendAll(str.toCharArray, offset, spaceToWrapAt)
               wrappedLine.append(updatedNewLineStr)
               offset = spaceToWrapAt + 1
-            }
-            else {
+            } else {
               wrappedLine.appendAll(str.toCharArray, offset, str.length)
               offset = inputLineLength
             }
@@ -348,8 +348,9 @@ import scala.util.control.Breaks
     * @since 2.1
     */
   def capitalize(str: String, delimiters: Char*): String = {
-    val delimLen = if (delimiters == null) -1
-    else delimiters.length
+    val delimLen =
+      if (delimiters == null) -1
+      else delimiters.length
     if (StringUtils.isEmpty(str) || delimLen == 0) return str
     val buffer = str.toCharArray
     var capitalizeNext = true
@@ -392,10 +393,11 @@ import scala.util.control.Breaks
     * @since 2.1
     */
   def capitalizeFully(str: String, delimiters: Char*): String = {
-    val delimLen = if (delimiters == null) -1
-    else delimiters.length
+    val delimLen =
+      if (delimiters == null) -1
+      else delimiters.length
     if (StringUtils.isEmpty(str) || delimLen == 0) return str
-    capitalize(str.toLowerCase, delimiters:_*)
+    capitalize(str.toLowerCase, delimiters: _*)
   }
 
   // TODO: @link to Character#isWhitespace
@@ -425,8 +427,9 @@ import scala.util.control.Breaks
     * @since 2.1
     */
   def uncapitalize(str: String, delimiters: Char*): String = {
-    val delimLen = if (delimiters == null) -1
-    else delimiters.length
+    val delimLen =
+      if (delimiters == null) -1
+      else delimiters.length
     if (StringUtils.isEmpty(str) || delimLen == 0) return str
     val buffer = str.toCharArray
     var uncapitalizeNext = true
@@ -473,12 +476,10 @@ import scala.util.control.Breaks
       if (Character.isUpperCase(ch) || Character.isTitleCase(ch)) {
         buffer(i) = Character.toLowerCase(ch)
         whitespace = false
-      }
-      else if (Character.isLowerCase(ch)) if (whitespace) {
+      } else if (Character.isLowerCase(ch)) if (whitespace) {
         buffer(i) = Character.toTitleCase(ch)
         whitespace = false
-      }
-      else buffer(i) = Character.toUpperCase(ch)
+      } else buffer(i) = Character.toUpperCase(ch)
       else whitespace = Character.isWhitespace(ch)
     }
     new String(buffer)
@@ -522,7 +523,7 @@ import scala.util.control.Breaks
       val ch = str.charAt(i)
       if (isDelimiter(ch, delimiters.toArray)) lastWasGap = true
       else if (lastWasGap) {
-        buf({count += 1; count - 1}) = ch
+        buf({ count += 1; count - 1 }) = ch
         lastWasGap = false
       } else {
         // ignore ch

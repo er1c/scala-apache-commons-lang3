@@ -31,8 +31,7 @@ import java.lang.{Long => JavaLong}
   * @since 2.1
   */
 @SerialVersionUID(62986528375L)
-class MutableLong()
-  extends Number with Comparable[MutableLong] with Mutable[Number] {
+class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Number] {
   /** The mutable value. */
   private var value: Long = 0L
 

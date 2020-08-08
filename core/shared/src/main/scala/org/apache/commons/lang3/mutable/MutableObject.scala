@@ -28,8 +28,7 @@ import java.io.Serializable
   * @since 2.1
   */
 @SerialVersionUID(86241875189L)
-class MutableObject[T <: AnyRef]()
-  extends Mutable[T] with Serializable {
+class MutableObject[T <: AnyRef]() extends Mutable[T] with Serializable {
   /** The mutable value. */
   private var value: T = null.asInstanceOf[T]
 

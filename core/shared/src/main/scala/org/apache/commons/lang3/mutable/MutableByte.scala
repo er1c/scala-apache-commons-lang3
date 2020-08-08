@@ -35,8 +35,7 @@ object MutableJavaByte {
   * @since 2.1
   */
 @SerialVersionUID(-1585823265L)
-class MutableJavaByte()
-  extends Number with Comparable[MutableJavaByte] with Mutable[Number] {
+class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mutable[Number] {
   import MutableJavaByte.{ONE, ZERO}
   /** The mutable value. */
   private var value: Byte = ZERO
