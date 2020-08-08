@@ -17,6 +17,7 @@
 
 package org.apache.commons.lang3.text
 
+import java.lang.{StringBuilder => JStringBuilder}
 import java.io.IOException
 import java.io.Reader
 import java.io.Serializable
@@ -467,7 +468,7 @@ class StrBuilder()
   override def append(seq: CharSequence): StrBuilder = {
     if (seq == null) return appendNull
     if (seq.isInstanceOf[StrBuilder]) return append(seq.asInstanceOf[StrBuilder])
-    if (seq.isInstanceOf[StringBuilder]) return append(seq.asInstanceOf[StringBuilder])
+    if (seq.isInstanceOf[JStringBuilder]) return append(seq.asInstanceOf[JStringBuilder])
     if (seq.isInstanceOf[StringBuffer]) return append(seq.asInstanceOf[StringBuffer])
     if (seq.isInstanceOf[CharBuffer]) return append(seq.asInstanceOf[CharBuffer])
     append(seq.toString)
@@ -636,13 +637,13 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 3.2
     */
-  def append(str: StringBuilder): StrBuilder = {
+  def append(str: JStringBuilder): StrBuilder = {
     if (str == null) return appendNull
     val strLen = str.length
     if (strLen > 0) {
       val len = length
       ensureCapacity(len + strLen)
-      str.underlying.getChars(0, strLen, buffer, len)
+      str.getChars(0, strLen, buffer, len)
       bufferSize += strLen
     }
     this
@@ -658,14 +659,14 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 3.2
     */
-  def append(str: StringBuilder, startIndex: Int, length: Int): StrBuilder = {
+  def append(str: JStringBuilder, startIndex: Int, length: Int): StrBuilder = {
     if (str == null) return appendNull
     if (startIndex < 0 || startIndex > str.length) throw new StringIndexOutOfBoundsException("startIndex must be valid")
     if (length < 0 || (startIndex + length) > str.length) throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
-      str.underlying.getChars(startIndex, startIndex + length, buffer, len)
+      str.getChars(startIndex, startIndex + length, buffer, len)
       bufferSize += length
     }
 
@@ -880,7 +881,7 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 3.2
     */
-  def appendln(str: StringBuilder): StrBuilder = append(str).appendNewLine
+  def appendln(str: JStringBuilder): StrBuilder = append(str).appendNewLine
 
   /**
     * Appends part of a string builder followed by a new line to this string builder.
@@ -892,7 +893,7 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 3.2
     */
-  def appendln(str: StringBuilder, startIndex: Int, length: Int): StrBuilder = append(str, startIndex, length).appendNewLine
+  def appendln(str: JStringBuilder, startIndex: Int, length: Int): StrBuilder = append(str, startIndex, length).appendNewLine
 
   /**
     * Appends part of a string buffer followed by a new line to this string builder.
@@ -2362,7 +2363,7 @@ class StrBuilder()
   @throws[IOException]
   def appendTo(appendable: Appendable): Unit = {
     if (appendable.isInstanceOf[Writer]) appendable.asInstanceOf[Writer].write(buffer, 0, size)
-    else if (appendable.isInstanceOf[java.lang.StringBuilder]) appendable.asInstanceOf[java.lang.StringBuilder].append(buffer, 0, size)
+    else if (appendable.isInstanceOf[JStringBuilder]) appendable.asInstanceOf[JStringBuilder].append(buffer, 0, size)
     else if (appendable.isInstanceOf[StringBuffer]) appendable.asInstanceOf[StringBuffer].append(buffer, 0, size)
     else if (appendable.isInstanceOf[CharBuffer]) appendable.asInstanceOf[CharBuffer].put(buffer, 0, size)
     else appendable.append(this)
@@ -2457,7 +2458,7 @@ class StrBuilder()
     * @return the builder as a StringBuilder
     * @since 3.2
     */
-  def toStringBuilder: StringBuilder = new StringBuilder(size).appendAll(buffer, 0, size)
+  def toStringBuilder: JStringBuilder = new JStringBuilder(size).append(buffer, 0, size)
 
   /**
     * Implement the {@link org.apache.commons.lang3.builder.Builder} interface.

@@ -574,7 +574,7 @@ import scala.util.control.Breaks
     * @return the modifiable list of String tokens, unmodifiable if null array or zero count
     */
   protected def tokenize(srcChars: Array[Char], offset: Int, count: Int): util.List[String] = {
-    if (srcChars == null || count == 0) return Collections.emptyList
+    if (srcChars == null || count == 0) return Collections.emptyList[String]
     val buf = new StrBuilder
     val tokenList = new util.ArrayList[String]
     var pos = offset
@@ -940,7 +940,7 @@ import scala.util.control.Breaks
     *
     * @return a new instance of this Tokenizer which has been reset.
     */
-  override def clone: Any = try {
+  override def clone: AnyRef = try {
     cloneReset
   } catch {
     case _: CloneNotSupportedException => null

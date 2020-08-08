@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Validate
 import java.lang.{Boolean => JavaBoolean}
 
 /**
-  * <p>Assists in implementing {@link java.lang.Object# toString ( )} methods.</p>
+  * <p>Assists in implementing {@link java.lang.Object#toString} methods.</p>
   *
   * <p>This class enables a good and consistent {@code toString()} to be built for any
   * class or object. This class aims to simplify the process by:</p>
