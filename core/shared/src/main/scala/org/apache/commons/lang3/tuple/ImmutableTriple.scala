@@ -76,7 +76,6 @@ object ImmutableTriple {
     new ImmutableTriple[L, M, R](left, middle, right)
 }
 
-
 /**
   * <p>An immutable triple consisting of three {@code Object} elements.</p>
   *

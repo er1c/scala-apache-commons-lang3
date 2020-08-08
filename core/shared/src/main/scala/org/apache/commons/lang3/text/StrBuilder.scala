@@ -91,8 +91,7 @@ object StrBuilder {
   */
 @deprecated
 @SerialVersionUID(7628716375283629643L)
-class StrBuilder()
-  extends CharSequence with Appendable with Serializable with Builder[String] {
+class StrBuilder() extends CharSequence with Appendable with Serializable with Builder[String] {
   /** Internal data storage. */
   protected var buffer: Array[Char] = new Array[Char](StrBuilder.CAPACITY) // TODO make private?
 
@@ -110,7 +109,7 @@ class StrBuilder()
     */
   def this(initialCapacity: Int) {
     this()
-    @inline def capacity: Int = if (initialCapacity <= 0)  StrBuilder.CAPACITY else initialCapacity
+    @inline def capacity: Int = if (initialCapacity <= 0) StrBuilder.CAPACITY else initialCapacity
     this.buffer = new Array[Char](capacity)
   }
 
@@ -394,7 +393,7 @@ class StrBuilder()
       val r = readable.asInstanceOf[Reader]
       ensureCapacity(size + 1)
       var read: Int = 0
-      while ({read = r.read(buffer, size, buffer.length - size); read } != -1) {
+      while ({ read = r.read(buffer, size, buffer.length - size); read } != -1) {
         bufferSize += read
         ensureCapacity(size + 1)
       }
@@ -521,7 +520,8 @@ class StrBuilder()
   def append(str: String, startIndex: Int, length: Int): StrBuilder = {
     if (str == null) return appendNull
     if (startIndex < 0 || startIndex > str.length) throw new StringIndexOutOfBoundsException("startIndex must be valid")
-    if (length < 0 || (startIndex + length) > str.length) throw new StringIndexOutOfBoundsException("length must be valid")
+    if (length < 0 || (startIndex + length) > str.length)
+      throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
@@ -578,8 +578,10 @@ class StrBuilder()
     if (buf == null) return appendNull
     if (buf.hasArray) {
       val totalLength = buf.remaining
-      if (startIndex < 0 || startIndex > totalLength) throw new StringIndexOutOfBoundsException("startIndex must be valid")
-      if (length < 0 || (startIndex + length) > totalLength) throw new StringIndexOutOfBoundsException("length must be valid")
+      if (startIndex < 0 || startIndex > totalLength)
+        throw new StringIndexOutOfBoundsException("startIndex must be valid")
+      if (length < 0 || (startIndex + length) > totalLength)
+        throw new StringIndexOutOfBoundsException("length must be valid")
       val len = length
       ensureCapacity(len + length)
       System.arraycopy(buf, buf.arrayOffset + buf.position() + startIndex, buffer, len, length)
@@ -619,7 +621,8 @@ class StrBuilder()
   def append(str: StringBuffer, startIndex: Int, length: Int): StrBuilder = {
     if (str == null) return appendNull
     if (startIndex < 0 || startIndex > str.length) throw new StringIndexOutOfBoundsException("startIndex must be valid")
-    if (length < 0 || (startIndex + length) > str.length) throw new StringIndexOutOfBoundsException("length must be valid")
+    if (length < 0 || (startIndex + length) > str.length)
+      throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
@@ -662,7 +665,8 @@ class StrBuilder()
   def append(str: JStringBuilder, startIndex: Int, length: Int): StrBuilder = {
     if (str == null) return appendNull
     if (startIndex < 0 || startIndex > str.length) throw new StringIndexOutOfBoundsException("startIndex must be valid")
-    if (length < 0 || (startIndex + length) > str.length) throw new StringIndexOutOfBoundsException("length must be valid")
+    if (length < 0 || (startIndex + length) > str.length)
+      throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
@@ -705,7 +709,8 @@ class StrBuilder()
   def append(str: StrBuilder, startIndex: Int, length: Int): StrBuilder = {
     if (str == null) return appendNull
     if (startIndex < 0 || startIndex > str.length) throw new StringIndexOutOfBoundsException("startIndex must be valid")
-    if (length < 0 || (startIndex + length) > str.length) throw new StringIndexOutOfBoundsException("length must be valid")
+    if (length < 0 || (startIndex + length) > str.length)
+      throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
@@ -746,8 +751,10 @@ class StrBuilder()
     */
   def append(chars: Array[Char], startIndex: Int, length: Int): StrBuilder = {
     if (chars == null) return appendNull
-    if (startIndex < 0 || startIndex > chars.length) throw new StringIndexOutOfBoundsException("Invalid startIndex: " + length)
-    if (length < 0 || (startIndex + length) > chars.length) throw new StringIndexOutOfBoundsException("Invalid length: " + length)
+    if (startIndex < 0 || startIndex > chars.length)
+      throw new StringIndexOutOfBoundsException("Invalid startIndex: " + length)
+    if (length < 0 || (startIndex + length) > chars.length)
+      throw new StringIndexOutOfBoundsException("Invalid length: " + length)
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
@@ -767,17 +774,17 @@ class StrBuilder()
   def append(value: Boolean): StrBuilder = {
     if (value) {
       ensureCapacity(size + 4)
-      buffer({bufferSize += 1; size - 1}) = 't'
-      buffer({bufferSize += 1; size - 1}) = 'r'
-      buffer({bufferSize += 1; size - 1}) = 'u'
-      buffer({bufferSize += 1; size - 1}) = 'e'
+      buffer({ bufferSize += 1; size - 1 }) = 't'
+      buffer({ bufferSize += 1; size - 1 }) = 'r'
+      buffer({ bufferSize += 1; size - 1 }) = 'u'
+      buffer({ bufferSize += 1; size - 1 }) = 'e'
     } else {
       ensureCapacity(size + 5)
-      buffer({bufferSize += 1; size - 1}) = 'f'
-      buffer({bufferSize += 1; size - 1}) = 'a'
-      buffer({bufferSize += 1; size - 1}) = 'l'
-      buffer({bufferSize += 1; size - 1}) = 's'
-      buffer({bufferSize += 1; size - 1}) = 'e'
+      buffer({ bufferSize += 1; size - 1 }) = 'f'
+      buffer({ bufferSize += 1; size - 1 }) = 'a'
+      buffer({ bufferSize += 1; size - 1 }) = 'l'
+      buffer({ bufferSize += 1; size - 1 }) = 's'
+      buffer({ bufferSize += 1; size - 1 }) = 'e'
     }
 
     this
@@ -793,7 +800,7 @@ class StrBuilder()
   override def append(ch: Char): StrBuilder = {
     val len = length
     ensureCapacity(len + 1)
-    buffer({bufferSize += 1; size - 1}) = ch
+    buffer({ bufferSize += 1; size - 1 }) = ch
     this
   }
 
@@ -893,7 +900,8 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 3.2
     */
-  def appendln(str: JStringBuilder, startIndex: Int, length: Int): StrBuilder = append(str, startIndex, length).appendNewLine
+  def appendln(str: JStringBuilder, startIndex: Int, length: Int): StrBuilder =
+    append(str, startIndex, length).appendNewLine
 
   /**
     * Appends part of a string buffer followed by a new line to this string builder.
@@ -905,7 +913,8 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 2.3
     */
-  def appendln(str: StringBuffer, startIndex: Int, length: Int): StrBuilder = append(str, startIndex, length).appendNewLine
+  def appendln(str: StringBuffer, startIndex: Int, length: Int): StrBuilder =
+    append(str, startIndex, length).appendNewLine
 
   /**
     * Appends another string builder followed by a new line to this string builder.
@@ -927,7 +936,8 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 2.3
     */
-  def appendln(str: StrBuilder, startIndex: Int, length: Int): StrBuilder = append(str, startIndex, length).appendNewLine
+  def appendln(str: StrBuilder, startIndex: Int, length: Int): StrBuilder =
+    append(str, startIndex, length).appendNewLine
 
   /**
     * Appends a char array followed by a new line to the string builder.
@@ -949,7 +959,8 @@ class StrBuilder()
     * @return this, to enable chaining
     * @since 2.3
     */
-  def appendln(chars: Array[Char], startIndex: Int, length: Int): StrBuilder = append(chars, startIndex, length).appendNewLine
+  def appendln(chars: Array[Char], startIndex: Int, length: Int): StrBuilder =
+    append(chars, startIndex, length).appendNewLine
 
   /**
     * Appends a boolean value followed by a new line to the string builder.
@@ -1055,7 +1066,7 @@ class StrBuilder()
     * @since 2.3
     */
   def appendAll(it: util.Iterator[_]): StrBuilder = {
-    if (it != null) while ( {
+    if (it != null) while ({
       it.hasNext
     }) append(it.next)
     this
@@ -1097,7 +1108,7 @@ class StrBuilder()
     if (iterable != null) {
       val sep = Objects.toString(separator, "")
       val it = iterable.iterator
-      while ( {
+      while ({
         it.hasNext
       }) {
         append(it.next)
@@ -1120,7 +1131,7 @@ class StrBuilder()
   def appendWithSeparators(it: util.Iterator[_], separator: String): StrBuilder = {
     if (it != null) {
       val sep = Objects.toString(separator, "")
-      while ( {
+      while ({
         it.hasNext
       }) {
         append(it.next)
@@ -1180,8 +1191,9 @@ class StrBuilder()
     * @since 2.5
     */
   def appendSeparator(standard: String, defaultIfEmpty: String): StrBuilder = {
-    val str = if (isEmpty) defaultIfEmpty
-    else standard
+    val str =
+      if (isEmpty) defaultIfEmpty
+      else standard
     if (str != null) append(str)
     this
   }
@@ -1225,7 +1237,7 @@ class StrBuilder()
   def appendSeparator(standard: Char, defaultIfEmpty: Char): StrBuilder = {
     if (size > 0)
       append(standard)
-      else append(defaultIfEmpty)
+    else append(defaultIfEmpty)
     this
   }
 
@@ -1293,7 +1305,7 @@ class StrBuilder()
     if (length >= 0) {
       ensureCapacity(size + length)
       for (_ <- 0 until length) {
-        buffer({bufferSize += 1; size - 1}) = padChar
+        buffer({ bufferSize += 1; size - 1 }) = padChar
       }
     }
     this
@@ -1313,8 +1325,9 @@ class StrBuilder()
   def appendFixedWidthPadLeft(obj: Any, width: Int, padChar: Char): StrBuilder = {
     if (width > 0) {
       ensureCapacity(size + width)
-      var str = if (obj == null) getNullText
-      else obj.toString
+      var str =
+        if (obj == null) getNullText
+        else obj.toString
       if (str == null) str = StringUtils.EMPTY
       val strLen = str.length
       if (strLen >= width) str.getChars(strLen - width, strLen, buffer, size)
@@ -1357,8 +1370,9 @@ class StrBuilder()
   def appendFixedWidthPadRight(obj: Any, width: Int, padChar: Char): StrBuilder = {
     if (width > 0) {
       ensureCapacity(size + width)
-      var str = if (obj == null) getNullText
-      else obj.toString
+      var str =
+        if (obj == null) getNullText
+        else obj.toString
       if (str == null) str = StringUtils.EMPTY
       val strLen = str.length
       if (strLen >= width) str.getChars(0, width, buffer, size)
@@ -1384,7 +1398,8 @@ class StrBuilder()
     * @param padChar the pad character to use
     * @return this, to enable chaining
     */
-  def appendFixedWidthPadRight(value: Int, width: Int, padChar: Char): StrBuilder = appendFixedWidthPadRight(String.valueOf(value), width, padChar)
+  def appendFixedWidthPadRight(value: Int, width: Int, padChar: Char): StrBuilder =
+    appendFixedWidthPadRight(String.valueOf(value), width, padChar)
 
   /**
     * Inserts the string representation of an object into this builder.
@@ -1466,7 +1481,8 @@ class StrBuilder()
     validateIndex(index)
     if (chars == null) return insert(index, nullText)
     if (offset < 0 || offset > chars.length) throw new StringIndexOutOfBoundsException("Invalid offset: " + offset)
-    if (length < 0 || offset + length > chars.length) throw new StringIndexOutOfBoundsException("Invalid length: " + length)
+    if (length < 0 || offset + length > chars.length)
+      throw new StringIndexOutOfBoundsException("Invalid length: " + length)
     if (length > 0) {
       ensureCapacity(size + length)
       System.arraycopy(buffer, index, buffer, index + length, size - index)
@@ -1491,18 +1507,18 @@ class StrBuilder()
     if (value) {
       ensureCapacity(size + 4)
       System.arraycopy(buffer, idx, buffer, idx + 4, size - idx)
-      buffer({idx += 1; idx - 1}) = 't'
-      buffer({idx += 1; idx - 1}) = 'r'
-      buffer({idx += 1; idx - 1}) = 'u'
+      buffer({ idx += 1; idx - 1 }) = 't'
+      buffer({ idx += 1; idx - 1 }) = 'r'
+      buffer({ idx += 1; idx - 1 }) = 'u'
       buffer(idx) = 'e'
       bufferSize += 4
     } else {
       ensureCapacity(size + 5)
       System.arraycopy(buffer, idx, buffer, idx + 5, size - idx)
-      buffer({idx += 1; idx - 1}) = 'f'
-      buffer({idx += 1; idx - 1}) = 'a'
-      buffer({idx += 1; idx - 1}) = 'l'
-      buffer({idx += 1; idx - 1}) = 's'
+      buffer({ idx += 1; idx - 1 }) = 'f'
+      buffer({ idx += 1; idx - 1 }) = 'a'
+      buffer({ idx += 1; idx - 1 }) = 'l'
+      buffer({ idx += 1; idx - 1 }) = 's'
       buffer(idx) = 'e'
       bufferSize += 5
     }
@@ -1566,7 +1582,7 @@ class StrBuilder()
     while (i < size) {
       if (buffer(i) == ch) {
         val start = i
-        while ({i += 1; i} < size && buffer(i) == ch) {}
+        while ({ i += 1; i } < size && buffer(i) == ch) {}
         val len = i - start
         deleteImpl(start, i, len)
         i -= len
@@ -1677,8 +1693,9 @@ class StrBuilder()
     */
   def replace(startIndex: Int, endIndex: Int, replaceStr: String): StrBuilder = {
     val newEndIndex = validateRange(startIndex, endIndex)
-    val insertLen = if (replaceStr == null) 0
-    else replaceStr.length
+    val insertLen =
+      if (replaceStr == null) 0
+      else replaceStr.length
     replaceImpl(startIndex, newEndIndex, newEndIndex - startIndex, replaceStr, insertLen)
     this
   }
@@ -1724,11 +1741,13 @@ class StrBuilder()
     * @return this, to enable chaining
     */
   def replaceAll(searchStr: String, replaceStr: String): StrBuilder = {
-    val searchLen = if (searchStr == null) 0
-    else searchStr.length
+    val searchLen =
+      if (searchStr == null) 0
+      else searchStr.length
     if (searchLen > 0) {
-      val replaceLen = if (replaceStr == null) 0
-      else replaceStr.length
+      val replaceLen =
+        if (replaceStr == null) 0
+        else replaceStr.length
       var index = indexOf(searchStr, 0)
       while (index >= 0) {
         replaceImpl(index, index + searchLen, searchLen, replaceStr, replaceLen)
@@ -1805,7 +1824,12 @@ class StrBuilder()
     * @return this, to enable chaining
     * @throws java.lang.IndexOutOfBoundsException if start index is invalid
     */
-  def replace(matcher: StrMatcher, replaceStr: String, startIndex: Int, endIndex: Int, replaceCount: Int): StrBuilder = {
+  def replace(
+    matcher: StrMatcher,
+    replaceStr: String,
+    startIndex: Int,
+    endIndex: Int,
+    replaceCount: Int): StrBuilder = {
     val newEndIndex = validateRange(startIndex, endIndex)
     replaceImpl(matcher, replaceStr, startIndex, newEndIndex, replaceCount)
   }
@@ -1825,7 +1849,12 @@ class StrBuilder()
     * @return this, to enable chaining
     * @throws java.lang.IndexOutOfBoundsException if any index is invalid
     */
-  private def replaceImpl(matcher: StrMatcher, replaceStr: String, from: Int, to: Int, replaceCount: Int): StrBuilder = {
+  private def replaceImpl(
+    matcher: StrMatcher,
+    replaceStr: String,
+    from: Int,
+    to: Int,
+    replaceCount: Int): StrBuilder = {
     if (matcher == null || size == 0) return this
     val replaceLen =
       if (replaceStr == null) 0
@@ -1927,7 +1956,7 @@ class StrBuilder()
     if (len > size) return false
     var pos = size - len
     var i = 0
-    while ( {
+    while ({
       i < len
     }) {
       if (buffer(pos) != str.charAt(i)) return false
@@ -1983,9 +2012,10 @@ class StrBuilder()
     * @param length the number of characters to extract, negative returns empty string
     * @return the new string
     */
-  def leftString(length: Int): String = if (length <= 0) StringUtils.EMPTY
-  else if (length >= size) new String(buffer, 0, size)
-  else new String(buffer, 0, length)
+  def leftString(length: Int): String =
+    if (length <= 0) StringUtils.EMPTY
+    else if (length >= size) new String(buffer, 0, size)
+    else new String(buffer, 0, length)
 
   /**
     * Extracts the rightmost characters from the string builder without
@@ -1999,9 +2029,10 @@ class StrBuilder()
     * @param length the number of characters to extract, negative returns empty string
     * @return the new string
     */
-  def rightString(length: Int): String = if (length <= 0) StringUtils.EMPTY
-  else if (length >= size) new String(buffer, 0, size)
-  else new String(buffer, size - length, length)
+  def rightString(length: Int): String =
+    if (length <= 0) StringUtils.EMPTY
+    else if (length >= size) new String(buffer, 0, size)
+    else new String(buffer, size - length, length)
 
   /**
     * Extracts some characters from the middle of the string builder without
@@ -2499,7 +2530,7 @@ class StrBuilder()
   /**
     * Inner class to allow StrBuilder to operate as a tokenizer.
     */
-  private[text] class StrBuilderTokenizer private[text]() extends StrTokenizer {
+  private[text] class StrBuilderTokenizer private[text] () extends StrTokenizer {
     /** {@inheritDoc }*/
     override protected def tokenize(chars: Array[Char], offset: Int, count: Int): util.List[String] = {
       if (chars == null) return super.tokenize(buffer, 0, size)
@@ -2516,7 +2547,7 @@ class StrBuilder()
   /**
     * Inner class to allow StrBuilder to operate as a reader.
     */
-  private[text] class StrBuilderReader private[text]() extends Reader {
+  private[text] class StrBuilderReader private[text] () extends Reader {
     /** The current stream position. */
     private var pos: Int = 0
     /** The last mark position. */
@@ -2528,11 +2559,12 @@ class StrBuilder()
 
     override def read: Int = {
       if (ready == false) return -1
-      charAt({pos += 1; pos - 1}).toInt
+      charAt({ pos += 1; pos - 1 }).toInt
     }
 
     override def read(b: Array[Char], off: Int, len: Int): Int = {
-      if (off < 0 || len < 0 || off > b.length || (off + len) > b.length || (off + len) < 0) throw new IndexOutOfBoundsException
+      if (off < 0 || len < 0 || off > b.length || (off + len) > b.length || (off + len) < 0)
+        throw new IndexOutOfBoundsException
       if (len == 0) return 0
       if (pos >= size) return -1
 
@@ -2567,12 +2599,10 @@ class StrBuilder()
   /**
     * Inner class to allow StrBuilder to operate as a writer.
     */
-  private[text] class StrBuilderWriter private[text]() extends Writer {
-    override def close(): Unit = {
-    }
+  private[text] class StrBuilderWriter private[text] () extends Writer {
+    override def close(): Unit = {}
 
-    override def flush(): Unit = {
-    }
+    override def flush(): Unit = {}
 
     override def write(c: Int): Unit = {
       append(c.toChar)

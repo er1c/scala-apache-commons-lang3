@@ -37,7 +37,6 @@ import org.apache.commons.lang3.Validate
  * limitations under the License.
  */
 
-
 /**
   * <p>Provides IEEE-754r variants of NumberUtils methods. </p>
   *
@@ -132,9 +131,10 @@ object IEEE754rUtils {
     * @param b value 2
     * @return the smallest of the values
     */
-  def min(a: Float, b: Float): Float = if (JavaFloat.isNaN(a)) b
-  else if (JavaFloat.isNaN(b)) a
-  else Math.min(a, b)
+  def min(a: Float, b: Float): Float =
+    if (JavaFloat.isNaN(a)) b
+    else if (JavaFloat.isNaN(b)) a
+    else Math.min(a, b)
 
   /**
     * <p>Returns the maximum value in an array.</p>
@@ -197,9 +197,10 @@ object IEEE754rUtils {
     * @param b value 2
     * @return the largest of the values
     */
-  def max(a: Double, b: Double): Double = if (JavaDouble.isNaN(a)) b
-  else if (JavaDouble.isNaN(b)) a
-  else Math.max(a, b)
+  def max(a: Double, b: Double): Double =
+    if (JavaDouble.isNaN(a)) b
+    else if (JavaDouble.isNaN(b)) a
+    else Math.max(a, b)
 
   /**
     * <p>Gets the maximum of three {@code float} values.</p>
@@ -222,7 +223,8 @@ object IEEE754rUtils {
     * @param b value 2
     * @return the largest of the values
     */
-  def max(a: Float, b: Float): Float = if (JavaFloat.isNaN(a)) b
-  else if (JavaFloat.isNaN(b)) a
-  else Math.max(a, b)
+  def max(a: Float, b: Float): Float =
+    if (JavaFloat.isNaN(a)) b
+    else if (JavaFloat.isNaN(b)) a
+    else Math.max(a, b)
 }

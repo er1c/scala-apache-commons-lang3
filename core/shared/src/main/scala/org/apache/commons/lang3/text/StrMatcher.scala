@@ -178,7 +178,7 @@ import org.apache.commons.lang3.StringUtils
   /**
     * Class used to define a set of characters for matching purposes.
     */
-  final private[text] class CharSetMatcher private[text]() extends StrMatcher {
+  final private[text] class CharSetMatcher private[text] () extends StrMatcher {
 
     /**
       * Constructor that creates a matcher from a character array.
@@ -213,14 +213,13 @@ import org.apache.commons.lang3.StringUtils
     *
     * @param ch the character to match
     */
-  final private[text] class CharMatcher private[text](ch: Char) extends StrMatcher {
+  final private[text] class CharMatcher private[text] (ch: Char) extends StrMatcher {
     override def isMatch(buffer: Array[Char], pos: Int, bufferStart: Int, bufferEnd: Int): Int =
       if (ch == buffer(pos)) 1
       else 0
   }
 
-
-  final private[text] class StringMatcher private[text]() extends StrMatcher {
+  final private[text] class StringMatcher private[text] () extends StrMatcher {
     /** The string to match, as a character array. */
     private var chars: Array[Char] = null
 
@@ -266,7 +265,7 @@ import org.apache.commons.lang3.StringUtils
     * Class used to match no characters.
     *
     */
-  final private[text] class NoMatcher private[text]() extends StrMatcher {
+  final private[text] class NoMatcher private[text] () extends StrMatcher {
     /**
       * Always returns {@code false}.
       *
@@ -282,14 +281,15 @@ import org.apache.commons.lang3.StringUtils
   /**
     * Class used to match whitespace as per trim().
     */
-  final private[text] class TrimMatcher private[text]()
+  final private[text] class TrimMatcher private[text] ()
 
   /**
     * Constructs a new instance of {@code TrimMatcher}.
     */
     extends StrMatcher {
-    override def isMatch(buffer: Array[Char], pos: Int, bufferStart: Int, bufferEnd: Int): Int = if (buffer(pos) <= 32) 1
-    else 0
+    override def isMatch(buffer: Array[Char], pos: Int, bufferStart: Int, bufferEnd: Int): Int =
+      if (buffer(pos) <= 32) 1
+      else 0
   }
 
 }
@@ -297,7 +297,7 @@ import org.apache.commons.lang3.StringUtils
 /**
   * Constructor.
   */
-@deprecated abstract class StrMatcher protected() {
+@deprecated abstract class StrMatcher protected () {
   /**
     * Returns the number of matching characters, zero for no match.
     * <p>

@@ -379,7 +379,7 @@ import scala.util.control.Breaks
     * @return the next sequential token, or null when no more tokens are found
     */
   def nextToken: String = {
-    if (hasNext) tokens({tokenPos += 1; tokenPos - 1})
+    if (hasNext) tokens({ tokenPos += 1; tokenPos - 1 })
     else null
   }
 
@@ -389,7 +389,7 @@ import scala.util.control.Breaks
     * @return the previous sequential token, or null when no more tokens are found
     */
   def previousToken: String = {
-    if (hasPrevious) tokens({tokenPos -= 1; tokenPos})
+    if (hasPrevious) tokens({ tokenPos -= 1; tokenPos })
     else null
   }
 
@@ -546,8 +546,7 @@ import scala.util.control.Breaks
     if (tokens == null) if (chars == null) { // still call tokenize as subclass may do some work
       val split = tokenize(null, 0, 0)
       tokens = split.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
-    }
-    else {
+    } else {
       val split = tokenize(chars, 0, chars.length)
       tokens = split.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
     }
@@ -616,14 +615,21 @@ import scala.util.control.Breaks
     * @return the starting position of the next field (the character
     *         immediately after the delimiter), or -1 if end of string found
     */
-  private def readNextToken(srcChars: Array[Char], start: Int, len: Int, workArea: StrBuilder, tokenList: util.List[String]): Int = { // skip all leading whitespace, unless it is the
+  private def readNextToken(
+    srcChars: Array[Char],
+    start: Int,
+    len: Int,
+    workArea: StrBuilder,
+    tokenList: util.List[String]): Int = { // skip all leading whitespace, unless it is the
     var pos: Int = start
 
     breakable {
       // field delimiter or the quote character
       while (pos < len) {
-        val removeLen = Math.max(getIgnoredMatcher.isMatch(srcChars, pos, pos, len), getTrimmerMatcher.isMatch(srcChars, pos, pos, len))
-        if (removeLen == 0 || getDelimiterMatcher.isMatch(srcChars, pos, pos, len) > 0 || getQuoteMatcher.isMatch(srcChars, pos, pos, len) > 0) break()
+        val removeLen = Math
+          .max(getIgnoredMatcher.isMatch(srcChars, pos, pos, len), getTrimmerMatcher.isMatch(srcChars, pos, pos, len))
+        if (removeLen == 0 || getDelimiterMatcher
+            .isMatch(srcChars, pos, pos, len) > 0 || getQuoteMatcher.isMatch(srcChars, pos, pos, len) > 0) break()
         pos += removeLen
       }
     }
@@ -661,7 +667,14 @@ import scala.util.control.Breaks
     *         immediately after the delimiter, or if end of string found,
     *         then the length of string
     */
-  private def readWithQuotes(srcChars: Array[Char], start: Int, len: Int, workArea: StrBuilder, tokenList: util.List[String], quoteStart: Int, quoteLen: Int): Int = { // Loop until we've found the end of the quoted
+  private def readWithQuotes(
+    srcChars: Array[Char],
+    start: Int,
+    len: Int,
+    workArea: StrBuilder,
+    tokenList: util.List[String],
+    quoteStart: Int,
+    quoteLen: Int): Int = { // Loop until we've found the end of the quoted
     // string or the end of the input
     workArea.clear
     var pos = start
@@ -689,11 +702,10 @@ import scala.util.control.Breaks
           }
         } else {
           // copy regular character from inside quotes
-          workArea.append(srcChars({pos += 1; pos - 1}))
+          workArea.append(srcChars({ pos += 1; pos - 1 }))
           trimStart = workArea.size
         }
-      }
-      else { // Not in quoting mode
+      } else { // Not in quoting mode
         // check for delimiter, and thus end of token
         val delimLen = getDelimiterMatcher.isMatch(srcChars, pos, start, len)
         if (delimLen > 0) { // return condition when end of token found
@@ -719,7 +731,7 @@ import scala.util.control.Breaks
               pos += trimmedLen
             } else {
               // copy regular character from outside quotes
-              workArea.append(srcChars({pos += 1; pos - 1}))
+              workArea.append(srcChars({ pos += 1; pos - 1 }))
               trimStart = workArea.size
             }
           }
@@ -940,11 +952,12 @@ import scala.util.control.Breaks
     *
     * @return a new instance of this Tokenizer which has been reset.
     */
-  override def clone: AnyRef = try {
-    cloneReset
-  } catch {
-    case _: CloneNotSupportedException => null
-  }
+  override def clone: AnyRef =
+    try {
+      cloneReset
+    } catch {
+      case _: CloneNotSupportedException => null
+    }
 
   /**
     * Creates a new instance of this Tokenizer. The new instance is reset so that

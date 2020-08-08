@@ -38,7 +38,8 @@ object MutableTriple {
     * @return   the empty array singleton that can be assigned without compiler warning.
     * @since 3.10.
     */
-  @SuppressWarnings(Array("unchecked")) def emptyArray[L, M, R]: Array[MutableTriple[L, M, R]] = EMPTY_ARRAY.asInstanceOf[Array[MutableTriple[L, M, R]]]
+  @SuppressWarnings(Array("unchecked")) def emptyArray[L, M, R]: Array[MutableTriple[L, M, R]] =
+    EMPTY_ARRAY.asInstanceOf[Array[MutableTriple[L, M, R]]]
 
   /**
     * <p>Obtains a mutable triple of three objects inferring the generic types.</p>
@@ -56,7 +57,6 @@ object MutableTriple {
     */
   def of[L, M, R](left: L, middle: M, right: R) = new MutableTriple[L, M, R](left, middle, right)
 }
-
 
 /**
   * <p>A mutable triple consisting of three {@code Object} elements.</p>

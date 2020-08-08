@@ -52,7 +52,8 @@ object Triple {
     * @return the empty array singleton that can be assigned without compiler warning.
     * @since 3.10.
     */
-  @SuppressWarnings(Array("unchecked")) def emptyArray[L, M, R]: Array[Triple[L, M, R]] = EMPTY_ARRAY.asInstanceOf[Array[Triple[L, M, R]]]
+  @SuppressWarnings(Array("unchecked")) def emptyArray[L, M, R]: Array[Triple[L, M, R]] =
+    EMPTY_ARRAY.asInstanceOf[Array[Triple[L, M, R]]]
 
   /**
     * <p>Obtains an immutable triple of three objects inferring the generic types.</p>
@@ -96,7 +97,12 @@ abstract class Triple[L, M, R] extends Comparable[Triple[L, M, R]] with Serializ
     * @param other the other triple, not null
     * @return negative if this is less, zero if equal, positive if greater
     */
-  override def compareTo(other: Triple[L, M, R]): Int = new CompareToBuilder().append(getLeft, other.getLeft).append(getMiddle, other.getMiddle).append(getRight, other.getRight).toComparison
+  override def compareTo(other: Triple[L, M, R]): Int =
+    new CompareToBuilder()
+      .append(getLeft, other.getLeft)
+      .append(getMiddle, other.getMiddle)
+      .append(getRight, other.getRight)
+      .toComparison
 
   /**
     * <p>Compares this triple to another based on the three elements.</p>
@@ -109,7 +115,8 @@ abstract class Triple[L, M, R] extends Comparable[Triple[L, M, R]] with Serializ
 
     if (obj.isInstanceOf[Triple[_, _, _]]) {
       val other = obj.asInstanceOf[Triple[_, _, _]]
-      return Objects.equals(getLeft, other.getLeft) && Objects.equals(getMiddle, other.getMiddle) && Objects.equals(getRight, other.getRight)
+      return Objects.equals(getLeft, other.getLeft) && Objects.equals(getMiddle, other.getMiddle) && Objects
+        .equals(getRight, other.getRight)
     }
 
     false

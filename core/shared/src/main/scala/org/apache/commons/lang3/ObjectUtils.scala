@@ -219,22 +219,21 @@ object ObjectUtils {
         if (componentType.isPrimitive) {
           var length = ReflectArray.getLength(obj)
           result = ReflectArray.newInstance(componentType, length)
-          while ({length -= 1; length + 1} > 0)
+          while ({ length -= 1; length + 1 } > 0)
             ReflectArray.set(result, length, ReflectArray.get(obj, length))
+        } else result = obj.asInstanceOf[Array[AnyRef]].clone
+      } else
+        try {
+          val clone = obj.getClass.getMethod("clone")
+          result = clone.invoke(obj)
+        } catch {
+          case e: NoSuchMethodException =>
+            throw new CloneFailedException("Cloneable type " + obj.getClass.getName + " has no clone method", e)
+          case e: IllegalAccessException =>
+            throw new CloneFailedException("Cannot clone Cloneable type " + obj.getClass.getName, e)
+          case e: InvocationTargetException =>
+            throw new CloneFailedException("Exception cloning Cloneable type " + obj.getClass.getName, e.getCause)
         }
-        else result = obj.asInstanceOf[Array[AnyRef]].clone
-      }
-      else try {
-        val clone = obj.getClass.getMethod("clone")
-        result = clone.invoke(obj)
-      } catch {
-        case e: NoSuchMethodException =>
-          throw new CloneFailedException("Cloneable type " + obj.getClass.getName + " has no clone method", e)
-        case e: IllegalAccessException =>
-          throw new CloneFailedException("Cannot clone Cloneable type " + obj.getClass.getName, e)
-        case e: InvocationTargetException =>
-          throw new CloneFailedException("Exception cloning Cloneable type " + obj.getClass.getName, e.getCause)
-      }
 
       @SuppressWarnings(Array("unchecked")) // OK because input is of type T
       val checked: T = result.asInstanceOf[T]
@@ -493,7 +492,9 @@ object ObjectUtils {
     * @since 3.2
     */
   def CONST_BYTE(v: Int): Byte = {
-    if (v < Byte.MinValue || v > Byte.MaxValue) throw new IllegalArgumentException("Supplied value must be a valid byte literal between -128 and 127: [" + v + "]")
+    if (v < Byte.MinValue || v > Byte.MaxValue)
+      throw new IllegalArgumentException(
+        "Supplied value must be a valid byte literal between -128 and 127: [" + v + "]")
     v.toByte
   }
 
@@ -518,7 +519,9 @@ object ObjectUtils {
     * @since 3.2
     */
   def CONST_SHORT(v: Int): Short = {
-    if (v < Short.MinValue || v > Short.MaxValue) throw new IllegalArgumentException("Supplied value must be a valid byte literal between -32768 and 32767: [" + v + "]")
+    if (v < Short.MinValue || v > Short.MaxValue)
+      throw new IllegalArgumentException(
+        "Supplied value must be a valid byte literal between -32768 and 32767: [" + v + "]")
     v.toShort
   }
 
@@ -539,8 +542,9 @@ object ObjectUtils {
     * @return {@code object} if it is not {@code null}, defaultValue otherwise
     *         TODO Rename to getIfNull in 4.0
     */
-  def defaultIfNull[T](`object`: T, defaultValue: T): T = if (`object` != null) `object`
-  else defaultValue
+  def defaultIfNull[T](`object`: T, defaultValue: T): T =
+    if (`object` != null) `object`
+    else defaultValue
 
   /**
     * <p>Compares two objects for equality, where either one or both
@@ -937,12 +941,12 @@ object ObjectUtils {
     * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
     * @since 3.0.1
     */
-  @SafeVarargs def median[T : ClassTag](comparator: Comparator[T], items: T*): T = {
+  @SafeVarargs def median[T: ClassTag](comparator: Comparator[T], items: T*): T = {
     Validate.notEmpty(items.toArray, "null/empty items")
     Validate.noNullElements(items)
     Validate.notNull(comparator, "null comparator")
     val sort = new util.TreeSet[T](comparator)
-    Collections.addAll(sort, items:_*)
+    Collections.addAll(sort, items: _*)
 
     @SuppressWarnings(Array("unchecked")) //we know all items added were T instances
     val result: T = sort.asScala.toIndexedSeq((sort.size - 1) / 2)
@@ -960,11 +964,11 @@ object ObjectUtils {
     * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
     * @since 3.0.1
     */
-  @SafeVarargs def median[T <: Comparable[Any] : ClassTag](items: T*): T = {
+  @SafeVarargs def median[T <: Comparable[Any]: ClassTag](items: T*): T = {
     Validate.notEmpty(items.toArray)
     Validate.noNullElements(items)
     val sort = new util.TreeSet[T]
-    Collections.addAll(sort, items:_*)
+    Collections.addAll(sort, items: _*)
     @SuppressWarnings(Array("unchecked")) val result = sort.asScala.toIndexedSeq((sort.size - 1) / 2)
     result
   }
