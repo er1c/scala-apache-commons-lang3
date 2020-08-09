@@ -294,7 +294,7 @@ object ExceptionUtils {
   /**
     * <p>Returns an array where each element is a line from the argument.</p>
     *
-    * <p>The end of line is determined by the value of {@link java.lang.System# lineSeparator ( )}.</p>
+    * <p>The end of line is determined by the value of {@link java.lang.System#lineSeparator ( )}.</p>
     *
     * @param stackTrace a stack trace String
     * @return an array where each element is a line from the argument

@@ -1614,7 +1614,7 @@ abstract class ToStringStyle protected ()
   }
 
   /**
-    * <p>Append the {@link java.lang.System# identityHashCode ( java.lang.Object )}.</p>
+    * <p>Append the {@link java.lang.System#identityHashCode ( java.lang.Object )}.</p>
     *
     * @param buffer the {@code StringBuffer} to populate
     * @param object the {@code Object} whose id to output

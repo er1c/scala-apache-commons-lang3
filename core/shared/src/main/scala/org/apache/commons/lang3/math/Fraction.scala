@@ -243,7 +243,7 @@
 //    *
 //    * @param str the string to parse, must not be {@code null}
 //    * @return the new {@code Fraction} instance
-//    * @throws NullPointerException  if the string is {@code null}
+//    * @throws java.lang.NullPointerException  if the string is {@code null}
 //    * @throws NumberFormatException if the number format is invalid
 //    */
 //  def getFraction(str: String): Fraction = {
@@ -599,7 +599,7 @@
 //        *
 //        * @param fraction the fraction to add, must not be {@code null}
 //        * @return a {@code Fraction} instance with the resulting values
-//        * @throws IllegalArgumentException if the fraction is {@code null}
+//        * @throws java.lang.IllegalArgumentException if the fraction is {@code null}
 //        * @throws ArithmeticException      if the resulting numerator or denominator exceeds
 //        *                                  {@code Integer.MAX_VALUE}
 //        */
@@ -611,7 +611,7 @@
 //        *
 //        * @param fraction the fraction to subtract, must not be {@code null}
 //        * @return a {@code Fraction} instance with the resulting values
-//        * @throws IllegalArgumentException if the fraction is {@code null}
+//        * @throws java.lang.IllegalArgumentException if the fraction is {@code null}
 //        * @throws ArithmeticException      if the resulting numerator or denominator
 //        *                                  cannot be represented in an {@code int}.
 //        */
@@ -623,7 +623,7 @@
 //        * @param fraction the fraction to subtract, must not be {@code null}
 //        * @param isAdd    true to add, false to subtract
 //        * @return a {@code Fraction} instance with the resulting values
-//        * @throws IllegalArgumentException if the fraction is {@code null}
+//        * @throws java.lang.IllegalArgumentException if the fraction is {@code null}
 //        * @throws ArithmeticException      if the resulting numerator or denominator
 //        *                                  cannot be represented in an {@code int}.
 //        */
@@ -666,7 +666,7 @@
 //        *
 //        * @param fraction the fraction to multiply by, must not be {@code null}
 //        * @return a {@code Fraction} instance with the resulting values
-//        * @throws NullPointerException if the fraction is {@code null}
+//        * @throws java.lang.NullPointerException if the fraction is {@code null}
 //        * @throws ArithmeticException  if the resulting numerator or denominator exceeds
 //        *                              {@code Integer.MAX_VALUE}
 //        */
@@ -685,7 +685,7 @@
 //        *
 //        * @param fraction the fraction to divide by, must not be {@code null}
 //        * @return a {@code Fraction} instance with the resulting values
-//        * @throws NullPointerException if the fraction is {@code null}
+//        * @throws java.lang.NullPointerException if the fraction is {@code null}
 //        * @throws ArithmeticException  if the fraction to divide by is zero
 //        * @throws ArithmeticException  if the resulting numerator or denominator exceeds
 //        *                              {@code Integer.MAX_VALUE}
@@ -733,7 +733,7 @@
 //        * @param other the object to compare to
 //        * @return -1 if this is less, 0 if equal, +1 if greater
 //        * @throws ClassCastException   if the object is not a {@code Fraction}
-//        * @throws NullPointerException if the object is {@code null}
+//        * @throws java.lang.NullPointerException if the object is {@code null}
 //        */
 //      override def compareTo(other: Fraction): Int = {
 //        if (this eq other) return 0

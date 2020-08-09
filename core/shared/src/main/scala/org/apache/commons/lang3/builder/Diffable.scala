@@ -47,7 +47,7 @@
 //    *
 //    * @param obj the object to diff against, can be {@code null}
 //    * @return a list of differences
-//    * @throws NullPointerException if the specified object is {@code null}
+//    * @throws java.lang.NullPointerException if the specified object is {@code null}
 //    */
 //  def diff(obj: T): DiffResult
 //}

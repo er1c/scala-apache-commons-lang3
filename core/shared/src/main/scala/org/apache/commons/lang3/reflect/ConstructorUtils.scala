@@ -73,7 +73,7 @@
 //    * @param cls  the class to be constructed, not {@code null}
 //    * @param args the array of arguments, {@code null} treated as empty
 //    * @return new instance of {@code cls}, not {@code null}
-//    * @throws NullPointerException      if {@code cls} is {@code null}
+//    * @throws java.lang.NullPointerException      if {@code cls} is {@code null}
 //    * @throws NoSuchMethodException     if a matching constructor cannot be found
 //    * @throws IllegalAccessException    if invocation is not permitted by security
 //    * @throws InvocationTargetException if an error occurs on invocation
@@ -102,7 +102,7 @@
 //    * @param args           the array of arguments, {@code null} treated as empty
 //    * @param parameterTypes the array of parameter types, {@code null} treated as empty
 //    * @return new instance of {@code cls}, not {@code null}
-//    * @throws NullPointerException      if {@code cls} is {@code null}
+//    * @throws java.lang.NullPointerException      if {@code cls} is {@code null}
 //    * @throws NoSuchMethodException     if a matching constructor cannot be found
 //    * @throws IllegalAccessException    if invocation is not permitted by security
 //    * @throws InvocationTargetException if an error occurs on invocation
@@ -136,7 +136,7 @@
 //    * @param cls  the class to be constructed, not {@code null}
 //    * @param args the array of arguments, {@code null} treated as empty
 //    * @return new instance of {@code cls}, not {@code null}
-//    * @throws NullPointerException      if {@code cls} is {@code null}
+//    * @throws java.lang.NullPointerException      if {@code cls} is {@code null}
 //    * @throws NoSuchMethodException     if a matching constructor cannot be found
 //    * @throws IllegalAccessException    if invocation is not permitted by security
 //    * @throws InvocationTargetException if an error occurs on invocation
@@ -165,7 +165,7 @@
 //    * @param args           the array of arguments, {@code null} treated as empty
 //    * @param parameterTypes the array of parameter types, {@code null} treated as empty
 //    * @return new instance of {@code cls}, not {@code null}
-//    * @throws NullPointerException      if {@code cls} is {@code null}
+//    * @throws java.lang.NullPointerException      if {@code cls} is {@code null}
 //    * @throws NoSuchMethodException     if a matching constructor cannot be found
 //    * @throws IllegalAccessException    if invocation is not permitted by security
 //    * @throws InvocationTargetException if an error occurs on invocation
@@ -196,7 +196,7 @@
 //    * @return the constructor, {@code null} if no matching accessible constructor found
 //    * @see Class#getConstructor
 //    * @see #getAccessibleConstructor(java.lang.reflect.Constructor)
-//    * @throws NullPointerException if {@code cls} is {@code null}
+//    * @throws java.lang.NullPointerException if {@code cls} is {@code null}
 //    */
 //  def getAccessibleConstructor[T](cls: Class[T], parameterTypes: Class[_]*): Constructor[T] = {
 //    Validate.notNull(cls, "class cannot be null")
@@ -216,7 +216,7 @@
 //    * @param ctor the prototype constructor object, not {@code null}
 //    * @return the constructor, {@code null} if no matching accessible constructor found
 //    * @see java.lang.SecurityManager
-//    * @throws NullPointerException if {@code ctor} is {@code null}
+//    * @throws java.lang.NullPointerException if {@code ctor} is {@code null}
 //    */
 //  def getAccessibleConstructor[T](ctor: Constructor[T]): Constructor[T] = {
 //    Validate.notNull(ctor, "constructor cannot be null")
@@ -240,7 +240,7 @@
 //    * @param cls            the class to find a constructor for, not {@code null}
 //    * @param parameterTypes find method with compatible parameters
 //    * @return the constructor, null if no matching accessible constructor found
-//    * @throws NullPointerException if {@code cls} is {@code null}
+//    * @throws java.lang.NullPointerException if {@code cls} is {@code null}
 //    */
 //  def getMatchingAccessibleConstructor[T](cls: Class[T], parameterTypes: Class[_]*): Constructor[T] = {
 //    Validate.notNull(cls, "class cannot be null")

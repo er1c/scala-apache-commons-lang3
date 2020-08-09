@@ -467,7 +467,7 @@
 //    * @param type           the type to be replaced
 //    * @param typeVarAssigns the map with type variables
 //    * @return the replaced type
-//    * @throws IllegalArgumentException if the type cannot be substituted
+//    * @throws java.lang.IllegalArgumentException if the type cannot be substituted
 //    */
 //  private def substituteTypeVariables(`type`: Type, typeVarAssigns: (util.Map[TypeVariable[_$1], Type]) forSome {type _$1}): Type = {
 //    if (`type`.isInstanceOf[TypeVariable[_]] && typeVarAssigns != null) {

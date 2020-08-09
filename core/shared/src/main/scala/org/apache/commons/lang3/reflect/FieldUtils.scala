@@ -64,7 +64,7 @@
 //    * @param fieldName
 //    * the field name to obtain
 //    * @return the Field object
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty
 //    */
 //  def getField(cls: Class[_], fieldName: String): Field = {
@@ -86,8 +86,8 @@
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
 //    * @return the Field object
-//    * @throws NullPointerException     if the class is {@code null}
-//    * @throws IllegalArgumentException if the field name is blank or empty or is matched at multiple places
+//    * @throws java.lang.NullPointerException     if the class is {@code null}
+//    * @throws java.lang.IllegalArgumentException if the field name is blank or empty or is matched at multiple places
 //    *                                  in the inheritance hierarchy
 //    */
 //  def getField(cls: Class[_], fieldName: String, forceAccess: Boolean): Field = {
@@ -152,7 +152,7 @@
 //    * @param fieldName
 //    * the field name to obtain
 //    * @return the Field object
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty
 //    */
 //  def getDeclaredField(cls: Class[_], fieldName: String): Field = getDeclaredField(cls, fieldName, false)
@@ -170,7 +170,7 @@
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
 //    * @return the Field object
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty
 //    */
 //  def getDeclaredField(cls: Class[_], fieldName: String, forceAccess: Boolean): Field = {
@@ -194,7 +194,7 @@
 //    * @param cls
 //    * the {@link Class} to query
 //    * @return an array of Fields (possibly empty).
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}
 //    * @since 3.2
 //    */
@@ -225,7 +225,7 @@
 //    * @param annotationCls
 //    * the {@link Annotation} that must be present on a field to be matched
 //    * @return an array of Fields (possibly empty).
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class or annotation are {@code null}
 //    * @since 3.4
 //    */
@@ -242,7 +242,7 @@
 //    * @param annotationCls
 //    * the {@link Annotation} that must be present on a field to be matched
 //    * @return a list of Fields (possibly empty).
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class or annotation are {@code null}
 //    * @since 3.4
 //    */
@@ -263,7 +263,7 @@
 //    * @param field
 //    * to read
 //    * @return the field value
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null}, or not {@code static}
 //    * @throws IllegalAccessException
 //    * if the field is not accessible
@@ -280,7 +280,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method.
 //    * @return the field value
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null} or not {@code static}
 //    * @throws IllegalAccessException
 //    * if the field is not made accessible
@@ -300,7 +300,7 @@
 //    * @param fieldName
 //    * the field name to obtain
 //    * @return the value of the field
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty, is not {@code static}, or could
 //    * not be found
 //    * @throws IllegalAccessException
@@ -321,7 +321,7 @@
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
 //    * @return the Field object
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty, is not {@code static}, or could
 //    * not be found
 //    * @throws IllegalAccessException
@@ -344,7 +344,7 @@
 //    * @param fieldName
 //    * the field name to obtain
 //    * @return the value of the field
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty, is not {@code static}, or could
 //    * not be found
 //    * @throws IllegalAccessException
@@ -365,7 +365,7 @@
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
 //    * @return the Field object
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty, is not {@code static}, or could
 //    * not be found
 //    * @throws IllegalAccessException
@@ -386,7 +386,7 @@
 //    * @param target
 //    * the object to call on, may be {@code null} for {@code static} fields
 //    * @return the field value
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null}
 //    * @throws IllegalAccessException
 //    * if the field is not accessible
@@ -405,7 +405,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method.
 //    * @return the field value
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null}
 //    * @throws IllegalAccessException
 //    * if the field is not made accessible
@@ -426,7 +426,7 @@
 //    * @param fieldName
 //    * the field name to obtain
 //    * @return the value of the field
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class is {@code null}, or the field name is blank or empty or could not be found
 //    * @throws IllegalAccessException
 //    * if the named field is not {@code public}
@@ -446,7 +446,7 @@
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
 //    * @return the field value
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, or the field name is blank or empty or could not be found
 //    * @throws IllegalAccessException
 //    * if the named field is not made accessible
@@ -468,7 +468,7 @@
 //    * @param fieldName
 //    * the field name to obtain
 //    * @return the value of the field
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, or the field name is blank or empty or could not be found
 //    * @throws IllegalAccessException
 //    * if the named field is not {@code public}
@@ -488,7 +488,7 @@
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match public fields.
 //    * @return the Field object
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, or the field name is blank or empty or could not be found
 //    * @throws IllegalAccessException
 //    * if the field is not made accessible
@@ -509,7 +509,7 @@
 //    * to write
 //    * @param value
 //    * to set
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null} or not {@code static}, or {@code value} is not assignable
 //    * @throws IllegalAccessException
 //    * if the field is not {@code public} or is {@code final}
@@ -530,7 +530,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null} or not {@code static}, or {@code value} is not assignable
 //    * @throws IllegalAccessException
 //    * if the field is not made accessible or is {@code final}
@@ -551,7 +551,7 @@
 //    * to write
 //    * @param value
 //    * to set
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code cls} is {@code null}, the field name is blank or empty, the field cannot be located or is
 //    * not {@code static}, or {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -575,7 +575,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code cls} is {@code null}, the field name is blank or empty, the field cannot be located or is
 //    * not {@code static}, or {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -597,7 +597,7 @@
 //    * to write
 //    * @param value
 //    * to set
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code cls} is {@code null}, the field name is blank or empty, the field cannot be located or is
 //    * not {@code static}, or {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -620,7 +620,7 @@
 //    * @param forceAccess
 //    * whether to break scope restrictions using the {@code AccessibleObject#setAccessible(boolean)} method.
 //    * {@code false} will only match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code cls} is {@code null}, the field name is blank or empty, the field cannot be located or is
 //    * not {@code static}, or {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -664,7 +664,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null} or {@code value} is not assignable
 //    * @throws IllegalAccessException
 //    * if the field is not made accessible or is {@code final}
@@ -682,7 +682,7 @@
 //    *
 //    * @param field
 //    * to remove the final modifier
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null}
 //    * @since 3.2
 //    */
@@ -699,7 +699,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the field is {@code null}
 //    * @deprecated As of Java 12, we can no longer drop the {@code final} modifier, thus
 //    *             rendering this method obsolete. The JDK discussion about this change can be found
@@ -731,7 +731,7 @@
 //    * the field name to obtain
 //    * @param value
 //    * to set
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, {@code fieldName} is blank or empty or could not be found, or
 //    * {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -755,7 +755,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, {@code fieldName} is blank or empty or could not be found, or
 //    * {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -779,7 +779,7 @@
 //    * the field name to obtain
 //    * @param value
 //    * to set
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, {@code fieldName} is blank or empty or could not be found, or
 //    * {@code value} is not assignable
 //    * @throws IllegalAccessException
@@ -803,7 +803,7 @@
 //    * whether to break scope restrictions using the
 //    * {@link java.lang.reflect.AccessibleObject# setAccessible ( boolean )} method. {@code false} will only
 //    * match {@code public} fields.
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code target} is {@code null}, {@code fieldName} is blank or empty or could not be found, or
 //    * {@code value} is not assignable
 //    * @throws IllegalAccessException

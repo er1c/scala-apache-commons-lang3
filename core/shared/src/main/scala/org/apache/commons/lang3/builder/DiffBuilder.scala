@@ -89,7 +89,7 @@
 //  * without creating a field {@link Diff} if the trivially equal
 //  * test is enabled and returns true.  The result of this test
 //  * is never changed throughout the life of this {@link DiffBuilder}.
-//  * @throws IllegalArgumentException
+//  * @throws java.lang.IllegalArgumentException
 //  * if {@code lhs} or {@code rhs} is {@code null}
 //  * @since 3.4
 //  */
@@ -129,7 +129,7 @@
 //    * @param style
 //    * the style will use when outputting the objects, {@code null}
 //    * uses the default
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if {@code lhs} or {@code rhs} is {@code null}
 //    */
 //  def this(lhs: T, rhs: T, style: ToStringStyle) {
@@ -148,7 +148,7 @@
 //    * @param rhs
 //    * the right hand {@code boolean}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Boolean, rhs: Boolean): DiffBuilder[T] = {
@@ -176,7 +176,7 @@
 //    * @param rhs
 //    * the right hand {@code boolean[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Boolean], rhs: Array[Boolean]): DiffBuilder[T] = {
@@ -204,7 +204,7 @@
 //    * @param rhs
 //    * the right hand {@code byte}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Byte, rhs: Byte): DiffBuilder[T] = {
@@ -232,7 +232,7 @@
 //    * @param rhs
 //    * the right hand {@code byte[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Byte], rhs: Array[Byte]): DiffBuilder[T] = {
@@ -260,7 +260,7 @@
 //    * @param rhs
 //    * the right hand {@code char}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Char, rhs: Char): DiffBuilder[T] = {
@@ -288,7 +288,7 @@
 //    * @param rhs
 //    * the right hand {@code char[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Char], rhs: Array[Char]): DiffBuilder[T] = {
@@ -316,7 +316,7 @@
 //    * @param rhs
 //    * the right hand {@code double}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Double, rhs: Double): DiffBuilder[T] = {
@@ -344,7 +344,7 @@
 //    * @param rhs
 //    * the right hand {@code double[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Double], rhs: Array[Double]): DiffBuilder[T] = {
@@ -372,7 +372,7 @@
 //    * @param rhs
 //    * the right hand {@code float}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Float, rhs: Float): DiffBuilder[T] = {
@@ -400,7 +400,7 @@
 //    * @param rhs
 //    * the right hand {@code float[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Float], rhs: Array[Float]): DiffBuilder[T] = {
@@ -428,7 +428,7 @@
 //    * @param rhs
 //    * the right hand {@code int}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Int, rhs: Int): DiffBuilder[T] = {
@@ -456,7 +456,7 @@
 //    * @param rhs
 //    * the right hand {@code int[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Int], rhs: Array[Int]): DiffBuilder[T] = {
@@ -484,7 +484,7 @@
 //    * @param rhs
 //    * the right hand {@code long}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Long, rhs: Long): DiffBuilder[T] = {
@@ -512,7 +512,7 @@
 //    * @param rhs
 //    * the right hand {@code long[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Long], rhs: Array[Long]): DiffBuilder[T] = {
@@ -540,7 +540,7 @@
 //    * @param rhs
 //    * the right hand {@code short}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Short, rhs: Short): DiffBuilder[T] = {
@@ -568,7 +568,7 @@
 //    * @param rhs
 //    * the right hand {@code short[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[Short], rhs: Array[Short]): DiffBuilder[T] = {
@@ -596,7 +596,7 @@
 //    * @param rhs
 //    * the right hand {@code Object}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Any, rhs: Any): DiffBuilder[T] = {
@@ -643,7 +643,7 @@
 //    * @param rhs
 //    * the right hand {@code Object[]}
 //    * @return this
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if field name is {@code null}
 //    */
 //  def append(fieldName: String, lhs: Array[AnyRef], rhs: Array[AnyRef]): DiffBuilder[T] = {
@@ -691,7 +691,7 @@
 //    * @param diffResult
 //    * the {@code DiffResult} to append
 //    * @return this
-//    * @throws NullPointerException if field name is {@code null}
+//    * @throws java.lang.NullPointerException if field name is {@code null}
 //    * @since 3.5
 //    */
 //  def append(fieldName: String, diffResult: DiffResult): DiffBuilder[T] = {
