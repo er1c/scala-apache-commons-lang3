@@ -876,7 +876,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
   /**
     * <p>Appends with the same format as the default <code>Object toString()
     * </code> method. Appends the class name followed by
-    * {@link java.lang.System# identityHashCode ( java.lang.Object )}.</p>
+    * {@link java.lang.System#identityHashCode ( java.lang.Object )}.</p>
     *
     * @param srcObject the {@code Object} whose class name and id to output
     * @return this

@@ -64,7 +64,7 @@
 //  * the style to use for the {@link #toString ( )} method. May be
 //  * {@code null}, in which case
 //  * {@link ToStringStyle# DEFAULT_STYLE} is used
-//  * @throws NullPointerException if {@code lhs}, {@code rhs} or {@code diffs} is {@code null}
+//  * @throws java.lang.NullPointerException if {@code lhs}, {@code rhs} or {@code diffs} is {@code null}
 //  */
 //  extends (Iterable[Diff[_$1]])
 //

@@ -706,7 +706,7 @@
 //    * @param method             lowest to consider
 //    * @param interfacesBehavior whether to search interfaces, {@code null} {@code implies} false
 //    * @return Set&lt;Method&gt; in ascending order from sub- to superclass
-//    * @throws NullPointerException if the specified method is {@code null}
+//    * @throws java.lang.NullPointerException if the specified method is {@code null}
 //    * @since 3.2
 //    */
 //  def getOverrideHierarchy(method: Method, interfacesBehavior: ClassUtils.Interfaces): util.Set[Method] = {
@@ -750,7 +750,7 @@
 //    * @param annotationCls
 //    * the {@link java.lang.annotation.Annotation} that must be present on a method to be matched
 //    * @return an array of Methods (possibly empty).
-//    * @throws NullPointerException if the class or annotation are {@code null}
+//    * @throws java.lang.NullPointerException if the class or annotation are {@code null}
 //    * @since 3.4
 //    */
 //  def getMethodsWithAnnotation(cls: Class[_], annotationCls: Class[_ <: Annotation]): Array[Method] = getMethodsWithAnnotation(cls, annotationCls, false, false)
@@ -763,7 +763,7 @@
 //    * @param annotationCls
 //    * the {@link Annotation} that must be present on a method to be matched
 //    * @return a list of Methods (possibly empty).
-//    * @throws IllegalArgumentException
+//    * @throws java.lang.IllegalArgumentException
 //    * if the class or annotation are {@code null}
 //    * @since 3.4
 //    */
@@ -781,7 +781,7 @@
 //    * @param ignoreAccess
 //    * determines if non public methods should be considered
 //    * @return an array of Methods (possibly empty).
-//    * @throws NullPointerException if the class or annotation are {@code null}
+//    * @throws java.lang.NullPointerException if the class or annotation are {@code null}
 //    * @since 3.6
 //    */
 //  def getMethodsWithAnnotation(cls: Class[_], annotationCls: Class[_ <: Annotation], searchSupers: Boolean, ignoreAccess: Boolean): Array[Method] = {
@@ -801,7 +801,7 @@
 //    * @param ignoreAccess
 //    * determines if non public methods should be considered
 //    * @return a list of Methods (possibly empty).
-//    * @throws NullPointerException if either the class or annotation class is {@code null}
+//    * @throws java.lang.NullPointerException if either the class or annotation class is {@code null}
 //    * @since 3.6
 //    */
 //  def getMethodsListWithAnnotation(cls: Class[_], annotationCls: Class[_ <: Annotation], searchSupers: Boolean, ignoreAccess: Boolean): util.List[Method] = {
@@ -845,7 +845,7 @@
 //    * @param ignoreAccess
 //    *          determines if underlying method has to be accessible
 //    * @return the first matching annotation, or {@code null} if not found
-//    * @throws NullPointerException if either the method or annotation class is {@code null}
+//    * @throws java.lang.NullPointerException if either the method or annotation class is {@code null}
 //    * @since 3.6
 //    */
 //  def getAnnotation[A <: Annotation](method: Method, annotationCls: Class[A], searchSupers: Boolean, ignoreAccess: Boolean): A = {

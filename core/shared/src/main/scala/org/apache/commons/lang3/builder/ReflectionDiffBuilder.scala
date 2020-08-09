@@ -87,7 +87,7 @@
 //  * @param style
 //  * the style will use when outputting the objects, {@code null}
 //  * uses the default
-//  * @throws IllegalArgumentException
+//  * @throws java.lang.IllegalArgumentException
 //  * if {@code lhs} or {@code rhs} is {@code null}
 //  */
 //  extends Builder[DiffResult] {
