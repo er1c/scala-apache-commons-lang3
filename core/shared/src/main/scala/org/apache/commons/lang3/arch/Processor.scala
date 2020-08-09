@@ -126,7 +126,6 @@ class Processor(val arch: Processor.Arch, val `type`: Processor.Type) {
     */
   def getType: Processor.Type = `type`
 
-
   /**
     * Checks if {@link Processor} is 32 bit.
     *
@@ -141,7 +140,6 @@ class Processor(val arch: Processor.Arch, val `type`: Processor.Type) {
     */
   def is64Bit: Boolean = Processor.Arch.BIT_64 == arch
 
-
   /**
     * Checks if {@link Processor} is type of x86.
     *
@@ -149,14 +147,12 @@ class Processor(val arch: Processor.Arch, val `type`: Processor.Type) {
     */
   def isX86: Boolean = Processor.Type.X86 == `type`
 
-
   /**
     * Checks if {@link Processor} is type of Intel Itanium.
     *
     * @return {@code true}. if {@link Processor} is {@link Processor.Type#IA_64}, else {@code false}.
     */
   def isIA64: Boolean = Processor.Type.IA_64 == `type`
-
 
   /**
     * Checks if {@link Processor} is type of Power PC.

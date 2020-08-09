@@ -35,7 +35,7 @@ object ComparableUtils {
     *
     * @param < A> the type of objects that this object may be compared against.
     */
-  class ComparableCheckBuilder[A <: Comparable[A]] private[ComparableUtils](val a: A) {
+  class ComparableCheckBuilder[A <: Comparable[A]] private[ComparableUtils] (val a: A) {
     /**
       * Checks if {@code [b <= a <= c]} or {@code [b >= a >= c]} where the {@code a} is object passed to {@link #is}.
       *
