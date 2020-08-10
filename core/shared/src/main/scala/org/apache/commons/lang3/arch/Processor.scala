@@ -48,6 +48,8 @@ object Processor {
       def getLabel: String = label
     }
 
+    implicit def valueToArch(x: Value): Arch = x.asInstanceOf[Arch]
+
     /**
       * A 32-bit processor architecture.
       */

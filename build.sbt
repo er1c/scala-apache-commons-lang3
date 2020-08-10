@@ -291,13 +291,22 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
     name := "scala-apache-commons-lang3",
     libraryDependencies ++= Seq(
       // For testing
-      "org.scalatest"     %%% "scalatest"        % ScalaTestVersion % Test,
-      "org.scalatestplus" %%% "scalacheck-1-14"  % ScalaTestPlusVersion % Test,
-      "org.scalacheck"    %%% "scalacheck"       % ScalaCheckVersion % Test,
+      "org.scalatest"     %%% "scalatest"           % ScalaTestVersion % Test,
+      "org.scalatestplus" %%% "scalacheck-1-14"     % ScalaTestPlusVersion % Test,
+      "org.scalacheck"    %%% "scalacheck"          % ScalaCheckVersion % Test,
     ),
   )
 
 lazy val coreJVM = core.jvm
+  .settings(
+    libraryDependencies ++= Seq(
+      //"com.novocode" % "junit-interface" % "0.11" % Test,
+      "org.junit.jupiter" % "junit-jupiter" % "5.6.2" % Test,
+      "org.scalatestplus" %% "junit-4-12" % ScalaTestPlusVersion % Test,
+      "org.junit-pioneer" % "junit-pioneer" % "0.8.0" % Test,
+    )
+  )
+
 lazy val coreJS  = core.js
 
 // Reloads build.sbt changes whenever detected

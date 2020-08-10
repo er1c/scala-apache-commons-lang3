@@ -15,109 +15,109 @@
  * limitations under the License.
  */
 
-//package org.apache.commons.lang3
-//
-//import java.util
-//import java.util.stream.Stream
-//import org.apache.commons.lang3.arch.Processor
-//
-///**
-//  * An utility class for the os.arch System Property. The class defines methods for
-//  * identifying the architecture of the current JVM.
-//  * <p>
-//  * Important: The os.arch System Property returns the architecture used by the JVM
-//  * not of the operating system.
-//  * </p>
-//  *
-//  * @since 3.6
-//  */
-//object ArchUtils {
-//  private var ARCH_TO_PROCESSOR = null
-//
-//  private def init(): Unit = {
-//    init_X86_32Bit()
-//    init_X86_64Bit()
-//    init_IA64_32Bit()
-//    init_IA64_64Bit()
-//    init_PPC_32Bit()
-//    init_PPC_64Bit()
-//  }
-//
-//  private def init_X86_32Bit(): Unit = {
-//    val processor = new Processor(Processor.Arch.BIT_32, Processor.Type.X86)
-//    addProcessors(processor, "x86", "i386", "i486", "i586", "i686", "pentium")
-//  }
-//
-//  private def init_X86_64Bit(): Unit = {
-//    val processor = new Processor(Processor.Arch.BIT_64, Processor.Type.X86)
-//    addProcessors(processor, "x86_64", "amd64", "em64t", "universal")
-//  }
-//
-//  private def init_IA64_32Bit(): Unit = {
-//    val processor = new Processor(Processor.Arch.BIT_32, Processor.Type.IA_64)
-//    addProcessors(processor, "ia64_32", "ia64n")
-//  }
-//
-//  private def init_IA64_64Bit(): Unit = {
-//    val processor = new Processor(Processor.Arch.BIT_64, Processor.Type.IA_64)
-//    addProcessors(processor, "ia64", "ia64w")
-//  }
-//
-//  private def init_PPC_32Bit(): Unit = {
-//    val processor = new Processor(Processor.Arch.BIT_32, Processor.Type.PPC)
-//    addProcessors(processor, "ppc", "power", "powerpc", "power_pc", "power_rs")
-//  }
-//
-//  private def init_PPC_64Bit(): Unit = {
-//    val processor = new Processor(Processor.Arch.BIT_64, Processor.Type.PPC)
-//    addProcessors(processor, "ppc64", "power64", "powerpc64", "power_pc64", "power_rs64")
-//  }
-//
-//  /**
-//    * Adds the given {@link Processor} with the given key {@link String} to the map.
-//    *
-//    * @param key       The key as {@link String}.
-//    * @param processor The {@link Processor} to add.
-//    * @throws IllegalStateException If the key already exists.
-//    */
-//  private def addProcessor(key: String, processor: Processor): Unit = {
-//    if (ARCH_TO_PROCESSOR.containsKey(key)) throw new IllegalStateException("Key " + key + " already exists in processor map")
-//    ARCH_TO_PROCESSOR.put(key, processor)
-//  }
-//
-//  /**
-//    * Adds the given {@link Processor} with the given keys to the map.
-//    *
-//    * @param keys      The keys.
-//    * @param processor The {@link Processor} to add.
-//    * @throws IllegalStateException If the key already exists.
-//    */
-//  private def addProcessors(processor: Processor, keys: String*): Unit = {
-//    Stream.of(keys).forEach((e: String) => addProcessor(e, processor))
-//  }
-//
-//  /**
-//    * Returns a {@link Processor} object of the current JVM.
-//    *
-//    * <p>
-//    * Important: The os.arch System Property returns the architecture used by the JVM
-//    * not of the operating system.
-//    * </p>
-//    *
-//    * @return A {@link Processor} when supported, else {@code null}.
-//    */
-//  def getProcessor: Processor = getProcessor(SystemUtils.OS_ARCH)
-//
-//  /**
-//    * Returns a {@link Processor} object the given value {@link String}. The {@link String} must be
-//    * like a value returned by the os.arch System Property.
-//    *
-//    * @param value A {@link String} like a value returned by the os.arch System Property.
-//    * @return A {@link Processor} when it exists, else {@code null}.
-//    */
-//  def getProcessor(value: String): Processor = ARCH_TO_PROCESSOR.get(value)
-//
-//  try ARCH_TO_PROCESSOR = new util.HashMap[String, Processor]
-//  init()
-//
-//}
+package org.apache.commons.lang3
+
+import java.util
+import org.apache.commons.lang3.arch.Processor
+
+/**
+  * An utility class for the os.arch System Property. The class defines methods for
+  * identifying the architecture of the current JVM.
+  * <p>
+  * Important: The os.arch System Property returns the architecture used by the JVM
+  * not of the operating system.
+  * </p>
+  *
+  * @since 3.6
+  */
+object ArchUtils {
+  private val ARCH_TO_PROCESSOR: util.HashMap[String, Processor] =
+    new util.HashMap[String, Processor]
+
+  private def init(): Unit = {
+    init_X86_32Bit()
+    init_X86_64Bit()
+    init_IA64_32Bit()
+    init_IA64_64Bit()
+    init_PPC_32Bit()
+    init_PPC_64Bit()
+  }
+
+  private def init_X86_32Bit(): Unit = {
+    val processor = new Processor(Processor.Arch.BIT_32, Processor.Type.X86)
+    addProcessors(processor, "x86", "i386", "i486", "i586", "i686", "pentium")
+  }
+
+  private def init_X86_64Bit(): Unit = {
+    val processor = new Processor(Processor.Arch.BIT_64, Processor.Type.X86)
+    addProcessors(processor, "x86_64", "amd64", "em64t", "universal")
+  }
+
+  private def init_IA64_32Bit(): Unit = {
+    val processor = new Processor(Processor.Arch.BIT_32, Processor.Type.IA_64)
+    addProcessors(processor, "ia64_32", "ia64n")
+  }
+
+  private def init_IA64_64Bit(): Unit = {
+    val processor = new Processor(Processor.Arch.BIT_64, Processor.Type.IA_64)
+    addProcessors(processor, "ia64", "ia64w")
+  }
+
+  private def init_PPC_32Bit(): Unit = {
+    val processor = new Processor(Processor.Arch.BIT_32, Processor.Type.PPC)
+    addProcessors(processor, "ppc", "power", "powerpc", "power_pc", "power_rs")
+  }
+
+  private def init_PPC_64Bit(): Unit = {
+    val processor = new Processor(Processor.Arch.BIT_64, Processor.Type.PPC)
+    addProcessors(processor, "ppc64", "power64", "powerpc64", "power_pc64", "power_rs64")
+  }
+
+  /**
+    * Adds the given {@link org.apache.commons.lang3.arch.Processor} with the given key {@link java.lang.String} to the map.
+    *
+    * @param key       The key as {@link java.lang.String}.
+    * @param processor The {@link org.apache.commons.lang3.arch.Processor} to add.
+    * @throws java.lang.IllegalStateException If the key already exists.
+    */
+  private def addProcessor(key: String, processor: Processor): Unit = {
+    if (ARCH_TO_PROCESSOR.containsKey(key))
+      throw new IllegalStateException("Key " + key + " already exists in processor map")
+    ARCH_TO_PROCESSOR.put(key, processor)
+    ()
+  }
+
+  /**
+    * Adds the given {@link org.apache.commons.lang3.arch.Processor} with the given keys to the map.
+    *
+    * @param keys      The keys.
+    * @param processor The {@link org.apache.commons.lang3.arch.Processor} to add.
+    * @throws java.lang.IllegalStateException If the key already exists.
+    */
+  private def addProcessors(processor: Processor, keys: String*): Unit = {
+    keys.foreach { e: String => addProcessor(e, processor) }
+  }
+
+  /**
+    * Returns a {@link org.apache.commons.lang3.arch.Processor} object of the current JVM.
+    *
+    * <p>
+    * Important: The os.arch System Property returns the architecture used by the JVM
+    * not of the operating system.
+    * </p>
+    *
+    * @return A {@link org.apache.commons.lang3.arch.Processor} when supported, else {@code null}.
+    */
+  def getProcessor: Processor = getProcessor(SystemUtils.OS_ARCH)
+
+  /**
+    * Returns a {@link org.apache.commons.lang3.arch.Processor} object the given value {@link java.lang.String}. The {@link java.lang.String} must be
+    * like a value returned by the os.arch System Property.
+    *
+    * @param value A {@link java.lang.String} like a value returned by the os.arch System Property.
+    * @return A {@link org.apache.commons.lang3.arch.Processor} when it exists, else {@code null}.
+    */
+  def getProcessor(value: String): Processor = ARCH_TO_PROCESSOR.get(value)
+
+  init()
+}

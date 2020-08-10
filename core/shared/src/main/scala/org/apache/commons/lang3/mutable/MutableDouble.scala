@@ -302,11 +302,11 @@ class MutableDouble() extends Number with Comparable[MutableDouble] with Mutable
   override def doubleValue: Double = value
 
   /**
-    * Gets this mutable as an instance of JavaDouble.
+    * Gets this mutable as an instance of Double.
     *
-    * @return a JavaDouble instance containing the value from this mutable, never null
+    * @return a Double instance containing the value from this mutable, never null
     */
-  def toJavaDouble: JavaDouble = JavaDouble.valueOf(doubleValue)
+  def toDouble: JavaDouble = JavaDouble.valueOf(doubleValue)
 
   /**
     * Compares this object against the specified object. The result is {@code true} if and only if the argument
