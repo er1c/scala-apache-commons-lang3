@@ -304,9 +304,9 @@ class MutableFloat() extends Number with Comparable[MutableFloat] with Mutable[N
   /**
     * Gets this mutable as an instance of JavaFloat.
     *
-    * @return a JavaFloat instance containing the value from this mutable, never null
+    * @return a Float instance containing the value from this mutable, never null
     */
-  def toJavaFloat: JavaFloat = JavaFloat.valueOf(floatValue)
+  def toFloat: JavaFloat = JavaFloat.valueOf(floatValue)
 
   /**
     * Compares this object against some other object. The result is {@code true} if and only if the argument is

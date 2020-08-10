@@ -306,7 +306,7 @@ class MutableShort() extends Number with Comparable[MutableShort] with Mutable[N
     *
     * @return a Short instance containing the value from this mutable, never null
     */
-  def toJavaShort: JavaShort = JavaShort.valueOf(shortValue)
+  def toShort: JavaShort = JavaShort.valueOf(shortValue)
 
   /**
     * Compares this object to the specified object. The result is {@code true} if and only if the argument

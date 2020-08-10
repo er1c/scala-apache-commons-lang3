@@ -288,11 +288,11 @@ class MutableInt() extends Number with Comparable[MutableInt] with Mutable[Numbe
   override def doubleValue: Double = value.toDouble
 
   /**
-    * Gets this mutable as an instance of Integereger.
+    * Gets this mutable as an instance of Integer.
     *
-    * @return a Integereger instance containing the value from this mutable, never null
+    * @return a Integer instance containing the value from this mutable, never null
     */
-  def toIntegereger: Integer = Integer.valueOf(intValue)
+  def toInteger: Integer = Integer.valueOf(intValue)
 
   /**
     * Compares this object to the specified object. The result is {@code true} if and only if the argument is

@@ -92,6 +92,11 @@ class ContextedException(message: String, cause: Throwable) extends Exception(me
   final private var exceptionContext: ExceptionContext = new DefaultExceptionContext
 
   /**
+    * Instantiates ContextedException without message and cause.
+    */
+  def this() = this(null, null)
+
+  /**
     * Instantiates ContextedException with message, but without cause.
     * <p>
     * The context information is stored using a default implementation.

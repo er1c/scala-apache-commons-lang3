@@ -23,7 +23,7 @@ import java.lang.{Long => JavaLong}
 /**
   * A mutable {@code long} wrapper.
   * <p>
-  * Note that as MutableJavaLong does not extend JavaLong, it is not treated by String.format as a JavaLong parameter.
+  * Note that as MutableLong does not extend Long, it is not treated by String.format as a Long parameter.
   *
   * Constructs a new MutableLong with the default value of zero.
   *
@@ -36,7 +36,7 @@ class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Num
   private var value: Long = 0L
 
   /**
-    * Constructs a new MutableJavaLong with the specified value.
+    * Constructs a new Mutableong with the specified value.
     *
     * @param value the initial value to store
     */
@@ -46,7 +46,7 @@ class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Num
   }
 
   /**
-    * Constructs a new MutableJavaLong with the specified value.
+    * Constructs a new MutableLong with the specified value.
     *
     * @param value the initial value to store, not null
     * @throws java.lang.NullPointerException if the object is null
@@ -57,7 +57,7 @@ class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Num
   }
 
   /**
-    * Constructs a new MutableJavaLong parsing the given string.
+    * Constructs a new MutableLong parsing the given string.
     *
     * @param value the string to parse, not null
     * @throws java.lang.NumberFormatException if the string cannot be parsed into a long
@@ -69,9 +69,9 @@ class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Num
   }
 
   /**
-    * Gets the value as a JavaLong instance.
+    * Gets the value as a Long instance.
     *
-    * @return the value as a JavaLong, never null
+    * @return the value as a Long, never null
     */
   override def getValue: JavaLong = JavaLong.valueOf(this.value)
 
@@ -261,43 +261,43 @@ class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Num
   }
 
   /**
-    * Returns the value of this MutableJavaLong as an int.
+    * Returns the value of this MutableLong as an int.
     *
     * @return the numeric value represented by this object after conversion to type int.
     */
   override def intValue: Int = value.toInt
 
   /**
-    * Returns the value of this MutableJavaLong as a long.
+    * Returns the value of this MutableLong as a long.
     *
     * @return the numeric value represented by this object after conversion to type long.
     */
   override def longValue: Long = value.toLong
 
   /**
-    * Returns the value of this MutableJavaLong as a float.
+    * Returns the value of this MutableLong as a float.
     *
     * @return the numeric value represented by this object after conversion to type float.
     */
   override def floatValue: Float = value.toFloat
 
   /**
-    * Returns the value of this MutableJavaLong as a double.
+    * Returns the value of this MutableLong as a double.
     *
     * @return the numeric value represented by this object after conversion to type double.
     */
   override def doubleValue: Double = value.toDouble
 
   /**
-    * Gets this mutable as an instance of JavaLong.
+    * Gets this mutable as an instance of Long.
     *
-    * @return a JavaLong instance containing the value from this mutable, never null
+    * @return a Long instance containing the value from this mutable, never null
     */
   def toLong: JavaLong = JavaLong.valueOf(longValue)
 
   /**
     * Compares this object to the specified object. The result is {@code true} if and only if the argument
-    * is not {@code null} and is a {@code MutableJavaLong} object that contains the same {@code long}
+    * is not {@code null} and is a {@code MutableLong} object that contains the same {@code long}
     * value as this object.
     *
     * @param obj the object to compare with, null returns false

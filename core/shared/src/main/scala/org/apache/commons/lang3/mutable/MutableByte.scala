@@ -20,28 +20,28 @@ package org.apache.commons.lang3.mutable
 import org.apache.commons.lang3.math.NumberUtils
 import java.lang.{Byte => JavaByte}
 
-object MutableJavaByte {
+object MutableByte {
   private val ONE: Byte = 1.toByte
   private val ZERO: Byte = 0.toByte
 }
 /**
   * A mutable {@code byte} wrapper.
   * <p>
-  * Note that as MutableJavaByte does not extend JavaByte, it is not treated by String.format as a JavaByte parameter.
+  * Note that as MutableByte does not extend Byte, it is not treated by String.format as a Byte parameter.
   *
-  * Constructs a new MutableJavaByte with the default value of zero.
+  * Constructs a new MutableByte with the default value of zero.
   *
-  * @see JavaByte
+  * @see Byte
   * @since 2.1
   */
 @SerialVersionUID(-1585823265L)
-class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mutable[Number] {
-  import MutableJavaByte.{ONE, ZERO}
+class MutableByte() extends Number with Comparable[MutableByte] with Mutable[Number] {
+  import MutableByte.{ONE, ZERO}
   /** The mutable value. */
   private var value: Byte = ZERO
 
   /**
-    * Constructs a new MutableJavaByte with the specified value.
+    * Constructs a new MutableByte with the specified value.
     *
     * @param value the initial value to store
     */
@@ -51,7 +51,7 @@ class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mut
   }
 
   /**
-    * Constructs a new MutableJavaByte with the specified value.
+    * Constructs a new MutableByte with the specified value.
     *
     * @param value the initial value to store, not null
     * @throws java.lang.NullPointerException if the object is null
@@ -62,7 +62,7 @@ class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mut
   }
 
   /**
-    * Constructs a new MutableJavaByte parsing the given string.
+    * Constructs a new MutableByte parsing the given string.
     *
     * @param value the string to parse, not null
     * @throws java.lang.NumberFormatException if the string cannot be parsed into a byte
@@ -266,35 +266,35 @@ class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mut
   }
 
   /**
-    * Returns the value of this MutableJavaByte as a byte.
+    * Returns the value of this MutableByte as a byte.
     *
     * @return the numeric value represented by this object after conversion to type byte.
     */
   override def byteValue: Byte = value
 
   /**
-    * Returns the value of this MutableJavaByte as an int.
+    * Returns the value of this MutableByte as an int.
     *
     * @return the numeric value represented by this object after conversion to type int.
     */
   override def intValue: Int = value.toInt
 
   /**
-    * Returns the value of this MutableJavaByte as a long.
+    * Returns the value of this MutableByte as a long.
     *
     * @return the numeric value represented by this object after conversion to type long.
     */
   override def longValue: Long = value.toLong
 
   /**
-    * Returns the value of this MutableJavaByte as a float.
+    * Returns the value of this MutableByte as a float.
     *
     * @return the numeric value represented by this object after conversion to type float.
     */
   override def floatValue: Float = value.toFloat
 
   /**
-    * Returns the value of this MutableJavaByte as a double.
+    * Returns the value of this MutableByte as a double.
     *
     * @return the numeric value represented by this object after conversion to type double.
     */
@@ -316,7 +316,7 @@ class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mut
     * @return {@code true} if the objects are the same; {@code false} otherwise.
     */
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[MutableJavaByte]) return value == obj.asInstanceOf[MutableJavaByte].byteValue
+    if (obj.isInstanceOf[MutableByte]) return value == obj.asInstanceOf[MutableByte].byteValue
     false
   }
 
@@ -333,7 +333,7 @@ class MutableJavaByte() extends Number with Comparable[MutableJavaByte] with Mut
     * @param other the other mutable to compare to, not null
     * @return negative if this is less, zero if equal, positive if greater
     */
-  override def compareTo(other: MutableJavaByte): Int = NumberUtils.compare(this.value, other.value)
+  override def compareTo(other: MutableByte): Int = NumberUtils.compare(this.value, other.value)
 
   /**
     * Returns the String value of this mutable.
