@@ -298,6 +298,10 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   )
 
 lazy val coreJVM = core.jvm
+  .settings(
+    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+  )
+
 lazy val coreJS  = core.js
 
 // Reloads build.sbt changes whenever detected
