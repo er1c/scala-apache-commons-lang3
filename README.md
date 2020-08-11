@@ -4,9 +4,77 @@
 
 Scala port of [Apache Commons Lang](https://commons.apache.org/proper/commons-lang/).  Based upon `3.11` [java code](https://github.com/apache/commons-lang/tree/master/src/main/java/org/apache/commons/lang3).
 
+Target Platforms: `Scala.js` 0.6.x/1.1.x, `Scala Native`
+
+## Development State
+
+* Rough Library Files Conversion (**210**/210) :white_check_mark:
+* Rough Test Files Conversion (**0**/182).  **Need Help** 
+* Core Lang3 Classes Compiling
+- [ ] [AnnotationUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/AnnotationUtils.scala)
+- [x] [ArchUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ArchUtils.scala)
+- [x] [ArrayUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ArrayUtils.scala)
+- [x] [BitField.scala](./core/shared/src/main/scala/org/apache/commons/lang3/BitField.scala)
+- [x] [BooleanUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/BooleanUtils.scala)
+- [x] [CharEncoding.scala](./core/shared/src/main/scala/org/apache/commons/lang3/CharEncoding.scala)
+- [ ] [CharRange.scala](./core/shared/src/main/scala/org/apache/commons/lang3/CharRange.scala)
+- [x] [CharSequenceUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/CharSequenceUtils.scala)
+- [ ] [CharSet.scala](./core/shared/src/main/scala/org/apache/commons/lang3/CharSet.scala)
+- [ ] [CharSetUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/CharSetUtils.scala)
+- [x] [CharUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/CharUtils.scala)
+- [x] [Charsets.scala](./core/shared/src/main/scala/org/apache/commons/lang3/Charsets.scala)
+- [x] [ClassLoaderUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ClassLoaderUtils.scala)
+- [x] [ClassPathUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ClassPathUtils.scala)
+- [x] [ClassUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ClassUtils.scala)
+- [x] [Conversion.scala](./core/shared/src/main/scala/org/apache/commons/lang3/Conversion.scala)
+- [ ] [EnumUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/EnumUtils.scala)
+- [ ] [Functions.scala](./core/shared/src/main/scala/org/apache/commons/lang3/Functions.scala)
+- [x] [JavaVersion.scala](./core/shared/src/main/scala/org/apache/commons/lang3/JavaVersion.scala)
+- [ ] [LocaleUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/LocaleUtils.scala)
+- [x] [NotImplementedException.scala](./core/shared/src/main/scala/org/apache/commons/lang3/NotImplementedException.scala)
+- [x] [ObjectUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ObjectUtils.scala)
+- [ ] [RandomStringUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/RandomStringUtils.scala)
+- [x] [RandomUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/RandomUtils.scala)
+- [ ] [Range.scala](./core/shared/src/main/scala/org/apache/commons/lang3/Range.scala)
+- [x] [RegExUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/RegExUtils.scala)
+- [x] [SerializationException.scala](./core/shared/src/main/scala/org/apache/commons/lang3/SerializationException.scala)
+- [x] [SerializationUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/SerializationUtils.scala)
+- [x] [StringEscapeUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/StringEscapeUtils.scala)
+- [x] [StringUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/StringUtils.scala)
+- [x] [SystemUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/SystemUtils.scala)
+- [ ] [ThreadUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ThreadUtils.scala)
+- [x] [Validate.scala](./core/shared/src/main/scala/org/apache/commons/lang3/Validate.scala)
+* Subpackages Compiling
+- [x] arch
+- [ ] builder (**14**/20)
+- [x] compare (**2**/2)
+- [x] exception (**6**/6)
+- [ ] function (**25**/43)
+- [ ] math (**2**/3)
+- [x] mutable (**9**/9)
+- [ ] reflect (**1**/8)
+- [x] text (**4**/4)
+- [x] text/translate (**12**/12)
+- [x] tuple (**5**/5)
+
+### Milestone 1
+
+The first milestone will be `StringUtils` tests and dependency-libraries passing.
+
+This is still fairly ambitious considering the number of dependencies required.
+
+**TODO** Create an audit of required tests to pass.
+
+Tests Passing:
+- [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala) (**5**/5)
+
+### Milestone 2
+
+All except `reflect`, `function`, `concurrent`
+
 ## Usage
 
-The packages are published on Maven Central.
+The packages will be published on Maven Central.
 
 ### Scala JVM/Native Target
 
