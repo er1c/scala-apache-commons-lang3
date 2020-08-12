@@ -305,9 +305,6 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
 
 lazy val coreJVM = core.jvm
   .settings(
-    testOptions in Test := Seq(
-      Tests.Argument(TestFrameworks.ScalaTest, "-m", "org.scalatestplus.junit")
-    ),
     scalacOptions in Test --= Seq(
       "-Ywarn-numeric-widen",
       "-Wnumeric-widen"

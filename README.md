@@ -67,7 +67,17 @@ This is still fairly ambitious considering the number of dependencies required.
 
 Tests Passing:
 - [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala) (**5**/5)
+- ArrayUtils
 - [x] [ArrayUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsTest.scala) (**329**/329)
+- [x] [ArrayUtilsAddTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsAddTest.scala)
+- [x] [ArrayUtilsInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsInsertTest.scala)
+- [x] [ArrayUtilsRemoveTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveTest.scala)
+- [x] [ArrayUtilsRemoveMultipleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.scala)
+- builder
+- [x] [builder.ToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringStyleTest.scala)
+- [x] [builder.ShortPrefixToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.scala)
+- [x] [builder.ToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringBuilderTest.scala)
+
 
 ### Milestone 2
 
