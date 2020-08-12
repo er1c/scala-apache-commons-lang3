@@ -615,7 +615,7 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
     * @param clazz
     * The class of object parameter
     */
-  protected def appendFieldsIn(clazz: Class[_]): Unit = {
+  protected def appendFieldsIn(clazz: Class[_], obj: Any = this.getObject): Unit = {
     if (clazz.isArray) {
       this.reflectionAppendArray(this.getObject)
       return
@@ -628,7 +628,7 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
       val fieldName = field.getName
       if (this.accept(field)) try { // Warning: Field.get(Object) creates wrappers objects
         // for primitive types.
-        val fieldValue = this.getValue(field)
+        val fieldValue = this.getValue(field, obj)
         if (!excludeNullValues || fieldValue != null)
           this.append(fieldName, fieldValue, !field.isAnnotationPresent(classOf[ToStringSummary]))
       } catch {
@@ -669,7 +669,7 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
     * @see java.lang.reflect.Field#get(Object)
     */
   @throws[IllegalAccessException]
-  protected def getValue(field: Field): Any = field.get(this.getObject)
+  protected def getValue(field: Field, obj: Any = this.getObject): Any = field.get(obj)
 
   /**
     * <p>
@@ -794,14 +794,39 @@ class ReflectionToStringBuilder[T](`object`: T, style: ToStringStyle, buffer: St
     */
   override def toString: String = {
     if (this.getObject == null) return this.getStyle.getNullText
-    var clazz = this.getObject.getClass
+    var clazz: Class[_] = this.getObject.getClass
     this.appendFieldsIn(clazz)
-    while ({
-      clazz.getSuperclass != null && (clazz ne this.getUpToClass)
-    }) {
+    getScalaCompanionClass(clazz).foreach { comp => this.appendFieldsIn(comp._1, comp._2) }
+    while (clazz.getSuperclass != null && (clazz ne this.getUpToClass)) {
       clazz = clazz.getSuperclass
       this.appendFieldsIn(clazz)
+      getScalaCompanionClass(clazz).foreach { comp => this.appendFieldsIn(comp._1, comp._2) }
     }
     super.toString
+  }
+
+  private def getScalaCompanionClass(clazz: Class[_]): Option[(Class[_], Any)] = {
+    try {
+
+      import scala.reflect.runtime.universe._
+
+      val rootMirror = runtimeMirror(clazz.getClassLoader)
+      val outerField: Option[Field] = clazz.getFields.find(_.getName == """$outer""")
+      val moduleMirror: Option[InstanceMirror] = outerField.map { _.get(getObject) }.map { rootMirror.reflect(_) }
+
+      val instanceSymbol: ClassSymbol = rootMirror.classSymbol(clazz)
+
+      Option(instanceSymbol.companion).filterNot { _ == NoSymbol }.map { _.asModule }.map { moduleSymbol =>
+        val companionMirror =
+          moduleMirror.map { _.reflectModule(moduleSymbol) }.getOrElse { rootMirror.reflectModule(moduleSymbol) }
+
+        val instance = companionMirror.instance
+
+        (instance.getClass, instance)
+      }
+    } catch {
+      case _: ClassNotFoundException => None
+      case _: NoSuchFieldException => None
+    }
   }
 }

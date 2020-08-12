@@ -26,20 +26,11 @@ import java.lang.{
   Short => JavaShort
 }
 import org.scalatestplus.junit.JUnitSuite
-import org.junit.jupiter.api.Assertions.assertArrayEquals
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNotSame
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Assertions.assertSame
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.Assert.{assertEquals, _}
+import org.junit.Test
 import java.util
 import java.util.{Collections, Comparator, Date, Random}
 import scala.reflect.ClassTag
-//import org.junit.jupiter.api.Test
-import org.junit.Test
 
 /**
   * Unit tests {@link org.apache.commons.lang3.ArrayUtils}.
@@ -48,6 +39,18 @@ import org.junit.Test
 object ArrayUtilsTest {
   /** A predefined seed used to initialize {@link java.util.Random} in order to get predictable results */
   private val SEED: Long = 16111981L
+  private val DoubleDelta: Double = 1e-9d
+  private val FloatDelta: Float = 1e-9f
+
+  private def assertTrue(condition: Boolean, message: String) =
+    org.junit.Assert.assertTrue(message, condition)
+
+  private def assertTrue(condition: Boolean) =
+    org.junit.Assert.assertTrue(condition)
+
+//  private def assertEquals(expected: Int, actual: Int) =
+//    org.junit.Assert.assertEquals(expected.toLong, actual.toLong)
+
   @SafeVarargs private def toArrayPropagatingType[T: ClassTag](items: T*): Array[T] = {
     ArrayUtils.toArray(items: _*)
   }
@@ -146,7 +149,7 @@ class ArrayUtilsTest extends JUnitSuite {
     assertNull(ArrayUtils.clone(null.asInstanceOf[Array[Double]]))
     val original = Array[Double](2.4d, 5.7d)
     val cloned = ArrayUtils.clone(original)
-    assertArrayEquals(original, cloned)
+    assertArrayEquals(original, cloned, DoubleDelta)
     assertNotSame(original, cloned)
   }
 
@@ -154,7 +157,7 @@ class ArrayUtilsTest extends JUnitSuite {
     assertNull(ArrayUtils.clone(null.asInstanceOf[Array[Float]]))
     val original = Array[Float](2.6f, 6.4f)
     val cloned = ArrayUtils.clone(original)
-    assertArrayEquals(original, cloned)
+    assertArrayEquals(original, cloned, FloatDelta)
     assertNotSame(original, cloned)
   }
 
@@ -4680,30 +4683,33 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
     assertEquals(
+      "empty array",
       ArrayUtils.EMPTY_BOOLEAN_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_BOOLEAN_ARRAY, 1, 2),
-      "empty array")
-    assertEquals(ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_BOOLEAN_ARRAY, 1, 2)
+    )
+    assertEquals("start > end", ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     // empty-return tests
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_BOOLEAN_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_BOOLEAN_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_BOOLEAN_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_BOOLEAN_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_BOOLEAN_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
     // array type tests
-    assertSame(classOf[Boolean], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "boolean type")
+    assertSame("boolean type", classOf[Boolean], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrayByte(): Unit = {
@@ -4716,25 +4722,27 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_BYTE_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_BYTE_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_BYTE_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_BYTE_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_BYTE_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_BYTE_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_BYTE_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
-    assertSame(classOf[Byte], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "byte type")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
+    assertSame("byte type", classOf[Byte], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrayDouble(): Unit = {
@@ -4747,25 +4755,27 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_DOUBLE_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_DOUBLE_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_DOUBLE_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_DOUBLE_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_DOUBLE_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_DOUBLE_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
-    assertSame(classOf[Double], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "double type")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
+    assertSame("double type", classOf[Double], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrayFloat(): Unit = {
@@ -4778,25 +4788,27 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_FLOAT_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_FLOAT_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_FLOAT_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_FLOAT_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_FLOAT_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_FLOAT_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
-    assertSame(classOf[Float], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "float type")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
+    assertSame("float type", classOf[Float], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrayInt(): Unit = {
@@ -4809,22 +4821,23 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_INT_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_INT_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_INT_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_INT_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
-    assertSame(ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 8733, 4), "start overshoot, any end, object test")
-    assertSame(classOf[Int], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "int type")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_INT_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 3, 3))
+    assertSame("start overshoot, any end, object test", ArrayUtils.EMPTY_INT_ARRAY, ArrayUtils.subarray(array, 8733, 4))
+    assertSame("int type", classOf[Int], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrayLong(): Unit = {
@@ -4837,25 +4850,27 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_LONG_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_LONG_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_LONG_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_LONG_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_LONG_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_LONG_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_LONG_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
-    assertSame(classOf[Long], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "long type")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
+    assertSame("long type", classOf[Long], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrayObject(): Unit = {
@@ -4872,7 +4887,7 @@ class ArrayUtilsTest extends JUnitSuite {
       "bcdef",
       StringUtils.join(ArrayUtils.subarray(objectArray, 1, objectArray.length)),
       "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
     assertEquals("", StringUtils.join(ArrayUtils.subarray(ArrayUtils.EMPTY_OBJECT_ARRAY, 1, 2)), "empty array")
     assertEquals("", StringUtils.join(ArrayUtils.subarray(objectArray, 4, 2)), "start > end")
     assertEquals("", StringUtils.join(ArrayUtils.subarray(objectArray, 3, 3)), "start == end")
@@ -4884,15 +4899,17 @@ class ArrayUtilsTest extends JUnitSuite {
       StringUtils.join(ArrayUtils.subarray(objectArray, -2, 12)),
       "start undershoot, end overshoot")
     val dateArray = Array(new Date(new Date().getTime), new Date, new Date, new Date, new Date)
-    assertSame(classOf[AnyRef], ArrayUtils.subarray(objectArray, 2, 4).getClass.getComponentType, "Object type")
+    assertSame("Object type", classOf[AnyRef], ArrayUtils.subarray(objectArray, 2, 4).getClass.getComponentType)
     assertSame(
+      "java.util.Date type",
       classOf[java.util.Date],
-      ArrayUtils.subarray(dateArray, 1, 4).getClass.getComponentType,
-      "java.util.Date type")
+      ArrayUtils.subarray(dateArray, 1, 4).getClass.getComponentType
+    )
     assertNotSame(
+      "java.sql.Date type",
       classOf[java.sql.Date],
-      ArrayUtils.subarray(dateArray, 1, 4).getClass.getComponentType,
-      "java.sql.Date type")
+      ArrayUtils.subarray(dateArray, 1, 4).getClass.getComponentType
+    )
     assertThrows[ClassCastException](
       classOf[Array[java.sql.Date]].cast(ArrayUtils.subarray(dateArray, 1, 3))
     ) //, "Invalid downcast")
@@ -4909,25 +4926,27 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_SHORT_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_SHORT_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_SHORT_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_SHORT_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_SHORT_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_SHORT_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_SHORT_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
-    assertSame(classOf[Short], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "short type")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
+    assertSame("short type", classOf[Short], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSubarrChar(): Unit = {
@@ -4940,25 +4959,27 @@ class ArrayUtilsTest extends JUnitSuite {
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, 0, array.length)), "0 start, length end")
     assertTrue(ArrayUtils.isEquals(midSubarray, ArrayUtils.subarray(array, 1, 5)), "mid start, mid end")
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, array.length)), "mid start, length end")
-    assertNull(ArrayUtils.subarray(nullArray, 0, 3), "null input")
-    assertEquals(ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_CHAR_ARRAY, 1, 2), "empty array")
-    assertEquals(ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 4, 2), "start > end")
-    assertEquals(ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end")
+    assertNull("null input", ArrayUtils.subarray(nullArray, 0, 3))
+    assertEquals("empty array", ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(ArrayUtils.EMPTY_CHAR_ARRAY, 1, 2))
+    assertEquals("start > end", ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 4, 2))
+    assertEquals("start == end", ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertTrue(ArrayUtils.isEquals(leftSubarray, ArrayUtils.subarray(array, -2, 4)), "start undershoot, normal end")
-    assertEquals(ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 33, 4), "start overshoot, any end")
+    assertEquals("start overshoot, any end", ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 33, 4))
     assertTrue(ArrayUtils.isEquals(rightSubarray, ArrayUtils.subarray(array, 2, 33)), "normal start, end overshoot")
     assertTrue(ArrayUtils.isEquals(array, ArrayUtils.subarray(array, -2, 12)), "start undershoot, end overshoot")
     assertSame(
+      "empty array, object test",
       ArrayUtils.EMPTY_CHAR_ARRAY,
-      ArrayUtils.subarray(ArrayUtils.EMPTY_CHAR_ARRAY, 1, 2),
-      "empty array, object test")
-    assertSame(ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 4, 1), "start > end, object test")
-    assertSame(ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 3, 3), "start == end, object test")
+      ArrayUtils.subarray(ArrayUtils.EMPTY_CHAR_ARRAY, 1, 2)
+    )
+    assertSame("start > end, object test", ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 4, 1))
+    assertSame("start == end, object test", ArrayUtils.EMPTY_CHAR_ARRAY, ArrayUtils.subarray(array, 3, 3))
     assertSame(
+      "start overshoot, any end, object test",
       ArrayUtils.EMPTY_CHAR_ARRAY,
-      ArrayUtils.subarray(array, 8733, 4),
-      "start overshoot, any end, object test")
-    assertSame(classOf[Char], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType, "char type")
+      ArrayUtils.subarray(array, 8733, 4)
+    )
+    assertSame("char type", classOf[Char], ArrayUtils.subarray(array, 2, 4).getClass.getComponentType)
   }
 
   @Test def testSwapBoolean(): Unit = {
@@ -5696,7 +5717,8 @@ class ArrayUtilsTest extends JUnitSuite {
         Array[JavaDouble](
           JavaDouble.valueOf(Double.MinValue),
           JavaDouble.valueOf(Double.MaxValue),
-          JavaDouble.valueOf(9999999)))
+          JavaDouble.valueOf(9999999))),
+      DoubleDelta
     )
     assertThrows[NullPointerException](
       ArrayUtils.toPrimitive(Array[JavaFloat](JavaFloat.valueOf(Float.MinValue), null.asInstanceOf[JavaFloat])))
@@ -5714,7 +5736,8 @@ class ArrayUtilsTest extends JUnitSuite {
           JavaDouble.valueOf(Double.MinValue),
           JavaDouble.valueOf(Double.MaxValue),
           JavaDouble.valueOf(9999999)),
-        1)
+        1),
+      DoubleDelta
     )
     assertArrayEquals(
       Array[Double](Double.MinValue, Double.MaxValue, 9999999),
@@ -5723,7 +5746,8 @@ class ArrayUtilsTest extends JUnitSuite {
           JavaDouble.valueOf(Double.MinValue),
           null.asInstanceOf[JavaDouble],
           JavaDouble.valueOf(9999999)),
-        Double.MaxValue)
+        Double.MaxValue),
+      DoubleDelta
     )
   }
 
@@ -5738,7 +5762,8 @@ class ArrayUtilsTest extends JUnitSuite {
         Array[JavaFloat](
           JavaFloat.valueOf(Float.MinValue),
           JavaFloat.valueOf(Float.MaxValue),
-          JavaFloat.valueOf(9999999)))
+          JavaFloat.valueOf(9999999))),
+      FloatDelta
     )
     assertThrows[NullPointerException](
       ArrayUtils.toPrimitive(Array[JavaFloat](JavaFloat.valueOf(Float.MinValue), null.asInstanceOf[JavaFloat])))
@@ -5756,13 +5781,15 @@ class ArrayUtilsTest extends JUnitSuite {
           JavaFloat.valueOf(Float.MinValue),
           JavaFloat.valueOf(Float.MaxValue),
           JavaFloat.valueOf(9999999)),
-        1)
+        1),
+      FloatDelta
     )
     assertArrayEquals(
       Array[Float](Float.MinValue, Float.MaxValue, 9999999),
       ArrayUtils.toPrimitive(
         Array[JavaFloat](JavaFloat.valueOf(Float.MinValue), null.asInstanceOf[JavaFloat], JavaFloat.valueOf(9999999)),
-        Float.MaxValue)
+        Float.MaxValue),
+      FloatDelta
     )
   }
 

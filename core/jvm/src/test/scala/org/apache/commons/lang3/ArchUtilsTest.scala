@@ -19,14 +19,9 @@ package lang3
 
 import org.scalatestplus.junit.JUnitSuite
 import org.apache.commons.lang3.ArchUtils
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.apache.commons.lang3.arch.Processor
 import org.apache.commons.lang3.arch.Processor.Arch
+import org.junit.Assert._
 import org.junit.Test
 
 /**

@@ -15,24 +15,16 @@
  * limitations under the License.
  */
 
-//package org.apache.commons.lang3.builder;
+//package org.apache.commons.lang3.builder
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import org.scalatestplus.junit.JUnitSuite
+//import org.junit.Assert._
+//import org.junit.Test
+//import org.junit.{Before, After}
 //
-//import org.junit.jupiter.api.Test;
-//
-//public class ReflectionToStringBuilderSummaryTest {
-//
-//    @SuppressWarnings("unused")
-//    private final String stringField = "string";
-//
-//    @ToStringSummary
-//    private final String summaryString = "summary";
-//
-//    @Test
-//    public void testSummary() {
-//        assertEquals("[stringField=string,summaryString=<String>]",
-//                new ReflectionToStringBuilder(this, ToStringStyle.NO_CLASS_NAME_STYLE).build());
-//    }
-//
+//class ReflectionToStringBuilderTest extends JUnitSuite {
+//  @Test def testConstructorWithNullObject(): Unit = {
+//    assertThrows[NullPointerException](
+//      new ReflectionToStringBuilder[ReflectionToStringBuilderTest](null, ToStringStyle.DEFAULT_STYLE, new StringBuffer))
+//  }
 //}

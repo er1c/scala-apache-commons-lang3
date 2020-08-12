@@ -98,6 +98,11 @@ lazy val sharedSettings = Seq(
       )
   }),
 
+  // Junit tests don't specialize Int vs Long
+  scalacOptions --= Seq(
+    "-Ywarn-numeric-widen",
+    "-Wnumeric-widen"
+  ),
 
   // Turning off fatal warnings for doc generation
   scalacOptions.in(Compile, doc) ~= filterConsoleScalacOptions,
@@ -297,13 +302,22 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
     ),
   )
 
+
 lazy val coreJVM = core.jvm
   .settings(
+    testOptions in Test := Seq(
+      Tests.Argument(TestFrameworks.ScalaTest, "-m", "org.scalatestplus.junit")
+    ),
+    scalacOptions in Test --= Seq(
+      "-Ywarn-numeric-widen",
+      "-Wnumeric-widen"
+    ),
     libraryDependencies ++= Seq(
       //"com.novocode" % "junit-interface" % "0.11" % Test,
-      "org.junit.jupiter" % "junit-jupiter" % "5.6.2" % Test,
+//      "org.junit.jupiter" % "junit-jupiter" % "5.6.2" % Test,
+//      "org.junit-pioneer" % "junit-pioneer" % "0.8.0" % Test,
       "org.scalatestplus" %% "junit-4-12" % ScalaTestPlusVersion % Test,
-      "org.junit-pioneer" % "junit-pioneer" % "0.8.0" % Test,
+      "junit" % "junit" % "4.13" % Test,
     )
   )
 

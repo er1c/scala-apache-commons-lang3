@@ -507,6 +507,7 @@ object ToStringStyle {
           if (keyStr != null) {
             if (firstItem) firstItem = false
             else appendFieldEnd(buffer, keyStr)
+
             appendFieldStart(buffer, keyStr)
             val value = entry.getValue
             if (value == null) appendNullText(buffer, keyStr)
@@ -1433,9 +1434,11 @@ abstract class ToStringStyle protected ()
     */
   def append(buffer: StringBuffer, fieldName: String, array: Array[Char], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
+
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
     else appendSummary(buffer, fieldName, array)
+
     appendFieldEnd(buffer, fieldName)
   }
 
@@ -1878,7 +1881,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current array start text
     */
-  protected[builder] def getArrayStart: String = arrayStart
+  protected[builder] def getArrayStart: String = this.arrayStart
 
   /**
     * <p>Sets the array start text.</p>
@@ -1890,7 +1893,7 @@ abstract class ToStringStyle protected ()
     */
   protected[builder] def setArrayStart(arrayStart: String): Unit = {
     if (arrayStart == null) this.arrayStart = StringUtils.EMPTY
-    this.arrayStart = arrayStart
+    else this.arrayStart = arrayStart
   }
 
   /**
@@ -1910,7 +1913,7 @@ abstract class ToStringStyle protected ()
     */
   protected[builder] def setArrayEnd(arrayEnd: String): Unit = {
     if (arrayEnd == null) this.arrayEnd = StringUtils.EMPTY
-    this.arrayEnd = arrayEnd
+    else this.arrayEnd = arrayEnd
   }
 
   /**
@@ -1950,7 +1953,7 @@ abstract class ToStringStyle protected ()
     */
   protected[builder] def setContentStart(contentStart: String): Unit = {
     if (contentStart == null) this.contentStart = StringUtils.EMPTY
-    this.contentStart = contentStart
+    else this.contentStart = contentStart
   }
 
   /**
@@ -1958,7 +1961,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current content end text
     */
-  protected[builder] def getContentEnd: String = contentEnd
+  protected[builder] def getContentEnd: String = this.contentEnd
 
   /**
     * <p>Sets the content end text.</p>
@@ -1970,7 +1973,7 @@ abstract class ToStringStyle protected ()
     */
   protected[builder] def setContentEnd(contentEnd: String): Unit = {
     if (contentEnd == null) this.contentEnd = StringUtils.EMPTY
-    this.contentEnd = contentEnd
+    else this.contentEnd = contentEnd
   }
 
   /**
@@ -1990,7 +1993,7 @@ abstract class ToStringStyle protected ()
     */
   protected[builder] def setFieldNameValueSeparator(fieldNameValueSeparator: String): Unit = {
     if (fieldNameValueSeparator == null) this.fieldNameValueSeparator = StringUtils.EMPTY
-    this.fieldNameValueSeparator = fieldNameValueSeparator
+    else this.fieldNameValueSeparator = fieldNameValueSeparator
   }
 
   /**
@@ -2010,7 +2013,7 @@ abstract class ToStringStyle protected ()
     */
   protected[builder] def setFieldSeparator(fieldSeparator: String): Unit = {
     if (fieldSeparator == null) this.fieldSeparator = StringUtils.EMPTY
-    this.fieldSeparator = fieldSeparator
+    else this.fieldSeparator = fieldSeparator
   }
 
   /**
