@@ -441,13 +441,13 @@
 //    // Construct a new array matching the method's declared parameter types.
 //    val newArgs = new Array[AnyRef](methodParameterTypes.length)
 //    // Copy the normal (non-varargs) parameters
-//    System.arraycopy(args, 0, newArgs, 0, methodParameterTypes.length - 1)
+//    Array.copy(args, 0, newArgs, 0, methodParameterTypes.length - 1)
 //    // Construct a new array for the variadic parameters
 //    val varArgComponentType = methodParameterTypes(methodParameterTypes.length - 1).getComponentType
 //    val varArgLength = args.length - methodParameterTypes.length + 1
 //    var varArgsArray = Array.newInstance(ClassUtils.primitiveToWrapper(varArgComponentType), varArgLength)
 //    // Copy the variadic arguments into the varargs array.
-//    System.arraycopy(args, methodParameterTypes.length - 1, varArgsArray, 0, varArgLength)
+//    Array.copy(args, methodParameterTypes.length - 1, varArgsArray, 0, varArgLength)
 //    if (varArgComponentType.isPrimitive) { // unbox from wrapper type to primitive type
 //      varArgsArray = ArrayUtils.toPrimitive(varArgsArray)
 //    }

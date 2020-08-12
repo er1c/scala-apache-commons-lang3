@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
-package org.apache.commons
+package org.apache.commons.lang3
 
-package object lang3 extends PackageBase {
-  /** Used to swallow unused warnings. */
-  @inline private[lang3] def void(as: Any*): Unit = (as, ())._2
+trait PackageBase {
+  type MutableHashMap[K, V] = scala.collection.mutable.HashMap[K, V]
+
+  private[lang3] def MutableHashMap[K, V](initialCapacity: Int, loadFactor: Double): MutableHashMap[K, V] = {
+    new MutableHashMap[K, V]()
+  }
 }

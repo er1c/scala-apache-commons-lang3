@@ -17,8 +17,15 @@
 
 package org.apache.commons.lang3.builder
 
-import java.lang.reflect
-import java.lang.{Boolean => JavaBoolean}
+import java.lang.reflect.{Array => ReflectArray}
+import java.lang.{
+  Boolean => JavaBoolean,
+  Byte => JavaByte,
+  Double => JavaDouble,
+  Float => JavaFloat,
+  Long => JavaLong,
+  Short => JavaShort
+}
 import java.io.Serializable
 import java.util
 import java.util.Objects
@@ -369,7 +376,7 @@ object ToStringStyle {
     this.setSizeStartText("\"<size=")
     this.setSizeEndText(">\"")
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[AnyRef], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Any], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -377,7 +384,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Long], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Long], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -385,7 +392,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Int], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Int], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -393,7 +400,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Short], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Short], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -401,7 +408,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Byte], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Byte], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -409,7 +416,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Char], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Char], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -417,7 +424,11 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Double], fullDetail: Boolean): Unit = {
+    override def append(
+      buffer: StringBuffer,
+      fieldName: String,
+      array: Array[Double],
+      fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -425,7 +436,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Float], fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, array: Array[Float], fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -433,7 +444,11 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Boolean], fullDetail: Boolean): Unit = {
+    override def append(
+      buffer: StringBuffer,
+      fieldName: String,
+      array: Array[Boolean],
+      fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -441,7 +456,7 @@ object ToStringStyle {
       super.append(buffer, fieldName, array, fullDetail)
     }
 
-    override def append(buffer: StringBuffer, fieldName: String, value: Any, fullDetail: Boolean): Unit = {
+    override def append(buffer: StringBuffer, fieldName: String, value: Any, fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -458,11 +473,19 @@ object ToStringStyle {
         appendNullText(buffer, fieldName)
         return
       }
-      if (value.isInstanceOf[String] || value.isInstanceOf[Character]) {
+      if (value.isInstanceOf[String] || value.isInstanceOf[Character] || value.isInstanceOf[Char]) {
         appendValueAsString(buffer, value.toString)
         return
       }
-      if (value.isInstanceOf[Number] || value.isInstanceOf[Boolean]) {
+      if (value.isInstanceOf[Number] ||
+        value.isInstanceOf[JavaBoolean] ||
+        value.isInstanceOf[Boolean] ||
+        value.isInstanceOf[Byte] ||
+        value.isInstanceOf[Short] ||
+        value.isInstanceOf[Double] ||
+        value.isInstanceOf[Float] ||
+        value.isInstanceOf[Int] ||
+        value.isInstanceOf[Long]) {
         buffer.append(value)
         return
       }
@@ -710,7 +733,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, value: Any, fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, value: Any, fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (value == null) appendNullText(buffer, fieldName)
     else appendInternal(buffer, fieldName, value, isFullDetail(fullDetail))
@@ -749,33 +772,33 @@ abstract class ToStringStyle protected ()
     else if (value.isInstanceOf[util.Map[_, _]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[util.Map[_, _]])
       else appendSummarySize(buffer, fieldName, value.asInstanceOf[util.Map[_, _]].size)
-    else if (value.isInstanceOf[Array[Long]])
+    else if (value.isInstanceOf[Array[JavaLong]] || value.isInstanceOf[Array[Long]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Long]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Long]])
-    else if (value.isInstanceOf[Array[Int]])
+    else if (value.isInstanceOf[Array[Integer]] || value.isInstanceOf[Array[Int]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Int]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Int]])
-    else if (value.isInstanceOf[Array[Short]])
+    else if (value.isInstanceOf[Array[JavaShort]] || value.isInstanceOf[Array[Short]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Short]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Short]])
-    else if (value.isInstanceOf[Array[Byte]])
+    else if (value.isInstanceOf[Array[JavaByte]] || value.isInstanceOf[Array[Byte]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Byte]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Byte]])
-    else if (value.isInstanceOf[Array[Char]])
+    else if (value.isInstanceOf[Array[Character]] || value.isInstanceOf[Array[Char]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Char]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Char]])
-    else if (value.isInstanceOf[Array[Double]])
+    else if (value.isInstanceOf[Array[JavaDouble]] || value.isInstanceOf[Array[Double]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Double]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Double]])
-    else if (value.isInstanceOf[Array[Float]])
+    else if (value.isInstanceOf[Array[JavaFloat]] || value.isInstanceOf[Array[Float]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Float]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Float]])
-    else if (value.isInstanceOf[Array[Boolean]])
+    else if (value.isInstanceOf[Array[JavaBoolean]] || value.isInstanceOf[Array[Boolean]])
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Boolean]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Boolean]])
     else if (value.getClass.isArray)
-      if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[AnyRef]])
-      else appendSummary(buffer, fieldName, value.asInstanceOf[Array[AnyRef]])
+      if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Any]])
+      else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Any]])
     else if (detail) appendDetail(buffer, fieldName, value)
     else appendSummary(buffer, fieldName, value)
     finally ToStringStyle.unregister(value)
@@ -1105,7 +1128,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[AnyRef], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Any], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1163,9 +1186,9 @@ abstract class ToStringStyle protected ()
   protected[lang3] def reflectionAppendArrayDetail(buffer: StringBuffer, fieldName: String, array: Any): Unit = {
     buffer.append(arrayStart)
 
-    val length = reflect.Array.getLength(array)
+    val length = ReflectArray.getLength(array)
     for (i <- 0 until length) {
-      val item = reflect.Array.get(array, i)
+      val item = ReflectArray.get(array, i)
       appendDetail(buffer, fieldName, i, item)
     }
 
@@ -1182,7 +1205,7 @@ abstract class ToStringStyle protected ()
     * @param array     the array to add to the {@code toString},
     *                  not {@code null}
     */
-  protected def appendSummary(buffer: StringBuffer, fieldName: String, array: Array[AnyRef]): Unit = {
+  protected def appendSummary(buffer: StringBuffer, fieldName: String, array: Array[Any]): Unit = {
     appendSummarySize(buffer, fieldName, array.length)
   }
 
@@ -1196,7 +1219,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Long], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Long], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
 
     if (array == null) appendNullText(buffer, fieldName)
@@ -1250,7 +1273,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Int], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Int], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
 
     if (array == null) appendNullText(buffer, fieldName)
@@ -1304,7 +1327,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Short], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Short], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
 
     if (array == null) appendNullText(buffer, fieldName)
@@ -1358,7 +1381,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Byte], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Byte], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1408,7 +1431,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Char], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Char], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1458,7 +1481,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Double], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Double], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1508,7 +1531,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Float], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Float], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1558,7 +1581,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Boolean], fullDetail: Boolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[Boolean], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1855,7 +1878,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current array start text
     */
-  protected def getArrayStart: String = arrayStart
+  protected[builder] def getArrayStart: String = arrayStart
 
   /**
     * <p>Sets the array start text.</p>
@@ -1865,7 +1888,7 @@ abstract class ToStringStyle protected ()
     *
     * @param arrayStart the new array start text
     */
-  protected def setArrayStart(arrayStart: String): Unit = {
+  protected[builder] def setArrayStart(arrayStart: String): Unit = {
     if (arrayStart == null) this.arrayStart = StringUtils.EMPTY
     this.arrayStart = arrayStart
   }
@@ -1875,7 +1898,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current array end text
     */
-  protected def getArrayEnd: String = arrayEnd
+  protected[builder] def getArrayEnd: String = arrayEnd
 
   /**
     * <p>Sets the array end text.</p>
@@ -1885,7 +1908,7 @@ abstract class ToStringStyle protected ()
     *
     * @param arrayEnd the new array end text
     */
-  protected def setArrayEnd(arrayEnd: String): Unit = {
+  protected[builder] def setArrayEnd(arrayEnd: String): Unit = {
     if (arrayEnd == null) this.arrayEnd = StringUtils.EMPTY
     this.arrayEnd = arrayEnd
   }
@@ -1895,7 +1918,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current array separator text
     */
-  protected def getArraySeparator: String = arraySeparator
+  protected[builder] def getArraySeparator: String = arraySeparator
 
   /**
     * <p>Sets the array separator text.</p>
@@ -1905,7 +1928,7 @@ abstract class ToStringStyle protected ()
     *
     * @param arraySeparator the new array separator text
     */
-  protected def setArraySeparator(arraySeparator: String): Unit = {
+  protected[builder] def setArraySeparator(arraySeparator: String): Unit = {
     if (arraySeparator == null) this.arraySeparator = StringUtils.EMPTY
     else this.arraySeparator = arraySeparator
   }
@@ -1915,7 +1938,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current content start text
     */
-  protected def getContentStart: String = contentStart
+  protected[builder] def getContentStart: String = contentStart
 
   /**
     * <p>Sets the content start text.</p>
@@ -1925,7 +1948,7 @@ abstract class ToStringStyle protected ()
     *
     * @param contentStart the new content start text
     */
-  protected def setContentStart(contentStart: String): Unit = {
+  protected[builder] def setContentStart(contentStart: String): Unit = {
     if (contentStart == null) this.contentStart = StringUtils.EMPTY
     this.contentStart = contentStart
   }
@@ -1935,7 +1958,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current content end text
     */
-  protected def getContentEnd: String = contentEnd
+  protected[builder] def getContentEnd: String = contentEnd
 
   /**
     * <p>Sets the content end text.</p>
@@ -1945,7 +1968,7 @@ abstract class ToStringStyle protected ()
     *
     * @param contentEnd the new content end text
     */
-  protected def setContentEnd(contentEnd: String): Unit = {
+  protected[builder] def setContentEnd(contentEnd: String): Unit = {
     if (contentEnd == null) this.contentEnd = StringUtils.EMPTY
     this.contentEnd = contentEnd
   }
@@ -1955,7 +1978,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current field name value separator text
     */
-  protected def getFieldNameValueSeparator: String = fieldNameValueSeparator
+  protected[builder] def getFieldNameValueSeparator: String = fieldNameValueSeparator
 
   /**
     * <p>Sets the field name value separator text.</p>
@@ -1965,7 +1988,7 @@ abstract class ToStringStyle protected ()
     *
     * @param fieldNameValueSeparator the new field name value separator text
     */
-  protected def setFieldNameValueSeparator(fieldNameValueSeparator: String): Unit = {
+  protected[builder] def setFieldNameValueSeparator(fieldNameValueSeparator: String): Unit = {
     if (fieldNameValueSeparator == null) this.fieldNameValueSeparator = StringUtils.EMPTY
     this.fieldNameValueSeparator = fieldNameValueSeparator
   }
@@ -1975,7 +1998,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current field separator text
     */
-  protected def getFieldSeparator: String = fieldSeparator
+  protected[builder] def getFieldSeparator: String = fieldSeparator
 
   /**
     * <p>Sets the field separator text.</p>
@@ -1985,7 +2008,7 @@ abstract class ToStringStyle protected ()
     *
     * @param fieldSeparator the new field separator text
     */
-  protected def setFieldSeparator(fieldSeparator: String): Unit = {
+  protected[builder] def setFieldSeparator(fieldSeparator: String): Unit = {
     if (fieldSeparator == null) this.fieldSeparator = StringUtils.EMPTY
     this.fieldSeparator = fieldSeparator
   }
@@ -1997,7 +2020,7 @@ abstract class ToStringStyle protected ()
     * @return the fieldSeparatorAtStart flag
     * @since 2.0
     */
-  protected def isFieldSeparatorAtStart: Boolean = fieldSeparatorAtStart
+  protected[builder] def isFieldSeparatorAtStart: Boolean = fieldSeparatorAtStart
 
   /**
     * <p>Sets whether the field separator should be added at the start
@@ -2006,7 +2029,7 @@ abstract class ToStringStyle protected ()
     * @param fieldSeparatorAtStart the fieldSeparatorAtStart flag
     * @since 2.0
     */
-  protected def setFieldSeparatorAtStart(fieldSeparatorAtStart: Boolean): Unit = {
+  protected[builder] def setFieldSeparatorAtStart(fieldSeparatorAtStart: Boolean): Unit = {
     this.fieldSeparatorAtStart = fieldSeparatorAtStart
   }
 
@@ -2017,7 +2040,7 @@ abstract class ToStringStyle protected ()
     * @return fieldSeparatorAtEnd flag
     * @since 2.0
     */
-  protected def isFieldSeparatorAtEnd: Boolean = fieldSeparatorAtEnd
+  protected[builder] def isFieldSeparatorAtEnd: Boolean = fieldSeparatorAtEnd
 
   /**
     * <p>Sets whether the field separator should be added at the end
@@ -2026,7 +2049,7 @@ abstract class ToStringStyle protected ()
     * @param fieldSeparatorAtEnd the fieldSeparatorAtEnd flag
     * @since 2.0
     */
-  protected def setFieldSeparatorAtEnd(fieldSeparatorAtEnd: Boolean): Unit = {
+  protected[builder] def setFieldSeparatorAtEnd(fieldSeparatorAtEnd: Boolean): Unit = {
     this.fieldSeparatorAtEnd = fieldSeparatorAtEnd
   }
 
@@ -2045,7 +2068,7 @@ abstract class ToStringStyle protected ()
     *
     * @param nullText the new text to output when null found
     */
-  protected def setNullText(nullText: String): Unit = {
+  protected[builder] def setNullText(nullText: String): Unit = {
     if (nullText == null) this.nullText = StringUtils.EMPTY
     else this.nullText = nullText
   }
@@ -2058,7 +2081,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current start of size text
     */
-  protected def getSizeStartText: String = sizeStartText
+  protected[builder] def getSizeStartText: String = sizeStartText
 
   /**
     * <p>Sets the start text to output when a {@code Collection},
@@ -2071,7 +2094,7 @@ abstract class ToStringStyle protected ()
     *
     * @param sizeStartText the new start of size text
     */
-  protected def setSizeStartText(sizeStartText: String): Unit = {
+  protected[builder] def setSizeStartText(sizeStartText: String): Unit = {
     if (sizeStartText == null) this.sizeStartText = StringUtils.EMPTY
     else this.sizeStartText = sizeStartText
   }
@@ -2084,7 +2107,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current end of size text
     */
-  protected def getSizeEndText: String = sizeEndText
+  protected[builder] def getSizeEndText: String = sizeEndText
 
   /**
     * <p>Sets the end text to output when a {@code Collection},
@@ -2097,7 +2120,7 @@ abstract class ToStringStyle protected ()
     *
     * @param sizeEndText the new end of size text
     */
-  protected def setSizeEndText(sizeEndText: String): Unit = {
+  protected[builder] def setSizeEndText(sizeEndText: String): Unit = {
     if (sizeEndText == null) this.sizeEndText = StringUtils.EMPTY
     else this.sizeEndText = sizeEndText
   }
@@ -2110,7 +2133,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current start of summary text
     */
-  protected def getSummaryObjectStartText: String = summaryObjectStartText
+  protected[builder] def getSummaryObjectStartText: String = summaryObjectStartText
 
   /**
     * <p>Sets the start text to output when an {@code Object} is
@@ -2123,7 +2146,7 @@ abstract class ToStringStyle protected ()
     *
     * @param summaryObjectStartText the new start of summary text
     */
-  protected def setSummaryObjectStartText(summaryObjectStartText: String): Unit = {
+  protected[builder] def setSummaryObjectStartText(summaryObjectStartText: String): Unit = {
     if (summaryObjectStartText == null) this.summaryObjectStartText = StringUtils.EMPTY
     else this.summaryObjectStartText = summaryObjectStartText
   }
@@ -2136,7 +2159,7 @@ abstract class ToStringStyle protected ()
     *
     * @return the current end of summary text
     */
-  protected def getSummaryObjectEndText: String = summaryObjectEndText
+  protected[builder] def getSummaryObjectEndText: String = summaryObjectEndText
 
   /**
     * <p>Sets the end text to output when an {@code Object} is
@@ -2149,7 +2172,7 @@ abstract class ToStringStyle protected ()
     *
     * @param summaryObjectEndText the new end of summary text
     */
-  protected def setSummaryObjectEndText(summaryObjectEndText: String): Unit = {
+  protected[builder] def setSummaryObjectEndText(summaryObjectEndText: String): Unit = {
     if (summaryObjectEndText == null) this.summaryObjectEndText = StringUtils.EMPTY
     else this.summaryObjectEndText = summaryObjectEndText
   }

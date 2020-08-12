@@ -444,7 +444,7 @@ object Conversion {
     val beSrcPos = src.length - 1 - srcPos
     val srcLen = Math.min(4, beSrcPos + 1)
     val paddedSrc = new Array[Boolean](4)
-    System.arraycopy(src, beSrcPos + 1 - srcLen, paddedSrc, 4 - srcLen, srcLen)
+    Array.copy(src, beSrcPos + 1 - srcLen, paddedSrc, 4 - srcLen, srcLen)
 
     val newSrc = paddedSrc
     val newSrcPos = 0

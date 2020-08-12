@@ -131,7 +131,7 @@ import java.util.Locale
   final def `with`(translators: CharSequenceTranslator*): CharSequenceTranslator = {
     val newArray = new Array[CharSequenceTranslator](translators.length + 1)
     newArray(0) = this
-    System.arraycopy(translators, 0, newArray, 1, translators.length)
+    Array.copy(translators, 0, newArray, 1, translators.length)
     new AggregateTranslator(newArray: _*)
   }
 }

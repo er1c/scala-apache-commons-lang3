@@ -212,7 +212,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (capacity > buffer.length) {
       val old = buffer
       buffer = new Array[Char](capacity * 2)
-      System.arraycopy(old, 0, buffer, 0, size)
+      Array.copy(old, 0, buffer, 0, size)
     }
     this
   }
@@ -226,7 +226,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (buffer.length > length) {
       val old = buffer
       buffer = new Array[Char](length)
-      System.arraycopy(old, 0, buffer, 0, size)
+      Array.copy(old, 0, buffer, 0, size)
     }
     this
   }
@@ -320,7 +320,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
   def toCharArray: Array[Char] = {
     if (size == 0) return ArrayUtils.EMPTY_CHAR_ARRAY
     val chars = new Array[Char](size)
-    System.arraycopy(buffer, 0, chars, 0, size)
+    Array.copy(buffer, 0, chars, 0, size)
     chars
   }
 
@@ -339,7 +339,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     val len = newEndIndex - startIndex
     if (len == 0) return ArrayUtils.EMPTY_CHAR_ARRAY
     val chars = new Array[Char](len)
-    System.arraycopy(buffer, startIndex, chars, 0, len)
+    Array.copy(buffer, startIndex, chars, 0, len)
     chars
   }
 
@@ -354,7 +354,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     var dest = destination
     if (dest == null || dest.length < len) dest = new Array[Char](len)
 
-    System.arraycopy(buffer, 0, dest, 0, len)
+    Array.copy(buffer, 0, dest, 0, len)
     dest
   }
 
@@ -372,7 +372,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (startIndex < 0) throw new StringIndexOutOfBoundsException(startIndex)
     if (endIndex < 0 || endIndex > length) throw new StringIndexOutOfBoundsException(endIndex)
     if (startIndex > endIndex) throw new StringIndexOutOfBoundsException("end < start")
-    System.arraycopy(buffer, startIndex, destination, destinationIndex, endIndex - startIndex)
+    Array.copy(buffer, startIndex, destination, destinationIndex, endIndex - startIndex)
   }
 
   /**
@@ -558,7 +558,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
       val length: Int = buf.remaining
       val len: Int = length
       ensureCapacity(len + length)
-      System.arraycopy(buf.array(), (buf.arrayOffset + buf.position()), buffer, len, length)
+      Array.copy(buf.array(), (buf.arrayOffset + buf.position()), buffer, len, length)
       bufferSize += length
     } else append(buf.toString)
     this
@@ -584,7 +584,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
         throw new StringIndexOutOfBoundsException("length must be valid")
       val len = length
       ensureCapacity(len + length)
-      System.arraycopy(buf, buf.arrayOffset + buf.position() + startIndex, buffer, len, length)
+      Array.copy(buf, buf.arrayOffset + buf.position() + startIndex, buffer, len, length)
       bufferSize += length
     } else append(buf.toString, startIndex, length)
     this
@@ -690,7 +690,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (strLen > 0) {
       val len = length
       ensureCapacity(len + strLen)
-      System.arraycopy(str.buffer, 0, buffer, len, strLen)
+      Array.copy(str.buffer, 0, buffer, len, strLen)
       bufferSize += strLen
     }
 
@@ -734,7 +734,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (strLen > 0) {
       val len = length
       ensureCapacity(len + strLen)
-      System.arraycopy(chars, 0, buffer, len, strLen)
+      Array.copy(chars, 0, buffer, len, strLen)
       bufferSize += strLen
     }
     this
@@ -758,7 +758,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (length > 0) {
       val len = length
       ensureCapacity(len + length)
-      System.arraycopy(chars, startIndex, buffer, len, length)
+      Array.copy(chars, startIndex, buffer, len, length)
       bufferSize += length
     }
 
@@ -1433,7 +1433,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
       if (strLen > 0) {
         val newSize = size + strLen
         ensureCapacity(newSize)
-        System.arraycopy(buffer, index, buffer, index + strLen, size - index)
+        Array.copy(buffer, index, buffer, index + strLen, size - index)
         bufferSize = newSize
         newStr.getChars(0, strLen, buffer, index)
       }
@@ -1458,8 +1458,8 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
 
     if (len > 0) {
       ensureCapacity(size + len)
-      System.arraycopy(buffer, index, buffer, index + len, size - index)
-      System.arraycopy(chars, 0, buffer, index, len)
+      Array.copy(buffer, index, buffer, index + len, size - index)
+      Array.copy(chars, 0, buffer, index, len)
       bufferSize += len
     }
 
@@ -1485,8 +1485,8 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
       throw new StringIndexOutOfBoundsException("Invalid length: " + length)
     if (length > 0) {
       ensureCapacity(size + length)
-      System.arraycopy(buffer, index, buffer, index + length, size - index)
-      System.arraycopy(chars, offset, buffer, index, length)
+      Array.copy(buffer, index, buffer, index + length, size - index)
+      Array.copy(chars, offset, buffer, index, length)
       bufferSize += length
     }
     this
@@ -1506,7 +1506,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
 
     if (value) {
       ensureCapacity(size + 4)
-      System.arraycopy(buffer, idx, buffer, idx + 4, size - idx)
+      Array.copy(buffer, idx, buffer, idx + 4, size - idx)
       buffer({ idx += 1; idx - 1 }) = 't'
       buffer({ idx += 1; idx - 1 }) = 'r'
       buffer({ idx += 1; idx - 1 }) = 'u'
@@ -1514,7 +1514,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
       bufferSize += 4
     } else {
       ensureCapacity(size + 5)
-      System.arraycopy(buffer, idx, buffer, idx + 5, size - idx)
+      Array.copy(buffer, idx, buffer, idx + 5, size - idx)
       buffer({ idx += 1; idx - 1 }) = 'f'
       buffer({ idx += 1; idx - 1 }) = 'a'
       buffer({ idx += 1; idx - 1 }) = 'l'
@@ -1528,7 +1528,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
   def insert(index: Int, value: Char): StrBuilder = {
     validateIndex(index)
     ensureCapacity(size + 1)
-    System.arraycopy(buffer, index, buffer, index + 1, size - index)
+    Array.copy(buffer, index, buffer, index + 1, size - index)
     buffer(index) = value
     bufferSize += 1
     this
@@ -1551,7 +1551,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @throws java.lang.IndexOutOfBoundsException if any index is invalid
     */
   private def deleteImpl(startIndex: Int, endIndex: Int, len: Int): Unit = {
-    System.arraycopy(buffer, endIndex, buffer, startIndex, size - endIndex)
+    Array.copy(buffer, endIndex, buffer, startIndex, size - endIndex)
     bufferSize -= len
   }
 
@@ -1674,7 +1674,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     val newSize = size - removeLen + insertLen
     if (insertLen != removeLen) {
       ensureCapacity(newSize)
-      System.arraycopy(buffer, endIndex, buffer, startIndex + insertLen, size - endIndex)
+      Array.copy(buffer, endIndex, buffer, startIndex + insertLen, size - endIndex)
       bufferSize = newSize
     }
     if (insertLen > 0) insertStr.getChars(0, insertLen, buffer, startIndex)

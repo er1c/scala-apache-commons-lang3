@@ -249,7 +249,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Boolean]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -273,7 +273,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Byte]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -297,7 +297,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Char]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -321,7 +321,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Double]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -345,7 +345,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Float]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -369,7 +369,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Int]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -393,7 +393,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Long]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -405,7 +405,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(obj: Any): ToStringBuilder = {
-    style.append(buffer, null, obj, null.asInstanceOf[Boolean])
+    style.append(buffer, null, obj, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -417,7 +417,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[AnyRef]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -441,7 +441,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(array: Array[Short]): ToStringBuilder = {
-    style.append(buffer, null, array, null.asInstanceOf[Boolean])
+    style.append(buffer, null, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -467,7 +467,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Boolean]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -512,7 +512,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Byte]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -558,7 +558,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Char]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -604,7 +604,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Double]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -650,7 +650,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Float]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -696,7 +696,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Int]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -742,7 +742,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Long]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -775,7 +775,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, obj: Any): ToStringBuilder = {
-    style.append(buffer, fieldName, obj, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, obj, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -803,7 +803,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[AnyRef]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 
@@ -849,7 +849,7 @@ class ToStringBuilder(`object`: Any, private var style: ToStringStyle, private v
     * @return this
     */
   def append(fieldName: String, array: Array[Short]): ToStringBuilder = {
-    style.append(buffer, fieldName, array, null.asInstanceOf[Boolean])
+    style.append(buffer, fieldName, array, null.asInstanceOf[JavaBoolean])
     this
   }
 

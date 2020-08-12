@@ -102,36 +102,22 @@ object ClassUtils {
     * Maps primitive {@code Class}es to their corresponding wrapper {@code Class}.
     */
   private val primitiveWrapperMap: Map[Class[_], Class[_]] = Map(
-    JavaBoolean.TYPE -> classOf[Boolean],
-    JavaByte.TYPE -> classOf[Byte],
-    Character.TYPE -> classOf[Character],
-    JavaShort.TYPE -> classOf[Short],
-    Integer.TYPE -> classOf[Integer],
-    JavaLong.TYPE -> classOf[Long],
-    JavaDouble.TYPE -> classOf[Double],
-    JavaFloat.TYPE -> classOf[Float],
-    Void.TYPE -> Void.TYPE
+    classOf[Boolean] -> JavaBoolean.TYPE,
+    classOf[Byte] -> JavaByte.TYPE,
+    classOf[Char] -> Character.TYPE,
+    classOf[Short] -> JavaShort.TYPE,
+    classOf[Int] -> Integer.TYPE,
+    classOf[Long] -> JavaLong.TYPE,
+    classOf[Double] -> JavaDouble.TYPE,
+    classOf[Float] -> JavaFloat.TYPE,
+    classOf[Unit] -> Void.TYPE
   )
 
   /**
     * Maps wrapper {@code Class}es to their corresponding primitive types.
     */
-  private val wrapperPrimitiveMap: Map[Class[_], Class[_]] = {
-    //???
-    Map.empty
-  }
-  /*
-    private static final Map<Class<?>, Class<?>> wrapperPrimitiveMap = new HashMap<>();
-    static {
-        for (final Map.Entry<Class<?>, Class<?>> entry : primitiveWrapperMap.entrySet()) {
-            final Class<?> primitiveClass = entry.getKey();
-            final Class<?> wrapperClass = entry.getValue();
-            if (!primitiveClass.equals(wrapperClass)) {
-                wrapperPrimitiveMap.put(wrapperClass, primitiveClass);
-            }
-        }
-    }
-   */
+  private val wrapperPrimitiveMap: Map[Class[_], Class[_]] =
+    primitiveWrapperMap.map { v => v._2 -> v._1 }.toMap // Required for 2.11
 
   /**
     * Maps a primitive class name to its corresponding abbreviation used in array class names.

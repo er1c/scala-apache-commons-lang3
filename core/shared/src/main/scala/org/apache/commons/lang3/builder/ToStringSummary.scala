@@ -17,7 +17,7 @@
 
 package org.apache.commons.lang3.builder
 
-import java.lang.annotation.{Annotation, ElementType, Retention, RetentionPolicy, Target}
+import java.lang.annotation.{ElementType, Retention, RetentionPolicy, Target}
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -49,6 +49,6 @@ import java.lang.annotation.{Annotation, ElementType, Retention, RetentionPolicy
   */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(Array(ElementType.FIELD))
-class ToStringSummary extends Annotation {
+class ToStringSummary extends scala.annotation.Annotation with java.lang.annotation.Annotation {
   override def annotationType: Class[_ <: java.lang.annotation.Annotation] = classOf[ToStringSummary]
 }

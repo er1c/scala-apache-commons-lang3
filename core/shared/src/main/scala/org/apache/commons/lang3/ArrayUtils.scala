@@ -39,6 +39,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder
 import org.apache.commons.lang3.builder.ToStringStyle
 import org.apache.commons.lang3.math.NumberUtils
 import org.apache.commons.lang3.mutable.MutableInt
+import scala.collection
 import scala.util.control.Breaks
 
 /**
@@ -646,12 +647,14 @@ object ArrayUtils {
     * @throws java.lang.IllegalArgumentException if both arguments are null
     */
   def add[T](array: Array[T], element: T): Array[T] = {
-    var `type`: Class[_] = null
-    if (array != null) `type` = array.getClass.getComponentType
-    else if (element != null) `type` = element.getClass
+    var clss: Class[_] = null
+
+    if (array != null) clss = array.getClass.getComponentType
+    else if (element != null) clss = element.getClass
     else throw new IllegalArgumentException("Arguments cannot both be null")
+
     @SuppressWarnings(Array("unchecked")) // type must be T
-    val newArray: Array[T] = copyArrayGrow1(array, `type`).asInstanceOf[Array[T]]
+    val newArray: Array[T] = copyArrayGrow1(array, clss).asInstanceOf[Array[T]]
     newArray(newArray.length - 1) = element
     newArray
   }
@@ -930,139 +933,148 @@ object ArrayUtils {
     }
     joinedArray
   }
-  //
-  //  /**
-  //    * Copies the given array and adds the given element at the beginning of the new array.
-  //    *
-  //    * <p>
-  //    * The new array contains the same elements of the input array plus the given element in the first position. The
-  //    * component type of the new array is the same as that of the input array.
-  //    * </p>
-  //    *
-  //    * <p>
-  //    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
-  //    * element.
-  //    * </p>
-  //    *
-  //    * <pre>
-  //    * ArrayUtils.add(null, true)          = [true]
-  //    * ArrayUtils.add([true], false)       = [false, true]
-  //    * ArrayUtils.add([true, false], true) = [true, true, false]
-  //    * </pre>
-  //    *
-  //    * @param array   the array to "add" the element to, may be {@code null}.
-  //    * @param element the object to add.
-  //    * @return A new array containing the existing elements plus the new element The returned array type will be that of
-  //    *         the input array (unless null), in which case it will have the same type as the element.
-  //    * @since 3.10
-  //    */
-  //  def addFirst(array: Array[Boolean], element: Boolean): Array[Boolean] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  /**
-  //    * Copies the given array and adds the given element at the beginning of the new array.
-  //    *
-  //    * <p>
-  //    * The new array contains the same elements of the input array plus the given element in the first position. The
-  //    * component type of the new array is the same as that of the input array.
-  //    * </p>
-  //    *
-  //    * <p>
-  //    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
-  //    * element.
-  //    * </p>
-  //    *
-  //    * <pre>
-  //    * ArrayUtils.add(null, 1)   = [1]
-  //    * ArrayUtils.add([1], 0)    = [0, 1]
-  //    * ArrayUtils.add([1, 0], 1) = [1, 1, 0]
-  //    * </pre>
-  //    *
-  //    * @param array   the array to "add" the element to, may be {@code null}.
-  //    * @param element the object to add.
-  //    * @return A new array containing the existing elements plus the new element The returned array type will be that of
-  //    *         the input array (unless null), in which case it will have the same type as the element.
-  //    * @since 3.10
-  //    */
-  //  def addFirst(array: Array[Byte], element: Byte): Array[Byte] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  /**
-  //    * Copies the given array and adds the given element at the beginning of the new array.
-  //    *
-  //    * <p>
-  //    * The new array contains the same elements of the input array plus the given element in the first position. The
-  //    * component type of the new array is the same as that of the input array.
-  //    * </p>
-  //    *
-  //    * <p>
-  //    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
-  //    * element.
-  //    * </p>
-  //    *
-  //    * <pre>
-  //    * ArrayUtils.add(null, '1')       = ['1']
-  //    * ArrayUtils.add(['1'], '0')      = ['0', '1']
-  //    * ArrayUtils.add(['1', '0'], '1') = ['1', '1', '0']
-  //    * </pre>
-  //    *
-  //    * @param array   the array to "add" the element to, may be {@code null}.
-  //    * @param element the object to add.
-  //    * @return A new array containing the existing elements plus the new element The returned array type will be that of
-  //    *         the input array (unless null), in which case it will have the same type as the element.
-  //    * @since 3.10
-  //    */
-  //  def addFirst(array: Array[Char], element: Char): Array[Char] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  def addFirst(array: Array[Double], element: Double): Array[Double] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  def addFirst(array: Array[Float], element: Float): Array[Float] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  def addFirst(array: Array[Int], element: Int): Array[Int] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  def addFirst(array: Array[Long], element: Long): Array[Long] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  def addFirst(array: Array[Short], element: Short): Array[Short] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
-  //  /**
-  //    * Copies the given array and adds the given element at the beginning of the new array.
-  //    *
-  //    * <p>
-  //    * The new array contains the same elements of the input array plus the given element in the first positioaddFirstaddFirstaddFirstn. The
-  //    * component type of the new array is the same as that of the input array.
-  //    * </p>
-  //    *
-  //    * <p>
-  //    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
-  //    * element, unless the element itself is null, in which case the return type is Object[]
-  //    * </p>
-  //    *
-  //    * <pre>
-  //    * ArrayUtils.add(null, null)      = IllegalArgumentException
-  //    * ArrayUtils.add(null, "a")       = ["a"]
-  //    * ArrayUtils.add(["a"], null)     = [null, "a"]
-  //    * ArrayUtils.add(["a"], "b")      = ["b", "a"]
-  //    * ArrayUtils.add(["a", "b"], "c") = ["c", "a", "b"]
-  //    * </pre>
-  //    *
-  //    * @tparam T      the component type of the array
-  //    * @param array   the array to "add" the element to, may be {@code null}
-  //    * @param element the object to add, may be {@code null}
-  //    * @return A new array containing the existing elements plus the new element The returned array type will be that of
-  //    *         the input array (unless null), in which case it will have the same type as the element. If both are null,
-  //    *         an IllegalArgumentException is thrown
-  //    * @since 3.10
-  //    * @throws java.lang.IllegalArgumentException if both arguments are null
-  //    */
-  //  def addFirst[T](array: Array[T], element: T): Array[T] = if (array == null) add(array, element)
-  //  else insert(0, array, element)
-  //
+
+  /**
+    * Copies the given array and adds the given element at the beginning of the new array.
+    *
+    * <p>
+    * The new array contains the same elements of the input array plus the given element in the first position. The
+    * component type of the new array is the same as that of the input array.
+    * </p>
+    *
+    * <p>
+    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
+    * element.
+    * </p>
+    *
+    * <pre>
+    * ArrayUtils.add(null, true)          = [true]
+    * ArrayUtils.add([true], false)       = [false, true]
+    * ArrayUtils.add([true, false], true) = [true, true, false]
+    * </pre>
+    *
+    * @param array   the array to "add" the element to, may be {@code null}.
+    * @param element the object to add.
+    * @return A new array containing the existing elements plus the new element The returned array type will be that of
+    *         the input array (unless null), in which case it will have the same type as the element.
+    * @since 3.10
+    */
+  def addFirst(array: Array[Boolean], element: Boolean): Array[Boolean] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  /**
+    * Copies the given array and adds the given element at the beginning of the new array.
+    *
+    * <p>
+    * The new array contains the same elements of the input array plus the given element in the first position. The
+    * component type of the new array is the same as that of the input array.
+    * </p>
+    *
+    * <p>
+    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
+    * element.
+    * </p>
+    *
+    * <pre>
+    * ArrayUtils.add(null, 1)   = [1]
+    * ArrayUtils.add([1], 0)    = [0, 1]
+    * ArrayUtils.add([1, 0], 1) = [1, 1, 0]
+    * </pre>
+    *
+    * @param array   the array to "add" the element to, may be {@code null}.
+    * @param element the object to add.
+    * @return A new array containing the existing elements plus the new element The returned array type will be that of
+    *         the input array (unless null), in which case it will have the same type as the element.
+    * @since 3.10
+    */
+  def addFirst(array: Array[Byte], element: Byte): Array[Byte] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  /**
+    * Copies the given array and adds the given element at the beginning of the new array.
+    *
+    * <p>
+    * The new array contains the same elements of the input array plus the given element in the first position. The
+    * component type of the new array is the same as that of the input array.
+    * </p>
+    *
+    * <p>
+    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
+    * element.
+    * </p>
+    *
+    * <pre>
+    * ArrayUtils.add(null, '1')       = ['1']
+    * ArrayUtils.add(['1'], '0')      = ['0', '1']
+    * ArrayUtils.add(['1', '0'], '1') = ['1', '1', '0']
+    * </pre>
+    *
+    * @param array   the array to "add" the element to, may be {@code null}.
+    * @param element the object to add.
+    * @return A new array containing the existing elements plus the new element The returned array type will be that of
+    *         the input array (unless null), in which case it will have the same type as the element.
+    * @since 3.10
+    */
+  def addFirst(array: Array[Char], element: Char): Array[Char] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  def addFirst(array: Array[Double], element: Double): Array[Double] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  def addFirst(array: Array[Float], element: Float): Array[Float] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  def addFirst(array: Array[Int], element: Int): Array[Int] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  def addFirst(array: Array[Long], element: Long): Array[Long] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  def addFirst(array: Array[Short], element: Short): Array[Short] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
+  /**
+    * Copies the given array and adds the given element at the beginning of the new array.
+    *
+    * <p>
+    * The new array contains the same elements of the input array plus the given element in the first positioaddFirstaddFirstaddFirstn. The
+    * component type of the new array is the same as that of the input array.
+    * </p>
+    *
+    * <p>
+    * If the input array is {@code null}, a new one element array is returned whose component type is the same as the
+    * element, unless the element itself is null, in which case the return type is Object[]
+    * </p>
+    *
+    * <pre>
+    * ArrayUtils.add(null, null)      = IllegalArgumentException
+    * ArrayUtils.add(null, "a")       = ["a"]
+    * ArrayUtils.add(["a"], null)     = [null, "a"]
+    * ArrayUtils.add(["a"], "b")      = ["b", "a"]
+    * ArrayUtils.add(["a", "b"], "c") = ["c", "a", "b"]
+    * </pre>
+    *
+    * @tparam T      the component type of the array
+    * @param array   the array to "add" the element to, may be {@code null}
+    * @param element the object to add, may be {@code null}
+    * @return A new array containing the existing elements plus the new element The returned array type will be that of
+    *         the input array (unless null), in which case it will have the same type as the element. If both are null,
+    *         an IllegalArgumentException is thrown
+    * @since 3.10
+    * @throws java.lang.IllegalArgumentException if both arguments are null
+    */
+  def addFirst[T](array: Array[T], element: T): Array[T] =
+    if (array == null) add(array, element)
+    else insert(0, array, element)
+
   /**
     * <p>Clones an array returning a typecast result and handling
     * {@code null}.
@@ -1879,154 +1891,143 @@ object ArrayUtils {
 
     INDEX_NOT_FOUND
   }
-  //
-  //  /**
-  //    * <p>Inserts elements into an array at the given index (starting from zero).</p>
-  //    *
-  //    * <p>When an array is returned, it is always a new array.</p>
-  //    *
-  //    * <pre>
-  //    * ArrayUtils.insert(index, null, null)      = null
-  //    * ArrayUtils.insert(index, array, null)     = cloned copy of 'array'
-  //    * ArrayUtils.insert(index, null, values)    = null
-  //    * </pre>
-  //    *
-  //    * @param index  the position within {@code array} to insert the new values
-  //    * @param array  the array to insert the values into, may be {@code null}
-  //    * @param values the new values to insert, may be {@code null}
-  //    * @return The new array.
-  //    * @throws java.lang.IndexOutOfBoundsException if {@code array} is provided
-  //    *                                   and either {@code index < 0} or {@code index > array.length}
-  //    * @since 3.6
-  //    */
-  //  def insert(index: Int, array: Array[Boolean], values: Boolean*): Array[Boolean] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Boolean](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Byte], values: Byte*): Array[Byte] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Byte](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Char], values: Char*): Array[Char] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Char](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Double], values: Double*): Array[Double] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Double](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Float], values: Float*): Array[Float] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Float](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Int], values: Int*): Array[Int] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Int](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Long], values: Long*): Array[Long] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Long](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  def insert(index: Int, array: Array[Short], values: Short*): Array[Short] = {
-  //    if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val result = new Array[Short](array.length + values.length)
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
-  //  /**
-  //    * <p>Inserts elements into an array at the given index (starting from zero).</p>
-  //    *
-  //    * <p>When an array is returned, it is always a new array.</p>
-  //    *
-  //    * <pre>
-  //    * ArrayUtils.insert(index, null, null)      = null
-  //    * ArrayUtils.insert(index, array, null)     = cloned copy of 'array'
-  //    * ArrayUtils.insert(index, null, values)    = null
-  //    * </pre>
-  //    *
-  //    * @tparam T     the type of elements in {@code array} and {@code values}
-  //    * @param index  the position within {@code array} to insert the new values
-  //    * @param array  the array to insert the values into, may be {@code null}
-  //    * @param values the new values to insert, may be {@code null}
-  //    * @return The new array.
-  //    * @throws java.lang.IndexOutOfBoundsException if {@code array} is provided
-  //    *                                   and either {@code index < 0} or {@code index > array.length}
-  //    * @since 3.6
-  //    */
-  //  @SafeVarargs def insert[T](index: Int, array: Array[T], values: T*): Array[T] = {
-  //    /*
-  //         * Note on use of @SafeVarargs:
-  //         *
-  //         * By returning null when 'array' is null, we avoid returning the vararg
-  //         * array to the caller. We also avoid relying on the type of the vararg
-  //         * array, by inspecting the component type of 'array'.
-  //         */ if (array == null) return null
-  //    if (ArrayUtils.isEmpty(values)) return clone(array)
-  //    if (index < 0 || index > array.length) throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
-  //    val `type` = array.getClass.getComponentType
-  //    @SuppressWarnings(Array("unchecked")) // OK, because array and values are of type T
-  //    val result: Array[T] = ReflectArray.newInstance(`type`, array.length + values.length).asInstanceOf[Array[T]]
-  //
-  //    System.arraycopy(values, 0, result, index, values.length)
-  //    if (index > 0) System.arraycopy(array, 0, result, 0, index)
-  //    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
-  //    result
-  //  }
-  //
+
+  /**
+    * <p>Inserts elements into an array at the given index (starting from zero).</p>
+    *
+    * <p>When an array is returned, it is always a new array.</p>
+    *
+    * <pre>
+    * ArrayUtils.insert(index, null, null)      = null
+    * ArrayUtils.insert(index, array, null)     = cloned copy of 'array'
+    * ArrayUtils.insert(index, null, values)    = null
+    * </pre>
+    *
+    * @param index  the position within {@code array} to insert the new values
+    * @param array  the array to insert the values into, may be {@code null}
+    * @param values the new values to insert, may be {@code null}
+    * @return The new array.
+    * @throws java.lang.IndexOutOfBoundsException if {@code array} is provided
+    *                                   and either {@code index < 0} or {@code index > array.length}
+    * @since 3.6
+    */
+  def insert(index: Int, array: Array[Boolean], values: Boolean*): Array[Boolean] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Boolean], values: Array[Boolean]): Array[Boolean] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Byte], values: Byte*): Array[Byte] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Byte], values: Array[Byte]): Array[Byte] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Char], values: Char*): Array[Char] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Char], values: Array[Char]): Array[Char] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Double], values: Double*): Array[Double] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Double], values: Array[Double]): Array[Double] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Float], values: Float*): Array[Float] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Float], values: Array[Float]): Array[Float] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Int], values: Int*): Array[Int] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Int], values: Array[Int]): Array[Int] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Long], values: Long*): Array[Long] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Long], values: Array[Long]): Array[Long] =
+    insertImpl(index, array, values)
+
+  def insert(index: Int, array: Array[Short], values: Short*): Array[Short] =
+    insertImpl(index, array, values: _*)
+
+  def insert(index: Int, array: Array[Short], values: Array[Short]): Array[Short] =
+    insertImpl(index, array, values)
+
+  private def insertImpl[@specialized T: ClassTag](index: Int, array: Array[T], values: T*): Array[T] = {
+    if (array == null) return null
+    if (values == null || values.isEmpty) return clone(array)
+    insertImpl(index, array, values.toArray)
+  }
+
+  private def insertImpl[@specialized T: ClassTag](index: Int, array: Array[T], values: Array[T]): Array[T] = {
+    if (array == null) return null
+    if (isEmpty(values)) return clone(array)
+
+    if (index < 0 || index > array.length)
+      throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
+
+    val result: Array[T] = new Array[T](array.length + values.length)
+
+    values.copyToArray(result, index, values.length)
+    if (index > 0) array.copyToArray(result, 0, index)
+    if (index < array.length)
+      array.view.slice(index, array.length).copyToArray(result, index + values.length, array.length - index)
+
+    result
+  }
+
+  /**
+    * <p>Inserts elements into an array at the given index (starting from zero).</p>
+    *
+    * <p>When an array is returned, it is always a new array.</p>
+    *
+    * <pre>
+    * ArrayUtils.insert(index, null, null)      = null
+    * ArrayUtils.insert(index, array, null)     = cloned copy of 'array'
+    * ArrayUtils.insert(index, null, values)    = null
+    * </pre>
+    *
+    * @tparam T     the type of elements in {@code array} and {@code values}
+    * @param index  the position within {@code array} to insert the new values
+    * @param array  the array to insert the values into, may be {@code null}
+    * @param values the new values to insert, may be {@code null}
+    * @return The new array.
+    * @throws java.lang.IndexOutOfBoundsException
+    *         if {@code array} is provided and either {@code index < 0} or
+    *         {@code index > array.length}
+    * @since 3.6
+    */
+  @SafeVarargs def insert[T](index: Int, array: Array[T], values: T*): Array[T] = {
+    /*
+     * Note on use of @SafeVarargs:
+     *
+     * By returning null when 'array' is null, we avoid returning the vararg
+     * array to the caller. We also avoid relying on the type of the vararg
+     * array, by inspecting the component type of 'array'.
+     */
+    if (array == null) return null
+    if (values == null || values.isEmpty) return clone(array)
+
+    if (index < 0 || index > array.length)
+      throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length)
+
+    val `type` = array.getClass.getComponentType
+    @SuppressWarnings(Array("unchecked")) // OK, because array and values are of type T
+    val result: Array[T] = ReflectArray.newInstance(`type`, array.length + values.length).asInstanceOf[Array[T]]
+
+    System.arraycopy(values, 0, result, index, values.length)
+    if (index > 0) System.arraycopy(array, 0, result, 0, index)
+    if (index < array.length) System.arraycopy(array, index, result, index + values.length, array.length - index)
+
+    result
+  }
+
   /**
     * Returns whether a given array can safely be accessed at the given index.
     *
@@ -2292,7 +2293,7 @@ object ArrayUtils {
     * <p>This method checks whether the provided array is sorted according to natural ordering
     * ({@code false} before {@code true}).
     *
-      * @param array the array to check
+    * @param array the array to check
     * @return whether the array is sorted according to natural ordering
     * @since 3.4
     */
@@ -2311,7 +2312,7 @@ object ArrayUtils {
   /**
     * <p>This method checks whether the provided array is sorted according to natural ordering.
     *
-      * @param array the array to check
+    * @param array the array to check
     * @return whether the array is sorted according to natural ordering
     * @since 3.4
     */
@@ -2403,7 +2404,7 @@ object ArrayUtils {
     * <p>This method checks whether the provided array is sorted according to the class's
     * {@code compareTo} method.
     *
-      * @param array the array to check
+    * @param array the array to check
     * @tparam T    the datatype of the array to check, it must implement {@code Comparable}
     * @return whether the array is sorted
     * @since 3.4
@@ -2419,7 +2420,7 @@ object ArrayUtils {
   /**
     * <p>This method checks whether the provided array is sorted according to the provided {@code Comparator}.
     *
-      * @param array      the array to check
+    * @param array      the array to check
     * @param comparator the {@code Comparator} to compare over
     * @tparam T         the datatype of the array
     * @return whether the array is sorted
@@ -2441,10 +2442,10 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given value within the array.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) if
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) if
     * {@code null} array input.
     *
-      * @param array       the array to traverse backwards looking for the object, may be {@code null}
+    * @param array       the array to traverse backwards looking for the object, may be {@code null}
     * @param valueToFind the object to find
     * @return the last index of the value within the array,
     *         {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
@@ -2454,12 +2455,12 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given value in the array starting at the given index.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than
+    * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than
     * the array length will search from the end of the array.
     *
-      * @param array       the array to traverse for looking for the object, may be {@code null}
+    * @param array       the array to traverse for looking for the object, may be {@code null}
     * @param valueToFind the value to find
     * @param startIndex  the start index to traverse backwards from
     * @return the last index of the value within the array,
@@ -2481,9 +2482,9 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given value within the array.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * @param array       the array to traverse backwards looking for the object, may be {@code null}
+    * @param array       the array to traverse backwards looking for the object, may be {@code null}
     * @param valueToFind the object to find
     * @return the last index of the value within the array,
     *         {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
@@ -2493,12 +2494,12 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given value in the array starting at the given index.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the
+    * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the
     * array length will search from the end of the array.
     *
-      * @param array       the array to traverse for looking for the object, may be {@code null}
+    * @param array       the array to traverse for looking for the object, may be {@code null}
     * @param valueToFind the value to find
     * @param startIndex  the start index to traverse backwards from
     * @return the last index of the value within the array,
@@ -2520,9 +2521,9 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given value within the array.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * @param array       the array to traverse backwards looking for the object, may be {@code null}
+    * @param array       the array to traverse backwards looking for the object, may be {@code null}
     * @param valueToFind the object to find
     * @return the last index of the value within the array,
     *         {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
@@ -2534,12 +2535,12 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given value in the array starting at the given index.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the
+    * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the
     * array length will search from the end of the array.
     *
-      * @param array       the array to traverse for looking for the object, may be {@code null}
+    * @param array       the array to traverse for looking for the object, may be {@code null}
     * @param valueToFind the value to find
     * @param startIndex  the start index to traverse backwards from
     * @return the last index of the value within the array,
@@ -2565,9 +2566,9 @@ object ArrayUtils {
     * This method will return the index of the last value which falls between the region
     * defined by valueToFind - tolerance and valueToFind + tolerance.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * @param array       the array to search through for the object, may be {@code null}
+    * @param array       the array to search through for the object, may be {@code null}
     * @param valueToFind the value to find
     * @param tolerance   tolerance of the search
     * @return the index of the value within the array,
@@ -2594,12 +2595,12 @@ object ArrayUtils {
     * This method will return the index of the last value which falls between the region
     * defined by valueToFind - tolerance and valueToFind + tolerance.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the
+    * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the
     * array length will search from the end of the array.
     *
-      * @param array       the array to traverse for looking for the object, may be {@code null}
+    * @param array       the array to traverse for looking for the object, may be {@code null}
     * @param valueToFind the value to find
     * @param startIndex  the start index to traverse backwards from
     * @param tolerance   search for value within plus/minus this amount
@@ -2672,9 +2673,9 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given object within the array.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * @param array        the array to traverse backwards looking for the object, may be {@code null}
+    * @param array        the array to traverse backwards looking for the object, may be {@code null}
     * @param objectToFind the object to find, may be {@code null}
     * @return the last index of the object within the array,
     *         {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
@@ -2685,12 +2686,12 @@ object ArrayUtils {
   /**
     * <p>Finds the last index of the given object in the array starting at the given index.
     *
-      * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+    * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
     *
-      * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than
+    * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than
     * the array length will search from the end of the array.
     *
-      * @param array        the array to traverse for looking for the object, may be {@code null}
+    * @param array        the array to traverse for looking for the object, may be {@code null}
     * @param objectToFind the object to find, may be {@code null}
     * @param startIndex   the start index to traverse backwards from
     * @return the last index of the object within the array,
@@ -2732,12 +2733,12 @@ object ArrayUtils {
     * <p>Defensive programming technique to change a {@code null}
     * reference to an empty one.
     *
-      * <p>This method returns an empty array for a {@code null} input array.
+    * <p>This method returns an empty array for a {@code null} input array.
     *
-      * <p>As a memory optimizing technique an empty array passed in will be overridden with
+    * <p>As a memory optimizing technique an empty array passed in will be overridden with
     * the empty {@code public static} references in this class.
     *
-      * @param array the array to check for {@code null} or empty
+    * @param array the array to check for {@code null} or empty
     * @return the same array, {@code public static} empty array if {@code null} or empty input
     * @since 2.5
     */
@@ -2769,12 +2770,12 @@ object ArrayUtils {
     * <p>Defensive programming technique to change a {@code null}
     * reference to an empty one.
     *
-      * <p>This method returns an empty array for a {@code null} input array.
+    * <p>This method returns an empty array for a {@code null} input array.
     *
-      * <p>As a memory optimizing technique an empty array passed in will be overridden with
+    * <p>As a memory optimizing technique an empty array passed in will be overridden with
     * the empty {@code public static} references in this class.
     *
-      * @param array the array to check for {@code null} or empty
+    * @param array the array to check for {@code null} or empty
     * @return the same array, {@code public static} empty array if {@code null} or empty input
     * @since 3.2
     */
@@ -2847,9 +2848,9 @@ object ArrayUtils {
     * <p>Defensive programming technique to change a {@code null}
     * reference to an empty one.
     *
-      * <p>This method returns an empty array for a {@code null} input array.
+    * <p>This method returns an empty array for a {@code null} input array.
     *
-      * @param array the array to check for {@code null} or empty
+    * @param array the array to check for {@code null} or empty
     * @param type  the class representation of the desired array
     * @tparam T    the class type
     * @return the same array, {@code public static} empty array if {@code null}
@@ -2867,22 +2868,22 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.remove([true], 0)              = []
     * ArrayUtils.remove([true, false], 0)       = [false]
     * ArrayUtils.remove([true, false], 1)       = [true]
     * ArrayUtils.remove([true, true, false], 1) = [true, false]
     * </pre>
     *
-      * @param array the array to remove the element from, may not be {@code null}
+    * @param array the array to remove the element from, may not be {@code null}
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
@@ -2898,22 +2899,22 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.remove([1], 0)          = []
     * ArrayUtils.remove([1, 0], 0)       = [0]
     * ArrayUtils.remove([1, 0], 1)       = [1]
     * ArrayUtils.remove([1, 0, 1], 1)    = [1, 1]
     * </pre>
     *
-      * @param array the array to remove the element from, may not be {@code null}
+    * @param array the array to remove the element from, may not be {@code null}
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
@@ -2929,22 +2930,22 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.remove(['a'], 0)           = []
     * ArrayUtils.remove(['a', 'b'], 0)      = ['b']
     * ArrayUtils.remove(['a', 'b'], 1)      = ['a']
     * ArrayUtils.remove(['a', 'b', 'c'], 1) = ['a', 'c']
     * </pre>
     *
-      * @param array the array to remove the element from, may not be {@code null}
+    * @param array the array to remove the element from, may not be {@code null}
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
@@ -2960,22 +2961,22 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.remove([1.1], 0)           = []
     * ArrayUtils.remove([2.5, 6.0], 0)      = [6.0]
     * ArrayUtils.remove([2.5, 6.0], 1)      = [2.5]
     * ArrayUtils.remove([2.5, 6.0, 3.8], 1) = [2.5, 3.8]
     * </pre>
     *
-      * @param array the array to remove the element from, may not be {@code null}
+    * @param array the array to remove the element from, may not be {@code null}
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
@@ -2994,22 +2995,22 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.remove([1], 0)         = []
     * ArrayUtils.remove([2, 6], 0)      = [6]
     * ArrayUtils.remove([2, 6], 1)      = [2]
     * ArrayUtils.remove([2, 6, 3], 1)   = [2, 3]
     * </pre>
     *
-      * @param array the array to remove the element from, may not be {@code null}
+    * @param array the array to remove the element from, may not be {@code null}
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
@@ -3028,15 +3029,15 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * @param array the array to remove the element from, may not be {@code null}
+    * @param array the array to remove the element from, may not be {@code null}
     * @param index the position of the element to be removed
     * @return A new array containing the existing elements except the element
     *         at the specified position.
@@ -3061,15 +3062,15 @@ object ArrayUtils {
     * All subsequent elements are shifted to the left (subtracts one from
     * their indices).
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the element on the specified position. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.remove(["a"], 0)           = []
     * ArrayUtils.remove(["a", "b"], 0)      = ["b"]
     * ArrayUtils.remove(["a", "b"], 1)      = ["a"]
@@ -3093,20 +3094,20 @@ object ArrayUtils {
     * <p>Removes the elements at the specified positions from the specified array.
     * All remaining elements are shifted to the left.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except those at the specified positions. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeAll([true, false, true], 0, 2) = [false]
     * ArrayUtils.removeAll([true, false, true], 1, 2) = [true]
     * </pre>
     *
-      * @param array   the array to remove the element from, may not be {@code null}
+    * @param array   the array to remove the element from, may not be {@code null}
     * @param indices the positions of the elements to be removed
     * @return A new array containing the existing elements except those
     *         at the specified positions.
@@ -3115,21 +3116,24 @@ object ArrayUtils {
     * @since 3.0.1
     */
   def removeAll(array: Array[Boolean], indices: Int*): Array[Boolean] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Boolean]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Boolean], indices: Array[Int]): Array[Boolean] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Boolean]]
 
   /**
     * <p>Removes the elements at the specified positions from the specified array.
     * All remaining elements are shifted to the left.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except those at the specified positions. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeAll([1], 0)             = []
     * ArrayUtils.removeAll([2, 6], 0)          = [6]
     * ArrayUtils.removeAll([2, 6], 0, 1)       = []
@@ -3138,7 +3142,7 @@ object ArrayUtils {
     * ArrayUtils.removeAll([2, 6, 3], 0, 1, 2) = []
     * </pre>
     *
-      * @param array   the array to remove the element from, may not be {@code null}
+    * @param array   the array to remove the element from, may not be {@code null}
     * @param indices the positions of the elements to be removed
     * @return A new array containing the existing elements except those
     *         at the specified positions.
@@ -3147,27 +3151,45 @@ object ArrayUtils {
     * @since 3.0.1
     */
   def removeAll(array: Array[Byte], indices: Int*): Array[Byte] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Byte]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Byte], indices: Array[Int]): Array[Byte] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Byte]]
 
   def removeAll(array: Array[Char], indices: Int*): Array[Char] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Char]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Char], indices: Array[Int]): Array[Char] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Char]]
 
   def removeAll(array: Array[Double], indices: Int*): Array[Double] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Double]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Double], indices: Array[Int]): Array[Double] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Double]]
 
   def removeAll(array: Array[Float], indices: Int*): Array[Float] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Float]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Float], indices: Array[Int]): Array[Float] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Float]]
 
   def removeAll(array: Array[Int], indices: Int*): Array[Int] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Int]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Int], indices: Array[Int]): Array[Int] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Int]]
 
   def removeAll(array: Array[Long], indices: Int*): Array[Long] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Long]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Long], indices: Array[Int]): Array[Long] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Long]]
 
   /**
     * Removes multiple array elements specified by indices.
     *
-      * @param array   source
+    * @param array   source
     * @param indices to remove
     * @return new array of same type minus elements specified by the set bits in {@code indices}
     * @since 3.2
@@ -3208,15 +3230,15 @@ object ArrayUtils {
   /**
     * Removes multiple array elements specified by index.
     *
-      * @param array   source
+    * @param array   source
     * @param indices to remove
     * @return new array of same type minus elements specified by unique values of {@code indices}
     * @since 3.0.1
     */
-  private[lang3] def removeAll(array: Any, indices: Int*)(implicit d: DummyImplicit): Any = {
+  private[lang3] def removeAll(array: Any, indices: Array[Int])(implicit d: DummyImplicit): Any = {
     val length: Int = getLength(array)
     var diff: Int = 0 // number of distinct indexes, i.e. number of entries that will be removed
-    val clonedIndices: Array[Int] = clone(indices.toArray)
+    val clonedIndices: Array[Int] = clone(indices)
 
     ju.Arrays.sort(clonedIndices)
     // identify length of result array
@@ -3262,26 +3284,29 @@ object ArrayUtils {
   }
 
   def removeAll(array: Array[Short], indices: Int*): Array[Short] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[Short]]
+    removeAll(array, indices.toArray)
+
+  def removeAll(array: Array[Short], indices: Array[Int]): Array[Short] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[Short]]
 
   /**
     * <p>Removes the elements at the specified positions from the specified array.
     * All remaining elements are shifted to the left.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except those at the specified positions. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <p>If the input array is {@code null}, an IndexOutOfBoundsException
+    * <p>If the input array is {@code null}, an IndexOutOfBoundsException
     * will be thrown, because in that case no valid index can be specified.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeAll(["a", "b", "c"], 0, 2) = ["b"]
     * ArrayUtils.removeAll(["a", "b", "c"], 1, 2) = ["a"]
     * </pre>
     *
-      * @tparam T      the component type of the array
+    * @tparam T      the component type of the array
     * @param array   the array to remove the element from, may not be {@code null}
     * @param indices the positions of the elements to be removed
     * @return A new array containing the existing elements except those
@@ -3292,12 +3317,16 @@ object ArrayUtils {
     */
   @SuppressWarnings(Array("unchecked")) // removeAll() always creates an array of the same type as its input
   def removeAll[T](array: Array[T], indices: Int*): Array[T] =
-    removeAll(array.asInstanceOf[Any], indices: _*).asInstanceOf[Array[T]]
+    removeAll(array, indices.toArray)
+
+  @SuppressWarnings(Array("unchecked")) // removeAll() always creates an array of the same type as its input
+  def removeAll[T](array: Array[T], indices: Array[Int]): Array[T] =
+    removeAll(array.asInstanceOf[Any], indices).asInstanceOf[Array[T]]
 
   /**
     * Removes the occurrences of the specified element from the specified boolean array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3315,7 +3344,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified byte array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3333,7 +3362,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified char array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3351,7 +3380,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified double array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3369,7 +3398,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified float array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3387,7 +3416,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified int array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3405,7 +3434,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified long array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3423,7 +3452,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified short array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3441,7 +3470,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3460,7 +3489,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified boolean array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3477,7 +3506,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified byte array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3494,7 +3523,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified char array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3511,7 +3540,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified double array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3528,7 +3557,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified float array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3545,7 +3574,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified int array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3562,7 +3591,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified long array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3579,7 +3608,7 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified short array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
@@ -3596,13 +3625,13 @@ object ArrayUtils {
   /**
     * Removes the occurrences of the specified element from the specified array.
     *
-      * <p>
+    * <p>
     * All subsequent elements are shifted to the left (subtracts one from their indices).
     * If the array doesn't contains such an element, no elements are removed from the array.
     * {@code null} will be returned if the input array is {@code null}.
     * </p>
     *
-      * @tparam T      the type of object in the array
+    * @tparam T      the type of object in the array
     * @param element the element to remove
     * @param array   the input array
     * @return A new array containing the existing elements except the occurrences of the specified element.
@@ -3617,12 +3646,12 @@ object ArrayUtils {
     * (subtracts one from their indices). If the array doesn't contains
     * such an element, no elements are removed from the array.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the first occurrence of the specified element. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElement(null, true)                = null
     * ArrayUtils.removeElement([], true)                  = []
     * ArrayUtils.removeElement([true], false)             = [true]
@@ -3630,7 +3659,7 @@ object ArrayUtils {
     * ArrayUtils.removeElement([true, false, true], true) = [false, true]
     * </pre>
     *
-      * @param array   the array to remove the element from, may be {@code null}
+    * @param array   the array to remove the element from, may be {@code null}
     * @param element the element to be removed
     * @return A new array containing the existing elements except the first
     *         occurrence of the specified element.
@@ -3648,12 +3677,12 @@ object ArrayUtils {
     * (subtracts one from their indices). If the array doesn't contains
     * such an element, no elements are removed from the array.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the first occurrence of the specified element. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElement(null, 1)        = null
     * ArrayUtils.removeElement([], 1)          = []
     * ArrayUtils.removeElement([1], 0)         = [1]
@@ -3661,7 +3690,7 @@ object ArrayUtils {
     * ArrayUtils.removeElement([1, 0, 1], 1)   = [0, 1]
     * </pre>
     *
-      * @param array   the array to remove the element from, may be {@code null}
+    * @param array   the array to remove the element from, may be {@code null}
     * @param element the element to be removed
     * @return A new array containing the existing elements except the first
     *         occurrence of the specified element.
@@ -3679,12 +3708,12 @@ object ArrayUtils {
     * (subtracts one from their indices). If the array doesn't contains
     * such an element, no elements are removed from the array.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the first occurrence of the specified element. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElement(null, 'a')            = null
     * ArrayUtils.removeElement([], 'a')              = []
     * ArrayUtils.removeElement(['a'], 'b')           = ['a']
@@ -3692,7 +3721,7 @@ object ArrayUtils {
     * ArrayUtils.removeElement(['a', 'b', 'a'], 'a') = ['b', 'a']
     * </pre>
     *
-      * @param array   the array to remove the element from, may be {@code null}
+    * @param array   the array to remove the element from, may be {@code null}
     * @param element the element to be removed
     * @return A new array containing the existing elements except the first
     *         occurrence of the specified element.
@@ -3710,12 +3739,12 @@ object ArrayUtils {
     * (subtracts one from their indices). If the array doesn't contains
     * such an element, no elements are removed from the array.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the first occurrence of the specified element. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElement(null, 1.1)            = null
     * ArrayUtils.removeElement([], 1.1)              = []
     * ArrayUtils.removeElement([1.1], 1.2)           = [1.1]
@@ -3723,7 +3752,7 @@ object ArrayUtils {
     * ArrayUtils.removeElement([1.1, 2.3, 1.1], 1.1) = [2.3, 1.1]
     * </pre>
     *
-      * @param array   the array to remove the element from, may be {@code null}
+    * @param array   the array to remove the element from, may be {@code null}
     * @param element the element to be removed
     * @return A new array containing the existing elements except the first
     *         occurrence of the specified element.
@@ -3747,12 +3776,12 @@ object ArrayUtils {
     * (subtracts one from their indices). If the array doesn't contains
     * such an element, no elements are removed from the array.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the first occurrence of the specified element. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElement(null, 1)      = null
     * ArrayUtils.removeElement([], 1)        = []
     * ArrayUtils.removeElement([1], 2)       = [1]
@@ -3760,7 +3789,7 @@ object ArrayUtils {
     * ArrayUtils.removeElement([1, 3, 1], 1) = [3, 1]
     * </pre>
     *
-      * @param array   the array to remove the element from, may be {@code null}
+    * @param array   the array to remove the element from, may be {@code null}
     * @param element the element to be removed
     * @return A new array containing the existing elements except the first
     *         occurrence of the specified element.
@@ -3790,12 +3819,12 @@ object ArrayUtils {
     * (subtracts one from their indices). If the array doesn't contains
     * such an element, no elements are removed from the array.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except the first occurrence of the specified element. The component
     * type of the returned array is always the same as that of the input
     * array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElement(null, "a")            = null
     * ArrayUtils.removeElement([], "a")              = []
     * ArrayUtils.removeElement(["a"], "b")           = ["a"]
@@ -3803,7 +3832,7 @@ object ArrayUtils {
     * ArrayUtils.removeElement(["a", "b", "a"], "a") = ["b", "a"]
     * </pre>
     *
-      * @tparam T      the component type of the array
+    * @tparam T      the component type of the array
     * @param array   the array to remove the element from, may be {@code null}
     * @param element the element to be removed
     * @return A new array containing the existing elements except the first
@@ -3823,12 +3852,12 @@ object ArrayUtils {
     * contained in the original array, no change occurs beyond the
     * removal of the existing matching items.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except for the earliest-encountered occurrences of the specified
     * elements. The component type of the returned array is always the same
     * as that of the input array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElements(null, true, false)               = null
     * ArrayUtils.removeElements([], true, false)                 = []
     * ArrayUtils.removeElements([true], false, false)            = [true]
@@ -3837,36 +3866,14 @@ object ArrayUtils {
     * ArrayUtils.removeElements([true, false, true], true, true) = [false]
     * </pre>
     *
-      * @param array  the array to remove the element from, may be {@code null}
+    * @param array  the array to remove the element from, may be {@code null}
     * @param values the elements to be removed
     * @return A new array containing the existing elements except the
     *         earliest-encountered occurrences of the specified elements.
     * @since 3.0.1
     */
-  def removeElements(array: Array[Boolean], values: Boolean*): Array[Boolean] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
-
-    val occurrences: ju.HashMap[Boolean, MutableInt] =
-      new ju.HashMap[Boolean, MutableInt](2) // only two possible values here
-    for (v <- values) {
-      val boxed: Boolean = JavaBoolean.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-      if (count == null) occurrences.put(boxed, new MutableInt(1))
-      else count.increment()
-    }
-
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Boolean = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
-      }
-    }
-
-    removeAll(array, toRemove).asInstanceOf[Array[Boolean]]
-  }
+  def removeElements(array: Array[Boolean], values: Boolean*): Array[Boolean] =
+    removeElementsImpl(array, values)
 
   /**
     * <p>Removes occurrences of specified elements, in specified quantities,
@@ -3875,12 +3882,12 @@ object ArrayUtils {
     * contained in the original array, no change occurs beyond the
     * removal of the existing matching items.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except for the earliest-encountered occurrences of the specified
     * elements. The component type of the returned array is always the same
     * as that of the input array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElements(null, 1, 2)      = null
     * ArrayUtils.removeElements([], 1, 2)        = []
     * ArrayUtils.removeElements([1], 2, 3)       = [1]
@@ -3889,186 +3896,57 @@ object ArrayUtils {
     * ArrayUtils.removeElements([1, 3, 1], 1, 1) = [3]
     * </pre>
     *
-      * @param array  the array to remove the element from, may be {@code null}
+    * @param array  the array to remove the element from, may be {@code null}
     * @param values the elements to be removed
     * @return A new array containing the existing elements except the
     *         earliest-encountered occurrences of the specified elements.
     * @since 3.0.1
     */
-  def removeElements(array: Array[Byte], values: Byte*): Array[Byte] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
+  def removeElements(array: Array[Byte], values: Byte*): Array[Byte] =
+    removeElementsImpl(array, values)
 
-    val occurrences: ju.Map[Byte, MutableInt] = new ju.HashMap[Byte, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Byte = JavaByte.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-      if (count == null) {
-        occurrences.put(boxed, new MutableInt(1))
-      } else {
-        count.increment()
-      }
-    }
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Byte = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) {
-          occurrences.remove(key)
-        }
-        toRemove.set(i)
-      }
-    }
+  def removeElements(array: Array[Char], values: Char*): Array[Char] =
+    removeElementsImpl(array, values)
 
-    removeAll(array, toRemove).asInstanceOf[Array[Byte]]
-  }
-  def removeElements(array: Array[Char], values: Char*): Array[Char] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
+  def removeElements(array: Array[Double], values: Double*): Array[Double] =
+    removeElementsImpl(array, values)
 
-    val occurrences: ju.HashMap[Character, MutableInt] = new ju.HashMap[Character, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Character = Character.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-      if (count == null) occurrences.put(boxed, new MutableInt(1))
+  def removeElements(array: Array[Float], values: Float*): Array[Float] =
+    removeElementsImpl(array, values)
+
+  def removeElements(array: Array[Int], values: Int*): Array[Int] =
+    removeElementsImpl(array, values)
+
+  def removeElements(array: Array[Long], values: Long*): Array[Long] =
+    removeElementsImpl(array, values)
+
+  def removeElements(array: Array[Short], values: Short*): Array[Short] =
+    removeElementsImpl(array, values)
+
+  private def removeElementsImpl[@specialized T: ClassTag](array: Array[T], values: Seq[T]): Array[T] = {
+    if (isEmpty(array) || values == null || values.isEmpty) return clone(array)
+
+    val occurrences: collection.mutable.Map[T, MutableInt] =
+      MutableHashMap[T, MutableInt](values.length, 1.0d)
+
+    for (v: T <- values) {
+      val count: MutableInt = occurrences.getOrElse(v, null)
+
+      if (count == null) occurrences.put(v, new MutableInt(1))
       else count.increment()
     }
 
     val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Char = array(i)
-      val count: MutableInt = occurrences.get(key)
-
+    for (idx: Int <- 0 until array.length) {
+      val key: T = array(idx)
+      val count: MutableInt = occurrences.getOrElse(key, null)
       if (count != null) {
         if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
+        toRemove.set(idx)
       }
     }
 
-    removeAll(array, toRemove).asInstanceOf[Array[Char]]
-  }
-
-  def removeElements(array: Array[Double], values: Double*): Array[Double] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
-
-    val occurrences: ju.HashMap[Double, MutableInt] = new ju.HashMap[Double, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Double = JavaDouble.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-      if (count == null) occurrences.put(boxed, new MutableInt(1))
-      else count.increment()
-    }
-
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Double = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
-      }
-    }
-
-    removeAll(array, toRemove).asInstanceOf[Array[Double]]
-  }
-  def removeElements(array: Array[Float], values: Float*): Array[Float] = {
-    if (isEmpty(array) || values.isEmpty) clone(array)
-
-    val occurrences: ju.HashMap[Float, MutableInt] = new ju.HashMap[Float, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Float = JavaFloat.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-
-      if (count == null) {
-        occurrences.put(boxed, new MutableInt(1))
-      } else count.increment()
-    }
-
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Float = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
-      }
-    }
-
-    removeAll(array, toRemove).asInstanceOf[Array[Float]]
-  }
-
-  def removeElements(array: Array[Int], values: Int*): Array[Int] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
-
-    val occurrences: ju.HashMap[Integer, MutableInt] = new ju.HashMap[Integer, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Integer = Integer.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-
-      if (count == null) occurrences.put(boxed, new MutableInt(1))
-      else count.increment()
-    }
-
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Int = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
-      }
-    }
-
-    removeAll(array, toRemove).asInstanceOf[Array[Int]]
-  }
-
-  def removeElements(array: Array[Long], values: Long*): Array[Long] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
-
-    val occurrences: ju.HashMap[Long, MutableInt] = new ju.HashMap[Long, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Long = JavaLong.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-
-      if (count == null) occurrences.put(boxed, new MutableInt(1))
-      else count.increment()
-    }
-
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Long = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
-      }
-    }
-
-    removeAll(array, toRemove).asInstanceOf[Array[Long]]
-  }
-
-  def removeElements(array: Array[Short], values: Short*): Array[Short] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
-
-    val occurrences: ju.HashMap[Short, MutableInt] = new ju.HashMap[Short, MutableInt](values.length)
-    for (v <- values) {
-      val boxed: Short = JavaShort.valueOf(v)
-      val count: MutableInt = occurrences.get(boxed)
-
-      if (count == null) occurrences.put(boxed, new MutableInt(1))
-      else count.increment()
-    }
-
-    val toRemove: ju.BitSet = new ju.BitSet
-    for (i <- 0 until array.length) {
-      val key: Short = array(i)
-      val count: MutableInt = occurrences.get(key)
-      if (count != null) {
-        if (count.decrementAndGet == 0) occurrences.remove(key)
-        toRemove.set(i)
-      }
-    }
-
-    removeAll(array, toRemove).asInstanceOf[Array[Short]]
+    removeAll(array, toRemove).asInstanceOf[Array[T]]
   }
 
   /**
@@ -4078,12 +3956,12 @@ object ArrayUtils {
     * contained in the original array, no change occurs beyond the
     * removal of the existing matching items.
     *
-      * <p>This method returns a new array with the same elements of the input
+    * <p>This method returns a new array with the same elements of the input
     * array except for the earliest-encountered occurrences of the specified
     * elements. The component type of the returned array is always the same
     * as that of the input array.
     *
-      * <pre>
+    * <pre>
     * ArrayUtils.removeElements(null, "a", "b")            = null
     * ArrayUtils.removeElements([], "a", "b")              = []
     * ArrayUtils.removeElements(["a"], "b", "c")           = ["a"]
@@ -4092,7 +3970,7 @@ object ArrayUtils {
     * ArrayUtils.removeElements(["a", "b", "a"], "a", "a") = ["b"]
     * </pre>
     *
-      * @tparam T     the component type of the array
+    * @tparam T     the component type of the array
     * @param array  the array to remove the element from, may be {@code null}
     * @param values the elements to be removed
     * @return A new array containing the existing elements except the
@@ -4100,7 +3978,7 @@ object ArrayUtils {
     * @since 3.0.1
     */
   @SafeVarargs def removeElements[T](array: Array[T], values: T*): Array[T] = {
-    if (isEmpty(array) || values.isEmpty) return clone(array)
+    if (isEmpty(array) || values == null || values.isEmpty) return clone(array)
 
     val occurrences: ju.HashMap[T, MutableInt] = new ju.HashMap[T, MutableInt](values.length)
     for (v <- values) {
@@ -4130,9 +4008,9 @@ object ArrayUtils {
   /**
     * <p>Reverses the order of the given array.
     *
-      * <p>This method does nothing for a {@code null} input array.
+    * <p>This method does nothing for a {@code null} input array.
     *
-      * @param array the array to reverse, may be {@code null}
+    * @param array the array to reverse, may be {@code null}
     */
   def reverse(array: Array[Boolean]): Unit =
     if (array != null) reverse(array, 0, array.length)
@@ -4141,10 +4019,10 @@ object ArrayUtils {
     * <p>
     * Reverses the order of the given array in the given range.
     *
-      * <p>
+    * <p>
     * This method does nothing for a {@code null} input array.
     *
-      * @param array
+    * @param array
     * the array to reverse, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4306,11 +4184,11 @@ object ArrayUtils {
   /**
     * <p>Reverses the order of the given array.
     *
-      * <p>There is no special handling for multi-dimensional arrays.
+    * <p>There is no special handling for multi-dimensional arrays.
     *
-      * <p>This method does nothing for a {@code null} input array.
+    * <p>This method does nothing for a {@code null} input array.
     *
-      * @param array the array to reverse, may be {@code null}
+    * @param array the array to reverse, may be {@code null}
     */
   def reverse[T](array: Array[T]): Unit = {
     if (array == null) return
@@ -4321,10 +4199,10 @@ object ArrayUtils {
     * <p>
     * Reverses the order of the given array in the given range.
     *
-      * <p>
+    * <p>
     * This method does nothing for a {@code null} input array.
     *
-      * @param array
+    * @param array
     * the array to reverse, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Under value (&lt;0) is promoted to 0, over value (&gt;array.length) results in no
@@ -4374,10 +4252,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given boolean array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4391,10 +4269,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given boolean array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4419,7 +4297,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4448,10 +4326,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given byte array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4465,10 +4343,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given byte array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4493,7 +4371,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4522,10 +4400,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given char array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4539,10 +4417,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given char array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4567,7 +4445,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4596,10 +4474,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given double array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4614,10 +4492,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given double array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4632,7 +4510,7 @@ object ArrayUtils {
     */
   def shift(array: Array[Double], startIndexInclusive: Int, endIndexExclusive: Int, offset: Int): Unit = {
     if (array == null) return
-    if (startIndexInclusive >= array.length - 1 || endIndexExclusive <= 0) return
+    if (startIndexInclusive >= (array.length - 1) || endIndexExclusive <= 0) return
 
     var startPos: Int = if (startIndexInclusive < 0) 0 else startIndexInclusive
     val endPos: Int = if (endIndexExclusive >= array.length) array.length else endIndexExclusive
@@ -4642,7 +4520,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4671,10 +4549,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given float array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4688,10 +4566,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given float array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4716,7 +4594,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4745,10 +4623,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given int array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4762,10 +4640,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given int array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4790,7 +4668,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4819,10 +4697,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given long array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4837,10 +4715,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given long array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4865,7 +4743,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4894,16 +4772,17 @@ object ArrayUtils {
   /**
     * Shifts the order of the given array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @tparam T    the type of {@code Array}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
     * @since 3.5
     */
-  def shift(array: Array[Any], offset: Int): Unit = {
+  def shift[T](array: Array[T], offset: Int): Unit = {
     if (array == null) return
     shift(array, 0, array.length, offset)
   }
@@ -4911,10 +4790,11 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @tparam T    the type of {@code Array}
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -4927,7 +4807,7 @@ object ArrayUtils {
     * rotate, than the effective offset is modulo the number of elements to rotate.
     * @since 3.5
     */
-  def shift(array: Array[Any], startIndexInclusive: Int, endIndexExclusive: Int, offset: Int): Unit = {
+  def shift[T](array: Array[T], startIndexInclusive: Int, endIndexExclusive: Int, offset: Int): Unit = {
     if (array == null) return
     if (startIndexInclusive >= array.length - 1 || endIndexExclusive <= 0) return
 
@@ -4939,7 +4819,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -4968,10 +4848,10 @@ object ArrayUtils {
   /**
     * Shifts the order of the given short array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array the array to shift, may be {@code null}
+    * @param array the array to shift, may be {@code null}
     * @param offset
     *              The number of positions to rotate the elements.  If the offset is larger than the number of elements to
     *              rotate, than the effective offset is modulo the number of elements to rotate.
@@ -4985,10 +4865,10 @@ object ArrayUtils {
   /**
     * Shifts the order of a series of elements in the given short array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for {@code null} or empty input arrays.</p>
     *
-      * @param array
+    * @param array
     * the array to shift, may be {@code null}
     * @param startIndexInclusive
     * the starting index. Undervalue (&lt;0) is promoted to 0, overvalue (&gt;array.length) results in no
@@ -5013,7 +4893,7 @@ object ArrayUtils {
     if (n <= 1) return
 
     currentOffset %= n
-    if (offset < 0) currentOffset += n
+    if (currentOffset < 0) currentOffset += n
 
     // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
     // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
@@ -5042,7 +4922,7 @@ object ArrayUtils {
   /**
     * Randomly permutes the elements of the specified array using the Fisher-Yates algorithm.
     *
-      * @param array the array to shuffle
+    * @param array the array to shuffle
     * @see <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher-Yates shuffle algorithm</a>
     * @since 3.6
     */
@@ -5053,7 +4933,7 @@ object ArrayUtils {
   /**
     * Randomly permutes the elements of the specified array using the Fisher-Yates algorithm.
     *
-      * @param array  the array to shuffle
+    * @param array  the array to shuffle
     * @param random the source of randomness used to permute the elements
     * @see <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher-Yates shuffle algorithm</a>
     * @since 3.6
@@ -5112,9 +4992,9 @@ object ArrayUtils {
     }
   }
 
-  def shuffle(array: Array[Any]): Unit = shuffle(array, new Random)
+  def shuffle[T](array: Array[T]): Unit = shuffle(array, new Random)
 
-  def shuffle(array: Array[Any], random: Random): Unit = {
+  def shuffle[T](array: Array[T], random: Random): Unit = {
     for (i <- array.length until 1 by -1) {
       swap(array, i - 1, random.nextInt(i), 1)
     }
@@ -5132,10 +5012,10 @@ object ArrayUtils {
     * <p>Produces a new {@code boolean} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5166,10 +5046,10 @@ object ArrayUtils {
     * <p>Produces a new {@code byte} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5200,10 +5080,10 @@ object ArrayUtils {
     * <p>Produces a new {@code char} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5234,10 +5114,10 @@ object ArrayUtils {
     * <p>Produces a new {@code double} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5267,10 +5147,10 @@ object ArrayUtils {
     * <p>Produces a new {@code float} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5301,10 +5181,10 @@ object ArrayUtils {
     * <p>Produces a new {@code int} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5335,10 +5215,10 @@ object ArrayUtils {
     * <p>Produces a new {@code long} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5369,10 +5249,10 @@ object ArrayUtils {
     * <p>Produces a new {@code short} array containing the elements
     * between the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * @param array               the array
+    * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
     *                            in an empty array.
@@ -5403,18 +5283,18 @@ object ArrayUtils {
     * <p>Produces a new array containing the elements between
     * the start and end indices.
     *
-      * <p>The start index is inclusive, the end index exclusive.
+    * <p>The start index is inclusive, the end index exclusive.
     * Null array input produces null output.
     *
-      * <p>The component type of the subarray is always the same as
+    * <p>The component type of the subarray is always the same as
     * that of the input array. Thus, if the input is an array of type
     * {@code Date}, the following usage is envisaged:
     *
-      * <pre>
+    * <pre>
     * Date[] someDates = (Date[]) ArrayUtils.subarray(allDates, 2, 5);
     * </pre>
     *
-      * @tparam T                  the component type of the array
+    * @tparam T                  the component type of the array
     * @param array               the array
     * @param startIndexInclusive the starting index. Undervalue (&lt;0)
     *                            is promoted to 0, overvalue (&gt;array.length) results
@@ -5454,7 +5334,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given boolean array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5467,7 +5347,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5480,7 +5360,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given boolean array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5495,7 +5375,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([true, false, true, false], 0, 3, 3) -&gt; [false, false, true, true]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5519,8 +5399,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Boolean = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5531,7 +5411,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given byte array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5544,7 +5424,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5557,7 +5437,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given byte array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5572,7 +5452,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5596,8 +5476,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Byte = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5608,7 +5488,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given char array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5621,7 +5501,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5634,7 +5514,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given char array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5649,7 +5529,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5673,8 +5553,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Char = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5685,7 +5565,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given double array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5698,7 +5578,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5711,7 +5591,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given double array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5726,7 +5606,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5750,8 +5630,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Double = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5762,7 +5642,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given float array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5775,7 +5655,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5788,7 +5668,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given float array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5803,7 +5683,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5827,8 +5707,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Float = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5839,7 +5719,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given int array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5852,7 +5732,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5865,7 +5745,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given int array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5880,7 +5760,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5904,8 +5784,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Int = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5916,7 +5796,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given long array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -5929,7 +5809,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([true, false, true], -1, 1) -&gt; [false, true, true]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -5942,7 +5822,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given long array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -5957,7 +5837,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -5981,8 +5861,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Long = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -5993,7 +5873,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -6006,12 +5886,13 @@ object ArrayUtils {
     * <li>ArrayUtils.swap(["1", "2", "3"], -1, 1) -&gt; ["2", "1", "3"]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @tparam T      the type of {@code Array}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
     */
-  def swap(array: Array[Any], offset1: Int, offset2: Int): Unit = {
+  def swap[T](array: Array[T], offset1: Int, offset2: Int): Unit = {
     if (isEmpty(array)) return
     swap(array, offset1, offset2, 1)
   }
@@ -6019,7 +5900,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -6034,13 +5915,14 @@ object ArrayUtils {
     * <li>ArrayUtils.swap(["1", "2", "3", "4"], 0, 3, 3) -&gt; ["4", "2", "3", "1"]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @tparam T      the type of {@code Array}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
     * @since 3.5
     */
-  def swap(array: Array[Any], offset1: Int, offset2: Int, len: Int): Unit = {
+  def swap[T](array: Array[T], offset1: Int, offset2: Int, len: Int): Unit = {
     if (isEmpty(array) || offset1 >= array.length || offset2 >= array.length) return
 
     var o1 = if (offset1 < 0) 0 else offset1
@@ -6057,9 +5939,9 @@ object ArrayUtils {
     var i: Int = 0
 
     while (i < _len) {
-      val aux: Any = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      val aux: T = array(o1)
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -6070,7 +5952,7 @@ object ArrayUtils {
   /**
     * Swaps two elements in the given short array.
     *
-      * <p>There is no special handling for multi-dimensional arrays. This method
+    * <p>There is no special handling for multi-dimensional arrays. This method
     * does nothing for a {@code null} or empty input array or for overflow indices.
     * Negative indices are promoted to 0(zero).</p>
     *
@@ -6083,7 +5965,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element to swap
     * @param offset2 the index of the second element to swap
     * @since 3.5
@@ -6096,7 +5978,7 @@ object ArrayUtils {
   /**
     * Swaps a series of elements in the given short array.
     *
-      * <p>This method does nothing for a {@code null} or empty input array or
+    * <p>This method does nothing for a {@code null} or empty input array or
     * for overflow indices. Negative indices are promoted to 0(zero). If any
     * of the sub-arrays to swap falls outside of the given array, then the
     * swap is stopped at the end of the array and as many as possible elements
@@ -6111,7 +5993,7 @@ object ArrayUtils {
     * <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
     * </ul>
     *
-      * @param array   the array to swap, may be {@code null}
+    * @param array   the array to swap, may be {@code null}
     * @param offset1 the index of the first element in the series to swap
     * @param offset2 the index of the second element in the series to swap
     * @param len     the number of elements to swap starting with the given indices
@@ -6135,8 +6017,8 @@ object ArrayUtils {
 
     while (i < _len) {
       val aux: Short = array(o1)
-      array(offset1) = array(o2)
-      array(offset2) = aux
+      array(o1) = array(o2)
+      array(o2) = aux
 
       i += 1
       o1 += 1
@@ -6147,9 +6029,9 @@ object ArrayUtils {
   /**
     * <p>Create a type-safe generic array.
     *
-      * <p>The Java language does not allow an array to be created from a generic type:
+    * <p>The Java language does not allow an array to be created from a generic type:
     *
-      * <pre>
+    * <pre>
     * public static &lt;T&gt; T[] createAnArray(int size) {
     * return new T[size]; // compiler error here
     * }
@@ -6158,25 +6040,25 @@ object ArrayUtils {
     * }
     * </pre>
     *
-      * <p>Therefore new arrays of generic types can be created with this method.
+    * <p>Therefore new arrays of generic types can be created with this method.
     * For example, an array of Strings can be created:
     *
-      * <pre>
+    * <pre>
     * String[] array = ArrayUtils.toArray("1", "2");
     * String[] emptyArray = ArrayUtils.&lt;String&gt;toArray();
     * </pre>
     *
-      * <p>The method is typically used in scenarios, where the caller itself uses generic types
+    * <p>The method is typically used in scenarios, where the caller itself uses generic types
     * that have to be combined into an array.
     *
-      * <p>Note, this method makes only sense to provide arguments of the same type so that the
+    * <p>Note, this method makes only sense to provide arguments of the same type so that the
     * compiler can deduce the type of the array itself. While it is possible to select the
     * type explicitly like in
     * {@code Number[] array = ArrayUtils.&lt;Number&gt;toArray(Integer.valueOf(42), Double.valueOf(Math.PI))},
     * there is no real advantage when compared to
     * {@code new Number[] {Integer.valueOf(42), Double.valueOf(Math.PI)}}.
     *
-      * @tparam T    the array's element type
+    * @tparam T    the array's element type
     * @param items the varargs array items, null allowed
     * @return the array, not null unless a null array is passed in
     * @since 3.0
@@ -6189,7 +6071,7 @@ object ArrayUtils {
     * elements, where the first element is used as key and the second as
     * value.
     *
-      * <p>This method can be used to initialize:
+    * <p>This method can be used to initialize:
     * <pre>
     * // Create a Map mapping colors.
     * Map colorMap = ArrayUtils.toMap(new String[][] {
@@ -6198,9 +6080,9 @@ object ArrayUtils {
     * {"BLUE", "#0000FF"}});
     * </pre>
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array an array whose elements are either a {@link java.util.Map.Entry} or
+    * @param array an array whose elements are either a {@link java.util.Map.Entry} or
     *              an Array containing at least two elements, may be {@code null}
     * @return a {@code Map} that was created from the array
     * @throws java.lang.IllegalArgumentException if one element of this Array is
@@ -6237,18 +6119,15 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive booleans to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code boolean} array
+    * @param array a {@code boolean} array
     * @return a {@code Boolean} array, {@code null} if null array input
     */
   def toObject(array: Array[Boolean]): Array[JavaBoolean] = {
     if (array == null) return null
-    else {
-      if (array.length == 0) {
-        return EMPTY_BOOLEAN_OBJECT_ARRAY
-      }
-    }
+    if (array.length == 0) return EMPTY_BOOLEAN_OBJECT_ARRAY
+
     val result: Array[JavaBoolean] = new Array[JavaBoolean](array.length)
     for (i <- 0 until array.length) {
       result(i) =
@@ -6262,9 +6141,9 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive bytes to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code byte} array
+    * @param array a {@code byte} array
     * @return a {@code Byte} array, {@code null} if null array input
     */
   def toObject(array: Array[Byte]): Array[JavaByte] = {
@@ -6282,9 +6161,9 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive chars to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code char} array
+    * @param array a {@code char} array
     * @return a {@code Character} array, {@code null} if null array input
     */
   def toObject(array: Array[Char]): Array[Character] = {
@@ -6302,9 +6181,9 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive doubles to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code double} array
+    * @param array a {@code double} array
     * @return a {@code Double} array, {@code null} if null array input
     */
   def toObject(array: Array[Double]): Array[JavaDouble] = {
@@ -6322,9 +6201,9 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive floats to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code float} array
+    * @param array a {@code float} array
     * @return a {@code Float} array, {@code null} if null array input
     */
   def toObject(array: Array[Float]): Array[JavaFloat] = {
@@ -6345,40 +6224,35 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive ints to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array an {@code int} array
+    * @param array an {@code int} array
     * @return an {@code Integer} array, {@code null} if null array input
     */
   def toObject(array: Array[Int]): Array[Integer] = {
     if (array == null) return null
-    else {
-      if (array.length == 0) {
-        return EMPTY_INTEGER_OBJECT_ARRAY
-      }
-    }
+    if (array.length == 0) return EMPTY_INTEGER_OBJECT_ARRAY
+
     val result: Array[Integer] = new Array[Integer](array.length)
     for (i <- 0 until array.length) {
       result(i) = Integer.valueOf(array(i))
     }
-    return result
+
+    result
   }
 
   /**
     * <p>Converts an array of primitive longs to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code long} array
+    * @param array a {@code long} array
     * @return a {@code Long} array, {@code null} if null array input
     */
   def toObject(array: Array[Long]): Array[JavaLong] = {
     if (array == null) return null
-    else {
-      if (array.length == 0) {
-        return EMPTY_LONG_OBJECT_ARRAY
-      }
-    }
+    if (array.length == 0) return EMPTY_LONG_OBJECT_ARRAY
+
     val result: Array[JavaLong] = new Array[JavaLong](array.length)
     for (i <- 0 until array.length) {
       result(i) = JavaLong.valueOf(array(i))
@@ -6390,9 +6264,9 @@ object ArrayUtils {
   /**
     * <p>Converts an array of primitive shorts to objects.
     *
-      * <p>This method returns {@code null} for a {@code null} input array.
+    * <p>This method returns {@code null} for a {@code null} input array.
     *
-      * @param array a {@code short} array
+    * @param array a {@code short} array
     * @return a {@code Short} array, {@code null} if null array input
     */
   def toObject(array: Array[Short]): Array[JavaShort] = {
@@ -6762,7 +6636,7 @@ object ArrayUtils {
     */
   def toPrimitive(array: Array[JavaShort]): Array[Short] = {
     if (array == null) return null
-    if (array.length == 0) EMPTY_SHORT_ARRAY
+    if (array.length == 0) return EMPTY_SHORT_ARRAY
 
     val result: Array[Short] = new Array[Short](array.length)
     for (i <- 0 until array.length) {
@@ -6826,52 +6700,54 @@ object ArrayUtils {
 
     new ToStringBuilder(array, ToStringStyle.SIMPLE_STYLE).append(array).toString
   }
-  //
-  //  /**
-  //    * <p>Returns an array containing the string representation of each element in the argument array.</p>
-  //    *
-  //    * <p>This method returns {@code null} for a {@code null} input array.</p>
-  //    *
-  //    * @param array the {@code Object[]} to be processed, may be null
-  //    * @return {@code String[]} of the same size as the source with its element's string representation,
-  //    *         {@code null} if null array input
-  //    * @throws java.lang.NullPointerException if array contains {@code null}
-  //    * @since 3.6
-  //    */
-  //  def toStringArray (array: Array[AnyRef] ): Array[String] = {
-  //    if (array == null) return null
-  //    else if (array.length == 0) return EMPTY_STRING_ARRAY
-  //
-  //    val result: Array[String] = new Array[String](array.length)
-  //    for (i <- 0 until array.length) {
-  //      result (i) = array(i).toString
-  //    }
-  //
-  //    result
-  //  }
-  //
-  //  /**
-  //    * <p>Returns an array containing the string representation of each element in the argument
-  //    * array handling {@code null} elements.</p>
-  //    *
-  //    * <p>This method returns {@code null} for a {@code null} input array.</p>
-  //    *
-  //    * @param array                the Object[] to be processed, may be null
-  //    * @param valueForNullElements the value to insert if {@code null} is found
-  //    * @return a {@code String} array, {@code null} if null array input
-  //    * @since 3.6
-  //    */
-  //  def toStringArray (array: Array[AnyRef], valueForNullElements: String): Array[String] = {
-  //    if (null == array) return null
-  //    else if (array.length == 0) return EMPTY_STRING_ARRAY
-  //    val result: Array[String] = new Array[String] (array.length)
-  //    for (i <- 0 until array.length) {
-  //      val `object`: Any = array(i)
-  //      result (i) =
-  //        if (`object` == null) valueForNullElements
-  //        else `object`.toString
-  //    }
-  //
-  //    result
-  //  }
+
+  /**
+    * <p>Returns an array containing the string representation of each element in the argument array.</p>
+    *
+    * <p>This method returns {@code null} for a {@code null} input array.</p>
+    *
+    * @tparam T    the type of {@code Array}
+    * @param array the {@code Object[]} to be processed, may be null
+    * @return {@code String[]} of the same size as the source with its element's string representation,
+    *         {@code null} if null array input
+    * @throws java.lang.NullPointerException if array contains {@code null}
+    * @since 3.6
+    */
+  def toStringArray[T](array: Array[T]): Array[String] = {
+    if (array == null) return null
+    else if (array.length == 0) return EMPTY_STRING_ARRAY
+
+    val result: Array[String] = new Array[String](array.length)
+    for (i <- 0 until array.length) {
+      result(i) = array(i).toString
+    }
+
+    result
+  }
+
+  /**
+    * <p>Returns an array containing the string representation of each element in the argument
+    * array handling {@code null} elements.</p>
+    *
+    * <p>This method returns {@code null} for a {@code null} input array.</p>
+    *
+    * @tparam T                   the type of {@code Array}
+    * @param array                the Object[] to be processed, may be null
+    * @param valueForNullElements the value to insert if {@code null} is found
+    * @return a {@code String} array, {@code null} if null array input
+    * @since 3.6
+    */
+  def toStringArray[T](array: Array[T], valueForNullElements: String): Array[String] = {
+    if (null == array) return null
+    else if (array.length == 0) return EMPTY_STRING_ARRAY
+    val result: Array[String] = new Array[String](array.length)
+    for (i <- 0 until array.length) {
+      val `object`: Any = array(i)
+      result(i) =
+        if (`object` == null) valueForNullElements
+        else `object`.toString
+    }
+
+    result
+  }
 }
