@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-package org.apache.commons.lang3.exception;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-/**
- * JUnit tests for DefaultExceptionContext.
- */
-public class DefaultExceptionContextTest extends AbstractExceptionContextTest<DefaultExceptionContext> {
-
-    @Override
-    @BeforeEach
-    public void setUp() throws Exception {
-        exceptionContext = new DefaultExceptionContext();
-        super.setUp();
-    }
-
-    @Test
-    public void testFormattedExceptionMessageNull() {
-        exceptionContext = new DefaultExceptionContext();
-        exceptionContext.getFormattedExceptionMessage(null);
-    }
-
-}
+//package org.apache.commons.lang3.exception;
+//
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//
+///**
+// * JUnit tests for DefaultExceptionContext.
+// */
+//public class DefaultExceptionContextTest extends AbstractExceptionContextTest<DefaultExceptionContext> {
+//
+//    @Override
+//    @BeforeEach
+//    public void setUp() throws Exception {
+//        exceptionContext = new DefaultExceptionContext();
+//        super.setUp();
+//    }
+//
+//    @Test
+//    public void testFormattedExceptionMessageNull() {
+//        exceptionContext = new DefaultExceptionContext();
+//        exceptionContext.getFormattedExceptionMessage(null);
+//    }
+//
+//}

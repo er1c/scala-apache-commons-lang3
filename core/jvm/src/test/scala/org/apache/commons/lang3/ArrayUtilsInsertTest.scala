@@ -19,10 +19,7 @@ package org.apache.commons.lang3
 
 //import java.lang.{Boolean => JavaBoolean, Byte => JavaByte, Double => JavaDouble, Float => JavaFloat, Long => JavaLong, Short => JavaShort}
 import org.scalatestplus.junit.JUnitSuite
-import org.junit.jupiter.api.Assertions.assertArrayEquals
-import org.junit.jupiter.api.Assertions.assertNotSame
-import org.junit.jupiter.api.Assertions.assertNull
-//import org.junit.jupiter.api.Test
+import org.junit.Assert._
 import org.junit.Test
 
 /**

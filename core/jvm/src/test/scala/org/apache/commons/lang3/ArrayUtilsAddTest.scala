@@ -26,15 +26,20 @@ import java.lang.{
   Short => JavaShort
 }
 import org.scalatestplus.junit.JUnitSuite
-import org.junit.jupiter.api.Assertions.assertArrayEquals
-import org.junit.jupiter.api.Assertions.assertEquals
-//import org.junit.jupiter.api.Test
+import org.junit.Assert._
 import org.junit.Test
+
+object ArrayUtilsAddTest {
+  private val DoubleDelta: Double = 1e-9d
+  private val FloatDelta: Float = 1e-9f
+}
 
 /**
   * Tests ArrayUtils add methods.
   */
 class ArrayUtilsAddTest extends JUnitSuite {
+  import ArrayUtilsAddTest._
+
   @Test def testAddFirstBoolean(): Unit = {
     var newArray: Array[Boolean] = null
     newArray = ArrayUtils.addFirst(null, false)
@@ -86,34 +91,34 @@ class ArrayUtilsAddTest extends JUnitSuite {
   @Test def testAddFirstDouble(): Unit = {
     var newArray: Array[Double] = null
     newArray = ArrayUtils.addFirst(null.asInstanceOf[Array[Double]], 0)
-    assertArrayEquals(Array[Double](0), newArray)
+    assertArrayEquals(Array[Double](0), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.addFirst(null.asInstanceOf[Array[Double]], 1)
-    assertArrayEquals(Array[Double](1), newArray)
+    assertArrayEquals(Array[Double](1), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
     val array1 = Array[Double](1, 2, 3)
     newArray = ArrayUtils.addFirst(array1, 0)
-    assertArrayEquals(Array[Double](0, 1, 2, 3), newArray)
+    assertArrayEquals(Array[Double](0, 1, 2, 3), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.addFirst(array1, 4)
-    assertArrayEquals(Array[Double](4, 1, 2, 3), newArray)
+    assertArrayEquals(Array[Double](4, 1, 2, 3), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
   }
 
   @Test def testAddFirstFloat(): Unit = {
     var newArray: Array[Float] = null
     newArray = ArrayUtils.addFirst(null.asInstanceOf[Array[Float]], 0)
-    assertArrayEquals(Array[Float](0), newArray)
+    assertArrayEquals(Array[Float](0), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.addFirst(null.asInstanceOf[Array[Float]], 1)
-    assertArrayEquals(Array[Float](1), newArray)
+    assertArrayEquals(Array[Float](1), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
     val array1 = Array[Float](1, 2, 3)
     newArray = ArrayUtils.addFirst(array1, 0)
-    assertArrayEquals(Array[Float](0, 1, 2, 3), newArray)
+    assertArrayEquals(Array[Float](0, 1, 2, 3), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.addFirst(array1, 4)
-    assertArrayEquals(Array[Float](4, 1, 2, 3), newArray)
+    assertArrayEquals(Array[Float](4, 1, 2, 3), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
   }
 
@@ -248,34 +253,34 @@ class ArrayUtilsAddTest extends JUnitSuite {
   @Test def testAddObjectArrayDouble(): Unit = {
     var newArray: Array[Double] = null
     newArray = ArrayUtils.add(null.asInstanceOf[Array[Double]], 0)
-    assertArrayEquals(Array[Double](0), newArray)
+    assertArrayEquals(Array[Double](0), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.add(null.asInstanceOf[Array[Double]], 1)
-    assertArrayEquals(Array[Double](1), newArray)
+    assertArrayEquals(Array[Double](1), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
     val array1 = Array[Double](1, 2, 3)
     newArray = ArrayUtils.add(array1, 0)
-    assertArrayEquals(Array[Double](1, 2, 3, 0), newArray)
+    assertArrayEquals(Array[Double](1, 2, 3, 0), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.add(array1, 4)
-    assertArrayEquals(Array[Double](1, 2, 3, 4), newArray)
+    assertArrayEquals(Array[Double](1, 2, 3, 4), newArray, DoubleDelta)
     assertEquals(JavaDouble.TYPE, newArray.getClass.getComponentType)
   }
 
   @Test def testAddObjectArrayFloat(): Unit = {
     var newArray: Array[Float] = null
     newArray = ArrayUtils.add(null.asInstanceOf[Array[Float]], 0)
-    assertArrayEquals(Array[Float](0), newArray)
+    assertArrayEquals(Array[Float](0), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.add(null.asInstanceOf[Array[Float]], 1)
-    assertArrayEquals(Array[Float](1), newArray)
+    assertArrayEquals(Array[Float](1), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
     val array1 = Array[Float](1, 2, 3)
     newArray = ArrayUtils.add(array1, 0)
-    assertArrayEquals(Array[Float](1, 2, 3, 0), newArray)
+    assertArrayEquals(Array[Float](1, 2, 3, 0), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
     newArray = ArrayUtils.add(array1, 4)
-    assertArrayEquals(Array[Float](1, 2, 3, 4), newArray)
+    assertArrayEquals(Array[Float](1, 2, 3, 4), newArray, FloatDelta)
     assertEquals(JavaFloat.TYPE, newArray.getClass.getComponentType)
   }
 
