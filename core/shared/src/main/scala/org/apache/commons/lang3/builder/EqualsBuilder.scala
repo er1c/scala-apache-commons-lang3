@@ -583,21 +583,30 @@ class EqualsBuilder() extends Builder[Boolean] {
     */
   def append(lhs: Any, rhs: Any): EqualsBuilder = {
     if (!_isEquals) return this
-    //if (lhs eq rhs) return this
-    assert(false, "unimplemented")
-    //???
+
+    if (lhs == null && rhs == null) {
+      this.setEquals(true)
+      return this
+    }
+
     if (lhs == null || rhs == null) {
       this.setEquals(false)
       return this
     }
-    val lhsClass = lhs.getClass
-    if (lhsClass.isArray) { // factor out array case in order to keep method small enough
-      // to be inlined
-      appendArray(lhs, rhs)
-    } else { // The simple case, not an array, just test the element
-      if (testRecursive && !ClassUtils.isPrimitiveOrWrapper(lhsClass)) reflectionAppend(lhs, rhs)
-      else _isEquals = lhs == rhs
+
+    (lhs, rhs) match {
+      case (l: AnyRef, _) if l.getClass.isArray =>
+        // factor out array case in order to keep method small enough to be inlined
+        appendArray(lhs, rhs)
+      case (l: AnyRef, r: AnyRef) if l eq r =>
+        this.setEquals(true)
+      case _ =>
+        val lhsClass = lhs.getClass
+        // The simple case, not an array, just test the element
+        if (testRecursive && !ClassUtils.isPrimitiveOrWrapper(lhsClass)) reflectionAppend(lhs, rhs)
+        else this.setEquals(lhs == rhs)
     }
+
     this
   }
 

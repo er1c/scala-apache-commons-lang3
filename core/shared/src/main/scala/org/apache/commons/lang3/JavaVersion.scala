@@ -242,7 +242,7 @@ object JavaVersion extends Enumeration {
     * @return the float value represented by the string or -1 if the given String can not be parsed.
     */
   private def toFloatVersion(value: String): Float = {
-    val defaultReturnValue = -1
+    val defaultReturnValue: Float = -1f
     if (value.contains(".")) {
       val toParse = value.split("\\.")
       if (toParse.length >= 2) return NumberUtils.toFloat(toParse(0) + '.' + toParse(1), defaultReturnValue)

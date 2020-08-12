@@ -67,6 +67,7 @@ This is still fairly ambitious considering the number of dependencies required.
 
 Tests Passing:
 - [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala) (**5**/5)
+- [x] [ArrayUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsTest.scala) (**329**/329)
 
 ### Milestone 2
 

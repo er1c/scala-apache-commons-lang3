@@ -3575,7 +3575,7 @@ object StringUtils {
     * <p>No delimiter is added before or after the list. Null objects or empty
     * strings within the iteration are represented by empty strings.</p>
     *
-    * <p>See the examples here: {@link #join(array:Array[Any],separator:Char)*}. </p>
+    * <p>See the examples here: {@link #join(array:Array[_],separator:Char)*}. </p>
     *
     * @param iterable  the {@code Iterable} providing the values to join together, may be null
     * @param separator the separator character to use
@@ -3594,7 +3594,7 @@ object StringUtils {
     * <p>No delimiter is added before or after the list.
     * A {@code null} separator is the same as an empty String ("").</p>
     *
-    * <p>See the examples here: {@link #join(array:Array[Any],separator:String)*}. </p>
+    * <p>See the examples here: {@link #join(array:Array[_],separator:String)*}. </p>
     *
     * @param iterable  the {@code Iterable} providing the values to join together, may be null
     * @param separator the separator character to use, null treated as ""
@@ -3613,14 +3613,14 @@ object StringUtils {
     * <p>No delimiter is added before or after the list. Null objects or empty
     * strings within the iteration are represented by empty strings.</p>
     *
-    * <p>See the examples here: {@link #join(array:Array[Any],separator:Char)*}. </p>
+    * <p>See the examples here: {@link #join(array:Array[_],separator:Char)*}. </p>
     *
     * @param iterator  the {@code Iterator} of values to join together, may be null
     * @param separator the separator character to use
     * @return the joined String, {@code null} if null iterator input
     * @since 2.0
     */
-  def join(iterator: util.Iterator[_], separator: Char): String = { // handle null, zero and one elements before building a buffer
+  def join(iterator: Iterator[_], separator: Char): String = { // handle null, zero and one elements before building a buffer
     if (iterator == null) return null
     if (!iterator.hasNext) return EMPTY
     val first = iterator.next
@@ -3645,13 +3645,13 @@ object StringUtils {
     * <p>No delimiter is added before or after the list.
     * A {@code null} separator is the same as an empty String ("").</p>
     *
-    * <p>See the examples here: {@link #join(array:Array[Any],separator:String)*}. </p>
+    * <p>See the examples here: {@link #join(array:Array[_],separator:String)*}. </p>
     *
     * @param iterator  the {@code Iterator} of values to join together, may be null
     * @param separator the separator character to use, null treated as ""
     * @return the joined String, {@code null} if null iterator input
     */
-  def join(iterator: util.Iterator[_], separator: String): String = {
+  def join(iterator: Iterator[_], separator: String): String = {
     if (iterator == null) return null
     if (!iterator.hasNext) return EMPTY
 
@@ -3751,7 +3751,7 @@ object StringUtils {
     * @return the joined String, {@code null} if null array input
     * @since 2.0
     */
-  def join(array: Array[Any], separator: Char): String = {
+  def join(array: Array[_], separator: Char): String = {
     if (array == null) return null
     join(array, separator, 0, array.length)
   }
@@ -3782,7 +3782,7 @@ object StringUtils {
     * @return the joined String, {@code null} if null array input
     * @since 2.0
     */
-  def join(array: Array[Any], separator: Char, startIndex: Int, endIndex: Int): String = {
+  def join(array: Array[_], separator: Char, startIndex: Int, endIndex: Int): String = {
     if (array == null) return null
     val noOfItems = endIndex - startIndex
     if (noOfItems <= 0) return EMPTY
@@ -3819,7 +3819,7 @@ object StringUtils {
     * @param separator the separator character to use, null treated as ""
     * @return the joined String, {@code null} if null array input
     */
-  def join(array: Array[Any], separator: String): String = {
+  def join(array: Array[_], separator: String): String = {
     if (array == null) return null
     join(array, separator, 0, array.length)
   }
@@ -3860,7 +3860,7 @@ object StringUtils {
     *                                        {@code endIndex < 0} or <br>
     *                                        {@code endIndex > array.length()}
     */
-  def join(array: Array[Any], separator: String, startIndex: Int, endIndex: Int): String = {
+  def join(array: Array[_], separator: String, startIndex: Int, endIndex: Int): String = {
     if (array == null) return null
 
     val newSeparator: String = if (separator == null) EMPTY else separator
@@ -3922,7 +3922,10 @@ object StringUtils {
     * @since 2.0
     *        3.0 Changed signature to use varargs
     */
-  @SafeVarargs def join[T](elements: T*): String = join(elements, null)
+  @SafeVarargs
+  def join[T](elements: T*): String = join(elements, null)
+
+  def join[T](elements: Array[T]): String = join(elements, null)
 
   /**
     * <p>Joins the elements of the provided varargs into a
