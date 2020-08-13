@@ -17,12 +17,10 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
-//
 //import java.math.BigInteger
 //import org.junit.Assert._
 //import org.junit.Test
-//import org.junit.{Before, After}
+//import org.scalatestplus.junit.JUnitSuite
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.builder.CompareToBuilder}.
@@ -88,12 +86,14 @@
 //  @Test def testReflectionCompareEx1(): Unit = {
 //    val o1 = new CompareToBuilderTest.TestObject(4)
 //    assertThrows[NullPointerException](CompareToBuilder.reflectionCompare(o1, null))
+//    ()
 //  }
 //
 //  @Test def testReflectionCompareEx2(): Unit = {
 //    val o1 = new CompareToBuilderTest.TestObject(4)
-//    val o2 = new Any
+//    val o2 = new AnyRef
 //    assertThrows[ClassCastException](CompareToBuilder.reflectionCompare(o1, o2))
+//    ()
 //  }
 //
 //  @Test def testReflectionHierarchyCompare(): Unit = {
@@ -103,9 +103,9 @@
 //  @Test def testReflectionHierarchyCompareExcludeFields(): Unit = {
 //    val excludeFields = Array[String]("b")
 //    testReflectionHierarchyCompare(true, excludeFields)
-//    var x = null
-//    var y = null
-//    var z = null
+//    var x: CompareToBuilderTest.TestSubObject = null
+//    var y: CompareToBuilderTest.TestSubObject = null
+//    var z: CompareToBuilderTest.TestSubObject = null
 //    x = new CompareToBuilderTest.TestSubObject(1, 1)
 //    y = new CompareToBuilderTest.TestSubObject(2, 1)
 //    z = new CompareToBuilderTest.TestSubObject(3, 1)
@@ -118,9 +118,9 @@
 //
 //  @Test def testReflectionHierarchyCompareTransients(): Unit = {
 //    testReflectionHierarchyCompare(true, null)
-//    var x = null
-//    var y = null
-//    var z = null
+//    var x: CompareToBuilderTest.TestTransientSubObject = null
+//    var y: CompareToBuilderTest.TestTransientSubObject = null
+//    var z: CompareToBuilderTest.TestTransientSubObject = null
 //    x = new CompareToBuilderTest.TestTransientSubObject(1, 1)
 //    y = new CompareToBuilderTest.TestTransientSubObject(2, 2)
 //    z = new CompareToBuilderTest.TestTransientSubObject(3, 3)
@@ -137,15 +137,15 @@
 //    z: Any,
 //    testTransients: Boolean,
 //    excludeFields: Array[String]): Unit = {
-//    assertEquals(0, CompareToBuilder.reflectionCompare(x, x, testTransients, null, excludeFields))
-//    assertEquals(0, CompareToBuilder.reflectionCompare(y, y, testTransients, null, excludeFields))
-//    assertEquals(0, CompareToBuilder.reflectionCompare(z, z, testTransients, null, excludeFields))
-//    assertTrue(0 > CompareToBuilder.reflectionCompare(x, y, testTransients, null, excludeFields))
-//    assertTrue(0 > CompareToBuilder.reflectionCompare(x, z, testTransients, null, excludeFields))
-//    assertTrue(0 > CompareToBuilder.reflectionCompare(y, z, testTransients, null, excludeFields))
-//    assertTrue(0 < CompareToBuilder.reflectionCompare(y, x, testTransients, null, excludeFields))
-//    assertTrue(0 < CompareToBuilder.reflectionCompare(z, x, testTransients, null, excludeFields))
-//    assertTrue(0 < CompareToBuilder.reflectionCompare(z, y, testTransients, null, excludeFields))
+//    assertEquals(0, CompareToBuilder.reflectionCompare(x, x, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertEquals(0, CompareToBuilder.reflectionCompare(y, y, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertEquals(0, CompareToBuilder.reflectionCompare(z, z, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertTrue(0 > CompareToBuilder.reflectionCompare(x, y, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertTrue(0 > CompareToBuilder.reflectionCompare(x, z, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertTrue(0 > CompareToBuilder.reflectionCompare(y, z, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertTrue(0 < CompareToBuilder.reflectionCompare(y, x, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertTrue(0 < CompareToBuilder.reflectionCompare(z, x, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
+//    assertTrue(0 < CompareToBuilder.reflectionCompare(z, y, testTransients, null.asInstanceOf[Class[_]], excludeFields:_*))
 //  }
 //
 //  private def testReflectionHierarchyCompare(testTransients: Boolean, excludeFields: Array[String]): Unit = {
@@ -189,11 +189,11 @@
 //      reflectionCompareSignum(x, y, testTransients, excludeFields),
 //      -reflectionCompareSignum(y, x, testTransients, excludeFields))
 //    // transitive
-//    if (CompareToBuilder.reflectionCompare(x, y, testTransients, null, excludeFields) > 0 && CompareToBuilder
-//        .reflectionCompare(y, z, testTransients, null, excludeFields) > 0)
-//      assertTrue(CompareToBuilder.reflectionCompare(x, z, testTransients, null, excludeFields) > 0)
+//    if (CompareToBuilder.reflectionCompare(x, y, testTransients, null, excludeFields:_*) > 0 && CompareToBuilder
+//        .reflectionCompare(y, z, testTransients, null, excludeFields:_*) > 0)
+//      assertTrue(CompareToBuilder.reflectionCompare(x, z, testTransients, null, excludeFields:_*) > 0)
 //    // un-named
-//    if (CompareToBuilder.reflectionCompare(x, y, testTransients, null, excludeFields) == 0)
+//    if (CompareToBuilder.reflectionCompare(x, y, testTransients, null, excludeFields:_*) == 0)
 //      assertEquals(
 //        reflectionCompareSignum(x, z, testTransients, excludeFields),
 //        -reflectionCompareSignum(y, z, testTransients, excludeFields))
@@ -214,7 +214,7 @@
 //    * @return int The signum
 //    */
 //  private def reflectionCompareSignum(lhs: Any, rhs: Any, testTransients: Boolean, excludeFields: Array[String]) =
-//    BigInteger.valueOf(CompareToBuilder.reflectionCompare(lhs, rhs, testTransients)).signum
+//    BigInteger.valueOf(CompareToBuilder.reflectionCompare(lhs, rhs, testTransients, null, excludeFields:_*)).signum
 //
 //  @Test def testAppendSuper(): Unit = {
 //    val o1 = new CompareToBuilderTest.TestObject(4)
@@ -256,8 +256,9 @@
 //
 //  @Test def testObjectEx2(): Unit = {
 //    val o1 = new CompareToBuilderTest.TestObject(4)
-//    val o2 = new Any
+//    val o2 = new AnyRef
 //    assertThrows[ClassCastException](new CompareToBuilder().append(o1, o2))
+//    ()
 //  }
 //
 //  @Test def testObjectComparator(): Unit = {
@@ -307,10 +308,10 @@
 //    assertEquals(0, new CompareToBuilder().append(o1, o1).toComparison)
 //    assertTrue(new CompareToBuilder().append(o1, o2).toComparison < 0)
 //    assertTrue(new CompareToBuilder().append(o2, o1).toComparison > 0)
-//    assertTrue(new CompareToBuilder().append(o1, Integer.MaxValue).toComparison < 0)
-//    assertTrue(new CompareToBuilder().append(Integer.MaxValue, o1).toComparison > 0)
-//    assertTrue(new CompareToBuilder().append(o1, Integer.MinValue).toComparison > 0)
-//    assertTrue(new CompareToBuilder().append(Integer.MinValue, o1).toComparison < 0)
+//    assertTrue(new CompareToBuilder().append(o1, Int.MaxValue).toComparison < 0)
+//    assertTrue(new CompareToBuilder().append(Int.MaxValue, o1).toComparison > 0)
+//    assertTrue(new CompareToBuilder().append(o1, Int.MinValue).toComparison > 0)
+//    assertTrue(new CompareToBuilder().append(Int.MinValue, o1).toComparison < 0)
 //  }
 //
 //  @Test def testShort(): Unit = {
@@ -381,8 +382,8 @@
 //    assertTrue(new CompareToBuilder().append(Float.MinValue, o1).toComparison < 0)
 //    assertEquals(0, new CompareToBuilder().append(Float.NaN, Float.NaN).toComparison)
 //    assertTrue(new CompareToBuilder().append(Float.NaN, Float.MaxValue).toComparison > 0)
-//    assertTrue(new CompareToBuilder().append(Float.POSITIVE_INFINITY, Float.MaxValue).toComparison > 0)
-//    assertTrue(new CompareToBuilder().append(Float.NEGATIVE_INFINITY, Float.MinValue).toComparison < 0)
+//    assertTrue(new CompareToBuilder().append(Float.PositiveInfinity, Float.MaxValue).toComparison > 0)
+//    assertTrue(new CompareToBuilder().append(Float.NegativeInfinity, Float.MinValue).toComparison < 0)
 //    assertTrue(new CompareToBuilder().append(o1, Float.NaN).toComparison < 0)
 //    assertTrue(new CompareToBuilder().append(Float.NaN, o1).toComparison > 0)
 //    assertTrue(new CompareToBuilder().append(-0.0, 0.0).toComparison < 0)
@@ -606,9 +607,9 @@
 //  }
 //
 //  @Test def testMultiLongArray(): Unit = {
-//    val array1 = new Array[Array[Long]](2, 2)
-//    val array2 = new Array[Array[Long]](2, 2)
-//    val array3 = new Array[Array[Long]](2, 3)
+//    val array1 = Array.ofDim[Long](2, 2)
+//    val array2 = Array.ofDim[Long](2, 2)
+//    val array3 = Array.ofDim[Long](2, 3)
 //    for (i <- 0 until array1.length) {
 //      for (j <- 0 until array1(0).length) {
 //        array1(i)(j) = (i + 1) * (j + 1)
@@ -628,9 +629,9 @@
 //  }
 //
 //  @Test def testMultiIntArray(): Unit = {
-//    val array1 = new Array[Array[Int]](2, 2)
-//    val array2 = new Array[Array[Int]](2, 2)
-//    val array3 = new Array[Array[Int]](2, 3)
+//    val array1 = Array.ofDim[Int](2, 2)
+//    val array2 = Array.ofDim[Int](2, 2)
+//    val array3 = Array.ofDim[Int](2, 3)
 //    for (i <- 0 until array1.length) {
 //      for (j <- 0 until array1(0).length) {
 //        array1(i)(j) = (i + 1) * (j + 1)
@@ -650,9 +651,9 @@
 //  }
 //
 //  @Test def testMultiShortArray(): Unit = {
-//    val array1 = new Array[Array[Short]](2, 2)
-//    val array2 = new Array[Array[Short]](2, 2)
-//    val array3 = new Array[Array[Short]](2, 3)
+//    val array1 = Array.ofDim[Short](2, 2)
+//    val array2 = Array.ofDim[Short](2, 2)
+//    val array3 = Array.ofDim[Short](2, 3)
 //    var i = 0
 //    while ({
 //      i < array1.length
@@ -682,9 +683,9 @@
 //  }
 //
 //  @Test def testMultiCharArray(): Unit = {
-//    val array1 = new Array[Array[Char]](2, 2)
-//    val array2 = new Array[Array[Char]](2, 2)
-//    val array3 = new Array[Array[Char]](2, 3)
+//    val array1 = Array.ofDim[Char](2, 2)
+//    val array2 = Array.ofDim[Char](2, 2)
+//    val array3 = Array.ofDim[Char](2, 3)
 //    var i = 0
 //    while ({
 //      i < array1.length
@@ -714,9 +715,9 @@
 //  }
 //
 //  @Test def testMultiByteArray(): Unit = {
-//    val array1 = new Array[Array[Byte]](2, 2)
-//    val array2 = new Array[Array[Byte]](2, 2)
-//    val array3 = new Array[Array[Byte]](2, 3)
+//    val array1 = Array.ofDim[Byte](2, 2)
+//    val array2 = Array.ofDim[Byte](2, 2)
+//    val array3 = Array.ofDim[Byte](2, 3)
 //    var i = 0
 //    while ({
 //      i < array1.length
@@ -746,9 +747,9 @@
 //  }
 //
 //  @Test def testMultiFloatArray(): Unit = {
-//    val array1 = new Array[Array[Float]](2, 2)
-//    val array2 = new Array[Array[Float]](2, 2)
-//    val array3 = new Array[Array[Float]](2, 3)
+//    val array1 = Array.ofDim[Float](2, 2)
+//    val array2 = Array.ofDim[Float](2, 2)
+//    val array3 = Array.ofDim[Float](2, 3)
 //    for (i <- 0 until array1.length) {
 //      for (j <- 0 until array1(0).length) {
 //        array1(i)(j) = (i + 1) * (j + 1)
@@ -768,9 +769,9 @@
 //  }
 //
 //  @Test def testMultiDoubleArray(): Unit = {
-//    val array1 = new Array[Array[Double]](2, 2)
-//    val array2 = new Array[Array[Double]](2, 2)
-//    val array3 = new Array[Array[Double]](2, 3)
+//    val array1 = Array.ofDim[Double](2, 2)
+//    val array2 = Array.ofDim[Double](2, 2)
+//    val array3 = Array.ofDim[Double](2, 3)
 //    for (i <- 0 until array1.length) {
 //      for (j <- 0 until array1(0).length) {
 //        array1(i)(j) = (i + 1) * (j + 1)
@@ -790,9 +791,9 @@
 //  }
 //
 //  @Test def testMultiBooleanArray(): Unit = {
-//    val array1 = new Array[Array[Boolean]](2, 2)
-//    val array2 = new Array[Array[Boolean]](2, 2)
-//    val array3 = new Array[Array[Boolean]](2, 3)
+//    val array1 = Array.ofDim[Boolean](2, 2)
+//    val array2 = Array.ofDim[Boolean](2, 2)
+//    val array3 = Array.ofDim[Boolean](2, 3)
 //    for (i <- 0 until array1.length) {
 //      for (j <- 0 until array1(0).length) {
 //        array1(i)(j) = i == 1 ^ j == 1

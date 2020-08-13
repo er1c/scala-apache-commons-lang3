@@ -66,8 +66,31 @@ This is still fairly ambitious considering the number of dependencies required.
 **TODO** Create an audit of required tests to pass.
 
 Tests Passing:
-- [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala) (**5**/5)
-- [x] [ArrayUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsTest.scala) (**329**/329)
+- [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala)
+- ArrayUtils
+- [x] [ArrayUtilsAddTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsAddTest.scala)
+- [x] [ArrayUtilsInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsInsertTest.scala)
+- [x] [ArrayUtilsRemoveTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveTest.scala)
+- [x] [ArrayUtilsRemoveMultipleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.scala)
+- [x] [ArrayUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsTest.scala)
+- [x] [CharSequenceUtils](./core/jvm/src/test/scala/org/apache/commons/lang3/CharSequenceUtils.scala)
+- [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
+- [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
+- text
+  - translate
+    - text
+    - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
+    - [x] [text.translate.LookupTranslatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/LookupTranslatorTest.scala)
+    - [x] [text.translate.NumericEntityEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.scala)
+    - [x] [text.translate.NumericEntityUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.scala)
+    - [x] [text.translate.OctalUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/OctalUnescaperTest.scala)
+    - [x] [text.translate.UnicodeEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.scala)
+    - [x] [text.translate.UnicodeUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.scala)
+    - [x] [text.translate.UnicodeUnpairedSurrogateRemoverTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.scala)
+- builder
+- [x] [builder.ToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringStyleTest.scala)
+- [x] [builder.ShortPrefixToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.scala)
+- [x] [builder.ToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringBuilderTest.scala)
 
 ### Milestone 2
 

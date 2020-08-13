@@ -89,9 +89,10 @@ import java.io.Writer
     */
   @throws[IOException]
   override def translate(codepoint: Int, out: Writer): Boolean = {
-    if (between)
+    if (between) {
       if (codepoint < below || codepoint > above) return false
-      else if (codepoint >= below && codepoint <= above) return false
+    } else if (codepoint >= below && codepoint <= above) return false
+
     out.write("&#")
     out.write(Integer.toString(codepoint, 10))
     out.write(';')

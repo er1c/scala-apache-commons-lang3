@@ -5428,9 +5428,10 @@ object StringUtils {
     searchString: String,
     replacement: String,
     max: Int,
-    ignoreCase: Boolean): String = {
+    ignoreCase: Boolean
+  ): String = {
     if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) return text
-    val needle = if (ignoreCase) searchString.toLowerCase else searchString
+    val needle: String = if (ignoreCase) searchString.toLowerCase else searchString
 
     var start = 0
     var `end` =
@@ -5441,29 +5442,32 @@ object StringUtils {
 
     val replLength = needle.length
     var increase = Math.max(replacement.length - replLength, 0)
+
     increase *= (
       if (max < 0) 16
       else Math.min(max, 64)
     )
 
     var remainingReplaces: Int = max
-    val buf = new StringBuilder(text.length + increase)
+    val buf = new java.lang.StringBuilder(text.length + increase)
 
     breakable {
-      while (`end` != INDEX_NOT_FOUND && remainingReplaces > 0) {
+      while (`end` != INDEX_NOT_FOUND) {
         buf
-          .appendAll(text.toCharArray, start, `end`)
+          .append(text, start, `end`)
           .append(replacement)
         start = `end` + replLength
 
         remainingReplaces -= 1
+        if (remainingReplaces == 0) break()
+
         `end` =
           if (ignoreCase) indexOfIgnoreCase(text, needle, start)
           else indexOf(text, needle, start)
       }
     }
 
-    buf.appendAll(text.toCharArray, start, text.length)
+    buf.append(text, start, text.length)
     buf.toString
   }
 

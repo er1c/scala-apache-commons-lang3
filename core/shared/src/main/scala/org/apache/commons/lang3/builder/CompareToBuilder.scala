@@ -253,7 +253,8 @@ object CompareToBuilder {
     rhs: Any,
     compareTransients: Boolean,
     reflectUpToClass: Class[_],
-    excludeFields: String*): Int = {
+    excludeFields: String*
+  ): Int = {
     //if (lhs eq rhs) return 0
     assert(false, "unimplemented")
     Objects.requireNonNull(lhs, "lhs")
