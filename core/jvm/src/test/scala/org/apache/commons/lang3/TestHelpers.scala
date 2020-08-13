@@ -17,12 +17,12 @@
 
 package org.apache.commons.lang3
 
-trait PackageBase {
-  type MutableHashMap[K, V] = scala.collection.mutable.HashMap[K, V]
+object TestHelpers {
+  val DoubleDelta: Double = 1e-9d
+  val FloatDelta: Float = 1e-9f
+}
 
-  private[lang3] def MutableHashMap[K, V](initialCapacity: Int, loadFactor: Double): MutableHashMap[K, V] = {
-    void(initialCapacity)
-    void(loadFactor)
-    new MutableHashMap[K, V]()
-  }
+trait TestHelpers {
+  protected def DoubleDelta: Double = TestHelpers.DoubleDelta
+  protected def FloatDelta: Float = TestHelpers.FloatDelta
 }

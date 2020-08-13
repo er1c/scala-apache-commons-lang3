@@ -29,7 +29,6 @@ import org.apache.commons.lang3.exception.CloneFailedException
 import org.apache.commons.lang3.mutable.MutableInt
 import org.apache.commons.lang3.text.StrBuilder
 import scala.collection.JavaConverters._
-import scala.reflect.ClassTag
 
 /**
   * <p>Operations on {@code Object}.</p>
@@ -42,47 +41,18 @@ import scala.reflect.ClassTag
   *
   * @since 1.0
   */
-//@Immutable
 @SuppressWarnings(
   Array("deprecation")
 ) // deprecated class StrBuilder is imported // because it is part of the signature of deprecated methods
 object ObjectUtils {
-
-  /**
-    * <p>Class used as a null placeholder where {@code null}
-    * has another meaning.</p>
-    *
-    * <p>For example, in a {@code HashMap} the
-    * {@link java.util.HashMap# get ( java.lang.Object )} method returns
-    * {@code null} if the {@code Map} contains {@code null} or if there is
-    * no matching key. The {@code Null} placeholder can be used to distinguish
-    * between these two cases.</p>
-    *
-    * <p>Another example is {@code Hashtable}, where {@code null}
-    * cannot be stored.</p>
-    */
-  @SerialVersionUID(7092611880189329093L)
-  class Null private[lang3] ()
-
-  /**
-    * Restricted constructor - singleton.
-    */
-    extends Serializable {
-    /**
-      * <p>Ensure singleton.</p>
-      *
-      * @return the singleton value
-      */
-    private def readResolve = NULL
-  }
-
   private val AT_SIGN = '@'
+
   /**
     * <p>Singleton used as a {@code null} placeholder where
     * {@code null} has another meaning.</p>
     *
     * <p>For example, in a {@code HashMap} the
-    * {@link java.util.HashMap# get ( java.lang.Object )} method returns
+    * {@link java.util.HashMap#get} method returns
     * {@code null} if the {@code Map} contains {@code null} or if there
     * is no matching key. The {@code Null} placeholder can be used to
     * distinguish between these two cases.</p>
@@ -92,7 +62,8 @@ object ObjectUtils {
     *
     * <p>This instance is Serializable.</p>
     */
-  val NULL = new ObjectUtils.Null
+  object NULL extends Serializable
+  type Null = NULL.type
 
   /**
     * Checks if all values in the given array are {@code null}.
@@ -116,7 +87,7 @@ object ObjectUtils {
     *         {@code false} if there is at least one non-null value in the array.
     * @since 3.11
     */
-  def allNull(values: Any*): Boolean = !anyNotNull(values)
+  def allNull(values: Any*): Boolean = !anyNotNull(values: _*)
 
   /**
     * Checks if all values in the array are not {@code nulls}.
@@ -175,7 +146,7 @@ object ObjectUtils {
     *         If the array is {@code null} or empty, {@code true} is also returned.
     * @since 3.11
     */
-  def anyNull(values: Any*): Boolean = !allNotNull(values)
+  def anyNull(values: Any*): Boolean = !allNotNull(values: _*)
 
   /**
     * Checks if any value in the given array is not {@code null}.
@@ -200,7 +171,7 @@ object ObjectUtils {
     *         If the array is {@code null} or empty {@code false} is also returned.
     * @since 3.5
     */
-  def anyNotNull(values: Any*): Boolean = firstNonNull(values) != null
+  def anyNotNull(values: Any*): Boolean = firstNonNull(values: _*) != null
 
   /**
     * <p>Clone an object.</p>
@@ -212,7 +183,7 @@ object ObjectUtils {
     * @since 3.0
     */
   def clone[T](obj: T): T = {
-    if (obj.isInstanceOf[Cloneable]) {
+    if (obj.isInstanceOf[java.lang.Cloneable] || obj.isInstanceOf[Cloneable]) {
       var result: AnyRef = null
       if (obj.getClass.isArray) {
         val componentType = obj.getClass.getComponentType
@@ -275,7 +246,7 @@ object ObjectUtils {
     * @return a negative value if c1 &lt; c2, zero if c1 = c2
     *         and a positive value if c1 &gt; c2
     */
-  def compare[T <: Comparable[Any]](c1: T, c2: T): Int = compare(c1, c2, false)
+  def compare[T <: Comparable[T]](c1: T, c2: T): Int = compare(c1, c2, false)
 
   /**
     * <p>Null safe comparison of Comparables.</p>
@@ -290,8 +261,9 @@ object ObjectUtils {
     *         and a positive value if c1 &gt; c2
     * @see java.util.Comparator#compare(Object, Object)
     */
-  def compare[T <: Comparable[Any]](c1: T, c2: T, nullGreater: Boolean): Int = {
+  def compare[T <: Comparable[T]](c1: T, c2: T, nullGreater: Boolean): Int = {
     (c1, c2) match {
+      case (null, null) => 0
       case (null, _) => if (nullGreater) 1 else -1
       case (_, null) => if (nullGreater) -1 else 1
       case (l: AnyRef, r: AnyRef) if l eq r => 0
@@ -569,6 +541,7 @@ object ObjectUtils {
     */
   @deprecated def equals(object1: Any, object2: Any): Boolean = {
     (object1, object2) match {
+      case (null, null) => true
       case (null, _) => false
       case (_, null) => false
       case (o1: AnyRef, o2: AnyRef) if o1 eq o2 => true
@@ -576,6 +549,34 @@ object ObjectUtils {
     }
   }
 
+  /**
+    * <p>Returns the first value in the array which is not {@code null}.
+    * If all the values are {@code null} or the array is {@code null}
+    * or empty then {@code null} is returned.</p>
+    *
+    * <pre>
+    * ObjectUtils.firstNonNull(null, null)      = null
+    * ObjectUtils.firstNonNull(null, "")        = ""
+    * ObjectUtils.firstNonNull(null, null, "")  = ""
+    * ObjectUtils.firstNonNull(null, "zz")      = "zz"
+    * ObjectUtils.firstNonNull("abc", *)        = "abc"
+    * ObjectUtils.firstNonNull(null, "xyz", *)  = "xyz"
+    * ObjectUtils.firstNonNull(Boolean.TRUE, *) = Boolean.TRUE
+    * ObjectUtils.firstNonNull()                = null
+    * </pre>
+    *
+    * @tparam T     the component type of the array
+    * @param values the values to test, may be {@code null} or empty
+    * @return       the first value from {@code values} which is not {@code null},
+    *               or {@code null} if there are no non-null values
+    * @since 3.0
+    */
+  def firstNonNull[T](values: Array[T]): T = {
+    if (values != null) for (v <- values) {
+      if (v != null) return v
+    }
+    null.asInstanceOf[T]
+  }
   /**
     * <p>Returns the first value in the array which is not {@code null}.
     * If all the values are {@code null} or the array is {@code null}
@@ -711,9 +712,40 @@ object ObjectUtils {
     * @deprecated this method has been replaced by {@code java.util.Objects.hash(Object...)} in Java 7 and will be
     *             removed in future releases.
     */
-  @deprecated def hashCodeMulti(objects: Any*): Int = {
+  @deprecated def hashCodeMulti[T](objects: Array[T]): Int = {
     var hash = 1
     if (objects != null) for (o <- objects) {
+      val tmpHash = hashCode(o)
+      hash = hash * 31 + tmpHash
+    }
+    hash
+  }
+
+  /**
+    * <p>Gets the hash code for multiple objects.</p>
+    *
+    * <p>This allows a hash code to be rapidly calculated for a number of objects.
+    * The hash code for a single object is the <em>not</em> same as {@link #hashCode(obj:Any)*}.
+    * The hash code for multiple objects is the same as that calculated by an
+    * {@code ArrayList} containing the specified objects.</p>
+    *
+    * <pre>
+    * ObjectUtils.hashCodeMulti()                 = 1
+    * ObjectUtils.hashCodeMulti((Object[]) null)  = 1
+    * ObjectUtils.hashCodeMulti(a)                = 31 + a.hashCode()
+    * ObjectUtils.hashCodeMulti(a,b)              = (31 + a.hashCode()) * 31 + b.hashCode()
+    * ObjectUtils.hashCodeMulti(a,b,c)            = ((31 + a.hashCode()) * 31 + b.hashCode()) * 31 + c.hashCode()
+    * </pre>
+    *
+    * @param objects the objects to obtain the hash code of, may be {@code null}
+    * @return the hash code of the objects, or zero if null
+    * @since 3.0
+    * @deprecated this method has been replaced by {@code java.util.Objects.hash(Object...)} in Java 7 and will be
+    *             removed in future releases.
+    */
+  @deprecated def hashCodeMulti(objects: Any*): Int = {
+    var hash = 1
+    if (objects != null && objects.nonEmpty) for (o <- objects) {
       val tmpHash = hashCode(o)
       hash = hash * 31 + tmpHash
     }
@@ -921,11 +953,38 @@ object ObjectUtils {
     * <li>If all the comparables are null, null is returned.
     * </ul>
     */
-  @SafeVarargs def max[T <: Comparable[Any]](values: T*): T = {
+  def max[T <: Comparable[T]](values: Array[T]): T = {
     var result: T = null.asInstanceOf[T]
-    if (values != null) for (value <- values) {
-      if (compare(value, result, false) > 0) result = value
+    if (values != null) {
+      for (value <- values) {
+        if (compare(value, result, false) > 0) result = value
+      }
     }
+
+    result
+  }
+
+  /**
+    * <p>Null safe comparison of Comparables.</p>
+    *
+    * @tparam T     type of the values processed by this method
+    * @param values the set of comparable values, may be null
+    * @return
+    * <ul>
+    * <li>If any objects are non-null and unequal, the greater object.
+    * <li>If all objects are non-null and equal, the first.
+    * <li>If any of the comparables are null, the greater of the non-null objects.
+    * <li>If all the comparables are null, null is returned.
+    * </ul>
+    */
+  @SafeVarargs def max[T <: Comparable[T]](values: T*): T = {
+    var result: T = null.asInstanceOf[T]
+    if (values != null) {
+      for (value <- values) {
+        if (compare(value, result, false) > 0) result = value
+      }
+    }
+
     result
   }
 
@@ -941,8 +1000,25 @@ object ObjectUtils {
     * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
     * @since 3.0.1
     */
-  @SafeVarargs def median[T: ClassTag](comparator: Comparator[T], items: T*): T = {
-    Validate.notEmpty(items.toArray, "null/empty items")
+  @SafeVarargs def median[T](comparator: Comparator[T], items: Array[T]): T = {
+    if (items == null) throw new NullPointerException
+    else median(comparator, items: _*)
+  }
+
+  /**
+    * Find the "best guess" middle value among comparables. If there is an even
+    * number of total values, the lower of the two middle values will be returned.
+    *
+    * @tparam T         type of values processed by this method
+    * @param comparator to use for comparisons
+    * @param items      to compare
+    * @return T at middle position
+    * @throws java.lang.NullPointerException     if items or comparator is {@code null}
+    * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
+    * @since 3.0.1
+    */
+  @SafeVarargs def median[T](comparator: Comparator[T], items: T*): T = {
+    Validate.notEmpty(items, "null/empty items")
     Validate.noNullElements(items)
     Validate.notNull(comparator, "null comparator")
     val sort = new util.TreeSet[T](comparator)
@@ -964,8 +1040,28 @@ object ObjectUtils {
     * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
     * @since 3.0.1
     */
-  @SafeVarargs def median[T <: Comparable[Any]: ClassTag](items: T*): T = {
-    Validate.notEmpty(items.toArray)
+  def median[T <: Comparable[T]](items: Array[T]): T = {
+    Validate.notEmpty(items)
+    Validate.noNullElements(items)
+    val sort = new util.TreeSet[T]
+    Collections.addAll(sort, items: _*)
+    @SuppressWarnings(Array("unchecked")) val result = sort.asScala.toIndexedSeq((sort.size - 1) / 2)
+    result
+  }
+
+  /**
+    * Find the "best guess" middle value among comparables. If there is an even
+    * number of total values, the lower of the two middle values will be returned.
+    *
+    * @tparam T    type of values processed by this method
+    * @param items to compare
+    * @return T    at middle position
+    * @throws java.lang.NullPointerException     if items is {@code null}
+    * @throws java.lang.IllegalArgumentException if items is empty or contains {@code null} values
+    * @since 3.0.1
+    */
+  @SafeVarargs def median[T <: Comparable[T]](items: T*): T = {
+    Validate.notEmpty(items)
     Validate.noNullElements(items)
     val sort = new util.TreeSet[T]
     Collections.addAll(sort, items: _*)
@@ -986,12 +1082,66 @@ object ObjectUtils {
     * <li>If all the comparables are null, null is returned.
     * </ul>
     */
-  @SafeVarargs def min[T <: Comparable[Any]](values: T*): T = {
+  def min[T <: Comparable[T]](values: Array[T]): T = {
     var result: T = null.asInstanceOf[T]
     if (values != null) for (value <- values) {
       if (compare(value, result, true) < 0) result = value
     }
     result
+  }
+
+  /**
+    * <p>Null safe comparison of Comparables.</p>
+    *
+    * @tparam T     type of the values processed by this method
+    * @param values the set of comparable values, may be null
+    * @return
+    * <ul>
+    * <li>If any objects are non-null and unequal, the lesser object.
+    * <li>If all objects are non-null and equal, the first.
+    * <li>If any of the comparables are null, the lesser of the non-null objects.
+    * <li>If all the comparables are null, null is returned.
+    * </ul>
+    */
+  @SafeVarargs def min[T <: Comparable[T]](values: T*): T = {
+    var result: T = null.asInstanceOf[T]
+    if (values != null) for (value <- values) {
+      if (compare(value, result, true) < 0) result = value
+    }
+    result
+  }
+
+  /**
+    * Find the most frequently occurring item.
+    *
+    * @tparam T    type of values processed by this method
+    * @param items to check
+    * @return most populous T, {@code null} if non-unique or no items supplied
+    * @since 3.0.1
+    */
+  def mode[T](items: Array[T]): T = {
+    if (ArrayUtils.isNotEmpty(items)) {
+      val occurrences = new util.HashMap[T, MutableInt](items.length)
+      for (t <- items) {
+        val count = occurrences.get(t)
+        if (count == null) occurrences.put(t, new MutableInt(1))
+        else count.increment()
+      }
+      var result: T = null.asInstanceOf[T]
+      var max = 0
+
+      for (e <- occurrences.entrySet.asScala) {
+        val cmp = e.getValue.intValue
+        if (cmp == max) result = null.asInstanceOf[T]
+        else if (cmp > max) {
+          max = cmp
+          result = e.getKey
+        }
+      }
+      return result
+    }
+
+    null.asInstanceOf[T]
   }
 
   /**

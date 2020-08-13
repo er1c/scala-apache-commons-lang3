@@ -68,6 +68,7 @@ object Validate {
   private val DEFAULT_IS_ASSIGNABLE_EX_MESSAGE = "Cannot assign a %s to a %s"
   private val DEFAULT_IS_INSTANCE_OF_EX_MESSAGE = "Expected type: %s, actual: %s"
 
+  // TODO: @link java.lang.String#format
   /**
     * <p>Validate that the argument condition is {@code true}; otherwise
     * throwing an exception with the specified message. This method is useful when
@@ -80,7 +81,7 @@ object Validate {
     * appended to the exception message only in the case of an error.</p>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@code java.lang.String#format} exception message if invalid, not null
     * @param value      the value to append to the message when invalid
     * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean)
@@ -91,6 +92,7 @@ object Validate {
     if (!expression) throw new IllegalArgumentException(message.format(value))
   }
 
+  // TODO: @link java.lang.String#format
   /**
     * <p>Validate that the argument condition is {@code true}; otherwise
     * throwing an exception with the specified message. This method is useful when
@@ -103,7 +105,7 @@ object Validate {
     * appended to the exception message only in the case of an error.</p>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@code java.lang.String#format} exception message if invalid, not null
     * @param value      the value to append to the message when invalid
     * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean)
@@ -114,6 +116,7 @@ object Validate {
     if (!expression) throw new IllegalArgumentException(message.format(value))
   }
 
+  // TODO: @link java.lang.String#format
   /**
     * <p>Validate that the argument condition is {@code true}; otherwise
     * throwing an exception with the specified message. This method is useful when
@@ -125,7 +128,7 @@ object Validate {
     * Validate.isTrue(myObject.isOk(), "The object is not okay");</pre>
     *
     * @param expression the boolean expression to check
-    * @param message    the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
+    * @param message    the {@code java.lang.String#format(String, Object...)} exception message if invalid, not null
     * @param values     the optional values for the formatted exception message, null array not recommended
     * @throws java.lang.IllegalArgumentException if expression is {@code false}
     * @see #isTrue(boolean)
@@ -176,6 +179,7 @@ object Validate {
     */
   def notNull[T](`object`: T): T = notNull(`object`, DEFAULT_IS_NULL_EX_MESSAGE)
 
+  // TODO: @link java.lang.String#format
   /**
     * <p>Validate that the specified argument is not {@code null};
     * otherwise throwing an exception with the specified message.
@@ -184,7 +188,7 @@ object Validate {
     *
     * @tparam T      the object type
     * @param object  the object to check
-    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@code java.lang.String#format(String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message
     * @return the validated object (never {@code null} for method chaining)
     * @throws java.lang.NullPointerException if the object is {@code null}
@@ -195,6 +199,31 @@ object Validate {
     Objects.requireNonNull(`object`, msg)
   }
 
+  // TODO: @link java.lang.String#format
+  /**
+    * <p>Validate that the specified argument array is neither {@code null}
+    * nor a length of zero (no elements); otherwise throwing an exception
+    * with the specified message.
+    *
+    * <pre>Validate.notEmpty(myArray, "The array must not be empty");</pre>
+    *
+    * @tparam T      the array type
+    * @param seq     the sequence to check, validated not null by this method
+    * @param message the {@code java.lang.String#format(String, Object...)} exception message if invalid, not null
+    * @param values  the optional values for the formatted exception message, null array not recommended
+    * @return the validated array (never {@code null} method for chaining)
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if the array is empty
+    * @see #notEmpty(Object[])
+    */
+  def notEmpty[T](seq: Seq[T], message: String, values: Any*): Seq[T] = {
+    @inline def msg: String = message.format(values)
+    Objects.requireNonNull(seq, msg)
+    if (seq.length == 0) throw new IllegalArgumentException(msg)
+    else seq
+  }
+
+  // TODO: @link java.lang.String#format
   /**
     * <p>Validate that the specified argument array is neither {@code null}
     * nor a length of zero (no elements); otherwise throwing an exception
@@ -204,7 +233,7 @@ object Validate {
     *
     * @tparam T      the array type
     * @param array   the array to check, validated not null by this method
-    * @param message the {@link java.lang.String# format ( String, Object...)} exception message if invalid, not null
+    * @param message the {@code java.lang.String#format(String, Object...)} exception message if invalid, not null
     * @param values  the optional values for the formatted exception message, null array not recommended
     * @return the validated array (never {@code null} method for chaining)
     * @throws java.lang.NullPointerException     if the array is {@code null}
@@ -217,6 +246,25 @@ object Validate {
     if (array.length == 0) throw new IllegalArgumentException(msg)
     array
   }
+
+  /**
+    * <p>Validate that the specified argument array is neither {@code null}
+    * nor a length of zero (no elements); otherwise throwing an exception.
+    *
+    * <pre>Validate.notEmpty(myArray);</pre>
+    *
+    * <p>The message in the exception is &quot;The validated array is
+    * empty&quot;.
+    *
+    * @tparam T    the array type
+    * @param seq the sequence to check, validated not null by this method
+    * @return the validated array (never {@code null} method for chaining)
+    * @throws java.lang.NullPointerException     if the array is {@code null}
+    * @throws java.lang.IllegalArgumentException if the array is empty
+    * @see #notEmpty(Object[], String, Object...)
+    */
+  def notEmpty[T](seq: Seq[T]): Seq[T] =
+    notEmpty(seq, DEFAULT_NOT_EMPTY_ARRAY_EX_MESSAGE)
 
   /**
     * <p>Validate that the specified argument array is neither {@code null}
@@ -498,7 +546,7 @@ object Validate {
     }) {
       if (it.next() == null) {
         val values2 = ArrayUtils.addAll(values.toArray, Integer.valueOf(i))
-        throw new IllegalArgumentException(String.format(message, values2))
+        throw new IllegalArgumentException(java.lang.String.format(message, values2))
       }
 
       i += 1
