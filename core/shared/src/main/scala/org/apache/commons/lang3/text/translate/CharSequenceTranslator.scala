@@ -72,6 +72,7 @@ import java.util.Locale
     */
   final def translate(input: CharSequence): String = {
     if (input == null) return null
+
     try {
       val writer = new StringWriter(input.length * 2)
       translate(input, writer)
@@ -99,11 +100,14 @@ import java.util.Locale
     val len = input.length
     while (pos < len) {
       val consumed = translate(input, pos, out)
-      if (consumed == 0) { // inlined implementation of Character.toChars(Character.codePointAt(input, pos))
+
+      if (consumed == 0) {
+        // inlined implementation of Character.toChars(Character.codePointAt(input, pos))
         // avoids allocating temp char arrays and duplicate checks
         val c1: Char = input.charAt(pos)
         out.write(c1.toInt)
         pos += 1
+
         if (Character.isHighSurrogate(c1) && pos < len) {
           val c2: Char = input.charAt(pos)
           if (Character.isLowSurrogate(c2)) {
@@ -129,9 +133,6 @@ import java.util.Locale
     * @return CharSequenceTranslator merging this translator with the others
     */
   final def `with`(translators: CharSequenceTranslator*): CharSequenceTranslator = {
-    val newArray = new Array[CharSequenceTranslator](translators.length + 1)
-    newArray(0) = this
-    Array.copy(translators, 0, newArray, 1, translators.length)
-    new AggregateTranslator(newArray: _*)
+    new AggregateTranslator(this +: translators: _*)
   }
 }

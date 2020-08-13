@@ -41,6 +41,7 @@ import java.io.Writer
   override def translate(input: CharSequence, index: Int, out: Writer): Int = {
     val remaining = input.length - index - 1 // how many characters left, ignoring the first \
     val builder = new StringBuilder
+
     if (input.charAt(index) == '\\' && remaining > 0 && isOctalDigit(input.charAt(index + 1))) {
       val next = index + 1
       val next2 = index + 2
@@ -55,6 +56,7 @@ import java.io.Writer
       out.write(Integer.parseInt(builder.toString, 8))
       return 1 + builder.length
     }
+
     0
   }
 

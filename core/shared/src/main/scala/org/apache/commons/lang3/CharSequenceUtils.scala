@@ -26,24 +26,25 @@ package org.apache.commons.lang3
   */
 object CharSequenceUtils {
   private val NOT_FOUND = -1
-//
-//  /**
-//    * <p>Returns a new {@code CharSequence} that is a subsequence of this
-//    * sequence starting with the {@code char} value at the specified index.</p>
-//    *
-//    * <p>This provides the {@code CharSequence} equivalent to {@link java.lang.String# substring ( int )}.
-//    * The length (in {@code char}) of the returned sequence is {@code length() - start},
-//    * so if {@code start == end} then an empty sequence is returned.</p>
-//    *
-//    * @param cs    the specified subsequence, null returns null
-//    * @param start the start index, inclusive, valid
-//    * @return a new subsequence, may be null
-//    * @throws java.lang.IndexOutOfBoundsException if {@code start} is negative or if
-//    *                                   {@code start} is greater than {@code length()}
-//    */
-//  def subSequence(cs: CharSequence, start: Int): CharSequence = if (cs == null) null
-//  else cs.subSequence(start, cs.length)
-//
+
+  /**
+    * <p>Returns a new {@code CharSequence} that is a subsequence of this
+    * sequence starting with the {@code char} value at the specified index.</p>
+    *
+    * <p>This provides the {@code CharSequence} equivalent to {@link java.lang.String# substring ( int )}.
+    * The length (in {@code char}) of the returned sequence is {@code length() - start},
+    * so if {@code start == end} then an empty sequence is returned.</p>
+    *
+    * @param cs    the specified subsequence, null returns null
+    * @param start the start index, inclusive, valid
+    * @return a new subsequence, may be null
+    * @throws java.lang.IndexOutOfBoundsException if {@code start} is negative or if
+    *                                   {@code start} is greater than {@code length()}
+    */
+  def subSequence(cs: CharSequence, start: Int): CharSequence =
+    if (cs == null) null
+    else cs.subSequence(start, cs.length)
+
   /**
     * Returns the index within {@code cs} of the first occurrence of the
     * specified character, starting the search at the specified index.

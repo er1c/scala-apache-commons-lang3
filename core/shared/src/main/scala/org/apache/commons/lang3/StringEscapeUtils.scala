@@ -242,12 +242,15 @@ import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover
     @throws[IOException]
     override def translate(input: CharSequence, index: Int, out: Writer): Int = {
       if (index != 0) throw new IllegalStateException("CsvEscaper should never reach the [1] index")
-      if (StringUtils.containsNone(input.toString, CsvEscaper.CSV_SEARCH_CHARS: _*)) out.write(input.toString)
-      else {
+
+      if (StringUtils.containsNone(input.toString, CsvEscaper.CSV_SEARCH_CHARS: _*)) {
+        out.write(input.toString)
+      } else {
         out.write(CsvEscaper.CSV_QUOTE.toInt)
         out.write(
           StringUtils
-            .replace(input.toString, CsvEscaper.CSV_QUOTE_STR, CsvEscaper.CSV_QUOTE_STR + CsvEscaper.CSV_QUOTE_STR))
+            .replace(input.toString, CsvEscaper.CSV_QUOTE_STR, CsvEscaper.CSV_QUOTE_STR + CsvEscaper.CSV_QUOTE_STR)
+        )
         out.write(CsvEscaper.CSV_QUOTE.toInt)
       }
       Character.codePointCount(input, 0, input.length)
@@ -363,12 +366,15 @@ import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover
         out.write(input.toString)
         return Character.codePointCount(input, 0, input.length)
       }
+
       // strip quotes
       val quoteless = input.subSequence(1, input.length - 1).toString
-      if (StringUtils.containsAny(quoteless, CsvUnescaper.CSV_SEARCH_CHARS)) { // deal with escaped quotes; ie) ""
+      if (StringUtils.containsAny(quoteless, CsvUnescaper.CSV_SEARCH_CHARS: _*)) {
+        // deal with escaped quotes; ie) ""
         out.write(
           StringUtils
-            .replace(quoteless, CsvUnescaper.CSV_QUOTE_STR + CsvUnescaper.CSV_QUOTE_STR, CsvUnescaper.CSV_QUOTE_STR))
+            .replace(quoteless, CsvUnescaper.CSV_QUOTE_STR + CsvUnescaper.CSV_QUOTE_STR, CsvUnescaper.CSV_QUOTE_STR)
+        )
       } else out.write(input.toString)
       Character.codePointCount(input, 0, input.length)
     }

@@ -29,7 +29,8 @@ import java.io.Writer
   *             <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/AggregateTranslator.html">
   *             AggregateTranslator</a> instead
   */
-@deprecated class AggregateTranslator(val translators: CharSequenceTranslator*)
+@deprecated
+class AggregateTranslator(val translators: CharSequenceTranslator*)
 
 /**
   * Specify the translators to be used at creation time.

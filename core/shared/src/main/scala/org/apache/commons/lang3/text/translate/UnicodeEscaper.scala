@@ -89,9 +89,10 @@ import java.io.Writer
     */
   @throws[IOException]
   override def translate(codepoint: Int, out: Writer): Boolean = {
-    if (between)
+    if (between) {
       if (codepoint < below || codepoint > above) return false
-      else if (codepoint >= below && codepoint <= above) return false
+    } else if (codepoint >= below && codepoint <= above) return false
+
     // TODO: Handle potential + sign per various Unicode escape implementations
     if (codepoint > 0xffff) out.write(toUtf16Escape(codepoint))
     else {
@@ -101,6 +102,7 @@ import java.io.Writer
       out.write(HEX_DIGITS((codepoint >> 4) & 15).toInt)
       out.write(HEX_DIGITS(codepoint & 15).toInt)
     }
+
     true
   }
 
