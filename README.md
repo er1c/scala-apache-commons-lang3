@@ -76,6 +76,23 @@ Tests Passing:
 - [x] [CharSequenceUtils](./core/jvm/src/test/scala/org/apache/commons/lang3/CharSequenceUtils.scala)
 - [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
 - [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
+- exception
+  - [x] [exception.AbstractExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionContextTest.scala)
+  - [x] [exception.AbstractExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionTest.scala)
+  - [x] [exception.CloneFailedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/CloneFailedExceptionTest.scala)
+  - [x] [exception.ContextedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedExceptionTest.scala)
+  - [x] [exception.ContextedRuntimeExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedRuntimeExceptionTest.scala)
+  - [x] [exception.DefaultExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/DefaultExceptionContextTest.scala)
+  - [x] [exception.ExceptionUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ExceptionUtilsTest.scala)
+- mutable
+  - [x] [mutable.MutableBooleanTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
+  - [x] [mutable.MutableByteTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
+  - [x] [mutable.MutableDoubleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableDoubleTest.scala)
+  - [x] [mutable.MutableFloatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableFloatTest.scala)
+  - [x] [mutable.MutableIntTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableIntTest.scala)
+  - [x] [mutable.MutableLongTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableLongTest.scala)
+  - [x] [mutable.MutableObjectTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableObjectTest.scala)
+  - [x] [mutable.MutableShortTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableShortTest.scala)
 - text
   - translate
     - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
