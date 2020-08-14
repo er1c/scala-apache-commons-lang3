@@ -42,7 +42,7 @@ class CloneFailedException(message: String, cause: Throwable) extends RuntimeExc
     * @param cause cause of the exception
     */
   def this(cause: Throwable) = {
-    this(null, cause)
+    this(cause.toString, cause)
   }
 
   /**

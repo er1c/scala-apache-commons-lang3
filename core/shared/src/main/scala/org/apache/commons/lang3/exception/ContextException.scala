@@ -112,7 +112,7 @@ class ContextedException(message: String, cause: Throwable) extends Exception(me
     *
     * @param cause the underlying cause of the exception, may be null
     */
-  def this(cause: Throwable) = this(null, cause)
+  def this(cause: Throwable) = this(cause.toString, cause)
 
   /**
     * Instantiates ContextedException with cause, message, and ExceptionContext.
