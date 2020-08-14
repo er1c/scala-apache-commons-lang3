@@ -112,7 +112,7 @@ class ContextedRuntimeException(message: String, cause: Throwable)
     * @param cause the underlying cause of the exception, may be null
     */
   def this(cause: Throwable) = {
-    this(null, cause)
+    this(cause.toString, cause)
   }
 
   /**

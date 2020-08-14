@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-package org.apache.commons.lang3.exception;
+package org.apache.commons.lang3.exception
 
+import org.scalatestplus.junit.JUnitSuite
 
 /**
- * Base class for testing {@link Exception} descendants
- */
-public abstract class AbstractExceptionTest {
+  * Base class for testing {@link Exception} descendants
+  */
+object AbstractExceptionTest {
+  protected[exception] val CAUSE_MESSAGE = "Cause message"
+  protected[exception] val EXCEPTION_MESSAGE = "Exception message"
+  protected[exception] val WRONG_EXCEPTION_MESSAGE = "Wrong exception message"
+  protected[exception] val WRONG_CAUSE_MESSAGE = "Wrong cause message"
+}
 
-    protected static final String CAUSE_MESSAGE = "Cause message";
-    protected static final String EXCEPTION_MESSAGE = "Exception message";
-
-    protected static final String WRONG_EXCEPTION_MESSAGE = "Wrong exception message";
-    protected static final String WRONG_CAUSE_MESSAGE = "Wrong cause message";
-
-    protected Exception generateCause() {
-        return new Exception(CAUSE_MESSAGE);
-    }
+abstract class AbstractExceptionTest extends JUnitSuite {
+  protected def generateCause = new Exception(AbstractExceptionTest.CAUSE_MESSAGE)
 }
