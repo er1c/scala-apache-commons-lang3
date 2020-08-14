@@ -62,17 +62,20 @@ def defaultPlugins: Project ⇒ Project = pr => {
     .enablePlugins(GitBranchPrompt)
 }
 
+val Scala211Version = "2.11.12"
+val Scala212Version = "2.12.12"
+val Scala213Version = "2.13.3"
+
 lazy val sharedSettings = Seq(
-  projectTitle := "Scala Apache Commons Lang",
+  projectTitle := "Scala Apache Commons Lang3",
   projectWebsiteRootURL := "https://er1c.github.io/",
   projectWebsiteBasePath := "/scala-apache-commons-lang3/",
   githubOwnerID := "er1c",
   githubRelativeRepositoryID := "scala-apache-commons-lang3",
 
   organization := "io.github.er1c",
-  //scalaVersion := "2.13.3",
-  scalaVersion := "2.13.3",
-  crossScalaVersions := Seq("2.11.12", "2.12.12", "2.13.3"),
+  scalaVersion := Scala213Version,
+  crossScalaVersions := Seq(Scala211Version, Scala212Version, Scala213Version),
 
   // More version specific compiler options
   scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
@@ -242,7 +245,7 @@ lazy val site = project.in(file("site"))
     import microsites._
     Seq(
       micrositeName := projectTitle.value,
-      micrositeDescription := "Scala Apache Commons Lang",
+      micrositeDescription := "Scala Apache Commons Lang3",
       micrositeAuthor := "Eric Peters",
       micrositeTwitterCreator := "@ericpeters",
       micrositeGithubOwner := githubOwnerID.value,
@@ -296,9 +299,9 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
     name := "scala-apache-commons-lang3",
     libraryDependencies ++= Seq(
       // For testing
-      "org.scalatest"     %%% "scalatest"           % ScalaTestVersion % Test,
-      "org.scalatestplus" %%% "scalacheck-1-14"     % ScalaTestPlusVersion % Test,
-      "org.scalacheck"    %%% "scalacheck"          % ScalaCheckVersion % Test,
+      "org.scalatest"     %%% "scalatest"       % ScalaTestVersion     % Test,
+      "org.scalatestplus" %%% "scalacheck-1-14" % ScalaTestPlusVersion % Test,
+      "org.scalacheck"    %%% "scalacheck"      % ScalaCheckVersion    % Test,
     ),
   )
 
@@ -310,11 +313,8 @@ lazy val coreJVM = core.jvm
       "-Wnumeric-widen"
     ),
     libraryDependencies ++= Seq(
-      //"com.novocode" % "junit-interface" % "0.11" % Test,
-//      "org.junit.jupiter" % "junit-jupiter" % "5.6.2" % Test,
-//      "org.junit-pioneer" % "junit-pioneer" % "0.8.0" % Test,
       "org.scalatestplus" %% "junit-4-12" % ScalaTestPlusVersion % Test,
-      "junit" % "junit" % "4.13" % Test,
+      "junit"             %  "junit"      % "4.13"               % Test
     )
   )
 
