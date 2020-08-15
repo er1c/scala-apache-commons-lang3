@@ -17,16 +17,16 @@
 
 //package org.apache.commons.lang3.tuple;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//import static org.junit.jupiter.api.Assertions.assertNull;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotEquals;
+//import static org.junit.Assert.assertNull;
 //
 //import java.io.ByteArrayInputStream;
 //import java.io.ByteArrayOutputStream;
 //import java.io.ObjectInputStream;
 //import java.io.ObjectOutputStream;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Test the MutableTriple class.

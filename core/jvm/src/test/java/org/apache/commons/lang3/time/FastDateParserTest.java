@@ -17,12 +17,12 @@
 
 //package org.apache.commons.lang3.time;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static org.junit.jupiter.api.Assertions.fail;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotEquals;
+//import static org.junit.Assert.assertThrows;
+//import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.fail;
 //
 //import java.io.Serializable;
 //import java.text.ParseException;
@@ -38,7 +38,7 @@
 //
 //import org.apache.commons.lang3.LocaleUtils;
 //import org.apache.commons.lang3.SerializationUtils;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Unit tests {@link org.apache.commons.lang3.time.FastDateParser}.

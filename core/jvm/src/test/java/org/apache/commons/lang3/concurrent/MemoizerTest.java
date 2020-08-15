@@ -19,12 +19,12 @@
 //
 //import static org.easymock.EasyMock.expect;
 //import static org.easymock.EasyMock.replay;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertThrows;
 //
 //import org.easymock.EasyMock;
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 //public class MemoizerTest {
 //

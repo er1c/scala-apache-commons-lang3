@@ -17,12 +17,12 @@
 
 //package org.apache.commons.lang3;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertSame;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertSame;
+//import static org.junit.Assert.assertThrows;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.io.IOException;
 //import java.io.UncheckedIOException;
@@ -43,7 +43,7 @@
 //import org.apache.commons.lang3.Functions.FailableFunction;
 //import org.apache.commons.lang3.Functions.FailableSupplier;
 //import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 //public class FunctionsTest {
 //

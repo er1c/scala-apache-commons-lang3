@@ -23,11 +23,11 @@
 //import static org.apache.commons.lang3.AnnotationUtilsTest.Stooge.LARRY;
 //import static org.apache.commons.lang3.AnnotationUtilsTest.Stooge.MOE;
 //import static org.apache.commons.lang3.AnnotationUtilsTest.Stooge.SHEMP;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotEquals;
+//import static org.junit.Assert.assertTimeoutPreemptively;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.lang.annotation.ElementType;
 //import java.lang.annotation.Retention;
@@ -42,7 +42,7 @@
 //import java.util.Map;
 //
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // */

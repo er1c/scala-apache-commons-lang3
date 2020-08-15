@@ -17,11 +17,11 @@
 
 //package org.apache.commons.lang3.time;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotSame;
-//import static org.junit.jupiter.api.Assertions.assertSame;
-//import static org.junit.jupiter.api.Assertions.fail;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotEquals;
+//import static org.junit.Assert.assertNotSame;
+//import static org.junit.Assert.assertSame;
+//import static org.junit.Assert.fail;
 //
 //import java.text.FieldPosition;
 //import java.text.Format;
@@ -36,7 +36,7 @@
 //import java.util.concurrent.atomic.AtomicInteger;
 //import java.util.concurrent.atomic.AtomicLongArray;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //import org.junitpioneer.jupiter.DefaultLocale;
 //import org.junitpioneer.jupiter.DefaultTimeZone;
 //

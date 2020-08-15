@@ -17,11 +17,11 @@
 
 //package org.apache.commons.lang3.concurrent;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertThrows;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.util.Iterator;
 //import java.util.NoSuchElementException;
@@ -30,7 +30,7 @@
 //import java.util.concurrent.TimeUnit;
 //
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Test class for {@link MultiBackgroundInitializer}.

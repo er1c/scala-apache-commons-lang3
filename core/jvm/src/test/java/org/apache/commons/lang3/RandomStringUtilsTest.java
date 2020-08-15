@@ -22,12 +22,12 @@
 //import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 //import static org.hamcrest.Matchers.is;
 //import static org.hamcrest.Matchers.lessThanOrEqualTo;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static org.junit.jupiter.api.Assertions.fail;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertThrows;
+//import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.fail;
 //
 //import java.lang.reflect.Constructor;
 //import java.lang.reflect.Modifier;
@@ -35,7 +35,7 @@
 //import java.nio.charset.StandardCharsets;
 //import java.util.Random;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Unit tests {@link org.apache.commons.lang3.RandomStringUtils}.

@@ -17,13 +17,13 @@
 
 //package org.apache.commons.lang3.reflect;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
 //
 //import org.apache.commons.lang3.reflect.testbed.AnotherChild;
 //import org.apache.commons.lang3.reflect.testbed.AnotherParent;
 //import org.apache.commons.lang3.reflect.testbed.Grandchild;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Unit tests InheritanceUtils

@@ -20,8 +20,8 @@
 //import java.nio.charset.Charset;
 //import java.nio.charset.StandardCharsets;
 //
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Assert;
+//import org.junit.Test;
 //
 ///**
 // * Tests {@link Charsets}.

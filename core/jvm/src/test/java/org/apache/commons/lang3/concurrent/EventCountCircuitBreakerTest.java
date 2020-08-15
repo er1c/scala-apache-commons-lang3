@@ -17,11 +17,11 @@
 
 //package org.apache.commons.lang3.concurrent;
 //
-//import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertArrayEquals;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotEquals;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.beans.PropertyChangeEvent;
 //import java.beans.PropertyChangeListener;
@@ -30,7 +30,7 @@
 //import java.util.concurrent.CountDownLatch;
 //import java.util.concurrent.TimeUnit;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Test class for {@code EventCountCircuitBreaker}.

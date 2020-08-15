@@ -30,18 +30,18 @@
 //import static org.apache.commons.lang3.JavaVersion.JAVA_1_7;
 //import static org.apache.commons.lang3.JavaVersion.JAVA_1_8;
 //import static org.apache.commons.lang3.JavaVersion.JAVA_9;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.io.File;
 //import java.lang.reflect.Constructor;
 //import java.lang.reflect.Modifier;
 //import java.util.Locale;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Unit tests {@link org.apache.commons.lang3.SystemUtils}.
