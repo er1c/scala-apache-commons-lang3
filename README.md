@@ -76,6 +76,16 @@ Tests Passing:
 - [x] [CharSequenceUtils](./core/jvm/src/test/scala/org/apache/commons/lang3/CharSequenceUtils.scala)
 - [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
 - [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
+- StringUtils
+  - [x] [StringUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTest.scala) (**Except** `getLevenshteinDistance`, `getJaroWinklerDistance`, and `getFuzzyDistance`.)
+  - [ ] [StringUtilsContainsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsContainsTest.scala)
+  - [ ] [StringUtilsEmptyBlankTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEmptyBlankTest.scala)
+  - [ ] [StringUtilsEqualsIndexOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.scala)
+  - [ ] [StringUtilsIsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsIsTest.scala)
+  - [ ] [StringUtilsStartsEndsWithTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.scala)
+  - [ ] [StringUtilsSubstringTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsSubstringTest.scala)
+  - [ ] [StringUtilsTrimStripTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTrimStripTest.scala)
+  - [ ] [StringUtilsValueOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsValueOfTest.scala)
 - [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
 - exception
   - [x] [exception.AbstractExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionContextTest.scala)
