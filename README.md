@@ -76,6 +76,7 @@ Tests Passing:
 - [x] [CharSequenceUtils](./core/jvm/src/test/scala/org/apache/commons/lang3/CharSequenceUtils.scala)
 - [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
 - [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
+- [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
 - exception
   - [x] [exception.AbstractExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionContextTest.scala)
   - [x] [exception.AbstractExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionTest.scala)
