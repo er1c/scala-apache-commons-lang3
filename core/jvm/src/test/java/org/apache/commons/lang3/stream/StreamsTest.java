@@ -21,10 +21,10 @@
 //import static org.hamcrest.core.Is.is;
 //import static org.hamcrest.core.IsEqual.equalTo;
 //import static org.hamcrest.core.IsNull.nullValue;
-//import static org.junit.jupiter.api.Assertions.assertAll;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.Assert.assertAll;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertThrows;
 //import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 //
 //import java.lang.reflect.UndeclaredThrowableException;
@@ -38,8 +38,8 @@
 //import org.apache.commons.lang3.function.FailableConsumer;
 //import org.apache.commons.lang3.function.FailablePredicate;
 //import org.junit.jupiter.api.DynamicTest;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.TestFactory;
+//import org.junit.Test;
+//import org.junit.TestFactory;
 //import org.junit.jupiter.api.function.Executable;
 //import org.xml.sax.SAXException;
 //

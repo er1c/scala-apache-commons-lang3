@@ -17,16 +17,16 @@
 
 //package org.apache.commons.lang3.concurrent.locks;
 //
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertNotSame;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNotSame;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.util.function.LongConsumer;
 //
 //import org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor;
 //import org.apache.commons.lang3.concurrent.locks.LockingVisitors.StampedLockVisitor;
 //import org.apache.commons.lang3.function.FailableConsumer;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 //public class LockingVisitorsTest {
 //

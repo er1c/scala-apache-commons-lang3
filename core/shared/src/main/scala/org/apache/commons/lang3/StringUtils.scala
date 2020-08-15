@@ -25,7 +25,6 @@ import java.util.Locale
 import scala.util.control.Breaks
 import java.util.Objects
 import java.util.function.Supplier
-//import java.util.function.Supplier
 import java.util.regex.Pattern
 import scala.collection.JavaConverters._
 
@@ -649,9 +648,9 @@ object StringUtils {
 
     var lastIdx = str.length - 1
     val last = str.charAt(lastIdx)
-    if (last == CharUtils.LF)
+    if (last == CharUtils.LF) {
       if (str.charAt(lastIdx - 1) == CharUtils.CR) lastIdx -= 1
-      else if (last != CharUtils.CR) lastIdx += 1
+    } else if (last != CharUtils.CR) lastIdx += 1
 
     str.substring(0, lastIdx)
   }
@@ -1734,114 +1733,117 @@ object StringUtils {
     }
     null.asInstanceOf[T]
   }
-//
-//  /**
-//    * Calls {@link java.lang.String# getBytes ( Charset )} in a null-safe manner.
-//    *
-//    * @param string  input string
-//    * @param charset The {@link Charset} to encode the {@code String}. If null, then use the default Charset.
-//    * @return The empty byte[] if {@code string} is null, the result of {@link java.lang.String# getBytes ( Charset )} otherwise.
-//    * @see String#getBytes(Charset)
-//    * @since 3.10
-//    */
-//  def getBytes(string: String, charset: Charset): Array[Byte] = if (string == null) ArrayUtils.EMPTY_BYTE_ARRAY
-//  else string.getBytes(Charsets.toCharset(charset))
-//
-//  /**
-//    * Calls {@link java.lang.String# getBytes ( String )} in a null-safe manner.
-//    *
-//    * @param string  input string
-//    * @param charset The {@link Charset} name to encode the {@code String}. If null, then use the default Charset.
-//    * @return The empty byte[] if {@code string} is null, the result of {@link java.lang.String# getBytes ( String )} otherwise.
-//    * @throws UnsupportedEncodingException Thrown when the named charset is not supported.
-//    * @see String#getBytes(String)
-//    * @since 3.10
-//    */
-//  @throws[UnsupportedEncodingException]
-//  def getBytes(string: String, charset: String): Array[Byte] = if (string == null) ArrayUtils.EMPTY_BYTE_ARRAY
-//  else string.getBytes(Charsets.toCharsetName(charset))
-//
-//  /**
-//    * <p>Compares all Strings in an array and returns the initial sequence of
-//    * characters that is common to all of them.</p>
-//    *
-//    * <p>For example,
-//    * {@code getCommonPrefix(new String[] {"i am a machine", "i am a robot"}) -&gt; "i am a "}</p>
-//    *
-//    * <pre>
-//    * StringUtils.getCommonPrefix(null) = ""
-//    * StringUtils.getCommonPrefix(new String[] {}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"abc"}) = "abc"
-//    * StringUtils.getCommonPrefix(new String[] {null, null}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"", ""}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"", null}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"abc", null, null}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {null, null, "abc"}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"", "abc"}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"abc", ""}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"abc", "abc"}) = "abc"
-//    * StringUtils.getCommonPrefix(new String[] {"abc", "a"}) = "a"
-//    * StringUtils.getCommonPrefix(new String[] {"ab", "abxyz"}) = "ab"
-//    * StringUtils.getCommonPrefix(new String[] {"abcde", "abxyz"}) = "ab"
-//    * StringUtils.getCommonPrefix(new String[] {"abcde", "xyz"}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"xyz", "abcde"}) = ""
-//    * StringUtils.getCommonPrefix(new String[] {"i am a machine", "i am a robot"}) = "i am a "
-//    * </pre>
-//    *
-//    * @param strs array of String objects, entries may be null
-//    * @return the initial sequence of characters that are common to all Strings
-//    *         in the array; empty String if the array is null, the elements are all null
-//    *         or if there is no common prefix.
-//    * @since 2.4
-//    */
-//  def getCommonPrefix(strs: String*): String = {
-//    if (ArrayUtils.isEmpty(strs)) return EMPTY
-//    val smallestIndexOfDiff = indexOfDifference(strs)
-//    if (smallestIndexOfDiff == INDEX_NOT_FOUND) { // all strings were identical
-//      if (strs(0) == null) return EMPTY
-//      strs(0)
-//    }
-//    else if (smallestIndexOfDiff == 0) { // there were no common initial characters
-//      EMPTY
-//    }
-//    else { // we found a common initial character sequence
-//      strs(0).substring(0, smallestIndexOfDiff)
-//    }
-//  }
-//
-//  /**
-//    * <p>Checks if a String {@code str} contains Unicode digits,
-//    * if yes then concatenate all the digits in {@code str} and return it as a String.</p>
-//    *
-//    * <p>An empty ("") String will be returned if no digits found in {@code str}.</p>
-//    *
-//    * <pre>
-//    * StringUtils.getDigits(null)  = null
-//    * StringUtils.getDigits("")    = ""
-//    * StringUtils.getDigits("abc") = ""
-//    * StringUtils.getDigits("1000$") = "1000"
-//    * StringUtils.getDigits("1123~45") = "112345"
-//    * StringUtils.getDigits("(541) 754-3010") = "5417543010"
-//    * StringUtils.getDigits("\u0967\u0968\u0969") = "\u0967\u0968\u0969"
-//    * </pre>
-//    *
-//    * @param str the String to extract digits from, may be null
-//    * @return String with only digits,
-//    *         or an empty ("") String if no digits found,
-//    *         or {@code null} String if {@code str} is null
-//    * @since 3.6
-//    */
-//  def getDigits(str: String): String = {
-//    if (isEmpty(str)) return str
-//    val sz = str.length
-//    val strDigits = new StringBuilder(sz)
-//    for (i <- 0 until sz) {
-//      val tempChar = str.charAt(i)
-//      if (Character.isDigit(tempChar)) strDigits.append(tempChar)
-//    }
-//    strDigits.toString
-//  }
-//
+
+  // TODO: @link java.lang.String#getBytes(Charset)
+  /**
+    * Calls {@code java.lang.String#getBytes(Charset)} in a null-safe manner.
+    *
+    * @param string  input string
+    * @param charset The {@link java.nio.charset.Charset} to encode the {@code String}. If null, then use the default Charset.
+    * @return The empty byte[] if {@code string} is null, the result of {@code java.lang.String#getBytes(Charset)} otherwise.
+    * @see String#getBytes(Charset)
+    * @since 3.10
+    */
+  def getBytes(string: String, charset: Charset): Array[Byte] =
+    if (string == null) ArrayUtils.EMPTY_BYTE_ARRAY
+    else string.getBytes(Charsets.toCharset(charset))
+
+  // TODO: @link java.lang.String#getBytes(String)
+  /**
+    * Calls {@code java.lang.String#getBytes(String)} in a null-safe manner.
+    *
+    * @param string  input string
+    * @param charset The {@link java.nio.charset.Charset} name to encode the {@code String}. If null, then use the default Charset.
+    * @return The empty byte[] if {@code string} is null, the result of {@code java.lang.String#getBytes(String)} otherwise.
+    * @throws java.io.UnsupportedEncodingException Thrown when the named charset is not supported.
+    * @see String#getBytes(String)
+    * @since 3.10
+    */
+  @throws[UnsupportedEncodingException]
+  def getBytes(string: String, charset: String): Array[Byte] =
+    if (string == null) ArrayUtils.EMPTY_BYTE_ARRAY
+    else string.getBytes(Charsets.toCharsetName(charset))
+
+  /**
+    * <p>Compares all Strings in an array and returns the initial sequence of
+    * characters that is common to all of them.</p>
+    *
+    * <p>For example,
+    * {@code getCommonPrefix(new String[] {"i am a machine", "i am a robot"}) -&gt; "i am a "}</p>
+    *
+    * <pre>
+    * StringUtils.getCommonPrefix(null) = ""
+    * StringUtils.getCommonPrefix(new String[] {}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"abc"}) = "abc"
+    * StringUtils.getCommonPrefix(new String[] {null, null}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"", ""}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"", null}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"abc", null, null}) = ""
+    * StringUtils.getCommonPrefix(new String[] {null, null, "abc"}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"", "abc"}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"abc", ""}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"abc", "abc"}) = "abc"
+    * StringUtils.getCommonPrefix(new String[] {"abc", "a"}) = "a"
+    * StringUtils.getCommonPrefix(new String[] {"ab", "abxyz"}) = "ab"
+    * StringUtils.getCommonPrefix(new String[] {"abcde", "abxyz"}) = "ab"
+    * StringUtils.getCommonPrefix(new String[] {"abcde", "xyz"}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"xyz", "abcde"}) = ""
+    * StringUtils.getCommonPrefix(new String[] {"i am a machine", "i am a robot"}) = "i am a "
+    * </pre>
+    *
+    * @param strs array of String objects, entries may be null
+    * @return the initial sequence of characters that are common to all Strings
+    *         in the array; empty String if the array is null, the elements are all null
+    *         or if there is no common prefix.
+    * @since 2.4
+    */
+  def getCommonPrefix(strs: String*): String = {
+    if (strs.isEmpty) return EMPTY
+    val smallestIndexOfDiff: Int = indexOfDifference(strs: _*)
+
+    if (smallestIndexOfDiff == INDEX_NOT_FOUND) { // all strings were identical
+      if (strs(0) == null) return EMPTY
+      strs(0)
+    } else if (smallestIndexOfDiff == 0) { // there were no common initial characters
+      EMPTY
+    } else { // we found a common initial character sequence
+      strs(0).substring(0, smallestIndexOfDiff)
+    }
+  }
+
+  /**
+    * <p>Checks if a String {@code str} contains Unicode digits,
+    * if yes then concatenate all the digits in {@code str} and return it as a String.</p>
+    *
+    * <p>An empty ("") String will be returned if no digits found in {@code str}.</p>
+    *
+    * <pre>
+    * StringUtils.getDigits(null)  = null
+    * StringUtils.getDigits("")    = ""
+    * StringUtils.getDigits("abc") = ""
+    * StringUtils.getDigits("1000$") = "1000"
+    * StringUtils.getDigits("1123~45") = "112345"
+    * StringUtils.getDigits("(541) 754-3010") = "5417543010"
+    * StringUtils.getDigits("\u0967\u0968\u0969") = "\u0967\u0968\u0969"
+    * </pre>
+    *
+    * @param str the String to extract digits from, may be null
+    * @return String with only digits,
+    *         or an empty ("") String if no digits found,
+    *         or {@code null} String if {@code str} is null
+    * @since 3.6
+    */
+  def getDigits(str: String): String = {
+    if (isEmpty(str)) return str
+    val sz = str.length
+    val strDigits = new StringBuilder(sz)
+    for (i <- 0 until sz) {
+      val tempChar = str.charAt(i)
+      if (Character.isDigit(tempChar)) strDigits.append(tempChar)
+    }
+    strDigits.toString
+  }
+
 //  /**
 //    * <p>Find the Fuzzy Distance which indicates the similarity score between two Strings.</p>
 //    *
@@ -1943,36 +1945,38 @@ object StringUtils {
       if (defaultSupplier == null) null.asInstanceOf[T]
       else defaultSupplier.get
     else str
-//
-//  /**
-//    * <p>Returns either the passed in CharSequence, or if the CharSequence is
-//    * empty or {@code null}, the value supplied by {@code defaultStrSupplier}.</p>
-//    *
-//    * <p>Caller responsible for thread-safety and exception handling of default value supplier</p>
-//    *
-//    * <pre>
-//    * {@code
-//    * StringUtils.getIfEmpty(null, () -> "NULL")    = "NULL"
-//    * StringUtils.getIfEmpty("", () -> "NULL")      = "NULL"
-//    * StringUtils.getIfEmpty(" ", () -> "NULL")     = " "
-//    * StringUtils.getIfEmpty("bat", () -> "NULL")   = "bat"
-//    * StringUtils.getIfEmpty("", () -> null)        = null
-//    * StringUtils.getIfEmpty("", null)              = null
-//    * }
-//    * </pre>
-//    * @tparam T   the specific kind of CharSequence
-//    * @param str  the CharSequence to check, may be null
-//    * @param defaultSupplier  the supplier of default CharSequence to return
-//    * if the input is empty ("") or {@code null}, may be null
-//    *
-//    * @return the passed in CharSequence, or the default
-//    * @see StringUtils#defaultString(String, String)
-//    * @since 3.10
-//    */
-//  def getIfEmpty[T <: CharSequence](str: T, defaultSupplier: Supplier[T]): T = if (isEmpty(str)) if (defaultSupplier == null) null
-//  else defaultSupplier.get
-//  else str
-//
+
+  /**
+    * <p>Returns either the passed in CharSequence, or if the CharSequence is
+    * empty or {@code null}, the value supplied by {@code defaultStrSupplier}.</p>
+    *
+    * <p>Caller responsible for thread-safety and exception handling of default value supplier</p>
+    *
+    * <pre>
+    * {@code
+    * StringUtils.getIfEmpty(null, () -> "NULL")    = "NULL"
+    * StringUtils.getIfEmpty("", () -> "NULL")      = "NULL"
+    * StringUtils.getIfEmpty(" ", () -> "NULL")     = " "
+    * StringUtils.getIfEmpty("bat", () -> "NULL")   = "bat"
+    * StringUtils.getIfEmpty("", () -> null)        = null
+    * StringUtils.getIfEmpty("", null)              = null
+    * }
+    * </pre>
+    * @tparam T   the specific kind of CharSequence
+    * @param str  the CharSequence to check, may be null
+    * @param defaultSupplier  the supplier of default CharSequence to return
+    * if the input is empty ("") or {@code null}, may be null
+    *
+    * @return the passed in CharSequence, or the default
+    * @see StringUtils#defaultString(String, String)
+    * @since 3.10
+    */
+  def getIfEmpty[T <: CharSequence](str: T, defaultSupplier: Supplier[T]): T =
+    if (isEmpty(str)) {
+      if (defaultSupplier == null) null.asInstanceOf[T]
+      else defaultSupplier.get
+    } else str
+
 //  /**
 //    * <p>Find the Jaro Winkler Distance which indicates the similarity score between two Strings.</p>
 //    *
@@ -2557,7 +2561,7 @@ object StringUtils {
     *        3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
     */
   def indexOfAnyBut(cs: CharSequence, searchChars: Char*): Int = {
-    if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars.toArray)) return INDEX_NOT_FOUND
+    if (isEmpty(cs) || searchChars.isEmpty) return INDEX_NOT_FOUND
     val csLen = cs.length
     val csLast = csLen - 1
     val searchLen = searchChars.length
@@ -2572,10 +2576,8 @@ object StringUtils {
               if (searchChars(j + 1) == cs.charAt(i + 1)) break()
             } else break()
         }
-
+        return i
       }
-
-      return i
     }
 
     INDEX_NOT_FOUND
@@ -2651,12 +2653,14 @@ object StringUtils {
     *        3.0 Changed signature from indexOfDifference(String...) to indexOfDifference(CharSequence...)
     */
   def indexOfDifference(css: CharSequence*): Int = {
-    if (ArrayUtils.getLength(css) <= 1) return INDEX_NOT_FOUND
+    if (css == null || css.isEmpty) return INDEX_NOT_FOUND
+
     var anyStringNull = false
     var allStringsNull = true
     val arrayLen = css.length
-    var shortestStrLen = Integer.MAX_VALUE
+    var shortestStrLen: Int = Int.MaxValue
     var longestStrLen = 0
+
     // find the min and max string lengths; this avoids checking to make
     // sure we are not exceeding the length of the string each time through
     // the bottom loop.
@@ -2678,19 +2682,22 @@ object StringUtils {
     var firstDiff = -1
     var stringPos: Int = 0
 
-    while (stringPos < shortestStrLen && firstDiff != -1) {
-      stringPos += 1
+    breakable {
+      while (stringPos < shortestStrLen) {
+        val comparisonChar = css(0).charAt(stringPos)
+        var arrayPos: Int = 1
 
-      val comparisonChar = css(0).charAt(stringPos)
-      var arrayPos: Int = 1
-      while (arrayPos < arrayLen) {
-        arrayPos += 1
-
-        if (css(arrayPos).charAt(stringPos) != comparisonChar) {
-          firstDiff = stringPos
-          arrayPos = arrayLen // end loop
+        while (arrayPos < arrayLen) {
+          if (css(arrayPos).charAt(stringPos) != comparisonChar) {
+            firstDiff = stringPos
+            arrayPos = arrayLen // end loop
+          } else arrayPos += 1
         }
+
+        if (firstDiff != -1) break()
+        else stringPos += 1
       }
+
     }
 
     if (firstDiff == -1 && shortestStrLen != longestStrLen) { // we compared all of the characters up to the length of the
@@ -3195,42 +3202,42 @@ object StringUtils {
     * @since 3.0 Changed signature from isEmpty(String) to isEmpty(CharSequence)
     */
   def isEmpty(cs: CharSequence): Boolean = cs == null || cs.length == 0
-//
-//  /**
-//    * <p>Checks if the CharSequence contains mixed casing of both uppercase and lowercase characters.</p>
-//    *
-//    * <p>{@code null} will return {@code false}. An empty CharSequence ({@code length()=0}) will return
-//    * {@code false}.</p>
-//    *
-//    * <pre>
-//    * StringUtils.isMixedCase(null)    = false
-//    * StringUtils.isMixedCase("")      = false
-//    * StringUtils.isMixedCase("ABC")   = false
-//    * StringUtils.isMixedCase("abc")   = false
-//    * StringUtils.isMixedCase("aBc")   = true
-//    * StringUtils.isMixedCase("A c")   = true
-//    * StringUtils.isMixedCase("A1c")   = true
-//    * StringUtils.isMixedCase("a/C")   = true
-//    * StringUtils.isMixedCase("aC\t")  = true
-//    * </pre>
-//    *
-//    * @param cs the CharSequence to check, may be null
-//    * @return {@code true} if the CharSequence contains both uppercase and lowercase characters
-//    * @since 3.5
-//    */
-//  def isMixedCase(cs: CharSequence): Boolean = {
-//    if (isEmpty(cs) || cs.length == 1) return false
-//    var containsUppercase = false
-//    var containsLowercase = false
-//    val sz = cs.length
-//    for (i <- 0 until sz) {
-//      if (containsUppercase && containsLowercase) return true
-//      else if (Character.isUpperCase(cs.charAt(i))) containsUppercase = true
-//      else if (Character.isLowerCase(cs.charAt(i))) containsLowercase = true
-//    }
-//    containsUppercase && containsLowercase
-//  }
-//
+
+  /**
+    * <p>Checks if the CharSequence contains mixed casing of both uppercase and lowercase characters.</p>
+    *
+    * <p>{@code null} will return {@code false}. An empty CharSequence ({@code length()=0}) will return
+    * {@code false}.</p>
+    *
+    * <pre>
+    * StringUtils.isMixedCase(null)    = false
+    * StringUtils.isMixedCase("")      = false
+    * StringUtils.isMixedCase("ABC")   = false
+    * StringUtils.isMixedCase("abc")   = false
+    * StringUtils.isMixedCase("aBc")   = true
+    * StringUtils.isMixedCase("A c")   = true
+    * StringUtils.isMixedCase("A1c")   = true
+    * StringUtils.isMixedCase("a/C")   = true
+    * StringUtils.isMixedCase("aC\t")  = true
+    * </pre>
+    *
+    * @param cs the CharSequence to check, may be null
+    * @return {@code true} if the CharSequence contains both uppercase and lowercase characters
+    * @since 3.5
+    */
+  def isMixedCase(cs: CharSequence): Boolean = {
+    if (isEmpty(cs) || cs.length == 1) return false
+    var containsUppercase = false
+    var containsLowercase = false
+    val sz = cs.length
+    for (i <- 0 until sz) {
+      if (containsUppercase && containsLowercase) return true
+      else if (Character.isUpperCase(cs.charAt(i))) containsUppercase = true
+      else if (Character.isLowerCase(cs.charAt(i))) containsLowercase = true
+    }
+    containsUppercase && containsLowercase
+  }
+
   /**
     * <p>Checks if none of the CharSequences are empty (""), null or whitespace only.</p>
     *
@@ -3591,6 +3598,25 @@ object StringUtils {
     * <p>Joins the elements of the provided {@code Iterable} into
     * a single String containing the provided elements.</p>
     *
+    * <p>No delimiter is added before or after the list. Null objects or empty
+    * strings within the iteration are represented by empty strings.</p>
+    *
+    * <p>See the examples here: {@link #join(array:Array[_],separator:Char)*}. </p>
+    *
+    * @param iterable  the {@code Iterable} providing the values to join together, may be null
+    * @param separator the separator character to use
+    * @return the joined String, {@code null} if null iterator input
+    * @since 2.3
+    */
+  def join(iterable: java.lang.Iterable[_], separator: Char): String = {
+    if (iterable == null) return null
+    join(iterable.iterator, separator)
+  }
+
+  /**
+    * <p>Joins the elements of the provided {@code Iterable} into
+    * a single String containing the provided elements.</p>
+    *
     * <p>No delimiter is added before or after the list.
     * A {@code null} separator is the same as an empty String ("").</p>
     *
@@ -3602,6 +3628,25 @@ object StringUtils {
     * @since 2.3
     */
   def join(iterable: Iterable[_], separator: String): String = {
+    if (iterable == null) return null
+    join(iterable.iterator, separator)
+  }
+
+  /**
+    * <p>Joins the elements of the provided {@code Iterable} into
+    * a single String containing the provided elements.</p>
+    *
+    * <p>No delimiter is added before or after the list.
+    * A {@code null} separator is the same as an empty String ("").</p>
+    *
+    * <p>See the examples here: {@link #join(array:Array[_],separator:String)*}. </p>
+    *
+    * @param iterable  the {@code Iterable} providing the values to join together, may be null
+    * @param separator the separator character to use, null treated as ""
+    * @return the joined String, {@code null} if null iterator input
+    * @since 2.3
+    */
+  def join(iterable: java.lang.Iterable[_], separator: String): String = {
     if (iterable == null) return null
     join(iterable.iterator, separator)
   }
@@ -3620,7 +3665,41 @@ object StringUtils {
     * @return the joined String, {@code null} if null iterator input
     * @since 2.0
     */
-  def join(iterator: Iterator[_], separator: Char): String = { // handle null, zero and one elements before building a buffer
+  def join(iterator: Iterator[_], separator: Char): String = {
+    // handle null, zero and one elements before building a buffer
+    if (iterator == null) return null
+    if (!iterator.hasNext) return EMPTY
+    val first = iterator.next
+    if (!iterator.hasNext) return Objects.toString(first, EMPTY)
+    // two or more elements
+    val buf = new StringBuilder(STRING_BUILDER_SIZE) // Java default is 16, probably too small
+    if (first != null) buf.append(first)
+    while ({
+      iterator.hasNext
+    }) {
+      buf.append(separator)
+      val obj = iterator.next
+      if (obj != null) buf.append(obj)
+    }
+    buf.toString
+  }
+
+  /**
+    * <p>Joins the elements of the provided {@code Iterator} into
+    * a single String containing the provided elements.</p>
+    *
+    * <p>No delimiter is added before or after the list. Null objects or empty
+    * strings within the iteration are represented by empty strings.</p>
+    *
+    * <p>See the examples here: {@link #join(array:Array[_],separator:Char)*}. </p>
+    *
+    * @param iterator  the {@code Iterator} of values to join together, may be null
+    * @param separator the separator character to use
+    * @return the joined String, {@code null} if null iterator input
+    * @since 2.0
+    */
+  def join(iterator: java.util.Iterator[_], separator: Char): String = {
+    // handle null, zero and one elements before building a buffer
     if (iterator == null) return null
     if (!iterator.hasNext) return EMPTY
     val first = iterator.next
@@ -3652,6 +3731,37 @@ object StringUtils {
     * @return the joined String, {@code null} if null iterator input
     */
   def join(iterator: Iterator[_], separator: String): String = {
+    if (iterator == null) return null
+    if (!iterator.hasNext) return EMPTY
+
+    val first = iterator.next
+    if (!iterator.hasNext) return Objects.toString(first, "")
+    val buf = new StringBuilder(STRING_BUILDER_SIZE)
+    if (first != null) buf.append(first)
+
+    while (iterator.hasNext) {
+      if (separator != null) buf.append(separator)
+      val obj = iterator.next
+      if (obj != null) buf.append(obj)
+    }
+
+    buf.toString
+  }
+
+  /**
+    * <p>Joins the elements of the provided {@code Iterator} into
+    * a single String containing the provided elements.</p>
+    *
+    * <p>No delimiter is added before or after the list.
+    * A {@code null} separator is the same as an empty String ("").</p>
+    *
+    * <p>See the examples here: {@link #join(array:Array[_],separator:String)*}. </p>
+    *
+    * @param iterator  the {@code Iterator} of values to join together, may be null
+    * @param separator the separator character to use, null treated as ""
+    * @return the joined String, {@code null} if null iterator input
+    */
+  def join(iterator: java.util.Iterator[_], separator: String): String = {
     if (iterator == null) return null
     if (!iterator.hasNext) return EMPTY
 
@@ -3708,6 +3818,48 @@ object StringUtils {
     val noOfItems = endIndex - startIndex
     if (noOfItems <= 0) return EMPTY
     val subList = list.subList(startIndex, endIndex)
+    join(subList.iterator, separator)
+  }
+
+  /**
+    * <p>Joins the elements of the provided {@code List} into a single String
+    * containing the provided list of elements.</p>
+    *
+    * <p>No delimiter is added before or after the list.
+    * Null objects or empty strings within the array are represented by
+    * empty strings.</p>
+    *
+    * <pre>
+    * StringUtils.join(null, *)               = null
+    * StringUtils.join([], *)                 = ""
+    * StringUtils.join([null], *)             = ""
+    * StringUtils.join(["a", "b", "c"], ';')  = "a;b;c"
+    * StringUtils.join(["a", "b", "c"], null) = "abc"
+    * StringUtils.join([null, "", "a"], ';')  = ";;a"
+    * </pre>
+    *
+    * @param list       the {@code List} of values to join together, may be null
+    * @param separator  the separator character to use
+    * @param startIndex the first index to start joining from.  It is
+    *                   an error to pass in a start index past the end of the list
+    * @param endIndex   the index to stop joining from (exclusive). It is
+    *                   an error to pass in an end index past the end of the list
+    * @return the joined String, {@code null} if null list input
+    * @since 3.8
+    */
+  def join(list: List[_], separator: Char, startIndex: Int, endIndex: Int): String = {
+    if (list == null) return null
+    val noOfItems = endIndex - startIndex
+    if (noOfItems <= 0) return EMPTY
+    val subList = list.slice(startIndex, endIndex)
+    join(subList.iterator, separator)
+  }
+
+  def join(list: List[_], separator: String, startIndex: Int, endIndex: Int): String = {
+    if (list == null) return null
+    val noOfItems = endIndex - startIndex
+    if (noOfItems <= 0) return EMPTY
+    val subList = list.slice(startIndex, endIndex)
     join(subList.iterator, separator)
   }
 
@@ -3782,7 +3934,7 @@ object StringUtils {
     * @return the joined String, {@code null} if null array input
     * @since 2.0
     */
-  def join(array: Array[_], separator: Char, startIndex: Int, endIndex: Int): String = {
+  def join[T](array: Array[T], separator: Char, startIndex: Int, endIndex: Int): String = {
     if (array == null) return null
     val noOfItems = endIndex - startIndex
     if (noOfItems <= 0) return EMPTY
@@ -3860,7 +4012,7 @@ object StringUtils {
     *                                        {@code endIndex < 0} or <br>
     *                                        {@code endIndex > array.length()}
     */
-  def join(array: Array[_], separator: String, startIndex: Int, endIndex: Int): String = {
+  def join[T](array: Array[T], separator: String, startIndex: Int, endIndex: Int): String = {
     if (array == null) return null
 
     val newSeparator: String = if (separator == null) EMPTY else separator
@@ -3948,11 +4100,52 @@ object StringUtils {
     * @throws java.lang.IllegalArgumentException if a null varargs is provided
     * @since 3.5
     */
-  def joinWith(separator: String, objects: Any*): String = {
+  def joinWith[T](separator: String, objects: Array[T]): String = {
     if (objects == null) throw new IllegalArgumentException("Object varargs must not be null")
+    if (ArrayUtils.isEmpty(objects)) return ""
+
     val sanitizedSeparator = defaultString(separator)
     val result = new StringBuilder
-    val iterator = util.Arrays.asList(objects).iterator
+    val iterator = objects.iterator
+
+    while (iterator.hasNext) {
+      val value = Objects.toString(iterator.next, "")
+      result.append(value)
+      if (iterator.hasNext) result.append(sanitizedSeparator)
+    }
+    result.toString
+  }
+
+  /**
+    * <p>Joins the elements of the provided varargs into a
+    * single String containing the provided elements.</p>
+    *
+    * <p>No delimiter is added before or after the list.
+    * {@code null} elements and separator are treated as empty Strings ("").</p>
+    *
+    * <pre>
+    * StringUtils.joinWith(",", {"a", "b"})        = "a,b"
+    * StringUtils.joinWith(",", {"a", "b",""})     = "a,b,"
+    * StringUtils.joinWith(",", {"a", null, "b"})  = "a,,b"
+    * StringUtils.joinWith(null, {"a", "b"})       = "ab"
+    * </pre>
+    *
+    *
+    * @param separator the separator character to use, null treated as ""
+    * @param objects   the varargs providing the values to join together. {@code null} elements are treated as ""
+    * @return the joined String.
+    * @throws java.lang.IllegalArgumentException if a null varargs is provided
+    * @since 3.5
+    */
+  def joinWith[T](separator: String, objects: T*): String = {
+    if (objects == null) throw new IllegalArgumentException("Object varargs must not be null")
+    if (objects.isEmpty) return ""
+
+    val sanitizedSeparator = defaultString(separator)
+    val result = new StringBuilder
+    val iterator =
+      if (objects.size == 1 && objects.head.getClass.isArray) util.Arrays.asList(objects).iterator.asScala
+      else objects.iterator
 
     while (iterator.hasNext) {
       val value = Objects.toString(iterator.next, "")

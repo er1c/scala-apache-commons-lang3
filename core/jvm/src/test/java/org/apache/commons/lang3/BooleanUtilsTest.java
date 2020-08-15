@@ -17,18 +17,18 @@
 
 //package org.apache.commons.lang3;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertSame;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertSame;
+//import static org.junit.Assert.assertThrows;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.lang.reflect.Constructor;
 //import java.lang.reflect.Modifier;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Unit tests {@link org.apache.commons.lang3.BooleanUtils}.

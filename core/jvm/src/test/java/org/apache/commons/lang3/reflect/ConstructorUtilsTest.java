@@ -17,11 +17,11 @@
 
 //package org.apache.commons.lang3.reflect;
 //
-//import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.Assert.assertArrayEquals;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertThrows;
 //
 //import java.lang.reflect.Constructor;
 //import java.util.Arrays;
@@ -32,7 +32,7 @@
 //import org.apache.commons.lang3.math.NumberUtils;
 //import org.apache.commons.lang3.mutable.MutableObject;
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Unit tests ConstructorUtils

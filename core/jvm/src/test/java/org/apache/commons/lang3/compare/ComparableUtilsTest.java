@@ -18,8 +18,8 @@
 //package org.apache.commons.lang3.compare;
 //
 //import static org.apache.commons.lang3.compare.ComparableUtils.is;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertTrue;
 //
 //import java.math.BigDecimal;
 //
@@ -27,7 +27,7 @@
 //import org.junit.jupiter.api.DisplayNameGeneration;
 //import org.junit.jupiter.api.DisplayNameGenerator;
 //import org.junit.jupiter.api.Nested;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 //@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 //public class ComparableUtilsTest {

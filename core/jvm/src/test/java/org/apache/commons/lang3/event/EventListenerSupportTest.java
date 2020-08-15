@@ -17,9 +17,9 @@
 
 //package org.apache.commons.lang3.event;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertSame;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertSame;
+//import static org.junit.Assert.assertThrows;
 //
 //import java.beans.PropertyChangeEvent;
 //import java.beans.PropertyVetoException;
@@ -35,7 +35,7 @@
 //import java.util.List;
 //
 //import org.easymock.EasyMock;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * @since 3.0

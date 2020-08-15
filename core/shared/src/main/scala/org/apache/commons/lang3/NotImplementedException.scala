@@ -64,7 +64,7 @@ class NotImplementedException(message: String, cause: Throwable, code: String)
     * @since 3.2
     */
   def this(cause: Throwable) {
-    this(null, cause, null)
+    this(cause.toString, cause, null)
   }
 
   /**
@@ -97,7 +97,7 @@ class NotImplementedException(message: String, cause: Throwable, code: String)
     * @since 3.2
     */
   def this(cause: Throwable, code: String) {
-    this(null, cause, code)
+    this(cause.toString, cause, code)
   }
 
   /**

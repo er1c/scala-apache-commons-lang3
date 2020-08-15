@@ -17,15 +17,15 @@
 
 //package org.apache.commons.lang3.text;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertThrows;
 //
 //import java.util.HashMap;
 //import java.util.Map;
 //import java.util.Properties;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * Test class for StrLookup.

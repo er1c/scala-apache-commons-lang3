@@ -79,7 +79,7 @@ class MutableInt() extends Number with Comparable[MutableInt] with Mutable[Numbe
     *
     * @param value the value to set
     */
-  def setValue(value: Integer): Unit = {
+  def setValue(value: Int): Unit = {
     this.value = value
   }
 

@@ -79,7 +79,7 @@ class MutableFloat() extends Number with Comparable[MutableFloat] with Mutable[N
     *
     * @param value the value to set
     */
-  def setValue(value: JavaFloat): Unit = {
+  def setValue(value: Float): Unit = {
     this.value = value
   }
 

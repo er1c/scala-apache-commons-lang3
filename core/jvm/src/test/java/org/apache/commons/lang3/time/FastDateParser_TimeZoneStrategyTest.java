@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.time;
 //
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.Assert.assertNotEquals;
 //
 //import java.text.DateFormatSymbols;
 //import java.text.ParseException;
@@ -25,7 +25,7 @@
 //import java.util.Locale;
 //import java.util.TimeZone;
 //
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //import org.junit.jupiter.params.ParameterizedTest;
 //import org.junit.jupiter.params.provider.MethodSource;
 //

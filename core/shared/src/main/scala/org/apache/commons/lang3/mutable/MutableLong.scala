@@ -80,7 +80,7 @@ class MutableLong() extends Number with Comparable[MutableLong] with Mutable[Num
     *
     * @param value the value to set
     */
-  def setValue(value: JavaLong): Unit = {
+  def setValue(value: Long): Unit = {
     this.value = value
   }
 

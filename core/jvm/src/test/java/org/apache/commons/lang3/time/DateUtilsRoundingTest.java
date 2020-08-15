@@ -17,8 +17,8 @@
 
 //package org.apache.commons.lang3.time;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotEquals;
 //
 //import java.text.DateFormat;
 //import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@
 //import java.util.Locale;
 //
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 //
 ///**
 // * These Unit-tests will check all possible extremes when using some rounding-methods of DateUtils.
