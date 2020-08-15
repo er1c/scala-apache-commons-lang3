@@ -30,7 +30,7 @@ package org.apache.commons.lang3
   */
 object CharUtils {
   private val CHAR_STRING_ARRAY: Array[String] = (0 until 128).map { c: Int =>
-    String.valueOf(c)
+    String.valueOf(c.toChar)
   }.toArray
 
   private val HEX_DIGITS: Array[Char] =
