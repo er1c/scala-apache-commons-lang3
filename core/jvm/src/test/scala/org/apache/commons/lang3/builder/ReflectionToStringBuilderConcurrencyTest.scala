@@ -95,7 +95,7 @@
 //    val threadPool = Executors.newFixedThreadPool(2)
 //    try { // Consumes toStrings
 //      val consumer = () => {
-//        def foo() = {
+//        def foo(): Unit = {
 //          for (i <- 0 until ReflectionToStringBuilderConcurrencyTest.REPEAT) {
 //            val s = ReflectionToStringBuilder.toString(holder)
 //            assertNotNull(s)
@@ -107,7 +107,7 @@
 //      }
 //      // Produces changes in the list
 //      val producer = () => {
-//        def foo() = {
+//        def foo(): Unit = {
 //          for (i <- 0 until ReflectionToStringBuilderConcurrencyTest.DATA_SIZE) {
 //            list.remove(list.get(0))
 //          }

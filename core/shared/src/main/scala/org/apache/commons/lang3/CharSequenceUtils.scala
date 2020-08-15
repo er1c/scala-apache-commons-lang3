@@ -117,6 +117,7 @@ object CharSequenceUtils {
     if (cs.isInstanceOf[String]) return cs.asInstanceOf[String].indexOf(searchChar.toString, start)
     else if (cs.isInstanceOf[StringBuilder]) return cs.asInstanceOf[StringBuilder].indexOf(searchChar.toString, start)
     else if (cs.isInstanceOf[StringBuffer]) return cs.asInstanceOf[StringBuffer].indexOf(searchChar.toString, start)
+
     cs.toString.indexOf(searchChar.toString, start)
     //        if (cs instanceof String && searchChar instanceof String) {
     //            // TODO: Do we assume searchChar is usually relatively small;

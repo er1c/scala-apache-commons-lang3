@@ -34,12 +34,12 @@ class ContextedRuntimeExceptionTest extends AbstractExceptionContextTest[Context
 
   @Before
   @throws[Exception]
-  override def setUp() = {
+  override def setUp(): Unit = {
     exceptionContext = new ContextedRuntimeException(new Exception(TEST_MESSAGE))
     super.setUp()
   }
 
-  @Test def testContextedException() = {
+  @Test def testContextedException(): Unit = {
     exceptionContext = new ContextedRuntimeException
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -47,14 +47,14 @@ class ContextedRuntimeExceptionTest extends AbstractExceptionContextTest[Context
     assertTrue(StringUtils.isEmpty(message))
   }
 
-  @Test def testContextedExceptionString() = {
+  @Test def testContextedExceptionString(): Unit = {
     exceptionContext = new ContextedRuntimeException(TEST_MESSAGE)
     assertEquals(TEST_MESSAGE, exceptionContext.getMessage)
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
     assertTrue(trace.contains(TEST_MESSAGE))
   }
 
-  @Test def testContextedExceptionThrowable() = {
+  @Test def testContextedExceptionThrowable(): Unit = {
     exceptionContext = new ContextedRuntimeException(new Exception(TEST_MESSAGE))
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -63,7 +63,7 @@ class ContextedRuntimeExceptionTest extends AbstractExceptionContextTest[Context
     assertTrue(message.contains(TEST_MESSAGE))
   }
 
-  @Test def testContextedExceptionStringThrowable() = {
+  @Test def testContextedExceptionStringThrowable(): Unit = {
     exceptionContext = new ContextedRuntimeException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE))
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -73,7 +73,8 @@ class ContextedRuntimeExceptionTest extends AbstractExceptionContextTest[Context
     assertTrue(message.contains(TEST_MESSAGE_2))
   }
 
-  @Test def testContextedExceptionStringThrowableContext() = { // Use an anonymous subclass to make sure users can provide custom implementations
+  @Test def testContextedExceptionStringThrowableContext()
+    : Unit = { // Use an anonymous subclass to make sure users can provide custom implementations
     exceptionContext =
       new ContextedRuntimeException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE), new DefaultExceptionContext() {})
     val message = exceptionContext.getMessage
@@ -84,7 +85,7 @@ class ContextedRuntimeExceptionTest extends AbstractExceptionContextTest[Context
     assertTrue(message.contains(TEST_MESSAGE_2))
   }
 
-  @Test def testNullExceptionPassing() = {
+  @Test def testNullExceptionPassing(): Unit = {
     exceptionContext = new ContextedRuntimeException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE), null)
       .addContextValue("test1", null)
       .addContextValue("test2", "some value")
@@ -95,7 +96,7 @@ class ContextedRuntimeExceptionTest extends AbstractExceptionContextTest[Context
     assertNotNull(message)
   }
 
-  @Test def testRawMessage() = {
+  @Test def testRawMessage(): Unit = {
     assertEquals(classOf[Exception].getName + ": " + TEST_MESSAGE, exceptionContext.getRawMessage)
     exceptionContext =
       new ContextedRuntimeException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE), new DefaultExceptionContext)
