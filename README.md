@@ -59,69 +59,152 @@ Target Platforms: `Scala.js` 0.6.x/1.1.x, `Scala Native`
 
 ### Milestone 1
 
-The first milestone will be `StringUtils` tests and dependency-libraries passing.
+The first milestone is `StringUtils` tests and dependency-libraries passing.
 
-This is still fairly ambitious considering the number of dependencies required.
+#### Milestone 1 Completion State:
 
-**TODO** Create an audit of required tests to pass.
+- Core Package
+  - [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala)
+  - ArrayUtils
+    - [x] [ArrayUtilsAddTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsAddTest.scala)
+    - [x] [ArrayUtilsInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsInsertTest.scala)
+    - [x] [ArrayUtilsRemoveTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveTest.scala)
+    - [x] [ArrayUtilsRemoveMultipleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.scala)
+    - [x] [ArrayUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsTest.scala)
+  - [x] [BitFieldTest](./core/jvm/src/test/scala/org/apache/commons/lang3/BitFieldTest.scala)
+  - [x] [BooleanUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/BooleanUtilsTest.scala)
+  - [ ] [CharEncodingTest](./core/jvm/src/test/scala/org/apache/commons/lang3/CharEncodingTest.scala)
+  - [x] [CharSequenceUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/CharSequenceUtilsTest.scala)
+  - [ ] [CharUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/CharUtilsTest.scala)
+  - [ ] [CharsetsTestCase](./core/jvm/src/test/scala/org/apache/commons/lang3/CharsetsTestCase.scala)
+  - [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
+  - [ ] [ClassPathUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassPathUtilsTest.scala)
+  - [ ] [ClassUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassUtilsTest.scala)
+  - [ ] [ConversionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ConversionTest.scala)
+  - [x] [JavaVersionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/JavaVersionTest.scala)
+  - [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
+  - [x] [ObjectUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ObjectUtilsTest.scala)
+  - [ ] [RandomUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RandomUtilsTest.scala)
+  - [ ] [RegExUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RegExUtilsTest.scala)
+  - [ ] [SerializationUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SerializationUtilsTest.scala)
+  - [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
+  - StringUtils
+    - [x] [StringUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTest.scala) (**Except** `getLevenshteinDistance`, `getJaroWinklerDistance`, and `getFuzzyDistance`.)
+    - [x] [StringUtilsContainsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsContainsTest.scala)
+    - [x] [StringUtilsEmptyBlankTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEmptyBlankTest.scala)
+    - [x] [StringUtilsEqualsIndexOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.scala)
+    - [x] [StringUtilsIsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsIsTest.scala)
+    - [x] [StringUtilsStartsEndsWithTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.scala)
+    - [x] [StringUtilsSubstringTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsSubstringTest.scala)
+    - [x] [StringUtilsTrimStripTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTrimStripTest.scala)
+    - [x] [StringUtilsValueOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsValueOfTest.scala)
+  - [ ] [SystemUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SystemUtilsTest.scala)
+- Sub packages
+  - builder
+    - [ ] [builder.CompareToBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/CompareToBuilderTest.scala)
+    - [ ] [builder.DefaultToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/DefaultToStringBuilderTest.scala)
+    - [ ] [builder.EqualsBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/EqualsBuilderTest.scala)
+    - [ ] [builder.HashCodeBuilderAndEqualsBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/HashCodeBuilderAndEqualsBuilderTest.scala)
+    - [ ] [builder.HashCodeBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/HashCodeBuilderTest.scala)
+    - [ ] [builder.JsonToStringStyle](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/JsonToStringStyle.scala)
+    - [ ] [builder.MultilineRecursiveToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyleTest.scala)
+    - [ ] [builder.MultilineToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/MultilineToStringStyleTest.scala)
+    - [ ] [builder.NoClassNameToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/NoClassNameToStringStyleTest.scala)
+    - [ ] [builder.NoFieldNamesToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/NoFieldNamesToStringStyleTest.scala)
+    - [ ] [builder.RecursiveToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/RecursiveToStringStyleTest.scala)
+    - [x] [builder.ShortPrefixToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.scala)    
+    - [ ] [builder.SimpleToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/SimpleToStringStyleTest.scala)
+    - [ ] [builder.StandardToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/StandardToStringStyleTest.scala)
+    - [x] [builder.ToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringBuilderTest.scala)
+    - [x] [builder.ToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringStyleTest.scala)
+  - compare
+    - [ ] [compare.ComparableUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/compare/ComparableUtilsTest.scala)
+    - [ ] [compare.ObjectToStringComparatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/compare/ObjectToStringComparatorTest.scala)
+  - exception
+    - [x] [exception.AbstractExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionContextTest.scala)
+    - [x] [exception.AbstractExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionTest.scala)
+    - [x] [exception.CloneFailedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/CloneFailedExceptionTest.scala)
+    - [x] [exception.ContextedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedExceptionTest.scala)
+    - [x] [exception.ContextedRuntimeExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedRuntimeExceptionTest.scala)
+    - [x] [exception.DefaultExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/DefaultExceptionContextTest.scala)
+    - [x] [exception.ExceptionUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ExceptionUtilsTest.scala)
+  - math
+    - [ ] [math.FractionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/FractionTest.scala)
+    - [ ] [math.IEEE754rUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/IEEE754rUtilsTest.scala)
+    - [ ] [math.NumberUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/NumberUtilsTest.scala)
+  - mutable
+    - [x] [mutable.MutableBooleanTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
+    - [x] [mutable.MutableByteTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
+    - [x] [mutable.MutableDoubleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableDoubleTest.scala)
+    - [x] [mutable.MutableFloatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableFloatTest.scala)
+    - [x] [mutable.MutableIntTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableIntTest.scala)
+    - [x] [mutable.MutableLongTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableLongTest.scala)
+    - [x] [mutable.MutableObjectTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableObjectTest.scala)
+    - [x] [mutable.MutableShortTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableShortTest.scala)
+  - text
+    - translate
+      - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
+      - [x] [text.translate.LookupTranslatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/LookupTranslatorTest.scala)
+      - [x] [text.translate.NumericEntityEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.scala)
+      - [x] [text.translate.NumericEntityUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.scala)
+      - [x] [text.translate.OctalUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/OctalUnescaperTest.scala)
+      - [x] [text.translate.UnicodeEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.scala)
+      - [x] [text.translate.UnicodeUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.scala)
+      - [x] [text.translate.UnicodeUnpairedSurrogateRemoverTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.scala)
+  - tuple
+    - [ ] [tuple.ImmutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutablePairTest.scala)
+    - [ ] [tuple.ImmutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutableTripleTest.scala)
+    - [ ] [tuple.MutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutablePairTest.scala)
+    - [ ] [tuple.MutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutableTripleTest.scala)
+    - [ ] [tuple.PairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/PairTest.scala)
+    - [ ] [tuple.TripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/TripleTest.scala)
 
-Tests Passing:
-- [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala)
-- ArrayUtils
-  - [x] [ArrayUtilsAddTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsAddTest.scala)
-  - [x] [ArrayUtilsInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsInsertTest.scala)
-  - [x] [ArrayUtilsRemoveTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveTest.scala)
-  - [x] [ArrayUtilsRemoveMultipleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.scala)
-  - [x] [ArrayUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsTest.scala)
-- [x] [CharSequenceUtils](./core/jvm/src/test/scala/org/apache/commons/lang3/CharSequenceUtils.scala)
-- [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
-- [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
-- StringUtils
-  - [x] [StringUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTest.scala) (**Except** `getLevenshteinDistance`, `getJaroWinklerDistance`, and `getFuzzyDistance`.)
-  - [x] [StringUtilsContainsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsContainsTest.scala)
-  - [x] [StringUtilsEmptyBlankTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEmptyBlankTest.scala)
-  - [x] [StringUtilsEqualsIndexOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.scala)
-  - [x] [StringUtilsIsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsIsTest.scala)
-  - [x] [StringUtilsStartsEndsWithTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.scala)
-  - [x] [StringUtilsSubstringTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsSubstringTest.scala)
-  - [x] [StringUtilsTrimStripTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTrimStripTest.scala)
-  - [x] [StringUtilsValueOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsValueOfTest.scala)
-- [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
-- exception
-  - [x] [exception.AbstractExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionContextTest.scala)
-  - [x] [exception.AbstractExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionTest.scala)
-  - [x] [exception.CloneFailedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/CloneFailedExceptionTest.scala)
-  - [x] [exception.ContextedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedExceptionTest.scala)
-  - [x] [exception.ContextedRuntimeExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedRuntimeExceptionTest.scala)
-  - [x] [exception.DefaultExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/DefaultExceptionContextTest.scala)
-  - [x] [exception.ExceptionUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ExceptionUtilsTest.scala)
-- mutable
-  - [x] [mutable.MutableBooleanTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
-  - [x] [mutable.MutableByteTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
-  - [x] [mutable.MutableDoubleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableDoubleTest.scala)
-  - [x] [mutable.MutableFloatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableFloatTest.scala)
-  - [x] [mutable.MutableIntTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableIntTest.scala)
-  - [x] [mutable.MutableLongTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableLongTest.scala)
-  - [x] [mutable.MutableObjectTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableObjectTest.scala)
-  - [x] [mutable.MutableShortTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableShortTest.scala)
-- text
-  - translate
-    - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
-    - [x] [text.translate.LookupTranslatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/LookupTranslatorTest.scala)
-    - [x] [text.translate.NumericEntityEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.scala)
-    - [x] [text.translate.NumericEntityUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.scala)
-    - [x] [text.translate.OctalUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/OctalUnescaperTest.scala)
-    - [x] [text.translate.UnicodeEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.scala)
-    - [x] [text.translate.UnicodeUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.scala)
-    - [x] [text.translate.UnicodeUnpairedSurrogateRemoverTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.scala)
-- builder
-  - [x] [builder.ToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringStyleTest.scala)
-  - [x] [builder.ShortPrefixToStringStyleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.scala)
-  - [x] [builder.ToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringBuilderTest.scala)
 
 ### Milestone 2
 
 All except `reflect`, `function`, `concurrent`
+
+- Core Package
+  - [ ] [StreamsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StreamsTest.scala)
+- Sub packages
+  - event
+  - stream
+    - [ ] [stream.StreamsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/stream/StreamsTest.scala)
+  - text
+    - **TODO**
+  - time 
+    - **TODO**
+
+### RC1
+
+All tests passing.
+
+- Sub packages
+  - builder
+    - [ ] [builder.DiffBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/DiffBuilderTest.scala)
+    - [ ] [builder.DiffResultTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/DiffResultTest.scala)
+    - [ ] [builder.DiffTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/DiffTest.scala)
+    - [ ] [builder.ReflectionDiffBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionDiffBuilderTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderConcurrencyTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderConcurrencyTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderExcludeNullValuesTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeNullValuesTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderExcludeTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderExcludeWithAnnotationTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderMutateInspectConcurrencyTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderMutateInspectConcurrencyTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderSummaryTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderSummaryTest.scala)
+    - [ ] [builder.ReflectionToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.scala)
+    - [ ] [builder.ToStringStyleConcurrencyTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/ToStringStyleConcurrencyTest.scala)
+  - concurrent
+    - **TODO**
+  - function
+    - [ ] [function.FailableFunctionsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/function/FailableFunctionsTest.scala)
+  - reflect
+    - [ ] [reflect.ConstructorUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/reflect/ConstructorUtilsTest.scala)
+    - [ ] [reflect.FieldUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/reflect/FieldUtilsTest.scala)
+    - [ ] [reflect.InheritanceUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/reflect/InheritanceUtilsTest.scala)
+    - [ ] [reflect.MethodUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/reflect/MethodUtilsTest.scala)
+    - [ ] [reflect.TypeLiteralTest](./core/jvm/src/test/scala/org/apache/commons/lang3/reflect/TypeLiteralTest.scala)
+    - [ ] [reflect.TypeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/reflect/TypeUtilsTest.scala)
+
 
 ## Usage
 
