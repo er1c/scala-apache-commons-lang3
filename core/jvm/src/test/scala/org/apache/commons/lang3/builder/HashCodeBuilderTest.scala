@@ -84,7 +84,7 @@
 //    @SuppressWarnings(Array("unused")) private var two = 0
 //    @SuppressWarnings(Array("unused")) private var three = 0
 //
-//    def this(one: Int, two: Int, three: Int) = {
+//    def this(one: Int, two: Int, three: Int): Unit = {
 //      this()
 //      this.one = one
 //      this.two = two

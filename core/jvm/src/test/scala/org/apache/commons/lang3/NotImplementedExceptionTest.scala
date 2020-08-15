@@ -25,7 +25,7 @@ import org.scalatestplus.junit.JUnitSuite
   * Unit tests {@link org.apache.commons.lang3.NotImplementedException}.
   */
 class NotImplementedExceptionTest extends JUnitSuite {
-  @Test def testConstructors() = {
+  @Test def testConstructors(): Unit = {
     val nested: Throwable = new RuntimeException
     val message: String = "Not Implemented"
     val code: String = "CODE"
@@ -48,7 +48,7 @@ class NotImplementedExceptionTest extends JUnitSuite {
     nie: NotImplementedException,
     message: String,
     nested: Throwable,
-    code: String) = {
+    code: String): Unit = {
     assertNotNull(assertMessage + ": target is null", nie)
     assertEquals(assertMessage + ": Message not equal", message, nie.getMessage)
     assertEquals(assertMessage + ": Nested throwable not equal", nested, nie.getCause)

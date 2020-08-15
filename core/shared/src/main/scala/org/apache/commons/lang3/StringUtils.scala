@@ -389,9 +389,10 @@ object StringUtils {
     str: String,
     suffix: CharSequence,
     ignoreCase: Boolean,
-    suffixes: CharSequence*): String = {
+    suffixes: Array[_ <: CharSequence]
+  ): String = {
     if (str == null || isEmpty(suffix) || endsWith(str, suffix, ignoreCase)) return str
-    if (suffixes.nonEmpty) for (s <- suffixes) {
+    if (ArrayUtils.isNotEmpty(suffixes)) for (s <- suffixes) {
       if (endsWith(str, s, ignoreCase)) return str
     }
     str + suffix.toString
@@ -430,7 +431,42 @@ object StringUtils {
     * @since 3.2
     */
   def appendIfMissing(str: String, suffix: CharSequence, suffixes: CharSequence*): String =
-    appendIfMissing(str, suffix, false, suffixes: _*)
+    appendIfMissing(str, suffix, false, suffixes.toArray)
+
+  /**
+    * Appends the suffix to the end of the string if the string does not
+    * already end with any of the suffixes.
+    *
+    * <pre>
+    * StringUtils.appendIfMissing(null, null) = null
+    * StringUtils.appendIfMissing("abc", null) = "abc"
+    * StringUtils.appendIfMissing("", "xyz") = "xyz"
+    * StringUtils.appendIfMissing("abc", "xyz") = "abcxyz"
+    * StringUtils.appendIfMissing("abcxyz", "xyz") = "abcxyz"
+    * StringUtils.appendIfMissing("abcXYZ", "xyz") = "abcXYZxyz"
+    * </pre>
+    * <p>With additional suffixes,</p>
+    * <pre>
+    * StringUtils.appendIfMissing(null, null, null) = null
+    * StringUtils.appendIfMissing("abc", null, null) = "abc"
+    * StringUtils.appendIfMissing("", "xyz", null) = "xyz"
+    * StringUtils.appendIfMissing("abc", "xyz", new CharSequence[]{null}) = "abcxyz"
+    * StringUtils.appendIfMissing("abc", "xyz", "") = "abc"
+    * StringUtils.appendIfMissing("abc", "xyz", "mno") = "abcxyz"
+    * StringUtils.appendIfMissing("abcxyz", "xyz", "mno") = "abcxyz"
+    * StringUtils.appendIfMissing("abcmno", "xyz", "mno") = "abcmno"
+    * StringUtils.appendIfMissing("abcXYZ", "xyz", "mno") = "abcXYZxyz"
+    * StringUtils.appendIfMissing("abcMNO", "xyz", "mno") = "abcMNOxyz"
+    * </pre>
+    *
+    * @param str      The string.
+    * @param suffix   The suffix to append to the end of the string.
+    * @param suffixes Additional suffixes that are valid terminators.
+    * @return A new String if suffix was appended, the same string otherwise.
+    * @since 3.2
+    */
+  def appendIfMissing(str: String, suffix: CharSequence, suffixes: Array[_ <: CharSequence]): String =
+    appendIfMissing(str, suffix, false, suffixes)
 
   /**
     * Appends the suffix to the end of the string if the string does not
@@ -465,7 +501,42 @@ object StringUtils {
     * @since 3.2
     */
   def appendIfMissingIgnoreCase(str: String, suffix: CharSequence, suffixes: CharSequence*): String =
-    appendIfMissing(str, suffix, true, suffixes: _*)
+    appendIfMissing(str, suffix, true, suffixes.toArray)
+
+  /**
+    * Appends the suffix to the end of the string if the string does not
+    * already end, case insensitive, with any of the suffixes.
+    *
+    * <pre>
+    * StringUtils.appendIfMissingIgnoreCase(null, null) = null
+    * StringUtils.appendIfMissingIgnoreCase("abc", null) = "abc"
+    * StringUtils.appendIfMissingIgnoreCase("", "xyz") = "xyz"
+    * StringUtils.appendIfMissingIgnoreCase("abc", "xyz") = "abcxyz"
+    * StringUtils.appendIfMissingIgnoreCase("abcxyz", "xyz") = "abcxyz"
+    * StringUtils.appendIfMissingIgnoreCase("abcXYZ", "xyz") = "abcXYZ"
+    * </pre>
+    * <p>With additional suffixes,</p>
+    * <pre>
+    * StringUtils.appendIfMissingIgnoreCase(null, null, null) = null
+    * StringUtils.appendIfMissingIgnoreCase("abc", null, null) = "abc"
+    * StringUtils.appendIfMissingIgnoreCase("", "xyz", null) = "xyz"
+    * StringUtils.appendIfMissingIgnoreCase("abc", "xyz", new CharSequence[]{null}) = "abcxyz"
+    * StringUtils.appendIfMissingIgnoreCase("abc", "xyz", "") = "abc"
+    * StringUtils.appendIfMissingIgnoreCase("abc", "xyz", "mno") = "abcxyz"
+    * StringUtils.appendIfMissingIgnoreCase("abcxyz", "xyz", "mno") = "abcxyz"
+    * StringUtils.appendIfMissingIgnoreCase("abcmno", "xyz", "mno") = "abcmno"
+    * StringUtils.appendIfMissingIgnoreCase("abcXYZ", "xyz", "mno") = "abcXYZ"
+    * StringUtils.appendIfMissingIgnoreCase("abcMNO", "xyz", "mno") = "abcMNO"
+    * </pre>
+    *
+    * @param str      The string.
+    * @param suffix   The suffix to append to the end of the string.
+    * @param suffixes Additional suffixes that are valid terminators.
+    * @return A new String if suffix was appended, the same string otherwise.
+    * @since 3.2
+    */
+  def appendIfMissingIgnoreCase(str: String, suffix: CharSequence, suffixes: Array[_ <: CharSequence]): String =
+    appendIfMissing(str, suffix, true, suffixes)
 
   // TODO: @link java.lang.Character#toTitleCase
   /**
@@ -1022,9 +1093,44 @@ object StringUtils {
     * @since 2.4
     *        3.0 Changed signature from containsAny(String, String) to containsAny(CharSequence, CharSequence)
     */
+  def containsAny(cs: CharSequence, searchChars: Array[Char]): Boolean =
+    if (searchChars == null) false
+    else containsAny(cs, searchChars: _*)
+
+  /**
+    * <p>
+    * Checks if the CharSequence contains any character in the given set of characters.
+    * </p>
+    *
+    * <p>
+    * A {@code null} CharSequence will return {@code false}. A {@code null} search CharSequence will return
+    * {@code false}.
+    * </p>
+    *
+    * <pre>
+    * StringUtils.containsAny(null, *)               = false
+    * StringUtils.containsAny("", *)                 = false
+    * StringUtils.containsAny(*, null)               = false
+    * StringUtils.containsAny(*, "")                 = false
+    * StringUtils.containsAny("zzabyycdxx", "za")    = true
+    * StringUtils.containsAny("zzabyycdxx", "by")    = true
+    * StringUtils.containsAny("zzabyycdxx", "zy")    = true
+    * StringUtils.containsAny("zzabyycdxx", "\tx")   = true
+    * StringUtils.containsAny("zzabyycdxx", "$.#yF") = true
+    * StringUtils.containsAny("aba", "z")            = false
+    * </pre>
+    *
+    * @param cs
+    * the CharSequence to check, may be null
+    * @param searchChars
+    * the chars to search for, may be null
+    * @return the {@code true} if any of the chars are found, {@code false} if no match or null input
+    * @since 2.4
+    *        3.0 Changed signature from containsAny(String, String) to containsAny(CharSequence, CharSequence)
+    */
   def containsAny(cs: CharSequence, searchChars: CharSequence): Boolean =
     if (searchChars == null) false
-    else containsAny(cs, CharSequenceUtils.toCharArray(searchChars))
+    else containsAny(cs, CharSequenceUtils.toCharArray(searchChars): _*)
 
   /**
     * <p>Checks if the CharSequence contains any of the CharSequences in the given array.</p>
@@ -1050,8 +1156,41 @@ object StringUtils {
     * @return {@code true} if any of the search CharSequences are found, {@code false} otherwise
     * @since 3.4
     */
-  def containsAny(cs: CharSequence, searchCharSequences: CharSequence*)(implicit d: DummyImplicit): Boolean = {
-    if (isEmpty(cs) || ArrayUtils.isEmpty(searchCharSequences.toArray)) return false
+  def containsAny[T <: CharSequence](cs: CharSequence, searchCharSequences: T*)(implicit d: DummyImplicit): Boolean = {
+    if (isEmpty(cs) || searchCharSequences.isEmpty) return false
+    for (searchCharSequence <- searchCharSequences) {
+      if (contains(cs, searchCharSequence)) return true
+    }
+    false
+  }
+
+  /**
+    * <p>Checks if the CharSequence contains any of the CharSequences in the given array.</p>
+    *
+    * <p>
+    * A {@code null} {@code cs} CharSequence will return {@code false}. A {@code null} or zero
+    * length search array will return {@code false}.
+    * </p>
+    *
+    * <pre>
+    * StringUtils.containsAny(null, *)            = false
+    * StringUtils.containsAny("", *)              = false
+    * StringUtils.containsAny(*, null)            = false
+    * StringUtils.containsAny(*, [])              = false
+    * StringUtils.containsAny("abcd", "ab", null) = true
+    * StringUtils.containsAny("abcd", "ab", "cd") = true
+    * StringUtils.containsAny("abc", "d", "abc")  = true
+    * </pre>
+    *
+    * @param cs                  The CharSequence to check, may be null
+    * @param searchCharSequences The array of CharSequences to search for, may be null.
+    *                            Individual CharSequences may be null as well.
+    * @return {@code true} if any of the search CharSequences are found, {@code false} otherwise
+    * @since 3.4
+    */
+  def containsAny(cs: CharSequence, searchCharSequences: Array[_ <: CharSequence])(implicit
+    d: DummyImplicit): Boolean = {
+    if (isEmpty(cs) || ArrayUtils.isEmpty(searchCharSequences)) return false
     for (searchCharSequence <- searchCharSequences) {
       if (contains(cs, searchCharSequence)) return true
     }
@@ -1117,7 +1256,49 @@ object StringUtils {
     *        3.0 Changed signature from containsNone(String, char[]) to containsNone(CharSequence, char...)
     */
   def containsNone(cs: CharSequence, searchChars: Char*): Boolean = {
-    if (cs == null || searchChars == null) return true
+    if (cs == null || searchChars == null || searchChars.isEmpty) return true
+    val csLen = cs.length
+    val csLast = csLen - 1
+    val searchLen = searchChars.length
+    val searchLast = searchLen - 1
+    for (i <- 0 until csLen) {
+      val ch = cs.charAt(i)
+      for (j <- 0 until searchLen) {
+        if (searchChars(j) == ch) if (Character.isHighSurrogate(ch)) {
+          if (j == searchLast) return false
+          if (i < csLast && searchChars(j + 1) == cs.charAt(i + 1)) return false
+        } else return false
+      }
+    }
+    true
+  }
+
+  /**
+    * <p>Checks that the CharSequence does not contain certain characters.</p>
+    *
+    * <p>A {@code null} CharSequence will return {@code true}.
+    * A {@code null} invalid character array will return {@code true}.
+    * An empty CharSequence (length()=0) always returns true.</p>
+    *
+    * <pre>
+    * StringUtils.containsNone(null, *)       = true
+    * StringUtils.containsNone(*, null)       = true
+    * StringUtils.containsNone("", *)         = true
+    * StringUtils.containsNone("ab", '')      = true
+    * StringUtils.containsNone("abab", 'xyz') = true
+    * StringUtils.containsNone("ab1", 'xyz')  = true
+    * StringUtils.containsNone("abz", 'xyz')  = false
+    * </pre>
+    *
+    *
+    * @param cs          the CharSequence to check, may be null
+    * @param searchChars an array of invalid chars, may be null
+    * @return true if it contains none of the invalid chars, or is null
+    * @since 2.0
+    *        3.0 Changed signature from containsNone(String, char[]) to containsNone(CharSequence, char...)
+    */
+  def containsNone(cs: CharSequence, searchChars: Array[Char]): Boolean = {
+    if (cs == null || ArrayUtils.isEmpty(searchChars)) return true
     val csLen = cs.length
     val csLast = csLen - 1
     val searchLen = searchChars.length
@@ -1186,6 +1367,36 @@ object StringUtils {
     * @since 3.0 Changed signature from containsOnly(String, char[]) to containsOnly(CharSequence, char...)
     */
   def containsOnly(cs: CharSequence, valid: Char*): Boolean = { // All these pre-checks are to maintain API with an older version
+    if (valid == null || cs == null) return false
+    if (cs.length == 0) return true
+    if (valid.length == 0) return false
+    indexOfAnyBut(cs, valid: _*) == INDEX_NOT_FOUND
+  }
+
+  /**
+    * <p>Checks if the CharSequence contains only certain characters.</p>
+    *
+    * <p>A {@code null} CharSequence will return {@code false}.
+    * A {@code null} valid character array will return {@code false}.
+    * An empty CharSequence (length()=0) always returns {@code true}.</p>
+    *
+    * <pre>
+    * StringUtils.containsOnly(null, *)       = false
+    * StringUtils.containsOnly(*, null)       = false
+    * StringUtils.containsOnly("", *)         = true
+    * StringUtils.containsOnly("ab", '')      = false
+    * StringUtils.containsOnly("abab", 'abc') = true
+    * StringUtils.containsOnly("ab1", 'abc')  = false
+    * StringUtils.containsOnly("abz", 'abc')  = false
+    * </pre>
+    *
+    *
+    * @param cs    the String to check, may be null
+    * @param valid an array of valid chars, may be null
+    * @return true if it only contains valid chars and is non-null
+    * @since 3.0 Changed signature from containsOnly(String, char[]) to containsOnly(CharSequence, char...)
+    */
+  def containsOnly(cs: CharSequence, valid: Array[Char]): Boolean = { // All these pre-checks are to maintain API with an older version
     if (valid == null || cs == null) return false
     if (cs.length == 0) return true
     if (valid.length == 0) return false
@@ -1522,8 +1733,32 @@ object StringUtils {
     *         the input {@code sequence} ends in any of the provided case-sensitive {@code searchStrings}.
     * @since 3.0
     */
-  def endsWithAny(sequence: CharSequence, searchStrings: CharSequence*): Boolean = {
-    if (isEmpty(sequence) || searchStrings.isEmpty) return false
+  def endsWithAny(sequence: CharSequence, searchStrings: CharSequence*): Boolean =
+    endsWithAny(sequence, searchStrings.toArray)
+
+  /**
+    * <p>Check if a CharSequence ends with any of the provided case-sensitive suffixes.</p>
+    *
+    * <pre>
+    * StringUtils.endsWithAny(null, null)      = false
+    * StringUtils.endsWithAny(null, new String[] {"abc"})  = false
+    * StringUtils.endsWithAny("abcxyz", null)     = false
+    * StringUtils.endsWithAny("abcxyz", new String[] {""}) = true
+    * StringUtils.endsWithAny("abcxyz", new String[] {"xyz"}) = true
+    * StringUtils.endsWithAny("abcxyz", new String[] {null, "xyz", "abc"}) = true
+    * StringUtils.endsWithAny("abcXYZ", "def", "XYZ") = true
+    * StringUtils.endsWithAny("abcXYZ", "def", "xyz") = false
+    * </pre>
+    *
+    * @param sequence      the CharSequence to check, may be null
+    * @param searchStrings the case-sensitive CharSequences to find, may be empty or contain {@code null}
+    * @see StringUtils#endsWith(CharSequence, CharSequence)
+    * @return {@code true} if the input {@code sequence} is {@code null} AND no {@code searchStrings} are provided, or
+    *         the input {@code sequence} ends in any of the provided case-sensitive {@code searchStrings}.
+    * @since 3.0
+    */
+  def endsWithAny(sequence: CharSequence, searchStrings: Array[_ <: CharSequence]): Boolean = {
+    if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) return false
     for (searchString <- searchStrings) {
       if (endsWith(sequence, searchString)) return true
     }
@@ -1610,8 +1845,30 @@ object StringUtils {
     *         {@code false} if {@code searchStrings} is null or contains no matches.
     * @since 3.5
     */
-  def equalsAny(string: CharSequence, searchStrings: CharSequence*): Boolean = {
-    if (ArrayUtils.isNotEmpty(searchStrings.toArray)) for (next <- searchStrings) {
+  def equalsAny(string: CharSequence, searchStrings: CharSequence*): Boolean =
+    equalsAny(string, searchStrings.toArray)
+
+  /**
+    * <p>Compares given {@code string} to a CharSequences vararg of {@code searchStrings},
+    * returning {@code true} if the {@code string} is equal to any of the {@code searchStrings}.</p>
+    *
+    * <pre>
+    * StringUtils.equalsAny(null, (CharSequence[]) null) = false
+    * StringUtils.equalsAny(null, null, null)    = true
+    * StringUtils.equalsAny(null, "abc", "def")  = false
+    * StringUtils.equalsAny("abc", null, "def")  = false
+    * StringUtils.equalsAny("abc", "abc", "def") = true
+    * StringUtils.equalsAny("abc", "ABC", "DEF") = false
+    * </pre>
+    *
+    * @param string        to compare, may be {@code null}.
+    * @param searchStrings a vararg of strings, may be {@code null}.
+    * @return {@code true} if the string is equal (case-sensitive) to any other element of {@code searchStrings};
+    *         {@code false} if {@code searchStrings} is null or contains no matches.
+    * @since 3.5
+    */
+  def equalsAny(string: CharSequence, searchStrings: Array[_ <: CharSequence]): Boolean = {
+    if (ArrayUtils.isNotEmpty(searchStrings)) for (next <- searchStrings) {
       if (equals(string, next)) return true
     }
     false
@@ -1636,9 +1893,36 @@ object StringUtils {
     *         {@code false} if {@code searchStrings} is null or contains no matches.
     * @since 3.5
     */
-  def equalsAnyIgnoreCase(string: CharSequence, searchStrings: CharSequence*): Boolean = {
-    if (ArrayUtils.isNotEmpty(searchStrings.toArray)) for (next <- searchStrings) {
-      if (equalsIgnoreCase(string, next)) return true
+  def equalsAnyIgnoreCase(string: CharSequence, searchStrings: CharSequence*): Boolean =
+    equalsAnyIgnoreCase(string, searchStrings.toArray)
+
+  /**
+    * <p>Compares given {@code string} to a CharSequences vararg of {@code searchStrings},
+    * returning {@code true} if the {@code string} is equal to any of the {@code searchStrings}, ignoring case.</p>
+    *
+    * <pre>
+    * StringUtils.equalsAnyIgnoreCase(null, (CharSequence[]) null) = false
+    * StringUtils.equalsAnyIgnoreCase(null, null, null)    = true
+    * StringUtils.equalsAnyIgnoreCase(null, "abc", "def")  = false
+    * StringUtils.equalsAnyIgnoreCase("abc", null, "def")  = false
+    * StringUtils.equalsAnyIgnoreCase("abc", "abc", "def") = true
+    * StringUtils.equalsAnyIgnoreCase("abc", "ABC", "DEF") = true
+    * </pre>
+    *
+    * @param string        to compare, may be {@code null}.
+    * @param searchStrings a vararg of strings, may be {@code null}.
+    * @return {@code true} if the string is equal (case-insensitive) to any other element of {@code searchStrings};
+    *         {@code false} if {@code searchStrings} is null or contains no matches.
+    * @since 3.5
+    */
+  def equalsAnyIgnoreCase(string: CharSequence, searchStrings: Array[_ <: CharSequence]): Boolean = {
+    if (searchStrings != null && ArrayUtils.isNotEmpty(searchStrings)) {
+      for {
+        next <- searchStrings
+        //if isNotEmpty(next)
+      } {
+        if (equalsIgnoreCase(string, next)) return true
+      }
     }
     false
   }
@@ -1705,6 +1989,39 @@ object StringUtils {
   }
 
   /**
+    * <p>Returns the first value in the array which is not empty (""),
+    * {@code null} or whitespace only.</p>
+    *
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
+    *
+    * <p>If all values are blank or the array is {@code null}
+    * or empty then {@code null} is returned.</p>
+    *
+    * <pre>
+    * StringUtils.firstNonBlank(null, null, null)     = null
+    * StringUtils.firstNonBlank(null, "", " ")        = null
+    * StringUtils.firstNonBlank("abc")                = "abc"
+    * StringUtils.firstNonBlank(null, "xyz")          = "xyz"
+    * StringUtils.firstNonBlank(null, "", " ", "xyz") = "xyz"
+    * StringUtils.firstNonBlank(null, "xyz", "abc")   = "xyz"
+    * StringUtils.firstNonBlank()                     = null
+    * </pre>
+    *
+    * @tparam T     the specific kind of CharSequence
+    * @param values the values to test, may be {@code null} or empty
+    * @return the first value from {@code values} which is not blank,
+    *         or {@code null} if there are no non-blank values
+    * @since 3.8
+    */
+  def firstNonBlank[T <: CharSequence](values: Array[T]): T = {
+    if (ArrayUtils.isNotEmpty(values)) for (v <- values) {
+      if (isNotBlank(v)) return v
+    }
+
+    null.asInstanceOf[T]
+  }
+
+  /**
     * <p>Returns the first value in the array which is not empty.</p>
     *
     * <p>If all values are empty or the array is {@code null}
@@ -1728,6 +2045,36 @@ object StringUtils {
     * @since 3.8
     */
   @SafeVarargs def firstNonEmpty[T <: CharSequence](values: T*): T = {
+    if (values != null) for (v <- values) {
+      if (isNotEmpty(v)) return v
+    }
+    null.asInstanceOf[T]
+  }
+
+  /**
+    * <p>Returns the first value in the array which is not empty.</p>
+    *
+    * <p>If all values are empty or the array is {@code null}
+    * or empty then {@code null} is returned.</p>
+    *
+    * <pre>
+    * StringUtils.firstNonEmpty(null, null, null)   = null
+    * StringUtils.firstNonEmpty(null, null, "")     = null
+    * StringUtils.firstNonEmpty(null, "", " ")      = " "
+    * StringUtils.firstNonEmpty("abc")              = "abc"
+    * StringUtils.firstNonEmpty(null, "xyz")        = "xyz"
+    * StringUtils.firstNonEmpty("", "xyz")          = "xyz"
+    * StringUtils.firstNonEmpty(null, "xyz", "abc") = "xyz"
+    * StringUtils.firstNonEmpty()                   = null
+    * </pre>
+    *
+    * @tparam T     the specific kind of CharSequence
+    * @param values the values to test, may be {@code null} or empty
+    * @return the first value from {@code values} which is not empty,
+    *         or {@code null} if there are no non-empty values
+    * @since 3.8
+    */
+  def firstNonEmpty[T <: CharSequence](values: Array[T]): T = {
     if (values != null) for (v <- values) {
       if (isNotEmpty(v)) return v
     }
@@ -2447,10 +2794,16 @@ object StringUtils {
     */
   def indexOfAny(cs: CharSequence, searchChars: Char*): Int = {
     if (isEmpty(cs) || searchChars.isEmpty) return INDEX_NOT_FOUND
+    indexOfAny(cs, searchChars.toArray)
+  }
+
+  def indexOfAny(cs: CharSequence, searchChars: Array[Char]): Int = {
+    if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) return INDEX_NOT_FOUND
     val csLen = cs.length
     val csLast = csLen - 1
     val searchLen = searchChars.length
     val searchLast = searchLen - 1
+
     for (i <- 0 until csLen) {
       val ch = cs.charAt(i)
       for (j <- 0 until searchLen) {
@@ -2460,8 +2813,11 @@ object StringUtils {
           } else return i
       }
     }
+
     INDEX_NOT_FOUND
   }
+
+  // IndexOfAny strings
 
   /**
     * <p>Find the first index of any of a set of potential substrings.</p>
@@ -2470,7 +2826,7 @@ object StringUtils {
     * A {@code null} or zero length search array will return {@code -1}.
     * A {@code null} search array entry will be ignored, but a search
     * array containing "" will return {@code 0} if {@code str} is not
-    * null. This method uses {@link java.lang.String# indexOf ( String )} if possible.</p>
+    * null. This method uses {@link java.lang.String#indexOf} if possible.</p>
     *
     * <pre>
     * StringUtils.indexOfAny(null, *)                      = -1
@@ -2491,12 +2847,15 @@ object StringUtils {
     * @since 3.0 Changed signature from indexOfAny(String, String[]) to indexOfAny(CharSequence, CharSequence...)
     */
   def indexOfAny(str: CharSequence, searchStrs: CharSequence*)(implicit d: DummyImplicit): Int = {
+    if (searchStrs.isEmpty) return INDEX_NOT_FOUND
+    indexOfAny(str, searchStrs.toArray)
+  }
+
+  def indexOfAny(str: CharSequence, searchStrs: Array[_ <: CharSequence]): Int = {
     if (str == null || searchStrs == null) return INDEX_NOT_FOUND
-
     // String's can't have a MAX_VALUEth index.
-    var ret = Integer.MAX_VALUE
+    var ret = Int.MaxValue
     var tmp = 0
-
     for (search <- searchStrs) {
       if (search != null) {
         tmp = CharSequenceUtils.indexOf(str, search, 0)
@@ -2504,7 +2863,7 @@ object StringUtils {
       }
     }
 
-    if (ret == Integer.MAX_VALUE) INDEX_NOT_FOUND
+    if (ret == Int.MaxValue) INDEX_NOT_FOUND
     else ret
   }
 
@@ -2560,8 +2919,35 @@ object StringUtils {
     * @since 2.0
     *        3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
     */
-  def indexOfAnyBut(cs: CharSequence, searchChars: Char*): Int = {
-    if (isEmpty(cs) || searchChars.isEmpty) return INDEX_NOT_FOUND
+  def indexOfAnyBut(cs: CharSequence, searchChars: Char*): Int =
+    indexOfAnyBut(cs, searchChars.toArray)
+
+  /**
+    * <p>Searches a CharSequence to find the first index of any
+    * character not in the given set of characters.</p>
+    *
+    * <p>A {@code null} CharSequence will return {@code -1}.
+    * A {@code null} or zero length search array will return {@code -1}.</p>
+    *
+    * <pre>
+    * StringUtils.indexOfAnyBut(null, *)                              = -1
+    * StringUtils.indexOfAnyBut("", *)                                = -1
+    * StringUtils.indexOfAnyBut(*, null)                              = -1
+    * StringUtils.indexOfAnyBut(*, [])                                = -1
+    * StringUtils.indexOfAnyBut("zzabyycdxx", new char[] {'z', 'a'} ) = 3
+    * StringUtils.indexOfAnyBut("aba", new char[] {'z'} )             = 0
+    * StringUtils.indexOfAnyBut("aba", new char[] {'a', 'b'} )        = -1
+    *
+    * </pre>
+    *
+    * @param cs          the CharSequence to check, may be null
+    * @param searchChars the chars to search for, may be null
+    * @return the index of any of the chars, -1 if no match or null input
+    * @since 2.0
+    *        3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
+    */
+  def indexOfAnyBut(cs: CharSequence, searchChars: Array[Char]): Int = {
+    if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) return INDEX_NOT_FOUND
     val csLen = cs.length
     val csLast = csLen - 1
     val searchLen = searchChars.length
@@ -2843,7 +3229,36 @@ object StringUtils {
     * @since 3.6
     */
   def isAllBlank(css: CharSequence*): Boolean = {
-    if (ArrayUtils.isEmpty(css.toArray)) return true
+    if (css == null || css.isEmpty) return true
+    for (cs <- css) {
+      if (isNotBlank(cs)) return false
+    }
+    true
+  }
+
+  /**
+    * <p>Checks if all of the CharSequences are empty (""), null or whitespace only.</p>
+    *
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
+    *
+    * <pre>
+    * StringUtils.isAllBlank(null)             = true
+    * StringUtils.isAllBlank(null, "foo")      = false
+    * StringUtils.isAllBlank(null, null)       = true
+    * StringUtils.isAllBlank("", "bar")        = false
+    * StringUtils.isAllBlank("bob", "")        = false
+    * StringUtils.isAllBlank("  bob  ", null)  = false
+    * StringUtils.isAllBlank(" ", "bar")       = false
+    * StringUtils.isAllBlank("foo", "bar")     = false
+    * StringUtils.isAllBlank(new String[] {})  = true
+    * </pre>
+    *
+    * @param css the CharSequences to check, may be null or empty
+    * @return {@code true} if all of the CharSequences are empty or null or whitespace only
+    * @since 3.6
+    */
+  def isAllBlank(css: Array[_ <: CharSequence]): Boolean = {
+    if (ArrayUtils.isEmpty(css)) return true
     for (cs <- css) {
       if (isNotBlank(cs)) return false
     }
@@ -2870,7 +3285,34 @@ object StringUtils {
     * @since 3.6
     */
   def isAllEmpty(css: CharSequence*): Boolean = {
-    if (ArrayUtils.isEmpty(css.toArray)) return true
+    if (css == null || css.isEmpty) return true
+    for (cs <- css) {
+      if (isNotEmpty(cs)) return false
+    }
+    true
+  }
+
+  /**
+    * <p>Checks if all of the CharSequences are empty ("") or null.</p>
+    *
+    * <pre>
+    * StringUtils.isAllEmpty(null)             = true
+    * StringUtils.isAllEmpty(null, "")         = true
+    * StringUtils.isAllEmpty(new String[] {})  = true
+    * StringUtils.isAllEmpty(null, "foo")      = false
+    * StringUtils.isAllEmpty("", "bar")        = false
+    * StringUtils.isAllEmpty("bob", "")        = false
+    * StringUtils.isAllEmpty("  bob  ", null)  = false
+    * StringUtils.isAllEmpty(" ", "bar")       = false
+    * StringUtils.isAllEmpty("foo", "bar")     = false
+    * </pre>
+    *
+    * @param css the CharSequences to check, may be null or empty
+    * @return {@code true} if all of the CharSequences are empty or null
+    * @since 3.6
+    */
+  def isAllEmpty(css: Array[_ <: CharSequence]): Boolean = {
+    if (ArrayUtils.isEmpty(css)) return true
     for (cs <- css) {
       if (isNotEmpty(cs)) return false
     }
@@ -3085,7 +3527,38 @@ object StringUtils {
     * @since 3.2
     */
   def isAnyBlank(css: CharSequence*): Boolean = {
-    if (ArrayUtils.isEmpty(css.toArray)) return false
+    if (css == null || css.isEmpty) return false
+    for (cs <- css) {
+      if (isBlank(cs)) return true
+    }
+    false
+  }
+
+  /**
+    * <p>Checks if any of the CharSequences are empty ("") or null or whitespace only.</p>
+    *
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
+    *
+    * <pre>
+    * StringUtils.isAnyBlank((String) null)    = true
+    * StringUtils.isAnyBlank((String[]) null)  = false
+    * StringUtils.isAnyBlank(null, "foo")      = true
+    * StringUtils.isAnyBlank(null, null)       = true
+    * StringUtils.isAnyBlank("", "bar")        = true
+    * StringUtils.isAnyBlank("bob", "")        = true
+    * StringUtils.isAnyBlank("  bob  ", null)  = true
+    * StringUtils.isAnyBlank(" ", "bar")       = true
+    * StringUtils.isAnyBlank(new String[] {})  = false
+    * StringUtils.isAnyBlank(new String[]{""}) = true
+    * StringUtils.isAnyBlank("foo", "bar")     = false
+    * </pre>
+    *
+    * @param css the CharSequences to check, may be null or empty
+    * @return {@code true} if any of the CharSequences are empty or null or whitespace only
+    * @since 3.2
+    */
+  def isAnyBlank(css: Array[_ <: CharSequence]): Boolean = {
+    if (ArrayUtils.isEmpty(css)) return false
     for (cs <- css) {
       if (isBlank(cs)) return true
     }
@@ -3113,7 +3586,35 @@ object StringUtils {
     * @since 3.2
     */
   def isAnyEmpty(css: CharSequence*): Boolean = {
-    if (ArrayUtils.isEmpty(css.toArray)) return false
+    if (css == null || css.isEmpty) return false
+    for (cs <- css) {
+      if (isEmpty(cs)) return true
+    }
+    false
+  }
+
+  /**
+    * <p>Checks if any of the CharSequences are empty ("") or null.</p>
+    *
+    * <pre>
+    * StringUtils.isAnyEmpty((String) null)    = true
+    * StringUtils.isAnyEmpty((String[]) null)  = false
+    * StringUtils.isAnyEmpty(null, "foo")      = true
+    * StringUtils.isAnyEmpty("", "bar")        = true
+    * StringUtils.isAnyEmpty("bob", "")        = true
+    * StringUtils.isAnyEmpty("  bob  ", null)  = true
+    * StringUtils.isAnyEmpty(" ", "bar")       = false
+    * StringUtils.isAnyEmpty("foo", "bar")     = false
+    * StringUtils.isAnyEmpty(new String[]{})   = false
+    * StringUtils.isAnyEmpty(new String[]{""}) = true
+    * </pre>
+    *
+    * @param css the CharSequences to check, may be null or empty
+    * @return {@code true} if any of the CharSequences are empty or null
+    * @since 3.2
+    */
+  def isAnyEmpty(css: Array[_ <: CharSequence]): Boolean = {
+    if (ArrayUtils.isEmpty(css)) return false
     for (cs <- css) {
       if (isEmpty(cs)) return true
     }
@@ -3264,6 +3765,31 @@ object StringUtils {
   def isNoneBlank(css: CharSequence*): Boolean = !isAnyBlank(css: _*)
 
   /**
+    * <p>Checks if none of the CharSequences are empty (""), null or whitespace only.</p>
+    *
+    * <p>Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
+    *
+    * <pre>
+    * StringUtils.isNoneBlank((String) null)    = false
+    * StringUtils.isNoneBlank((String[]) null)  = true
+    * StringUtils.isNoneBlank(null, "foo")      = false
+    * StringUtils.isNoneBlank(null, null)       = false
+    * StringUtils.isNoneBlank("", "bar")        = false
+    * StringUtils.isNoneBlank("bob", "")        = false
+    * StringUtils.isNoneBlank("  bob  ", null)  = false
+    * StringUtils.isNoneBlank(" ", "bar")       = false
+    * StringUtils.isNoneBlank(new String[] {})  = true
+    * StringUtils.isNoneBlank(new String[]{""}) = false
+    * StringUtils.isNoneBlank("foo", "bar")     = true
+    * </pre>
+    *
+    * @param css the CharSequences to check, may be null or empty
+    * @return {@code true} if none of the CharSequences are empty or null or whitespace only
+    * @since 3.2
+    */
+  def isNoneBlank(css: Array[_ <: CharSequence]): Boolean = !isAnyBlank(css)
+
+  /**
     * <p>Checks if none of the CharSequences are empty ("") or null.</p>
     *
     * <pre>
@@ -3284,6 +3810,28 @@ object StringUtils {
     * @since 3.2
     */
   def isNoneEmpty(css: CharSequence*): Boolean = !isAnyEmpty(css: _*)
+
+  /**
+    * <p>Checks if none of the CharSequences are empty ("") or null.</p>
+    *
+    * <pre>
+    * StringUtils.isNoneEmpty((String) null)    = false
+    * StringUtils.isNoneEmpty((String[]) null)  = true
+    * StringUtils.isNoneEmpty(null, "foo")      = false
+    * StringUtils.isNoneEmpty("", "bar")        = false
+    * StringUtils.isNoneEmpty("bob", "")        = false
+    * StringUtils.isNoneEmpty("  bob  ", null)  = false
+    * StringUtils.isNoneEmpty(new String[] {})  = true
+    * StringUtils.isNoneEmpty(new String[]{""}) = false
+    * StringUtils.isNoneEmpty(" ", "bar")       = true
+    * StringUtils.isNoneEmpty("foo", "bar")     = true
+    * </pre>
+    *
+    * @param css the CharSequences to check, may be null or empty
+    * @return {@code true} if none of the CharSequences are empty or null
+    * @since 3.2
+    */
+  def isNoneEmpty(css: Array[_ <: CharSequence]): Boolean = !isAnyEmpty(css)
 
   /**
     * <p>Checks if a CharSequence is not empty (""), not null and not whitespace only.</p>
@@ -4337,8 +4885,37 @@ object StringUtils {
     * @return the last index of any of the CharSequences, -1 if no match
     * @since 3.0 Changed signature from lastIndexOfAny(String, String[]) to lastIndexOfAny(CharSequence, CharSequence)
     */
-  def lastIndexOfAny(str: CharSequence, searchStrs: CharSequence*): Int = {
-    if (str == null || searchStrs == null) return INDEX_NOT_FOUND
+  def lastIndexOfAny(str: CharSequence, searchStrs: CharSequence*): Int =
+    lastIndexOfAny(str, searchStrs.toArray)
+
+  /**
+    * <p>Find the latest index of any substring in a set of potential substrings.</p>
+    *
+    * <p>A {@code null} CharSequence will return {@code -1}.
+    * A {@code null} search array will return {@code -1}.
+    * A {@code null} or zero length search array entry will be ignored,
+    * but a search array containing "" will return the length of {@code str}
+    * if {@code str} is not null. This method uses {@link java.lang.String# indexOf ( String )} if possible</p>
+    *
+    * <pre>
+    * StringUtils.lastIndexOfAny(null, *)                    = -1
+    * StringUtils.lastIndexOfAny(*, null)                    = -1
+    * StringUtils.lastIndexOfAny(*, [])                      = -1
+    * StringUtils.lastIndexOfAny(*, [null])                  = -1
+    * StringUtils.lastIndexOfAny("zzabyycdxx", ["ab", "cd"]) = 6
+    * StringUtils.lastIndexOfAny("zzabyycdxx", ["cd", "ab"]) = 6
+    * StringUtils.lastIndexOfAny("zzabyycdxx", ["mn", "op"]) = -1
+    * StringUtils.lastIndexOfAny("zzabyycdxx", ["mn", "op"]) = -1
+    * StringUtils.lastIndexOfAny("zzabyycdxx", ["mn", ""])   = 10
+    * </pre>
+    *
+    * @param str        the CharSequence to check, may be null
+    * @param searchStrs the CharSequences to search for, may be null
+    * @return the last index of any of the CharSequences, -1 if no match
+    * @since 3.0 Changed signature from lastIndexOfAny(String, String[]) to lastIndexOfAny(CharSequence, CharSequence)
+    */
+  def lastIndexOfAny(str: CharSequence, searchStrs: Array[_ <: CharSequence]): Int = {
+    if (str == null || ArrayUtils.isEmpty(searchStrs)) return INDEX_NOT_FOUND
 
     var ret = INDEX_NOT_FOUND
     var tmp = 0
@@ -7189,8 +7766,33 @@ object StringUtils {
     * @since 2.5
     *        3.0 Changed signature from startsWithAny(String, String[]) to startsWithAny(CharSequence, CharSequence...)
     */
-  def startsWithAny(sequence: CharSequence, searchStrings: CharSequence*): Boolean = {
-    if (isEmpty(sequence) || searchStrings.isEmpty) return false
+  def startsWithAny(sequence: CharSequence, searchStrings: CharSequence*): Boolean =
+    startsWithAny(sequence, searchStrings.toArray)
+
+  /**
+    * <p>Check if a CharSequence starts with any of the provided case-sensitive prefixes.</p>
+    *
+    * <pre>
+    * StringUtils.startsWithAny(null, null)      = false
+    * StringUtils.startsWithAny(null, new String[] {"abc"})  = false
+    * StringUtils.startsWithAny("abcxyz", null)     = false
+    * StringUtils.startsWithAny("abcxyz", new String[] {""}) = true
+    * StringUtils.startsWithAny("abcxyz", new String[] {"abc"}) = true
+    * StringUtils.startsWithAny("abcxyz", new String[] {null, "xyz", "abc"}) = true
+    * StringUtils.startsWithAny("abcxyz", null, "xyz", "ABCX") = false
+    * StringUtils.startsWithAny("ABCXYZ", null, "xyz", "abc") = false
+    * </pre>
+    *
+    * @param sequence      the CharSequence to check, may be null
+    * @param searchStrings the case-sensitive CharSequence prefixes, may be empty or contain {@code null}
+    * @see StringUtils#startsWith(CharSequence, CharSequence)
+    * @return {@code true} if the input {@code sequence} is {@code null} AND no {@code searchStrings} are provided, or
+    *         the input {@code sequence} begins with any of the provided case-sensitive {@code searchStrings}.
+    * @since 2.5
+    *        3.0 Changed signature from startsWithAny(String, String[]) to startsWithAny(CharSequence, CharSequence...)
+    */
+  def startsWithAny(sequence: CharSequence, searchStrings: Array[_ <: CharSequence]): Boolean = {
+    if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) return false
     for (searchString <- searchStrings) {
       if (startsWith(sequence, searchString)) return true
     }
@@ -7325,6 +7927,27 @@ object StringUtils {
     * @return the stripped Strings, {@code null} if null array input
     */
   def stripAll(strs: String*): Array[String] = stripAll(strs.toArray, null)
+
+  /**
+    * <p>Strips whitespace from the start and end of every String in an array.
+    * Whitespace is defined by {@link java.lang.Character# isWhitespace ( char )}.</p>
+    *
+    * <p>A new array is returned each time, except for length zero.
+    * A {@code null} array will return {@code null}.
+    * An empty array will return itself.
+    * A {@code null} array entry will be ignored.</p>
+    *
+    * <pre>
+    * StringUtils.stripAll(null)             = null
+    * StringUtils.stripAll([])               = []
+    * StringUtils.stripAll(["abc", "  abc"]) = ["abc", "abc"]
+    * StringUtils.stripAll(["abc  ", null])  = ["abc", null]
+    * </pre>
+    *
+    * @param strs the array to remove whitespace from, may be null
+    * @return the stripped Strings, {@code null} if null array input
+    */
+  def stripAll(strs: Array[String]): Array[String] = stripAll(strs, null)
 
   /**
     * <p>Strips any of a set of characters from the start and end of every
@@ -7902,17 +8525,19 @@ object StringUtils {
     val openLen = open.length
     val list = new util.ArrayList[String]
     var pos = 0
-    while ({
-      pos < strLen - closeLen
-    }) {
-      var start = str.indexOf(open, pos)
-      if (start < 0) break //todo: break is not supported
-      start += openLen
-      val `end` = str.indexOf(close, start)
-      if (`end` < 0) break //todo: break is not supported
-      list.add(str.substring(start, `end`))
-      pos = `end` + closeLen
+
+    breakable {
+      while (pos < strLen - closeLen) {
+        var start = str.indexOf(open, pos)
+        if (start < 0) break()
+        start += openLen
+        val `end` = str.indexOf(close, start)
+        if (`end` < 0) break()
+        list.add(str.substring(start, `end`))
+        pos = `end` + closeLen
+      }
     }
+
     if (list.isEmpty) return null
     list.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
   }

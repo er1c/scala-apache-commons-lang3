@@ -389,7 +389,10 @@ class StringUtilsTest extends JUnitSuite {
       "appendIfMissing(\"\",xyz,null))",
       "xyz",
       StringUtils.appendIfMissing("", "xyz", null.asInstanceOf[CharSequence]))
-    assertEquals("appendIfMissing(abc,xyz,{null})", "abcxyz", StringUtils.appendIfMissing("abc", "xyz", null))
+    assertEquals(
+      "appendIfMissing(abc,xyz,{null})",
+      "abcxyz",
+      StringUtils.appendIfMissing("abc", "xyz", null.asInstanceOf[String]))
     assertEquals("appendIfMissing(abc,xyz,\"\")", "abc", StringUtils.appendIfMissing("abc", "xyz", ""))
     assertEquals("appendIfMissing(abc,xyz,mno)", "abcxyz", StringUtils.appendIfMissing("abc", "xyz", "mno"))
     assertEquals("appendIfMissing(abcxyz,xyz,mno)", "abcxyz", StringUtils.appendIfMissing("abcxyz", "xyz", "mno"))
@@ -428,7 +431,7 @@ class StringUtilsTest extends JUnitSuite {
     assertEquals(
       "appendIfMissingIgnoreCase(abc,xyz,{null})",
       "abcxyz",
-      StringUtils.appendIfMissingIgnoreCase("abc", "xyz", null))
+      StringUtils.appendIfMissingIgnoreCase("abc", "xyz", null.asInstanceOf[CharSequence]))
     assertEquals(
       "appendIfMissingIgnoreCase(abc,xyz,\"\")",
       "abc",

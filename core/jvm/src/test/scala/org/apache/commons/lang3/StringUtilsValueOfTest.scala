@@ -15,30 +15,27 @@
  * limitations under the License.
  */
 
-//package org.apache.commons.lang3;
-//
-//import org.junit.Assert;
-//import org.junit.Test;
-//
-///**
-// * Tests {@link StringUtils}'s valueOf() methods.
-// *
-// * @since 3.9
-// */
-//public class StringUtilsValueOfTest {
-//
-//    @Test
-//    public void testValueOfChar() {
-//        Assertions.assertEquals("ABC", StringUtils.valueOf(new char[] {'A', 'B', 'C' }));
-//    }
-//
-//    @Test
-//    public void testValueOfCharEmpty() {
-//        Assertions.assertEquals(StringUtils.EMPTY, StringUtils.valueOf(ArrayUtils.EMPTY_CHAR_ARRAY));
-//    }
-//
-//    @Test
-//    public void testValueOfCharNull() {
-//        Assertions.assertNull(StringUtils.valueOf(null));
-//    }
-//}
+package org.apache.commons.lang3
+
+import org.junit.Assert._
+import org.junit.Test
+import org.scalatestplus.junit.JUnitSuite
+
+/**
+  * Tests {@link StringUtils}'s valueOf() methods.
+  *
+  * @since 3.9
+  */
+class StringUtilsValueOfTest extends JUnitSuite {
+  @Test def testValueOfChar(): Unit = {
+    assertEquals("ABC", StringUtils.valueOf(Array[Char]('A', 'B', 'C')))
+  }
+
+  @Test def testValueOfCharEmpty(): Unit = {
+    assertEquals(StringUtils.EMPTY, StringUtils.valueOf(ArrayUtils.EMPTY_CHAR_ARRAY))
+  }
+
+  @Test def testValueOfCharNull(): Unit = {
+    assertNull(StringUtils.valueOf(null))
+  }
+}

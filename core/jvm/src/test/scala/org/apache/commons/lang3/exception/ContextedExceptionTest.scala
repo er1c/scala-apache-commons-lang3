@@ -39,7 +39,7 @@ class ContextedExceptionTest extends AbstractExceptionContextTest[ContextedExcep
     super.setUp()
   }
 
-  @Test def testContextedException() = {
+  @Test def testContextedException(): Unit = {
     exceptionContext = new ContextedException
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -47,14 +47,14 @@ class ContextedExceptionTest extends AbstractExceptionContextTest[ContextedExcep
     assertTrue(StringUtils.isEmpty(message))
   }
 
-  @Test def testContextedExceptionString() = {
+  @Test def testContextedExceptionString(): Unit = {
     exceptionContext = new ContextedException(TEST_MESSAGE)
     assertEquals(TEST_MESSAGE, exceptionContext.getMessage)
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
     assertTrue(trace.contains(TEST_MESSAGE))
   }
 
-  @Test def testContextedExceptionThrowable() = {
+  @Test def testContextedExceptionThrowable(): Unit = {
     exceptionContext = new ContextedException(new Exception(TEST_MESSAGE))
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -63,7 +63,7 @@ class ContextedExceptionTest extends AbstractExceptionContextTest[ContextedExcep
     assertTrue(message.contains(TEST_MESSAGE))
   }
 
-  @Test def testContextedExceptionStringThrowable() = {
+  @Test def testContextedExceptionStringThrowable(): Unit = {
     exceptionContext = new ContextedException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE))
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -73,7 +73,7 @@ class ContextedExceptionTest extends AbstractExceptionContextTest[ContextedExcep
     assertTrue(message.contains(TEST_MESSAGE_2))
   }
 
-  @Test def testContextedExceptionStringThrowableContext() = {
+  @Test def testContextedExceptionStringThrowableContext(): Unit = {
     exceptionContext = new ContextedException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE), new DefaultExceptionContext)
     val message = exceptionContext.getMessage
     val trace = ExceptionUtils.getStackTrace(exceptionContext)
@@ -83,7 +83,7 @@ class ContextedExceptionTest extends AbstractExceptionContextTest[ContextedExcep
     assertTrue(message.contains(TEST_MESSAGE_2))
   }
 
-  @Test def testNullExceptionPassing() = {
+  @Test def testNullExceptionPassing(): Unit = {
     exceptionContext = new ContextedException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE), null)
       .addContextValue("test1", null)
       .addContextValue("test2", "some value")
@@ -94,7 +94,7 @@ class ContextedExceptionTest extends AbstractExceptionContextTest[ContextedExcep
     assertNotNull(message)
   }
 
-  @Test def testRawMessage() = {
+  @Test def testRawMessage(): Unit = {
     assertEquals(classOf[Exception].getName + ": " + TEST_MESSAGE, exceptionContext.getRawMessage)
     exceptionContext = new ContextedException(TEST_MESSAGE_2, new Exception(TEST_MESSAGE), new DefaultExceptionContext)
     assertEquals(TEST_MESSAGE_2, exceptionContext.getRawMessage)

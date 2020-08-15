@@ -95,7 +95,7 @@
 //    val threadPool = Executors.newFixedThreadPool(2)
 //    try { // Consumes toStrings
 //      val consumer = () => {
-//        def foo() = {
+//        def foo(): Unit = {
 //          for (i <- 0 until ToStringStyleConcurrencyTest.REPEAT) { // Calls ToStringStyle
 //            new ToStringBuilder(holder).append(holder.collection)
 //          }

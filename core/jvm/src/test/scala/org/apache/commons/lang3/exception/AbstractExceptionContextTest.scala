@@ -79,7 +79,7 @@ abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializa
     assertFalse(contextMessage.contains(TEST_MESSAGE))
   }
 
-  @Test def testSetContextValue() = {
+  @Test def testSetContextValue(): Unit = {
     exceptionContext.addContextValue("test2", "different value")
     exceptionContext.setContextValue("test3", "3")
     val message = exceptionContext.getFormattedExceptionMessage(TEST_MESSAGE)
@@ -105,7 +105,7 @@ abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializa
     assertFalse(contextMessage.contains(TEST_MESSAGE))
   }
 
-  @Test def testGetFirstContextValue() = {
+  @Test def testGetFirstContextValue(): Unit = {
     exceptionContext.addContextValue("test2", "different value")
     assertNull(exceptionContext.getFirstContextValue("test1"))
     assertEquals("some value", exceptionContext.getFirstContextValue("test2"))
@@ -114,7 +114,7 @@ abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializa
     assertEquals("another", exceptionContext.getFirstContextValue("test2"))
   }
 
-  @Test def testGetContextValues() = {
+  @Test def testGetContextValues(): Unit = {
     exceptionContext.addContextValue("test2", "different value")
     assertEquals(exceptionContext.getContextValues("test1"), Collections.singletonList(null))
     assertEquals(exceptionContext.getContextValues("test2"), util.Arrays.asList("some value", "different value"))
@@ -122,7 +122,7 @@ abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializa
     assertEquals("another", exceptionContext.getFirstContextValue("test2"))
   }
 
-  @Test def testGetContextLabels() = {
+  @Test def testGetContextLabels(): Unit = {
     assertEquals(5, exceptionContext.getContextEntries.size)
     exceptionContext.addContextValue("test2", "different value")
     val labels = exceptionContext.getContextLabels
@@ -134,7 +134,7 @@ abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializa
     assertTrue(labels.contains("test Nbr"))
   }
 
-  @Test def testGetContextEntries() = {
+  @Test def testGetContextEntries(): Unit = {
     assertEquals(5, exceptionContext.getContextEntries.size)
     exceptionContext.addContextValue("test2", "different value")
     val entries = exceptionContext.getContextEntries
@@ -147,7 +147,7 @@ abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializa
     assertEquals("test2", entries.get(5).getKey)
   }
 
-  @Test def testJavaSerialization() = {
+  @Test def testJavaSerialization(): Unit = {
     exceptionContext.setContextValue("test Poorly written obj", "serializable replacement")
     val clone: T = SerializationUtils.deserialize[T](SerializationUtils.serialize(exceptionContext))
     assertEquals(exceptionContext.getFormattedExceptionMessage(null), clone.getFormattedExceptionMessage(null))

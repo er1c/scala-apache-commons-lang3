@@ -72,7 +72,7 @@ object ExceptionUtilsTest {
   @SerialVersionUID(1L)
   private class ExceptionWithoutCause extends Exception {
     @SuppressWarnings(Array("unused"))
-    def getTargetException() = {
+    def getTargetException(): Unit = {
       // noop
     }
   }
