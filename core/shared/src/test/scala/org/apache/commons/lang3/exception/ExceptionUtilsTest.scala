@@ -107,7 +107,7 @@ class ExceptionUtilsTest extends JUnitSuite {
   private var withoutCause: Throwable = null
   private var jdkNoCause: Throwable = null
   private var cyclicCause: ExceptionWithCause = null
-  private var notVisibleException: Throwable = null
+//  private var notVisibleException: Throwable = null
 
   private def createExceptionWithCause: Throwable =
     try {
@@ -147,7 +147,7 @@ class ExceptionUtilsTest extends JUnitSuite {
     withCause = null
     jdkNoCause = null
     cyclicCause = null
-    notVisibleException = null
+//    notVisibleException = null
   }
 
   @Test
@@ -203,7 +203,7 @@ class ExceptionUtilsTest extends JUnitSuite {
     assertSame(cyclicCause.getCause, ExceptionUtils.getCause(cyclicCause))
     assertSame(cyclicCause.getCause.getCause, ExceptionUtils.getCause(cyclicCause.getCause))
     assertSame(cyclicCause.getCause, ExceptionUtils.getCause(cyclicCause.getCause.getCause))
-    assertSame(withoutCause, ExceptionUtils.getCause(notVisibleException))
+//    assertSame(withoutCause, ExceptionUtils.getCause(notVisibleException))
   }
 
   @SuppressWarnings(Array("deprecation"))
