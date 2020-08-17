@@ -23,16 +23,16 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import java.io.ByteArrayOutputStream
-import java.io.IOException
+//import java.io.IOException
 import java.io.PrintStream
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.util
-import org.apache.commons.lang3.test.NotVisibleExceptionFactory
+//import org.apache.commons.lang3.test.NotVisibleExceptionFactory
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.function.ThrowingRunnable
+//import org.junit.function.ThrowingRunnable
 import org.scalatestplus.junit.JUnitSuite
 import scala.util.control.Breaks
 
@@ -88,14 +88,14 @@ object ExceptionUtilsTest {
   @SerialVersionUID(1L)
   class TestThrowable extends Throwable {}
 
-  private def redeclareCheckedException = throwsCheckedException
-
-  private def throwsCheckedException =
-    try {
-      throw new IOException
-    } catch {
-      case e: Exception => ExceptionUtils.rethrow[Integer](e)
-    }
+//  private def redeclareCheckedException = throwsCheckedException
+//
+//  private def throwsCheckedException =
+//    try {
+//      throw new IOException
+//    } catch {
+//      case e: Exception => ExceptionUtils.rethrow[Integer](e)
+//    }
 }
 
 class ExceptionUtilsTest extends JUnitSuite {
@@ -137,7 +137,7 @@ class ExceptionUtilsTest extends JUnitSuite {
     val b: ExceptionWithCause = new ExceptionWithCause(a)
     a.setCauseImpl(b)
     cyclicCause = new ExceptionWithCause(a)
-    notVisibleException = NotVisibleExceptionFactory.createException(withoutCause)
+//    notVisibleException = NotVisibleExceptionFactory.createException(withoutCause)
   }
 
   @After
@@ -169,29 +169,29 @@ class ExceptionUtilsTest extends JUnitSuite {
     assertEquals("IllegalArgumentException: Base", ExceptionUtils.getRootCauseMessage(th))
   }
 
-  @Test def testCatchTechniques(): Unit = {
-    var ioe = org.junit.Assert.assertThrows(
-      classOf[IOException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          throwsCheckedException
-          ()
-        }
-      })
-    assertEquals(1, ExceptionUtils.getThrowableCount(ioe))
-
-    ioe = org.junit.Assert.assertThrows(
-      classOf[IOException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          redeclareCheckedException
-          ()
-        }
-      })
-    assertEquals(1, ExceptionUtils.getThrowableCount(ioe))
-  }
+//  @Test def testCatchTechniques(): Unit = {
+//    var ioe = org.junit.Assert.assertThrows(
+//      classOf[IOException],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          throwsCheckedException
+//          ()
+//        }
+//      })
+//    assertEquals(1, ExceptionUtils.getThrowableCount(ioe))
+//
+//    ioe = org.junit.Assert.assertThrows(
+//      classOf[IOException],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          redeclareCheckedException
+//          ()
+//        }
+//      })
+//    assertEquals(1, ExceptionUtils.getThrowableCount(ioe))
+//  }
 
   @SuppressWarnings(Array("deprecation")) // Specifically tests the deprecated methods
   @Test def testGetCause_Throwable(): Unit = {
@@ -486,19 +486,19 @@ class ExceptionUtilsTest extends JUnitSuite {
     ()
   }
 
-  @Test def testThrow(): Unit = {
-    val expected: Exception = new InterruptedException
-    val actual: Exception = org.junit.Assert.assertThrows(
-      classOf[Exception],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.rethrow(expected)
-        }
-      })
-
-    assertSame(expected, actual)
-  }
+//  @Test def testThrow(): Unit = {
+//    val expected: Exception = new InterruptedException
+//    val actual: Exception = org.junit.Assert.assertThrows(
+//      classOf[Exception],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ExceptionUtils.rethrow(expected)
+//        }
+//      })
+//
+//    assertSame(expected, actual)
+//  }
 
   @Test def testThrowableOf_ThrowableClass(): Unit = {
     assertEquals(null, ExceptionUtils.throwableOfThrowable[Throwable](null, null))
@@ -590,57 +590,57 @@ class ExceptionUtilsTest extends JUnitSuite {
     assertEquals(withCause, ExceptionUtils.throwableOfType(withCause, classOf[Throwable], 0))
   }
 
-  @Test def testWrapAndUnwrapCheckedException(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new IOException)
-        }
-      })
+//  @Test def testWrapAndUnwrapCheckedException(): Unit = {
+//    val t: Throwable = org.junit.Assert.assertThrows(
+//      classOf[Throwable],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ExceptionUtils.wrapAndThrow(new IOException)
+//        }
+//      })
+//
+//    assertTrue(ExceptionUtils.hasCause(t, classOf[IOException]))
+//  }
 
-    assertTrue(ExceptionUtils.hasCause(t, classOf[IOException]))
-  }
+//  @Test def testWrapAndUnwrapError(): Unit = {
+//    val t: Throwable = org.junit.Assert.assertThrows(
+//      classOf[Throwable],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ExceptionUtils.wrapAndThrow(new OutOfMemoryError)
+//        }
+//      })
+//
+//    assertTrue(ExceptionUtils.hasCause(t, classOf[Error]))
+//  }
 
-  @Test def testWrapAndUnwrapError(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new OutOfMemoryError)
-        }
-      })
+//  @Test def testWrapAndUnwrapRuntimeException(): Unit = {
+//    val t: Throwable = org.junit.Assert.assertThrows(
+//      classOf[Throwable],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ExceptionUtils.wrapAndThrow(new IllegalArgumentException)
+//        }
+//      })
+//
+//    assertTrue(ExceptionUtils.hasCause(t, classOf[RuntimeException]))
+//  }
 
-    assertTrue(ExceptionUtils.hasCause(t, classOf[Error]))
-  }
-
-  @Test def testWrapAndUnwrapRuntimeException(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new IllegalArgumentException)
-        }
-      })
-
-    assertTrue(ExceptionUtils.hasCause(t, classOf[RuntimeException]))
-  }
-
-  @Test def testWrapAndUnwrapThrowable(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new TestThrowable)
-        }
-      })
-
-    assertTrue(ExceptionUtils.hasCause(t, classOf[TestThrowable]))
-  }
+//  @Test def testWrapAndUnwrapThrowable(): Unit = {
+//    val t: Throwable = org.junit.Assert.assertThrows(
+//      classOf[Throwable],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ExceptionUtils.wrapAndThrow(new TestThrowable)
+//        }
+//      })
+//
+//    assertTrue(ExceptionUtils.hasCause(t, classOf[TestThrowable]))
+//  }
 
   @Test
   //@DisplayName("getStackFrames returns the string array of the stack frames when there is a real exception")

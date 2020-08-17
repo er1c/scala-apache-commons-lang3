@@ -319,6 +319,13 @@ lazy val coreJVM = core.jvm
   )
 
 lazy val coreJS  = core.js
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.scalatestplus" %% "junit-4-12" % ScalaTestPlusVersion % Test,
+      "com.novocode" % "junit-interface" % "0.11" % Test
+    )
+  )
+  .enablePlugins(ScalaJSJUnitPlugin)
 
 // Reloads build.sbt changes whenever detected
 Global / onChangedBuildSource := ReloadOnSourceChanges

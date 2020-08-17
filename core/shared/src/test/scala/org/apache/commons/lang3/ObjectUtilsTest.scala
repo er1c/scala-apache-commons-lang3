@@ -22,13 +22,13 @@ import java.lang.{Boolean => JavaBoolean}
 import java.util
 import java.util.{Calendar, Collections, Comparator, Date}
 import java.util.function.Supplier
-import org.apache.commons.lang3.exception.CloneFailedException
+//import org.apache.commons.lang3.exception.CloneFailedException
 import org.apache.commons.lang3.mutable.MutableInt
 import org.apache.commons.lang3.mutable.MutableObject
 import org.apache.commons.lang3.text.StrBuilder
 import org.junit.Assert._
 import org.junit.Test
-import org.junit.function.ThrowingRunnable
+//import org.junit.function.ThrowingRunnable
 import org.scalatestplus.junit.JUnitSuite
 
 /**
@@ -707,24 +707,24 @@ class ObjectUtilsTest extends JUnitSuite with TestHelpers {
     assertNull(ObjectUtils.clone(string))
   }
 
-  /**
-    * Tests {@link ObjectUtils#clone} with an uncloneable object.
-    */
-  @Test def testCloneOfUncloneable(): Unit = {
-    val string: ObjectUtilsTest.UncloneableString = new ObjectUtilsTest.UncloneableString("apache")
-    val e: CloneFailedException = org.junit.Assert.assertThrows(
-      classOf[CloneFailedException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ObjectUtils.clone(string)
-          ()
-        }
-      }
-    )
-
-    assertEquals(classOf[NoSuchMethodException], e.getCause.getClass)
-  }
+//  /**
+//    * Tests {@link ObjectUtils#clone} with an uncloneable object.
+//    */
+//  @Test def testCloneOfUncloneable(): Unit = {
+//    val string: ObjectUtilsTest.UncloneableString = new ObjectUtilsTest.UncloneableString("apache")
+//    val e: CloneFailedException = org.junit.Assert.assertThrows(
+//      classOf[CloneFailedException],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ObjectUtils.clone(string)
+//          ()
+//        }
+//      }
+//    )
+//
+//    assertEquals(classOf[NoSuchMethodException], e.getCause.getClass)
+//  }
 
   /**
     * Tests {@link ObjectUtils#clone} with an object array.
@@ -761,23 +761,23 @@ class ObjectUtilsTest extends JUnitSuite with TestHelpers {
     assertSame(string, ObjectUtils.cloneIfPossible(string))
   }
 
-  /**
-    * Tests {@link ObjectUtils#cloneIfPossible} with an uncloneable object.
-    */
-  @Test def testPossibleCloneOfUncloneable(): Unit = {
-    val string: ObjectUtilsTest.UncloneableString = new ObjectUtilsTest.UncloneableString("apache")
-    val e: CloneFailedException = org.junit.Assert.assertThrows(
-      classOf[CloneFailedException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ObjectUtils.cloneIfPossible(string)
-          ()
-        }
-      })
-
-    assertEquals(classOf[NoSuchMethodException], e.getCause.getClass)
-  }
+//  /**
+//    * Tests {@link ObjectUtils#cloneIfPossible} with an uncloneable object.
+//    */
+//  @Test def testPossibleCloneOfUncloneable(): Unit = {
+//    val string: ObjectUtilsTest.UncloneableString = new ObjectUtilsTest.UncloneableString("apache")
+//    val e: CloneFailedException = org.junit.Assert.assertThrows(
+//      classOf[CloneFailedException],
+//      new ThrowingRunnable() {
+//        @throws[Throwable]
+//        override def run(): Unit = {
+//          ObjectUtils.cloneIfPossible(string)
+//          ()
+//        }
+//      })
+//
+//    assertEquals(classOf[NoSuchMethodException], e.getCause.getClass)
+//  }
 
   @Test def testConstMethods(): Unit = { // To truly test the CONST() method, we'd want to look in the
     // bytecode to see if the literals were folded into the
