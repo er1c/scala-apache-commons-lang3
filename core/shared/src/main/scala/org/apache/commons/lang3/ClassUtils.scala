@@ -102,15 +102,16 @@ object ClassUtils {
     * Maps primitive {@code Class}es to their corresponding wrapper {@code Class}.
     */
   private val primitiveWrapperMap: Map[Class[_], Class[_]] = Map(
-    classOf[Boolean] -> JavaBoolean.TYPE,
-    classOf[Byte] -> JavaByte.TYPE,
-    classOf[Char] -> Character.TYPE,
-    classOf[Short] -> JavaShort.TYPE,
-    classOf[Int] -> Integer.TYPE,
-    classOf[Long] -> JavaLong.TYPE,
-    classOf[Double] -> JavaDouble.TYPE,
-    classOf[Float] -> JavaFloat.TYPE,
-    classOf[Unit] -> Void.TYPE
+    classOf[Boolean] -> classOf[java.lang.Boolean],
+    classOf[Byte] -> classOf[java.lang.Byte],
+    classOf[Char] -> classOf[java.lang.Character],
+    classOf[Short] -> classOf[java.lang.Short],
+    classOf[Int] -> classOf[java.lang.Integer],
+    classOf[Long] -> classOf[java.lang.Long],
+    classOf[Double] -> classOf[java.lang.Double],
+    classOf[Float] -> classOf[java.lang.Float],
+    classOf[Unit] -> classOf[java.lang.Void]
+    //Void.TYPE -> Void.TYPE,
   )
 
   /**
@@ -204,7 +205,7 @@ object ClassUtils {
     var _className: String = className
     val arrayPrefix = new StringBuilder
 
-    // Handle array encoding
+    // Handle java array encoding
     if (_className.startsWith("[")) {
       while (_className.charAt(0) == '[') {
         _className = _className.substring(1)
@@ -218,14 +219,26 @@ object ClassUtils {
       if (reverseAbbreviationMap.contains(_className))
         _className = reverseAbbreviationMap(_className)
     }
+
+    if (_className.endsWith("[]")) {}
+
     val lastDotIdx = _className.lastIndexOf(PACKAGE_SEPARATOR_CHAR.toInt)
-    val innerIdx = _className.indexOf(
-      INNER_CLASS_SEPARATOR_CHAR.toInt,
-      if (lastDotIdx == -1) 0
-      else lastDotIdx + 1)
+
+    // e.g. org.apache.commons.lang3.ClassUtils$[] => ClassUtils$[]
     var out = _className.substring(lastDotIdx + 1)
-    if (innerIdx != -1) out = out.replace(INNER_CLASS_SEPARATOR_CHAR, PACKAGE_SEPARATOR_CHAR)
-    out + arrayPrefix
+
+    val innerIdx: Int = out.indexOf(INNER_CLASS_SEPARATOR_CHAR.toInt)
+
+    if (innerIdx != -1) {
+      out = out.replace(INNER_CLASS_SEPARATOR_CHAR, PACKAGE_SEPARATOR_CHAR)
+
+      // Scala companion objects
+      if (out.last == '.') out = out.substring(0, out.length - 1) + '$'
+      if (out.indexOf(".anon.") != -1) out = out.replace(".anon.", "$anon.")
+      if (out.indexOf(".[") != -1) out = out.replace(".[", "$[")
+    }
+
+    out + arrayPrefix.result()
   }
 
   /**
@@ -290,7 +303,8 @@ object ClassUtils {
     * @since 3.7
     * @see Class#getSimpleName()
     */
-  def getName(cls: Class[_]): String = getName(cls, StringUtils.EMPTY)
+  def getName(cls: Class[_]): String =
+    getName(cls, StringUtils.EMPTY)
 
   /**
     * <p>Null-safe version of {@code cls.getName()}</p>
@@ -554,19 +568,19 @@ object ClassUtils {
     *         {@code null} if null input
     * @throws java.lang.ClassCastException if classNames contains a non String entry
     */
-  def convertClassNamesToClasses(classNames: List[String]): List[Class[_]] = {
-    if (classNames == null || classNames.isEmpty) return Nil
-    val classes = List.newBuilder[Class[_]]
+  def convertClassNamesToClasses(classNames: util.List[String]): util.List[Class[_]] = {
+    if (classNames == null) return null
+    val classes = new util.ArrayList[Class[_]](classNames.size())
 
-    for (className <- classNames) {
+    for (className <- classNames.asScala) {
       try {
-        classes += (Class.forName(className))
+        classes.add(Class.forName(className))
       } catch {
-        case _: Exception => classes += null
+        case _: Exception => classes.add(null)
       }
     }
 
-    classes.result()
+    classes
   }
 
   /**
@@ -630,7 +644,10 @@ object ClassUtils {
     * @return {@code true} if assignment possible
     */
   def isAssignable(classArray: Array[Class[_]], toClassArray: Class[_]*): Boolean =
-    isAssignable(classArray, toClassArray.toArray, true)
+    isAssignable(classArray, toClassArray.toArray)
+
+  def isAssignable(classArray: Array[Class[_]], toClassArray: Array[Class[_]]): Boolean =
+    isAssignable(classArray, toClassArray, true)
 
   /**
     * <p>Checks if an array of Classes can be assigned to another array of Classes.</p>
@@ -839,9 +856,12 @@ object ClassUtils {
     *         Empty array if an empty array passed in.
     * @since 2.1
     */
-  def primitivesToWrappers(classes: Class[_]*): Array[Class[_]] = {
+  def primitivesToWrappers(classes: Class[_]*): Array[Class[_]] =
+    primitivesToWrappers(classes.toArray)
+
+  def primitivesToWrappers(classes: Array[Class[_]]): Array[Class[_]] = {
     if (classes == null) return null
-    if (classes.length == 0) return classes.toArray
+    if (classes.length == 0) return classes
 
     val convertedClasses = new Array[Class[_]](classes.length)
     for (i <- 0 until classes.length) {
@@ -866,7 +886,7 @@ object ClassUtils {
     * @see #primitiveToWrapper(Class)
     * @since 2.4
     */
-  def wrapperToPrimitive(cls: Class[_]): Class[_] = wrapperPrimitiveMap(cls)
+  def wrapperToPrimitive(cls: Class[_]): Class[_] = wrapperPrimitiveMap.getOrElse(cls, null)
 
   /**
     * <p>Converts the specified array of wrapper Class objects to an array of
@@ -882,7 +902,10 @@ object ClassUtils {
     * @see #wrapperToPrimitive(Class)
     * @since 2.4
     */
-  def wrappersToPrimitives(classes: Class[_]*): Array[Class[_]] = {
+  def wrappersToPrimitives(classes: Class[_]*): Array[Class[_]] =
+    wrappersToPrimitives(classes.toArray)
+
+  def wrappersToPrimitives(classes: Array[Class[_]]): Array[Class[_]] = {
     if (classes == null) return null
     if (classes.length == 0) return classes.toArray
 
@@ -1083,7 +1106,10 @@ object ClassUtils {
     * @return a {@code Class} array, {@code null} if null array input
     * @since 2.4
     */
-  def toClass(array: Any*): Array[Class[_]] = {
+  def toClass(array: Any*): Array[Class[_]] =
+    toClass(array.toArray)
+
+  def toClass(array: Array[Any]): Array[Class[_]] = {
     if (array == null) return null
     if (array.length == 0) return ArrayUtils.EMPTY_CLASS_ARRAY
 
