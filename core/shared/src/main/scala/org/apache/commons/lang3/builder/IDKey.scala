@@ -49,7 +49,10 @@ final class IDKey private[builder] (val value: Any) {
     if (id != idKey.id) return false
 
     // Note that identity equals is used.
-    //value eq idKey.value
-    ???
+    (value, idKey.value) match {
+      case (null, null) => true
+      case (l: AnyRef, r: AnyRef) => l eq r
+      case _ => value == idKey.value
+    }
   }
 }

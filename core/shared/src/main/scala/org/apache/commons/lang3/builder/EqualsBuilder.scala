@@ -329,10 +329,14 @@ object EqualsBuilder {
     reflectUpToClass: Class[_],
     testRecursive: Boolean,
     excludeFields: String*): Boolean = {
-    //if (lhs eq rhs) return true
-    assert(false, "unimplemented")
-    //???
+
     if (lhs == null || rhs == null) return false
+
+    (lhs, rhs) match {
+      case (l: AnyRef, r: AnyRef) => if (l eq r) return true
+      case _ => // nothing
+    }
+
     new EqualsBuilder()
       .setExcludeFields(excludeFields: _*)
       .setReflectUpToClass(reflectUpToClass)
@@ -464,9 +468,12 @@ class EqualsBuilder() extends Builder[Boolean] {
     */
   def reflectionAppend(lhs: Any, rhs: Any): EqualsBuilder = {
     if (!_isEquals) return this
-    //if (lhs eq rhs) return this
-    assert(false, "unimplemented")
-    //???
+
+    (lhs, rhs) match {
+      case (l: AnyRef, r: AnyRef) => if (l eq r) return this
+      case _ => // nothing
+    }
+
     if (lhs == null || rhs == null) {
       _isEquals = false
       return this
