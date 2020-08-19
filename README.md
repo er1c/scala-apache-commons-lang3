@@ -84,9 +84,9 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
   - [x] [JavaVersionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/JavaVersionTest.scala)
   - [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
   - [x] [ObjectUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ObjectUtilsTest.scala)
-  - [ ] [RandomUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RandomUtilsTest.scala)
-  - [ ] [RegExUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RegExUtilsTest.scala)
-  - [ ] [SerializationUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SerializationUtilsTest.scala)
+  - [x] [RandomUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RandomUtilsTest.scala)
+  - [x] [RegExUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RegExUtilsTest.scala)
+  - [x] [SerializationUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SerializationUtilsTest.scala)
   - [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
   - StringUtils
     - [x] [StringUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTest.scala) (**Except** `getLevenshteinDistance`, `getJaroWinklerDistance`, and `getFuzzyDistance`.)
