@@ -1,0 +1,59 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+//package org.apache.commons.lang3.compare
+//
+//import org.junit.Assert.assertEquals
+//import java.util
+//import org.junit.Test
+//
+///**
+//  * Tests {@link ObjectToStringComparator}.
+//  */
+//object ObjectToStringComparatorTest {
+//
+//  private class Thing private[compare](val string: String) {
+//    override def toString = string
+//  }
+//
+//}
+//
+//class ObjectToStringComparatorTest {
+//  @Test def testNull() = {
+//    val things = util.Arrays.asList(null, new ObjectToStringComparatorTest.Thing("y"), null)
+//    things.sort(ObjectToStringComparator.INSTANCE)
+//    assertEquals("y", things.get(0).string)
+//    assertEquals(null, things.get(1))
+//    assertEquals(null, things.get(2))
+//  }
+//
+//  @Test def testNullToString() = {
+//    val things = util.Arrays.asList(new ObjectToStringComparatorTest.Thing(null), new ObjectToStringComparatorTest.Thing("y"), new ObjectToStringComparatorTest.Thing(null))
+//    things.sort(ObjectToStringComparator.INSTANCE)
+//    assertEquals("y", things.get(0).string)
+//    assertEquals(null, things.get(1).string)
+//    assertEquals(null, things.get(2).string)
+//  }
+//
+//  @Test def testSortCollection() = {
+//    val things = util.Arrays.asList(new ObjectToStringComparatorTest.Thing("z"), new ObjectToStringComparatorTest.Thing("y"), new ObjectToStringComparatorTest.Thing("x"))
+//    things.sort(ObjectToStringComparator.INSTANCE)
+//    assertEquals("x", things.get(0).string)
+//    assertEquals("y", things.get(1).string)
+//    assertEquals("z", things.get(2).string)
+//  }
+//}
