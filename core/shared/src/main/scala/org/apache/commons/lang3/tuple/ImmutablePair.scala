@@ -34,7 +34,8 @@ object ImmutablePair {
     * An immutable pair of nulls.
     */
   // This is not defined with generics to avoid warnings in call sites.
-  @SuppressWarnings(Array("rawtypes")) private val NULL: ImmutablePair[_, _] = of(null, null)
+  @SuppressWarnings(Array("rawtypes"))
+  private val NULL: ImmutablePair[Any, Any] = of[Any, Any](null.asInstanceOf[Any], null.asInstanceOf[Any])
 
   /**
     * Returns the empty array singleton that can be assigned without compiler warning.

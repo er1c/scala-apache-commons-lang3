@@ -23,16 +23,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder
 
 @SerialVersionUID(1L)
 object Triple {
-
-  @SerialVersionUID(1L)
-  final private class TripleAdapter[L, M, R] extends Triple[L, M, R] {
-    override def getLeft: L = null.asInstanceOf[L]
-
-    override def getMiddle: M = null.asInstanceOf[M]
-
-    override def getRight: R = null.asInstanceOf[R]
-  }
-
   /**
     * An empty array.
     * <p>
@@ -41,7 +31,7 @@ object Triple {
     *
     * @since 3.10.
     */
-  val EMPTY_ARRAY: Array[Triple[_, _, _]] = Array(new TripleAdapter[Any, Any, Any])
+  val EMPTY_ARRAY: Array[Triple[_, _, _]] = new Array[Triple[_, _, _]](0)
 
   /**
     * Returns the empty array singleton that can be assigned without compiler warning.

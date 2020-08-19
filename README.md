@@ -79,7 +79,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
   - [x] [CharsetsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/CharsetsTest.scala)
   - [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
   - [x] [ClassPathUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassPathUtilsTest.scala)
-  - [ ] [ClassUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassUtilsTest.scala)
+  - [x] [ClassUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassUtilsTest.scala)
   - [ ] [ConversionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ConversionTest.scala)
   - [x] [JavaVersionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/JavaVersionTest.scala)
   - [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
@@ -101,7 +101,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
   - [ ] [SystemUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SystemUtilsTest.scala)
 - Sub packages
   - builder
-    - [ ] [builder.CompareToBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/CompareToBuilderTest.scala)
+    - [x] [builder.CompareToBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/CompareToBuilderTest.scala)
     - [ ] [builder.DefaultToStringBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/DefaultToStringBuilderTest.scala)
     - [ ] [builder.EqualsBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/EqualsBuilderTest.scala)
     - [ ] [builder.HashCodeBuilderAndEqualsBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/HashCodeBuilderAndEqualsBuilderTest.scala)
@@ -152,12 +152,12 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
       - [x] [text.translate.UnicodeUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.scala)
       - [x] [text.translate.UnicodeUnpairedSurrogateRemoverTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.scala)
   - tuple
-    - [ ] [tuple.ImmutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutablePairTest.scala)
-    - [ ] [tuple.ImmutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutableTripleTest.scala)
-    - [ ] [tuple.MutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutablePairTest.scala)
-    - [ ] [tuple.MutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutableTripleTest.scala)
-    - [ ] [tuple.PairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/PairTest.scala)
-    - [ ] [tuple.TripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/TripleTest.scala)
+    - [x] [tuple.ImmutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutablePairTest.scala)
+    - [x] [tuple.ImmutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutableTripleTest.scala)
+    - [x] [tuple.MutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutablePairTest.scala)
+    - [x] [tuple.MutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutableTripleTest.scala)
+    - [x] [tuple.PairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/PairTest.scala)
+    - [x] [tuple.TripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/TripleTest.scala)
 
 
 ### Milestone 2

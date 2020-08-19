@@ -254,19 +254,31 @@ object CompareToBuilder {
     compareTransients: Boolean,
     reflectUpToClass: Class[_],
     excludeFields: String*
+  ): Int = reflectionCompare(lhs, rhs, compareTransients, reflectUpToClass, excludeFields.toArray)
+
+  def reflectionCompare(
+    lhs: Any,
+    rhs: Any,
+    compareTransients: Boolean,
+    reflectUpToClass: Class[_],
+    excludeFields: Array[String]
   ): Int = {
-    //if (lhs eq rhs) return 0
-    assert(false, "unimplemented")
+    (lhs, rhs) match {
+      case (l: AnyRef, r: AnyRef) => if (l eq r) return 0
+      case _ => // nothing
+    }
+
     Objects.requireNonNull(lhs, "lhs")
     Objects.requireNonNull(rhs, "rhs")
     var lhsClazz = lhs.getClass
     if (!lhsClazz.isInstance(rhs)) throw new ClassCastException
     val compareToBuilder = new CompareToBuilder
-    reflectionAppend(lhs, rhs, lhsClazz, compareToBuilder, compareTransients, excludeFields.toArray)
+
+    reflectionAppend(lhs, rhs, lhsClazz, compareToBuilder, compareTransients, excludeFields)
 
     while (lhsClazz.getSuperclass != null && (lhsClazz ne reflectUpToClass)) {
       lhsClazz = lhsClazz.getSuperclass
-      reflectionAppend(lhs, rhs, lhsClazz, compareToBuilder, compareTransients, excludeFields.toArray)
+      reflectionAppend(lhs, rhs, lhsClazz, compareToBuilder, compareTransients, excludeFields)
     }
     compareToBuilder.toComparison
   }
@@ -392,6 +404,7 @@ class CompareToBuilder() extends Builder[Integer] {
     if (comparison != 0) return this
 
     (lhs, rhs) match {
+      case (null, null) => comparison = 0; return this;
       case (null, _) => comparison = -1; return this
       case (_, null) => comparison = 1; return this
       case (l: AnyRef, _) if l.getClass.isArray =>
@@ -575,7 +588,7 @@ class CompareToBuilder() extends Builder[Integer] {
     * @throws java.lang.ClassCastException if {@code rhs} is not assignment-compatible
     *                            with {@code lhs}
     */
-  def append(lhs: Array[Any], rhs: Array[Any]): CompareToBuilder = append(lhs, rhs, null)
+  def append(lhs: Array[AnyRef], rhs: Array[AnyRef]): CompareToBuilder = append(lhs, rhs, null)
 
   /**
     * <p>Appends to the {@code builder} the deep comparison of
@@ -600,27 +613,29 @@ class CompareToBuilder() extends Builder[Integer] {
     *                            with {@code lhs}
     * @since 2.0
     */
-  def append(lhs: Array[Any], rhs: Array[Any], comparator: Comparator[_]): CompareToBuilder = {
+  def append(lhs: Array[_], rhs: Array[_], comparator: Comparator[_])(implicit
+    dummy: DummyImplicit): CompareToBuilder = {
     if (comparison != 0) return this
     if (lhs eq rhs) return this
     if (lhs == null) {
       comparison = -1
       return this
     }
+
     if (rhs == null) {
       comparison = 1
       return this
     }
+
     if (lhs.length != rhs.length) {
       comparison =
         if (lhs.length < rhs.length) -1
         else 1
       return this
     }
+
     var i = 0
-    while ({
-      i < lhs.length && comparison == 0
-    }) {
+    while (i < lhs.length && comparison == 0) {
       append(lhs(i), rhs(i), comparator)
 
       i += 1
@@ -775,6 +790,7 @@ class CompareToBuilder() extends Builder[Integer] {
   def append(lhs: Array[Char], rhs: Array[Char]): CompareToBuilder = {
     if (comparison != 0) return this
     if (lhs eq rhs) return this
+
     if (lhs == null) {
       comparison = -1
       return this

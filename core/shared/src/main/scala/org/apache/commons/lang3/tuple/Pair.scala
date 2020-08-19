@@ -24,16 +24,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder
 
 @SerialVersionUID(4954918890077093841L)
 object Pair {
-
-  @SerialVersionUID(1L)
-  final private class PairAdapter[L, R] extends Pair[L, R] {
-    override def getLeft: L = null.asInstanceOf[L]
-
-    override def getRight: R = null.asInstanceOf[R]
-
-    override def setValue(value: R): R = null.asInstanceOf[R]
-  }
-
   /**
     * An empty array.
     * <p>
@@ -42,7 +32,7 @@ object Pair {
     *
     * @since 3.10.
     */
-  val EMPTY_ARRAY: Array[Pair[_, _]] = Array(new PairAdapter[Any, Any])
+  val EMPTY_ARRAY: Array[Pair[_, _]] = new Array[Pair[_, _]](0)
 
   /**
     * Returns the empty array singleton that can be assigned without compiler warning.
