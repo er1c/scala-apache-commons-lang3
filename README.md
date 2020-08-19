@@ -9,7 +9,7 @@ Target Platforms: `Scala.js` 0.6.x/1.1.x, `Scala Native`
 ## Development State
 
 * Rough Library Files Conversion (**210**/210) :white_check_mark:
-* Rough Test Files Conversion (**90**/182).
+* Rough Test Files Conversion (**182**/182) :white_check_mark:
 * Core Lang3 Classes Compiling
 - [ ] [AnnotationUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/AnnotationUtils.scala)
 - [x] [ArchUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ArchUtils.scala)
@@ -98,7 +98,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [x] [StringUtilsSubstringTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsSubstringTest.scala)
     - [x] [StringUtilsTrimStripTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTrimStripTest.scala)
     - [x] [StringUtilsValueOfTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsValueOfTest.scala)
-  - [ ] [SystemUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SystemUtilsTest.scala)
+  - [x] [SystemUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SystemUtilsTest.scala)
 - Sub packages
   - builder
     - [x] [builder.CompareToBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/builder/CompareToBuilderTest.scala)
@@ -142,6 +142,16 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [x] [mutable.MutableObjectTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableObjectTest.scala)
     - [x] [mutable.MutableShortTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableShortTest.scala)
   - text
+    - [ ] [text.CompositeFormatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/CompositeFormatTest.scala)
+    - [ ] [text.ExtendedMessageFormatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/ExtendedMessageFormatTest.scala)
+    - [ ] [text.FormattableUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/FormattableUtilsTest.scala)
+    - [ ] [text.StrBuilderAppendInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.scala)
+    - [ ] [text.StrBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrBuilderTest.scala)
+    - [ ] [text.StrLookupTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrLookupTest.scala)
+    - [ ] [text.StrMatcherTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrMatcherTest.scala)
+    - [ ] [text.StrSubstitutorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrSubstitutorTest.scala)
+    - [ ] [text.StrTokenizerTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrTokenizerTest.scala)
+    - [ ] [text.WordUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/WordUtilsTest.scala)
     - translate :white_check_mark:
       - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
       - [x] [text.translate.LookupTranslatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/LookupTranslatorTest.scala)
