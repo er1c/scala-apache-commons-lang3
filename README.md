@@ -9,7 +9,7 @@ Target Platforms: `Scala.js` 0.6.x/1.1.x, `Scala Native`
 ## Development State
 
 * Rough Library Files Conversion (**210**/210) :white_check_mark:
-* Rough Test Files Conversion (**0**/182).  **Need Help** 
+* Rough Test Files Conversion (**90**/182).
 * Core Lang3 Classes Compiling
 - [ ] [AnnotationUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/AnnotationUtils.scala)
 - [x] [ArchUtils.scala](./core/shared/src/main/scala/org/apache/commons/lang3/ArchUtils.scala)
@@ -63,9 +63,9 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
 
 #### Milestone 1 Completion State:
 
-- Core Package
+- Core Package :white_check_mark:
   - [x] [ArchUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArchUtilsTest.scala)
-  - ArrayUtils
+  - ArrayUtils :white_check_mark:
     - [x] [ArrayUtilsAddTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsAddTest.scala)
     - [x] [ArrayUtilsInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsInsertTest.scala)
     - [x] [ArrayUtilsRemoveTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ArrayUtilsRemoveTest.scala)
@@ -88,7 +88,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
   - [x] [RegExUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/RegExUtilsTest.scala)
   - [x] [SerializationUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/SerializationUtilsTest.scala)
   - [x] [StringEscapeUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringEscapeUtilsTest.scala)
-  - StringUtils
+  - StringUtils :white_check_mark:
     - [x] [StringUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsTest.scala) (**Except** `getLevenshteinDistance`, `getJaroWinklerDistance`, and `getFuzzyDistance`.)
     - [x] [StringUtilsContainsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsContainsTest.scala)
     - [x] [StringUtilsEmptyBlankTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StringUtilsEmptyBlankTest.scala)
@@ -120,7 +120,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
   - compare
     - [ ] [compare.ComparableUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/compare/ComparableUtilsTest.scala)
     - [ ] [compare.ObjectToStringComparatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/compare/ObjectToStringComparatorTest.scala)
-  - exception
+  - exception :white_check_mark:
     - [x] [exception.AbstractExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionContextTest.scala)
     - [x] [exception.AbstractExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/AbstractExceptionTest.scala)
     - [x] [exception.CloneFailedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/CloneFailedExceptionTest.scala)
@@ -132,7 +132,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [ ] [math.FractionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/FractionTest.scala)
     - [ ] [math.IEEE754rUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/IEEE754rUtilsTest.scala)
     - [ ] [math.NumberUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/NumberUtilsTest.scala)
-  - mutable
+  - mutable :white_check_mark:
     - [x] [mutable.MutableBooleanTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
     - [x] [mutable.MutableByteTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
     - [x] [mutable.MutableDoubleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableDoubleTest.scala)
@@ -142,7 +142,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [x] [mutable.MutableObjectTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableObjectTest.scala)
     - [x] [mutable.MutableShortTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableShortTest.scala)
   - text
-    - translate
+    - translate :white_check_mark:
       - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
       - [x] [text.translate.LookupTranslatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/LookupTranslatorTest.scala)
       - [x] [text.translate.NumericEntityEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.scala)
@@ -151,7 +151,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
       - [x] [text.translate.UnicodeEscaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.scala)
       - [x] [text.translate.UnicodeUnescaperTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.scala)
       - [x] [text.translate.UnicodeUnpairedSurrogateRemoverTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.scala)
-  - tuple
+  - tuple :white_check_mark:
     - [x] [tuple.ImmutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutablePairTest.scala)
     - [x] [tuple.ImmutableTripleTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/ImmutableTripleTest.scala)
     - [x] [tuple.MutablePairTest](./core/jvm/src/test/scala/org/apache/commons/lang3/tuple/MutablePairTest.scala)
