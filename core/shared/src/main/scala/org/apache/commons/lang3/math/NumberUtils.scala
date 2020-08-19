@@ -17,7 +17,7 @@
 
 package org.apache.commons.lang3.math
 
-import java.lang.reflect
+import java.lang.reflect.{Array => ReflectArray}
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
@@ -464,7 +464,7 @@ object NumberUtils {
     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
     * @since 3.8
     */
-  def toScaledBigDecimal(value: Double): BigDecimal = toScaledBigDecimal(value, INTEGER_TWO, RoundingMode.HALF_EVEN)
+  def toScaledBigDecimal(value: JavaDouble): BigDecimal = toScaledBigDecimal(value, INTEGER_TWO, RoundingMode.HALF_EVEN)
 
   /**
     * Convert a {@code Double} to a {@code BigDecimal} whose scale is the
@@ -616,12 +616,12 @@ object NumberUtils {
       val numeric = str.substring(0, length - 1)
       val allZeros = isAllZeros(mant) && isAllZeros(exp)
       lastChar match {
-        case 'l' =>
-        case 'L' =>
+        case 'l' | 'L' =>
           if (dec == null && exp == null && (!numeric.isEmpty && numeric.charAt(0) == '-' && isDigits(
               numeric.substring(1)) || isDigits(numeric))) {
-            try return createLong(numeric)
-            catch {
+            try {
+              return createLong(numeric)
+            } catch {
               case _: NumberFormatException =>
               // NOPMD
               // Too big for a long
@@ -629,8 +629,7 @@ object NumberUtils {
             return createBigInteger(numeric)
           }
           throw new NumberFormatException(str + " is not a valid number.")
-        case 'f' =>
-        case 'F' =>
+        case 'f' | 'F' =>
           try {
             val f = createFloat(str)
             if (!(f.isInfinite || f.floatValue == 0.0f && !(allZeros))) { //If it's too big for a float or the float value = 0 and the string
@@ -641,17 +640,24 @@ object NumberUtils {
             case _: NumberFormatException =>
             // ignore the bad number
           }
-        //$FALL-THROUGH$
-        case 'd' =>
-        case 'D' =>
+
+          try {
+            return createBigDecimal(numeric)
+          } catch {
+            case _: NumberFormatException =>
+          }
+
+        case 'd' | 'D' =>
           try {
             val d = createDouble(str)
             if (!(d.isInfinite || d.floatValue == 0.0d && !(allZeros))) return d
           } catch {
             case _: NumberFormatException =>
           }
-          try return createBigDecimal(numeric)
-          catch {
+
+          try {
+            return createBigDecimal(numeric)
+          } catch {
             case _: NumberFormatException =>
           }
         case _ =>
@@ -676,6 +682,7 @@ object NumberUtils {
       }
       return createBigInteger(str)
     }
+
     //Must be a Float, Double, BigDecimal
     val allZeros = isAllZeros(mant) && isAllZeros(exp)
     try {
@@ -690,6 +697,7 @@ object NumberUtils {
     } catch {
       case _: NumberFormatException =>
     }
+
     createBigDecimal(str)
   }
 
@@ -744,8 +752,8 @@ object NumberUtils {
     * @return converted {@code Float} (or null if the input is null)
     * @throws java.lang.NumberFormatException if the value cannot be converted
     */
-  def createFloat(str: String): Float = {
-    if (str == null) return null.asInstanceOf[Float]
+  def createFloat(str: String): JavaFloat = {
+    if (str == null) return null.asInstanceOf[JavaFloat]
     str.toFloat
   }
 
@@ -758,8 +766,8 @@ object NumberUtils {
     * @return converted {@code Double} (or null if the input is null)
     * @throws java.lang.NumberFormatException if the value cannot be converted
     */
-  def createDouble(str: String): Double = {
-    if (str == null) return null.asInstanceOf[Double]
+  def createDouble(str: String): JavaDouble = {
+    if (str == null) return null.asInstanceOf[JavaDouble]
     str.toDouble
   }
 
@@ -791,8 +799,8 @@ object NumberUtils {
     * @return converted {@code Long} (or null if the input is null)
     * @throws java.lang.NumberFormatException if the value cannot be converted
     */
-  def createLong(str: String): Long = {
-    if (str == null) return null.asInstanceOf[Long]
+  def createLong(str: String): JavaLong = {
+    if (str == null) return null.asInstanceOf[JavaLong]
     JavaLong.decode(str)
   }
 
@@ -808,32 +816,30 @@ object NumberUtils {
     */
   def createBigInteger(str: String): BigInteger = {
     if (str == null) return null
+
     var pos = 0 // offset within string
     var radix = 10
     var negate = false // need to negate later?
+
     if (str.startsWith("-")) {
       negate = true
       pos = 1
     }
+
     if (str.startsWith("0x", pos) || str.startsWith("0X", pos)) { // hex
       radix = 16
       pos += 2
-    } else {
-      if (str.startsWith("#", pos)) { // alternative hex (allowed by Long/Integer)
-        radix = 16
-        pos += 1
-      } else {
-        if (str.startsWith("0", pos) && str.length > pos + 1) { // octal; so long as there are additional digits
-          radix = 8
-          pos += 1
-          // default is to treat as decimal}}}
-          val value = new BigInteger(str.substring(pos), radix)
-          return if (negate) value.negate
-          else value
-        }
-      }
-    }
-    ???
+    } else if (str.startsWith("#", pos)) { // alternative hex (allowed by Long/Integer)
+      radix = 16
+      pos += 1
+    } else if (str.startsWith("0", pos) && str.length > pos + 1) { // octal; so long as there are additional digits
+      radix = 8
+      pos += 1
+    } // default is to treat as decimal
+
+    val value = new BigInteger(str.substring(pos), radix)
+    if (negate) value.negate
+    else value
   }
 
   /**
@@ -860,7 +866,10 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(long[]) to min(long...)
     */
-  def min(array: Long*) = { // Validates input
+  def min(array: Long*): Long = min(array.toArray)
+
+  def min(array: Array[Long]): Long = {
+    // Validates input
     validateArray(array)
     // Finds and returns min
     var min = array(0)
@@ -878,7 +887,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(int[]) to min(int...)
     */
-  def min(array: Int*) = {
+  def min(array: Int*): Int = min(array.toArray)
+
+  def min(array: Array[Int]): Int = {
     validateArray(array)
     var min = array(0)
     for (j <- 1 until array.length) {
@@ -895,7 +906,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(short[]) to min(short...)
     */
-  def min(array: Short*) = {
+  def min(array: Short*): Short = min(array.toArray)
+
+  def min(array: Array[Short]): Short = {
     validateArray(array)
     var min = array(0)
     for (i <- 1 until array.length) {
@@ -912,7 +925,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from min(byte[]) to min(byte...)
     */
-  def min(array: Byte*) = {
+  def min(array: Byte*): Byte = min(array.toArray)
+
+  def min(array: Array[Byte]): Byte = {
     validateArray(array)
     var min = array(0)
     for (i <- 1 until array.length) {
@@ -930,11 +945,13 @@ object NumberUtils {
     * @see IEEE754rUtils#min(double[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from min(double[]) to min(double...)
     */
-  def min(array: Double*): Double = {
+  def min(array: Double*): Double = min(array.toArray)
+
+  def min(array: Array[Double]): Double = {
     validateArray(array)
     var min = array(0)
     for (i <- 1 until array.length) {
-      if (Double.NaN == array(i)) return Double.NaN
+      if (JavaDouble.isNaN(array(i))) return Double.NaN
       if (array(i) < min) min = array(i)
     }
     min
@@ -949,11 +966,13 @@ object NumberUtils {
     * @see IEEE754rUtils#min(float[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from min(float[]) to min(float...)
     */
-  def min(array: Float*): Float = {
+  def min(array: Float*): Float = min(array.toArray)
+
+  def min(array: Array[Float]): Float = {
     validateArray(array)
     var min = array(0)
     for (i <- 1 until array.length) {
-      if (Float.NaN == array(i)) return Float.NaN
+      if (JavaFloat.isNaN(array(i))) return Float.NaN
       if (array(i) < min) min = array(i)
     }
     min
@@ -967,7 +986,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(long[]) to max(long...)
     */
-  def max(array: Long*) = {
+  def max(array: Long*): Long = max(array.toArray)
+
+  def max(array: Array[Long]): Long = {
     validateArray(array)
     // Finds and returns max
     var max = array(0)
@@ -985,7 +1006,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(int[]) to max(int...)
     */
-  def max(array: Int*) = {
+  def max(array: Int*): Int = max(array.toArray)
+
+  def max(array: Array[Int]): Int = {
     validateArray(array)
     var max = array(0)
     for (j <- 1 until array.length) {
@@ -1002,7 +1025,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(short[]) to max(short...)
     */
-  def max(array: Short*) = {
+  def max(array: Short*): Short = max(array.toArray)
+
+  def max(array: Array[Short]): Short = {
     validateArray(array)
     var max = array(0)
     for (i <- 1 until array.length) {
@@ -1019,7 +1044,9 @@ object NumberUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is {@code null} or empty
     * @since 3.4 Changed signature from max(byte[]) to max(byte...)
     */
-  def max(array: Byte*) = {
+  def max(array: Byte*): Byte = max(array.toArray)
+
+  def max(array: Array[Byte]): Byte = {
     validateArray(array)
     var max = array(0)
     for (i <- 1 until array.length) {
@@ -1037,11 +1064,25 @@ object NumberUtils {
     * @see IEEE754rUtils#max(double[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from max(double[]) to max(double...)
     */
-  def max(array: Double*): Double = {
+  def max(array: Double*): Double = max(array.toArray)
+
+  def max(array: Array[Double]): Double = {
     validateArray(array)
     var max = array(0)
     for (j <- 1 until array.length) {
-      if (Double.NaN == array(j)) return Double.NaN
+      if (JavaDouble.isNaN(array(j))) return Double.NaN
+      if (array(j) > max) max = array(j)
+    }
+    max
+  }
+
+  def max(array: JavaDouble*): JavaDouble = max(array.toArray)
+
+  def max(array: Array[JavaDouble]): JavaDouble = {
+    validateArray(array)
+    var max = array(0)
+    for (j <- 1 until array.length) {
+      if (JavaDouble.isNaN(array(j))) return Double.NaN
       if (array(j) > max) max = array(j)
     }
     max
@@ -1056,11 +1097,13 @@ object NumberUtils {
     * @see IEEE754rUtils#max(float[]) IEEE754rUtils for a version of this method that handles NaN differently
     * @since 3.4 Changed signature from max(float[]) to max(float...)
     */
-  def max(array: Float*): Float = {
+  def max(array: Float*): Float = max(array.toArray)
+
+  def max(array: Array[Float]): Float = {
     validateArray(array)
     var max = array(0)
     for (j <- 1 until array.length) {
-      if (Float.NaN == array(j)) return Float.NaN
+      if (JavaFloat.isNaN(array(j))) return Float.NaN
       if (array(j) > max) max = array(j)
     }
     max
@@ -1074,7 +1117,7 @@ object NumberUtils {
     */
   private def validateArray(array: Any): Unit = {
     Validate.notNull(array, "The Array must not be null")
-    Validate.isTrue(reflect.Array.getLength(array) != 0, "Array cannot be empty.")
+    Validate.isTrue(ReflectArray.getLength(array) != 0, "Array cannot be empty.")
   }
 
   /**
