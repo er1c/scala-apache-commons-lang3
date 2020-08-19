@@ -58,6 +58,6 @@ class SerializationException(msg: String, cause: Throwable) extends RuntimeExcep
     *              that caused this exception to be thrown.
     */
   def this(cause: Throwable) {
-    this(null, cause)
+    this(cause.toString, cause)
   }
 }

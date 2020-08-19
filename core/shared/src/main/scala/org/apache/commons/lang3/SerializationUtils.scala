@@ -112,8 +112,9 @@ object SerializationUtils {
     */
   def serialize(obj: Serializable, outputStream: OutputStream): Unit = {
     Validate.notNull(outputStream, "The OutputStream must not be null")
-    val out: ObjectOutputStream = new ObjectOutputStream(outputStream)
+    var out: ObjectOutputStream = null
     try {
+      out = new ObjectOutputStream(outputStream)
       out.writeObject(obj)
     } catch {
       case ex: IOException => throw new SerializationException(ex)
@@ -166,8 +167,9 @@ object SerializationUtils {
     */
   def deserialize[T](inputStream: InputStream): T = {
     Validate.notNull(inputStream, "The InputStream must not be null")
-    val in: ObjectInputStream = new ObjectInputStream(inputStream)
+    var in: ObjectInputStream = null
     try {
+      in = new ObjectInputStream(inputStream)
       @SuppressWarnings(Array("unchecked")) val obj: T = in.readObject.asInstanceOf[T]
       return obj
     } catch {
