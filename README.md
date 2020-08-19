@@ -80,7 +80,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
   - [x] [ClassLoaderUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassLoaderUtilsTest.scala)
   - [x] [ClassPathUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassPathUtilsTest.scala)
   - [x] [ClassUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ClassUtilsTest.scala)
-  - [ ] [ConversionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ConversionTest.scala)
+  - [x] [ConversionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ConversionTest.scala)
   - [x] [JavaVersionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/JavaVersionTest.scala)
   - [x] [NotImplementedExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/NotImplementedExceptionTest.scala)
   - [x] [ObjectUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ObjectUtilsTest.scala)
