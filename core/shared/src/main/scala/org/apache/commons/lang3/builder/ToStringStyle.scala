@@ -376,7 +376,11 @@ object ToStringStyle {
     this.setSizeStartText("\"<size=")
     this.setSizeEndText(">\"")
 
-    override def append(buffer: StringBuffer, fieldName: String, array: Array[Any], fullDetail: JavaBoolean): Unit = {
+    override def append(
+      buffer: StringBuffer,
+      fieldName: String,
+      array: Array[AnyRef],
+      fullDetail: JavaBoolean): Unit = {
       if (fieldName == null)
         throw new UnsupportedOperationException("Field names are mandatory when using JsonToStringStyle")
       if (!isFullDetail(fullDetail))
@@ -468,7 +472,7 @@ object ToStringStyle {
       appendValueAsString(buffer, String.valueOf(value))
     }
 
-    override protected def appendDetail(buffer: StringBuffer, fieldName: String, value: Any): Unit = {
+    override protected def appendDetail(buffer: StringBuffer, fieldName: String, value: AnyRef): Unit = {
       if (value == null) {
         appendNullText(buffer, fieldName)
         return
@@ -760,7 +764,7 @@ abstract class ToStringStyle protected ()
     *                  not {@code null}
     * @param detail    output detail or not
     */
-  protected def appendInternal(buffer: StringBuffer, fieldName: String, value: Any, detail: Boolean): Unit = {
+  protected[builder] def appendInternal(buffer: StringBuffer, fieldName: String, value: Any, detail: Boolean): Unit = {
     if (ToStringStyle.isRegistered(value) && !(value.isInstanceOf[Number] || value.isInstanceOf[Boolean] || value
         .isInstanceOf[Character])) {
       appendCyclicObject(buffer, fieldName, value)
@@ -798,9 +802,9 @@ abstract class ToStringStyle protected ()
       if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Boolean]])
       else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Boolean]])
     else if (value.getClass.isArray)
-      if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[Any]])
-      else appendSummary(buffer, fieldName, value.asInstanceOf[Array[Any]])
-    else if (detail) appendDetail(buffer, fieldName, value)
+      if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[Array[AnyRef]])
+      else appendSummary(buffer, fieldName, value.asInstanceOf[Array[AnyRef]])
+    else if (detail) appendDetail(buffer, fieldName, value.asInstanceOf[AnyRef])
     else appendSummary(buffer, fieldName, value)
     finally ToStringStyle.unregister(value)
   }
@@ -830,7 +834,7 @@ abstract class ToStringStyle protected ()
     * @param value     the value to add to the {@code toString},
     *                  not {@code null}
     */
-  protected def appendDetail(buffer: StringBuffer, fieldName: String, value: Any): Unit = {
+  protected def appendDetail(buffer: StringBuffer, fieldName: String, value: AnyRef): Unit = {
     void(fieldName)
     buffer.append(value)
     ()
@@ -1129,7 +1133,7 @@ abstract class ToStringStyle protected ()
     * @param fullDetail {@code true} for detail, {@code false}
     *                   for summary info, {@code null} for style decides
     */
-  def append(buffer: StringBuffer, fieldName: String, array: Array[Any], fullDetail: JavaBoolean): Unit = {
+  def append(buffer: StringBuffer, fieldName: String, array: Array[AnyRef], fullDetail: JavaBoolean): Unit = {
     appendFieldStart(buffer, fieldName)
     if (array == null) appendNullText(buffer, fieldName)
     else if (isFullDetail(fullDetail)) appendDetail(buffer, fieldName, array)
@@ -1146,7 +1150,7 @@ abstract class ToStringStyle protected ()
     * @param array     the array to add to the {@code toString},
     *                  not {@code null}
     */
-  protected def appendDetail(buffer: StringBuffer, fieldName: String, array: Array[Any])(implicit
+  protected def appendDetail(buffer: StringBuffer, fieldName: String, array: Array[AnyRef])(implicit
     d: DummyImplicit): Unit = {
     buffer.append(arrayStart)
 
@@ -1206,7 +1210,7 @@ abstract class ToStringStyle protected ()
     * @param array     the array to add to the {@code toString},
     *                  not {@code null}
     */
-  protected def appendSummary(buffer: StringBuffer, fieldName: String, array: Array[Any]): Unit = {
+  protected def appendSummary(buffer: StringBuffer, fieldName: String, array: Array[AnyRef]): Unit = {
     appendSummarySize(buffer, fieldName, array.length)
   }
 

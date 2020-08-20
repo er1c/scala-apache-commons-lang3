@@ -19,43 +19,34 @@
 //
 //import org.scalatestplus.junit.JUnitSuite
 //import java.util
-//import java.util.{ArrayList, List}
 //import org.junit.Assert._
 //import org.junit.Test
-//import org.junit.{Before, After}
-//
+//import scala.collection.JavaConverters._
 ///**
 //  */
 //object MultilineRecursiveToStringStyleTest {
 //
 //  private[builder] class WithArrays {
-//    private[builder] val boolArray = null
-//    private[builder] val charArray = null
-//    private[builder] val doubleArray = null
-//    private[builder] val intArray = null
-//    private[builder] val longArray = null
-//    private[builder] val stringArray = null
+//    private[builder] var boolArray: Array[Boolean] = null
+//    private[builder] var charArray: Array[Char] = null
+//    private[builder] var doubleArray: Array[Double] = null
+//    private[builder] var intArray: Array[Int] = null
+//    private[builder] var longArray: Array[Long] = null
+//    private[builder] var stringArray: Array[String] = null
 //  }
 //
 //  private[builder] class Bank private[builder] (var name: String) {}
 //
 //  private[builder] class Customer private[builder] (var name: String) {
-//    private[builder] val bank = null
-//    private[builder] val accounts = null
+//    private[builder] var bank: Bank = null
+//    private[builder] var accounts: Array[Account] = null
 //  }
 //
 //  private[builder] class Account {
-//    private[builder] val owner = null
+//    private[builder] var owner: Customer = null
 //    private[builder] val transactions = new util.ArrayList[MultilineRecursiveToStringStyleTest.Transaction]
 //
-//    def getBalance: Double = {
-//      var balance = 0
-//      import scala.collection.JavaConversions._
-//      for (tx <- transactions) {
-//        balance += tx.amount
-//      }
-//      balance
-//    }
+//    def getBalance: Double = transactions.asScala.map{_.amount}.sum
 //  }
 //
 //  private[builder] class Transaction private[builder] (var date: String, var amount: Double) {}
@@ -157,5 +148,5 @@
 //  private def getClassPrefix(`object`: Any) =
 //    `object`.getClass.getName + "@" + Integer.toHexString(System.identityHashCode(`object`))
 //
-//  private def toString(`object`: Any) = new ReflectionToStringBuilder[_](`object`, new Nothing).toString
+//  private def toString(`object`: Any) = new ReflectionToStringBuilder[_](`object`, new MultilineRecursiveToStringStyle()).toString
 //}

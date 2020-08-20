@@ -28,21 +28,21 @@
 //  *
 //  * <pre>
 //  * public class Job {
-//  * String title;
-//  * ...
+//  *   String title;
+//  *   ...
 //  * }
 //  *
 //  * public class Person {
-//  * String name;
-//  * int age;
-//  * boolean smoker;
-//  * Job job;
+//  *   String name;
+//  *   int age;
+//  *   boolean smoker;
+//  *   Job job;
 //  *
-//  * ...
+//  *   ...
 //  *
-//  * public String toString() {
-//  * return new ReflectionToStringBuilder(this, new MultilineRecursiveToStringStyle()).toString();
-//  * }
+//  *   public String toString() {
+//  *     return new ReflectionToStringBuilder(this, new MultilineRecursiveToStringStyle()).toString();
+//  *   }
 //  * }
 //  * </pre>
 //  *
@@ -97,15 +97,15 @@
 //    * @param spaces how far to indent
 //    * @return a StringBuilder with {spaces} leading space characters.
 //    */
-//  private def spacer(spaces: Int) = {
+//  private def spacer(spaces: Int): StringBuilder = {
 //    val sb = new StringBuilder
-//    for (i <- 0 until spaces) {
+//    for (_ <- 0 until spaces) {
 //      sb.append(" ")
 //    }
 //    sb
 //  }
 //
-//  override def appendDetail(buffer: StringBuffer, fieldName: String, value: Any): Unit = {
+//  override def appendDetail(buffer: StringBuffer, fieldName: String, value: AnyRef): Unit = {
 //    if (!ClassUtils.isPrimitiveWrapper(value.getClass) && !(classOf[String] == value.getClass) && accept(value.getClass)) {
 //      spaces += MultilineRecursiveToStringStyle.INDENT
 //      resetIndent()
@@ -135,7 +135,7 @@
 //  override protected def appendDetail(buffer: StringBuffer, fieldName: String, array: Array[Long]): Unit = {
 //    spaces += MultilineRecursiveToStringStyle.INDENT
 //    resetIndent()
-//    super.appendDetail(buffer, fieldName, array)
+//    super.appendDetail(buffer, fieldName, array: Array[Long])
 //    spaces -= MultilineRecursiveToStringStyle.INDENT
 //    resetIndent()
 //  }
