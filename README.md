@@ -50,7 +50,7 @@ Target Platforms: `Scala.js` 0.6.x/1.1.x, `Scala Native`
 - [x] compare (**2**/2)
 - [x] exception (**6**/6)
 - [ ] function (**25**/43)
-- [ ] math (**2**/3)
+- [x] math (**3**/3)
 - [x] mutable (**9**/9)
 - [ ] reflect (**1**/8)
 - [x] text (**4**/4)
@@ -128,10 +128,10 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [x] [exception.ContextedRuntimeExceptionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ContextedRuntimeExceptionTest.scala)
     - [x] [exception.DefaultExceptionContextTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/DefaultExceptionContextTest.scala)
     - [x] [exception.ExceptionUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/exception/ExceptionUtilsTest.scala)
-  - math
-    - [ ] [math.FractionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/FractionTest.scala)
-    - [ ] [math.IEEE754rUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/IEEE754rUtilsTest.scala)
-    - [ ] [math.NumberUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/NumberUtilsTest.scala)
+  - math :white_check_mark:
+    - [x] [math.FractionTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/FractionTest.scala)
+    - [x] [math.IEEE754rUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/IEEE754rUtilsTest.scala)
+    - [x] [math.NumberUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/math/NumberUtilsTest.scala)
   - mutable :white_check_mark:
     - [x] [mutable.MutableBooleanTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
     - [x] [mutable.MutableByteTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableBooleanTest.scala)
@@ -176,6 +176,7 @@ All except `reflect`, `function`, `concurrent`
 
 - Core Package
   - [ ] [StreamsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/StreamsTest.scala)
+  - [ ] [ValidateTest](./core/jvm/src/test/scala/org/apache/commons/lang3/ValidateTest.scala)
 - Sub packages
   - event
   - stream

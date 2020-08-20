@@ -54,7 +54,9 @@ object IEEE754rUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is empty
     * @since 3.4 Changed signature from min(double[]) to min(double...)
     */
-  def min(array: Double*): Double = {
+  def min(array: Double*): Double = min(array.toArray)
+
+  def min(array: Array[Double]): Double = {
     Validate.notNull(array, "The Array must not be null")
     Validate.isTrue(array.length != 0, "Array cannot be empty.")
     // Finds and returns min
@@ -74,7 +76,9 @@ object IEEE754rUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is empty
     * @since 3.4 Changed signature from min(float[]) to min(float...)
     */
-  def min(array: Float*): Float = {
+  def min(array: Float*): Float = min(array.toArray)
+
+  def min(array: Array[Float]): Float = {
     Validate.notNull(array, "The Array must not be null")
     Validate.isTrue(array.length != 0, "Array cannot be empty.")
     var currMin = array(0)
@@ -145,7 +149,9 @@ object IEEE754rUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is empty
     * @since 3.4 Changed signature from max(double[]) to max(double...)
     */
-  def max(array: Double*): Double = {
+  def max(array: Double*): Double = max(array.toArray)
+
+  def max(array: Array[Double]): Double = {
     Validate.notNull(array, "The Array must not be null")
     Validate.isTrue(array.length != 0, "Array cannot be empty.")
     // Finds and returns max
@@ -166,7 +172,9 @@ object IEEE754rUtils {
     * @throws java.lang.IllegalArgumentException if {@code array} is empty
     * @since 3.4 Changed signature from max(float[]) to max(float...)
     */
-  def max(array: Float*): Float = {
+  def max(array: Float*): Float = max(array.toArray)
+
+  def max(array: Array[Float]): Float = {
     Validate.notNull(array, "The Array must not be null")
     Validate.isTrue(array.length != 0, "Array cannot be empty.")
     var currMax = array(0)
