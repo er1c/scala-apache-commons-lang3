@@ -17,10 +17,11 @@
 
 //package org.apache.commons.lang3.builder
 //
+//import java.lang.{Double => JavaDouble, Float => JavaFloat}
+//import org.apache.commons.lang3.void
 //import org.scalatestplus.junit.JUnitSuite
 //import org.junit.Assert._
 //import org.junit.Test
-//import org.junit.{Before, After}
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.builder.HashCodeBuilder}.
@@ -31,20 +32,20 @@
 //    * A reflection test fixture.
 //    */
 //  private[builder] class ReflectionTestCycleA {
-//    private[builder] val b = null
+//    private[builder] var b: ReflectionTestCycleB = null
 //
 //    override def hashCode: Int = HashCodeBuilder.reflectionHashCode(this)
 //  }
 //
 //  private[builder] class ReflectionTestCycleB {
-//    private[builder] val a = null
+//    private[builder] var a: ReflectionTestCycleA = null
 //
 //    override def hashCode: Int = HashCodeBuilder.reflectionHashCode(this)
 //  }
 //
 //  private[builder] class TestObject private[builder] (var a: Int) {
 //    override def equals(o: Any): Boolean = {
-//      if (o eq this) return true
+//      if (o.isInstanceOf[AnyRef] && (o.asInstanceOf[AnyRef] eq this)) return true
 //      if (!o.isInstanceOf[HashCodeBuilderTest.TestObject]) return false
 //      val rhs = o.asInstanceOf[HashCodeBuilderTest.TestObject]
 //      a == rhs.a
@@ -62,6 +63,7 @@
 //  private[builder] class TestSubObject private[builder] (a: Int) extends HashCodeBuilderTest.TestObject(a) {
 //    private var b = 0
 //    @SuppressWarnings(Array("unused")) private var t = 0
+//    void(t)
 //
 //    def this(a: Int, b: Int, t: Int) {
 //      this(a)
@@ -70,7 +72,7 @@
 //    }
 //
 //    override def equals(o: Any): Boolean = {
-//      if (o eq this) return true
+//      if (o.isInstanceOf[AnyRef] && (o.asInstanceOf[AnyRef] eq this)) return true
 //      if (!o.isInstanceOf[HashCodeBuilderTest.TestSubObject]) return false
 //      val rhs = o.asInstanceOf[HashCodeBuilderTest.TestSubObject]
 //      super.equals(o) && b == rhs.b
@@ -84,7 +86,11 @@
 //    @SuppressWarnings(Array("unused")) private var two = 0
 //    @SuppressWarnings(Array("unused")) private var three = 0
 //
-//    def this(one: Int, two: Int, three: Int): Unit = {
+//    void(one)
+//    void(two)
+//    void(three)
+//
+//    def this(one: Int, two: Int, three: Int) = {
 //      this()
 //      this.one = one
 //      this.two = two
@@ -109,18 +115,22 @@
 //class HashCodeBuilderTest extends JUnitSuite {
 //  @Test def testConstructorExZero(): Unit = {
 //    assertThrows[IllegalArgumentException](new HashCodeBuilder(0, 0))
+//    ()
 //  }
 //
 //  @Test def testConstructorExEvenFirst(): Unit = {
 //    assertThrows[IllegalArgumentException](new HashCodeBuilder(2, 3))
+//    ()
 //  }
 //
 //  @Test def testConstructorExEvenSecond(): Unit = {
 //    assertThrows[IllegalArgumentException](new HashCodeBuilder(3, 2))
+//    ()
 //  }
 //
 //  @Test def testConstructorExEvenNegative(): Unit = {
 //    assertThrows[IllegalArgumentException](new HashCodeBuilder(-2, -2))
+//    ()
 //  }
 //
 //  @Test def testReflectionHashCode(): Unit = {
@@ -142,51 +152,52 @@
 //  }
 //
 //  @Test def testReflectionHierarchyHashCodeEx1(): Unit = {
-//    assertThrows(
-//      classOf[IllegalArgumentException],
-//      () => HashCodeBuilder.reflectionHashCode(0, 0, new HashCodeBuilderTest.TestSubObject(0, 0, 0), true))
+//    assertThrows[IllegalArgumentException](
+//      HashCodeBuilder.reflectionHashCode(0, 0, new HashCodeBuilderTest.TestSubObject(0, 0, 0), true))
+//    ()
 //  }
 //
 //  @Test def testReflectionHierarchyHashCodeEx2(): Unit = {
-//    assertThrows(
-//      classOf[IllegalArgumentException],
-//      () => HashCodeBuilder.reflectionHashCode(2, 2, new HashCodeBuilderTest.TestSubObject(0, 0, 0), true))
+//    assertThrows[IllegalArgumentException](
+//      HashCodeBuilder.reflectionHashCode(2, 2, new HashCodeBuilderTest.TestSubObject(0, 0, 0), true))
+//    ()
 //  }
 //
 //  @Test def testReflectionHashCodeEx1(): Unit = {
-//    assertThrows(
-//      classOf[IllegalArgumentException],
-//      () => HashCodeBuilder.reflectionHashCode(0, 0, new HashCodeBuilderTest.TestObject(0), true))
+//    assertThrows[IllegalArgumentException](
+//      HashCodeBuilder.reflectionHashCode(0, 0, new HashCodeBuilderTest.TestObject(0), true))
+//    ()
 //  }
 //
 //  @Test def testReflectionHashCodeEx2(): Unit = {
-//    assertThrows(
-//      classOf[IllegalArgumentException],
-//      () => HashCodeBuilder.reflectionHashCode(2, 2, new HashCodeBuilderTest.TestObject(0), true))
+//    assertThrows[IllegalArgumentException](
+//      HashCodeBuilder.reflectionHashCode(2, 2, new HashCodeBuilderTest.TestObject(0), true))
+//    ()
 //  }
 //
 //  @Test def testReflectionHashCodeEx3(): Unit = {
 //    assertThrows[NullPointerException](HashCodeBuilder.reflectionHashCode(13, 19, null, true))
+//    ()
 //  }
 //
 //  @Test def testSuper(): Unit = {
-//    val obj = new Any
+//    val obj = new AnyRef
 //    assertEquals(
 //      17 * 37 + 19 * 41 + obj.hashCode,
 //      new HashCodeBuilder(17, 37).appendSuper(new HashCodeBuilder(19, 41).append(obj).toHashCode).toHashCode)
 //  }
 //
 //  @Test def testObject(): Unit = {
-//    var obj = null
+//    var obj: AnyRef = null
 //    assertEquals(17 * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
-//    obj = new Any
+//    obj = new AnyRef
 //    assertEquals(17 * 37 + obj.hashCode, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //  }
 //
 //  @Test def testObjectBuild(): Unit = {
-//    var obj = null
+//    var obj: AnyRef = null
 //    assertEquals(17 * 37, new HashCodeBuilder(17, 37).append(obj).build.intValue)
-//    obj = new Any
+//    obj = new AnyRef
 //    assertEquals(17 * 37 + obj.hashCode, new HashCodeBuilder(17, 37).append(obj).build.intValue)
 //  }
 //
@@ -218,13 +229,13 @@
 //  @Test @SuppressWarnings(Array("cast")) def testDouble(): Unit = {
 //    assertEquals(17 * 37, new HashCodeBuilder(17, 37).append(0d).toHashCode)
 //    val d: Double = 1234567.89
-//    val l: Long = Double.doubleToLongBits(d)
+//    val l: Long = JavaDouble.doubleToLongBits(d)
 //    assertEquals(17 * 37 + (l ^ l >> 32).toInt, new HashCodeBuilder(17, 37).append(d).toHashCode)
 //  }
 //  @Test @SuppressWarnings(Array("cast")) def testFloat(): Unit = {
 //    assertEquals(17 * 37, new HashCodeBuilder(17, 37).append(0f).toHashCode)
 //    val f: Float = 1234.89f
-//    val i: Int = Float.floatToIntBits(f)
+//    val i: Int = JavaFloat.floatToIntBits(f)
 //    assertEquals(17 * 37 + i, new HashCodeBuilder(17, 37).append(f).toHashCode)
 //  }
 //  @Test def testBoolean(): Unit = {
@@ -235,17 +246,17 @@
 //    assertEquals(17 * 37, new HashCodeBuilder(17, 37).append(null.asInstanceOf[Array[AnyRef]]).toHashCode)
 //    val obj: Array[AnyRef] = new Array[AnyRef](2)
 //    assertEquals(17 * 37 * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
-//    obj(0) = new Any
+//    obj(0) = new AnyRef
 //    assertEquals((17 * 37 + obj(0).hashCode) * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
-//    obj(1) = new Any
+//    obj(1) = new AnyRef
 //    assertEquals((17 * 37 + obj(0).hashCode) * 37 + obj(1).hashCode, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //  }
 //  @Test def testObjectArrayAsObject(): Unit = {
 //    val obj: Array[AnyRef] = new Array[AnyRef](2)
 //    assertEquals(17 * 37 * 37, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
-//    obj(0) = new Any
+//    obj(0) = new AnyRef
 //    assertEquals((17 * 37 + obj(0).hashCode) * 37, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
-//    obj(1) = new Any
+//    obj(1) = new AnyRef
 //    assertEquals(
 //      (17 * 37 + obj(0).hashCode) * 37 + obj(1).hashCode,
 //      new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
@@ -344,11 +355,11 @@
 //    val obj: Array[Double] = new Array[Double](2)
 //    assertEquals(17 * 37 * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //    obj(0) = 5.4d
-//    val l1: Long = Double.doubleToLongBits(5.4d)
+//    val l1: Long = JavaDouble.doubleToLongBits(5.4d)
 //    val h1: Int = (l1 ^ l1 >> 32).toInt
 //    assertEquals((17 * 37 + h1) * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //    obj(1) = 6.3d
-//    val l2: Long = Double.doubleToLongBits(6.3d)
+//    val l2: Long = JavaDouble.doubleToLongBits(6.3d)
 //    val h2: Int = (l2 ^ l2 >> 32).toInt
 //    assertEquals((17 * 37 + h1) * 37 + h2, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //  }
@@ -356,11 +367,11 @@
 //    val obj: Array[Double] = new Array[Double](2)
 //    assertEquals(17 * 37 * 37, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
 //    obj(0) = 5.4d
-//    val l1: Long = Double.doubleToLongBits(5.4d)
+//    val l1: Long = JavaDouble.doubleToLongBits(5.4d)
 //    val h1: Int = (l1 ^ l1 >> 32).toInt
 //    assertEquals((17 * 37 + h1) * 37, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
 //    obj(1) = 6.3d
-//    val l2: Long = Double.doubleToLongBits(6.3d)
+//    val l2: Long = JavaDouble.doubleToLongBits(6.3d)
 //    val h2: Int = (l2 ^ l2 >> 32).toInt
 //    assertEquals((17 * 37 + h1) * 37 + h2, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
 //  }
@@ -369,20 +380,20 @@
 //    val obj: Array[Float] = new Array[Float](2)
 //    assertEquals(17 * 37 * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //    obj(0) = 5.4f
-//    val h1: Int = Float.floatToIntBits(5.4f)
+//    val h1: Int = JavaFloat.floatToIntBits(5.4f)
 //    assertEquals((17 * 37 + h1) * 37, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //    obj(1) = 6.3f
-//    val h2: Int = Float.floatToIntBits(6.3f)
+//    val h2: Int = JavaFloat.floatToIntBits(6.3f)
 //    assertEquals((17 * 37 + h1) * 37 + h2, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //  }
 //  @Test def testFloatArrayAsObject(): Unit = {
 //    val obj: Array[Float] = new Array[Float](2)
 //    assertEquals(17 * 37 * 37, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
 //    obj(0) = 5.4f
-//    val h1: Int = Float.floatToIntBits(5.4f)
+//    val h1: Int = JavaFloat.floatToIntBits(5.4f)
 //    assertEquals((17 * 37 + h1) * 37, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
 //    obj(1) = 6.3f
-//    val h2: Int = Float.floatToIntBits(6.3f)
+//    val h2: Int = JavaFloat.floatToIntBits(6.3f)
 //    assertEquals((17 * 37 + h1) * 37 + h2, new HashCodeBuilder(17, 37).append(obj.asInstanceOf[Any]).toHashCode)
 //  }
 //  @Test def testBooleanArray(): Unit = {
@@ -416,21 +427,22 @@
 //    obj(1) = new Array[Boolean](1)
 //    assertEquals(((17 * 37 + 0) * 37 + 1) * 37 + 1, new HashCodeBuilder(17, 37).append(obj).toHashCode)
 //  }
-//  @Test def testReflectionHashCodeExcludeFields(): Unit = {
-//    val x: HashCodeBuilderTest.TestObjectWithMultipleFields =
-//      new HashCodeBuilderTest.TestObjectWithMultipleFields(1, 2, 3)
-//    assertEquals(((17 * 37 + 1) * 37 + 3) * 37 + 2, HashCodeBuilder.reflectionHashCode(x))
-//    assertEquals(
-//      ((17 * 37 + 1) * 37 + 3) * 37 + 2,
-//      HashCodeBuilder.reflectionHashCode(x, null.asInstanceOf[Array[String]]))
-//    assertEquals(((17 * 37 + 1) * 37 + 3) * 37 + 2, HashCodeBuilder.reflectionHashCode(x))
-//    assertEquals(((17 * 37 + 1) * 37 + 3) * 37 + 2, HashCodeBuilder.reflectionHashCode(x, "xxx"))
-//    assertEquals((17 * 37 + 1) * 37 + 3, HashCodeBuilder.reflectionHashCode(x, "two"))
-//    assertEquals((17 * 37 + 1) * 37 + 2, HashCodeBuilder.reflectionHashCode(x, "three"))
-//    assertEquals(17 * 37 + 1, HashCodeBuilder.reflectionHashCode(x, "two", "three"))
-//    assertEquals(17, HashCodeBuilder.reflectionHashCode(x, "one", "two", "three"))
-//    assertEquals(17, HashCodeBuilder.reflectionHashCode(x, "one", "two", "three", "xxx"))
-//  }
+//
+////  @Test def testReflectionHashCodeExcludeFields(): Unit = {
+////    val x: HashCodeBuilderTest.TestObjectWithMultipleFields =
+////      new HashCodeBuilderTest.TestObjectWithMultipleFields(1, 2, 3)
+////    assertEquals(((17 * 37 + 1) * 37 + 3) * 37 + 2, HashCodeBuilder.reflectionHashCode(x))
+////    assertEquals(
+////      ((17 * 37 + 1) * 37 + 3) * 37 + 2,
+////      HashCodeBuilder.reflectionHashCode(x, null.asInstanceOf[Array[String]]))
+////    assertEquals(((17 * 37 + 1) * 37 + 3) * 37 + 2, HashCodeBuilder.reflectionHashCode(x))
+////    assertEquals(((17 * 37 + 1) * 37 + 3) * 37 + 2, HashCodeBuilder.reflectionHashCode(x, "xxx"))
+////    assertEquals((17 * 37 + 1) * 37 + 3, HashCodeBuilder.reflectionHashCode(x, "two"))
+////    assertEquals((17 * 37 + 1) * 37 + 2, HashCodeBuilder.reflectionHashCode(x, "three"))
+////    assertEquals(17 * 37 + 1, HashCodeBuilder.reflectionHashCode(x, "two", "three"))
+////    assertEquals(17, HashCodeBuilder.reflectionHashCode(x, "one", "two", "three"))
+////    assertEquals(17, HashCodeBuilder.reflectionHashCode(x, "one", "two", "three", "xxx"))
+////  }
 //
 //  /**
 //    * Test Objects pointing to each other.
@@ -462,16 +474,18 @@
 //    * Ensures LANG-520 remains true
 //    */
 //  @Test def testToHashCodeEqualsHashCode(): Unit = {
-//    val hcb: HashCodeBuilder = new HashCodeBuilder(17, 37).append(new Any).append('a')
+//    val hcb: HashCodeBuilder = new HashCodeBuilder(17, 37).append(new AnyRef).append('a')
 //    assertEquals(
+//      "hashCode() is no longer returning the same value as toHashCode() - see LANG-520",
 //      hcb.toHashCode,
-//      hcb.hashCode,
-//      "hashCode() is no longer returning the same value as toHashCode() - see LANG-520")
+//      hcb.hashCode
+//    )
 //  }
-//  @Test def testToHashCodeExclude(): Unit = {
-//    val one: HashCodeBuilderTest.TestObjectHashCodeExclude = new HashCodeBuilderTest.TestObjectHashCodeExclude(1, 2)
-//    val two: HashCodeBuilderTest.TestObjectHashCodeExclude2 = new HashCodeBuilderTest.TestObjectHashCodeExclude2(1, 2)
-//    assertEquals(17 * 37 + 2, HashCodeBuilder.reflectionHashCode(one))
-//    assertEquals(17, HashCodeBuilder.reflectionHashCode(two))
-//  }
+//
+////  @Test def testToHashCodeExclude(): Unit = {
+////    val one: HashCodeBuilderTest.TestObjectHashCodeExclude = new HashCodeBuilderTest.TestObjectHashCodeExclude(1, 2)
+////    val two: HashCodeBuilderTest.TestObjectHashCodeExclude2 = new HashCodeBuilderTest.TestObjectHashCodeExclude2(1, 2)
+////    assertEquals(17 * 37 + 2, HashCodeBuilder.reflectionHashCode(one))
+////    assertEquals(17, HashCodeBuilder.reflectionHashCode(two))
+////  }
 //}

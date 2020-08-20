@@ -57,7 +57,7 @@ class RecursiveToStringStyle()
   * <p>Constructor.</p>
   */
   extends ToStringStyle {
-  override def appendDetail(buffer: StringBuffer, fieldName: String, value: Any): Unit = {
+  override def appendDetail(buffer: StringBuffer, fieldName: String, value: AnyRef): Unit = {
     if (!ClassUtils.isPrimitiveWrapper(value.getClass) &&
       !(classOf[String] == value.getClass) &&
       accept(value.getClass)) buffer.append(ReflectionToStringBuilder.toString(value, this))
@@ -69,7 +69,7 @@ class RecursiveToStringStyle()
   override protected def appendDetail(buffer: StringBuffer, fieldName: String, coll: util.Collection[_]): Unit = {
     appendClassName(buffer, coll)
     appendIdentityHashCode(buffer, coll)
-    appendDetail(buffer, fieldName, coll)
+    super.appendDetail(buffer, fieldName, coll)
   }
 
   /**
