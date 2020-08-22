@@ -26,9 +26,9 @@
 //import org.junit.{Before, After}
 //
 ///**
-//  * Unit tests {@link org.apache.commons.lang3.builder.MultiLineToStringStyleTest}.
+//  * Unit tests {@link org.apache.commons.lang3.builder.MultilineToStringStyleTest}.
 //  */
-//class MultiLineToStringStyleTest extends JUnitSuite {
+//class MultilineToStringStyleTest extends JUnitSuite {
 //  final private val base = Integer.valueOf(5)
 //  final private val baseStr = base.getClass.getName + "@" + Integer.toHexString(System.identityHashCode(base))
 //
