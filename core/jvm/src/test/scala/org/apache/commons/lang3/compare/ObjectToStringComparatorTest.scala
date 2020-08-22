@@ -15,45 +15,50 @@
  * limitations under the License.
  */
 
-//package org.apache.commons.lang3.compare
-//
-//import org.junit.Assert.assertEquals
-//import java.util
-//import org.junit.Test
-//
-///**
-//  * Tests {@link ObjectToStringComparator}.
-//  */
-//object ObjectToStringComparatorTest {
-//
-//  private class Thing private[compare](val string: String) {
-//    override def toString = string
-//  }
-//
-//}
-//
-//class ObjectToStringComparatorTest {
-//  @Test def testNull() = {
-//    val things = util.Arrays.asList(null, new ObjectToStringComparatorTest.Thing("y"), null)
-//    things.sort(ObjectToStringComparator.INSTANCE)
-//    assertEquals("y", things.get(0).string)
-//    assertEquals(null, things.get(1))
-//    assertEquals(null, things.get(2))
-//  }
-//
-//  @Test def testNullToString() = {
-//    val things = util.Arrays.asList(new ObjectToStringComparatorTest.Thing(null), new ObjectToStringComparatorTest.Thing("y"), new ObjectToStringComparatorTest.Thing(null))
-//    things.sort(ObjectToStringComparator.INSTANCE)
-//    assertEquals("y", things.get(0).string)
-//    assertEquals(null, things.get(1).string)
-//    assertEquals(null, things.get(2).string)
-//  }
-//
-//  @Test def testSortCollection() = {
-//    val things = util.Arrays.asList(new ObjectToStringComparatorTest.Thing("z"), new ObjectToStringComparatorTest.Thing("y"), new ObjectToStringComparatorTest.Thing("x"))
-//    things.sort(ObjectToStringComparator.INSTANCE)
-//    assertEquals("x", things.get(0).string)
-//    assertEquals("y", things.get(1).string)
-//    assertEquals("z", things.get(2).string)
-//  }
-//}
+package org.apache.commons.lang3.compare
+
+import org.junit.Assert.assertEquals
+import java.util
+import org.junit.Test
+import org.scalatestplus.junit.JUnitSuite
+
+object ObjectToStringComparatorTest {
+  private class Thing private[compare] (val string: String) {
+    override def toString = string
+  }
+}
+
+/**
+  * Tests {@link ObjectToStringComparator}.
+  */
+class ObjectToStringComparatorTest extends JUnitSuite {
+  @Test def testNull(): Unit = {
+    val things = util.Arrays.asList(null, new ObjectToStringComparatorTest.Thing("y"), null)
+    things.sort(ObjectToStringComparator.INSTANCE)
+    assertEquals("y", things.get(0).string)
+    assertEquals(null, things.get(1))
+    assertEquals(null, things.get(2))
+  }
+
+  @Test def testNullToString(): Unit = {
+    val things = util.Arrays.asList(
+      new ObjectToStringComparatorTest.Thing(null),
+      new ObjectToStringComparatorTest.Thing("y"),
+      new ObjectToStringComparatorTest.Thing(null))
+    things.sort(ObjectToStringComparator.INSTANCE)
+    assertEquals("y", things.get(0).string)
+    assertEquals(null, things.get(1).string)
+    assertEquals(null, things.get(2).string)
+  }
+
+  @Test def testSortCollection() = {
+    val things = util.Arrays.asList(
+      new ObjectToStringComparatorTest.Thing("z"),
+      new ObjectToStringComparatorTest.Thing("y"),
+      new ObjectToStringComparatorTest.Thing("x"))
+    things.sort(ObjectToStringComparator.INSTANCE)
+    assertEquals("x", things.get(0).string)
+    assertEquals("y", things.get(1).string)
+    assertEquals("z", things.get(2).string)
+  }
+}
