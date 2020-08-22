@@ -539,11 +539,12 @@ object StringUtils {
     appendIfMissing(str, suffix, true, suffixes)
 
   // TODO: @link java.lang.Character#toTitleCase
+  // TODO: @link org.apache.commons.lang3.text.WordUtils#capitalize
   /**
     * <p>Capitalizes a String changing the first character to title case as
     * per {@code java.lang.Character#toTitleCase}. No other characters are changed.</p>
     *
-    * <p>For a word based algorithm, see {@link org.apache.commons.lang3.text.WordUtils#capitalize}.
+    * <p>For a word based algorithm, see {@code org.apache.commons.lang3.text.WordUtils#capitalize}.
     * A {@code null} input String returns {@code null}.</p>
     *
     * <pre>

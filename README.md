@@ -149,7 +149,7 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [ ] [text.StrMatcherTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrMatcherTest.scala)
     - [ ] [text.StrSubstitutorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrSubstitutorTest.scala)
     - [ ] [text.StrTokenizerTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrTokenizerTest.scala)
-    - [ ] [text.WordUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/WordUtilsTest.scala)
+    - [x] [text.WordUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/WordUtilsTest.scala)
     - translate :white_check_mark:
       - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
       - [x] [text.translate.LookupTranslatorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/LookupTranslatorTest.scala)

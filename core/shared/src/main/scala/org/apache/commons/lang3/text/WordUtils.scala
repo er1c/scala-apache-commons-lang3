@@ -263,50 +263,67 @@ import scala.util.control.Breaks
   def wrap(str: String, wrapLength: Int, newLineStr: String, wrapLongWords: Boolean, wrapOn: String): String = {
     if (str == null) return null
 
-    val updatedNewLineStr = if (newLineStr == null) System.lineSeparator else newLineStr
-    val updatedWrapLength = if (wrapLength < 1) 1 else wrapLength
-    val patternToWrapOn = Pattern.compile(if (StringUtils.isBlank(wrapOn)) " " else wrapOn)
+    val _newLineStr =
+      if (newLineStr == null) System.lineSeparator
+      else newLineStr
+
+    val _wrapLength =
+      if (wrapLength < 1) 1
+      else wrapLength
+
+    val _wrapOn =
+      if (StringUtils.isBlank(wrapOn)) " "
+      else wrapOn
+
+    val patternToWrapOn = Pattern.compile(_wrapOn)
     val inputLineLength = str.length
     var offset = 0
-    val wrappedLine = new StringBuilder(inputLineLength + 32)
+    val wrappedLine = new java.lang.StringBuilder(inputLineLength + 32)
 
     breakable {
       while (offset < inputLineLength) {
         var spaceToWrapAt = -1
         var matcher = patternToWrapOn.matcher(
-          str.substring(
-            offset,
-            Math.min(Math.min(Integer.MAX_VALUE, offset + updatedWrapLength + 1L).toInt, inputLineLength)))
-        if (matcher.find) {
+          str
+            .substring(offset, Math.min(Math.min(Integer.MAX_VALUE, offset + _wrapLength + 1L).toInt, inputLineLength)))
+
+        var _cont = false
+        if (matcher.find()) {
           if (matcher.start == 0) {
             offset += matcher.`end`
-          } else {
+            _cont = true
+          }
+          spaceToWrapAt = matcher.start + offset
+        }
+
+        if (!_cont) {
+          // only last line without leading spaces is left
+          if (inputLineLength - offset <= _wrapLength) break()
+
+          while (matcher.find()) {
             spaceToWrapAt = matcher.start + offset
           }
-        }
-        // only last line without leading spaces is left
-        if (inputLineLength - offset <= updatedWrapLength) break()
 
-        while (matcher.find) spaceToWrapAt = matcher.start + offset
-        if (spaceToWrapAt >= offset) { // normal case
-          wrappedLine.appendAll(str.toCharArray, offset, spaceToWrapAt)
-          wrappedLine.append(updatedNewLineStr)
-          offset = spaceToWrapAt + 1
-        } else { // really long word or URL
-          if (wrapLongWords) { // wrap really long word one line at a time
-            wrappedLine.appendAll(str.toCharArray, offset, updatedWrapLength + offset)
-            wrappedLine.append(updatedNewLineStr)
-            offset += updatedWrapLength
-          } else { // do not wrap really long word, just extend beyond limit
-            matcher = patternToWrapOn.matcher(str.substring(offset + updatedWrapLength))
-            if (matcher.find) spaceToWrapAt = matcher.start + offset + updatedWrapLength
-            if (spaceToWrapAt >= 0) {
-              wrappedLine.appendAll(str.toCharArray, offset, spaceToWrapAt)
-              wrappedLine.append(updatedNewLineStr)
-              offset = spaceToWrapAt + 1
-            } else {
-              wrappedLine.appendAll(str.toCharArray, offset, str.length)
-              offset = inputLineLength
+          if (spaceToWrapAt >= offset) { // normal case
+            wrappedLine.append(str, offset, spaceToWrapAt)
+            wrappedLine.append(_newLineStr)
+            offset = spaceToWrapAt + 1
+          } else { // really long word or URL
+            if (wrapLongWords) { // wrap really long word one line at a time
+              wrappedLine.append(str, offset, _wrapLength + offset)
+              wrappedLine.append(_newLineStr)
+              offset += _wrapLength
+            } else { // do not wrap really long word, just extend beyond limit
+              matcher = patternToWrapOn.matcher(str.substring(offset + _wrapLength))
+              if (matcher.find()) spaceToWrapAt = matcher.start + offset + _wrapLength
+              if (spaceToWrapAt >= 0) {
+                wrappedLine.append(str, offset, spaceToWrapAt)
+                wrappedLine.append(_newLineStr)
+                offset = spaceToWrapAt + 1
+              } else {
+                wrappedLine.append(str, offset, str.length)
+                offset = inputLineLength
+              }
             }
           }
         }
@@ -314,15 +331,16 @@ import scala.util.control.Breaks
     }
 
     // Whatever is left in line is short enough to just pass through
-    wrappedLine.appendAll(str.toCharArray, offset, str.length)
+    wrappedLine.append(str, offset, str.length)
     wrappedLine.toString
   }
 
+  // TODO: @code #capitalizeFully ( String, char[])
   /**
     * <p>Capitalizes all the delimiter separated words in a String.
     * Only the first character of each word is changed. To convert the
     * rest of each word to lowercase at the same time,
-    * use {@link #capitalizeFully ( String, char[])}.</p>
+    * use {@code #capitalizeFully ( String, char[])}.</p>
     *
     * <p>The delimiters represent a set of characters understood to separate words.
     * The first string character and the first non-delimiter character after a
@@ -348,15 +366,22 @@ import scala.util.control.Breaks
     * @since 2.1
     */
   def capitalize(str: String, delimiters: Char*): String = {
+    if (delimiters == null || delimiters.isEmpty) capitalize(str, null.asInstanceOf[Array[Char]])
+    else capitalize(str, delimiters.toArray)
+  }
+
+  def capitalize(str: String, delimiters: Array[Char]): String = {
     val delimLen =
       if (delimiters == null) -1
       else delimiters.length
+
     if (StringUtils.isEmpty(str) || delimLen == 0) return str
+
     val buffer = str.toCharArray
     var capitalizeNext = true
     for (i <- 0 until buffer.length) {
       val ch = buffer(i)
-      if (isDelimiter(ch, delimiters.toArray)) capitalizeNext = true
+      if (isDelimiter(ch, delimiters)) capitalizeNext = true
       else if (capitalizeNext) {
         buffer(i) = Character.toTitleCase(ch)
         capitalizeNext = false
@@ -393,6 +418,11 @@ import scala.util.control.Breaks
     * @since 2.1
     */
   def capitalizeFully(str: String, delimiters: Char*): String = {
+    if (delimiters == null || delimiters.isEmpty) capitalizeFully(str, null.asInstanceOf[Array[Char]])
+    else capitalizeFully(str, delimiters.toArray)
+  }
+
+  def capitalizeFully(str: String, delimiters: Array[Char]): String = {
     val delimLen =
       if (delimiters == null) -1
       else delimiters.length
@@ -427,15 +457,21 @@ import scala.util.control.Breaks
     * @since 2.1
     */
   def uncapitalize(str: String, delimiters: Char*): String = {
+    if (delimiters == null || delimiters.isEmpty) uncapitalize(str, null.asInstanceOf[Array[Char]])
+    else uncapitalize(str, delimiters.toArray)
+  }
+
+  def uncapitalize(str: String, delimiters: Array[Char]): String = {
     val delimLen =
       if (delimiters == null) -1
       else delimiters.length
+
     if (StringUtils.isEmpty(str) || delimLen == 0) return str
     val buffer = str.toCharArray
     var uncapitalizeNext = true
     for (i <- 0 until buffer.length) {
       val ch = buffer(i)
-      if (isDelimiter(ch, delimiters.toArray)) uncapitalizeNext = true
+      if (isDelimiter(ch, delimiters)) uncapitalizeNext = true
       else if (uncapitalizeNext) {
         buffer(i) = Character.toLowerCase(ch)
         uncapitalizeNext = false
@@ -513,15 +549,21 @@ import scala.util.control.Breaks
     * @since 2.2
     */
   def initials(str: String, delimiters: Char*): String = {
+    if (delimiters == null || delimiters.isEmpty) initials(str, null.asInstanceOf[Array[Char]])
+    else initials(str, delimiters.toArray)
+  }
+
+  def initials(str: String, delimiters: Array[Char]): String = {
     if (StringUtils.isEmpty(str)) return str
     if (delimiters != null && delimiters.isEmpty) return StringUtils.EMPTY
+
     val strLen = str.length
     val buf = new Array[Char](strLen / 2 + 1)
     var count = 0
     var lastWasGap = true
     for (i <- 0 until strLen) {
       val ch = str.charAt(i)
-      if (isDelimiter(ch, delimiters.toArray)) lastWasGap = true
+      if (isDelimiter(ch, delimiters)) lastWasGap = true
       else if (lastWasGap) {
         buf({ count += 1; count - 1 }) = ch
         lastWasGap = false

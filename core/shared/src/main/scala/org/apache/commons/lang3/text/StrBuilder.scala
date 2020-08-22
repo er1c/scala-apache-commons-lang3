@@ -91,9 +91,9 @@ object StrBuilder {
   */
 @deprecated
 @SerialVersionUID(7628716375283629643L)
-class StrBuilder() extends CharSequence with Appendable with Serializable with Builder[String] {
+class StrBuilder() extends CharSequence with Appendable with Serializable with Builder[String] { self =>
   /** Internal data storage. */
-  protected var buffer: Array[Char] = new Array[Char](StrBuilder.CAPACITY) // TODO make private?
+  protected[text] var buffer: Array[Char] = new Array[Char](StrBuilder.CAPACITY) // TODO make private?
 
   /** Current size of the buffer. */
   protected var bufferSize = 0
@@ -350,7 +350,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @return the input array, unless that was null or too small
     */
   def getChars(destination: Array[Char]): Array[Char] = {
-    val len = length
+    val len = self.length
     var dest = destination
     if (dest == null || dest.length < len) dest = new Array[Char](len)
 
@@ -370,7 +370,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     */
   def getChars(startIndex: Int, endIndex: Int, destination: Array[Char], destinationIndex: Int): Unit = {
     if (startIndex < 0) throw new StringIndexOutOfBoundsException(startIndex)
-    if (endIndex < 0 || endIndex > length) throw new StringIndexOutOfBoundsException(endIndex)
+    if (endIndex < 0 || endIndex > self.length) throw new StringIndexOutOfBoundsException(endIndex)
     if (startIndex > endIndex) throw new StringIndexOutOfBoundsException("end < start")
     Array.copy(buffer, startIndex, destination, destinationIndex, endIndex - startIndex)
   }
@@ -499,9 +499,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (str == null) return appendNull
     val strLen = str.length
     if (strLen > 0) {
-      val len = length
-      ensureCapacity(len + strLen)
-      str.getChars(0, strLen, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + strLen)
+      str.getChars(0, strLen, buffer, currentLength)
       bufferSize += strLen
     }
 
@@ -519,13 +519,14 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     */
   def append(str: String, startIndex: Int, length: Int): StrBuilder = {
     if (str == null) return appendNull
+
     if (startIndex < 0 || startIndex > str.length) throw new StringIndexOutOfBoundsException("startIndex must be valid")
     if (length < 0 || (startIndex + length) > str.length)
       throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
-      val len = length
-      ensureCapacity(len + length)
-      str.getChars(startIndex, startIndex + length, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + length)
+      str.getChars(startIndex, startIndex + length, buffer, currentLength)
       bufferSize += length
     }
 
@@ -556,9 +557,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (buf == null) return appendNull
     if (buf.hasArray) {
       val length: Int = buf.remaining
-      val len: Int = length
-      ensureCapacity(len + length)
-      Array.copy(buf.array(), (buf.arrayOffset + buf.position()), buffer, len, length)
+      val currentLength: Int = self.length
+      ensureCapacity(currentLength + length)
+      Array.copy(buf.array(), (buf.arrayOffset + buf.position()), buffer, currentLength, length)
       bufferSize += length
     } else append(buf.toString)
     this
@@ -582,9 +583,11 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
         throw new StringIndexOutOfBoundsException("startIndex must be valid")
       if (length < 0 || (startIndex + length) > totalLength)
         throw new StringIndexOutOfBoundsException("length must be valid")
-      val len = length
-      ensureCapacity(len + length)
-      Array.copy(buf, buf.arrayOffset + buf.position() + startIndex, buffer, len, length)
+
+      val currentLength = self.length
+      ensureCapacity(currentLength + length)
+
+      System.arraycopy(buf.array, buf.arrayOffset + buf.position() + startIndex, buffer, currentLength, length)
       bufferSize += length
     } else append(buf.toString, startIndex, length)
     this
@@ -601,9 +604,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (str == null) return appendNull
     val strLen = str.length
     if (strLen > 0) {
-      val len = length
-      ensureCapacity(len + strLen)
-      str.getChars(0, strLen, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + strLen)
+      str.getChars(0, strLen, buffer, currentLength)
       bufferSize += strLen
     }
     this
@@ -624,9 +627,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (length < 0 || (startIndex + length) > str.length)
       throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
-      val len = length
-      ensureCapacity(len + length)
-      str.getChars(startIndex, startIndex + length, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + length)
+      str.getChars(startIndex, startIndex + length, buffer, currentLength)
       bufferSize += length
     }
     this
@@ -644,9 +647,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (str == null) return appendNull
     val strLen = str.length
     if (strLen > 0) {
-      val len = length
-      ensureCapacity(len + strLen)
-      str.getChars(0, strLen, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + strLen)
+      str.getChars(0, strLen, buffer, currentLength)
       bufferSize += strLen
     }
     this
@@ -668,9 +671,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (length < 0 || (startIndex + length) > str.length)
       throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
-      val len = length
-      ensureCapacity(len + length)
-      str.getChars(startIndex, startIndex + length, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + length)
+      str.getChars(startIndex, startIndex + length, buffer, currentLength)
       bufferSize += length
     }
 
@@ -688,9 +691,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (str == null) return appendNull
     val strLen = str.length
     if (strLen > 0) {
-      val len = length
-      ensureCapacity(len + strLen)
-      Array.copy(str.buffer, 0, buffer, len, strLen)
+      val currentLength = self.length
+      ensureCapacity(currentLength + strLen)
+      Array.copy(str.buffer, 0, buffer, currentLength, strLen)
       bufferSize += strLen
     }
 
@@ -712,9 +715,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (length < 0 || (startIndex + length) > str.length)
       throw new StringIndexOutOfBoundsException("length must be valid")
     if (length > 0) {
-      val len = length
-      ensureCapacity(len + length)
-      str.getChars(startIndex, startIndex + length, buffer, len)
+      val currentLength = self.length
+      ensureCapacity(currentLength + length)
+      str.getChars(startIndex, startIndex + length, buffer, currentLength)
       bufferSize += length
     }
 
@@ -732,9 +735,9 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     if (chars == null) return appendNull
     val strLen = chars.length
     if (strLen > 0) {
-      val len = length
-      ensureCapacity(len + strLen)
-      Array.copy(chars, 0, buffer, len, strLen)
+      val currentLength = self.length
+      ensureCapacity(currentLength + strLen)
+      Array.copy(chars, 0, buffer, currentLength, strLen)
       bufferSize += strLen
     }
     this
@@ -751,14 +754,16 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     */
   def append(chars: Array[Char], startIndex: Int, length: Int): StrBuilder = {
     if (chars == null) return appendNull
+
     if (startIndex < 0 || startIndex > chars.length)
       throw new StringIndexOutOfBoundsException("Invalid startIndex: " + length)
     if (length < 0 || (startIndex + length) > chars.length)
       throw new StringIndexOutOfBoundsException("Invalid length: " + length)
+
     if (length > 0) {
-      val len = length
-      ensureCapacity(len + length)
-      Array.copy(chars, startIndex, buffer, len, length)
+      val currentLength = self.length
+      ensureCapacity(currentLength + length)
+      Array.copy(chars, startIndex, buffer, currentLength, length)
       bufferSize += length
     }
 
@@ -798,7 +803,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @since 3.0
     */
   override def append(ch: Char): StrBuilder = {
-    val len = length
+    val len = self.length
     ensureCapacity(len + 1)
     buffer({ bufferSize += 1; size - 1 }) = ch
     this
@@ -2054,7 +2059,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     val idx: Int = if (index < 0) 0 else index
 
     if (length <= 0 || idx >= size) StringUtils.EMPTY
-    if (size <= idx + length) new String(buffer, idx, size - idx)
+    else if (size <= idx + length) new String(buffer, idx, size - idx)
     else new String(buffer, idx, length)
   }
 
@@ -2447,7 +2452,12 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @param obj the object to check, null returns false
     * @return true if the builders contain the same characters in the same order
     */
-  override def equals(obj: Any): Boolean = obj.isInstanceOf[StrBuilder] && this == obj.asInstanceOf[StrBuilder]
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case b: StrBuilder => equals(b)
+      case _ => false
+    }
+  }
 
   /**
     * Gets a suitable hash code for this builder.
@@ -2531,16 +2541,18 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * Inner class to allow StrBuilder to operate as a tokenizer.
     */
   private[text] class StrBuilderTokenizer private[text] () extends StrTokenizer {
-    /** {@inheritDoc }*/
+    /** {@inheritDoc} */
     override protected def tokenize(chars: Array[Char], offset: Int, count: Int): util.List[String] = {
-      if (chars == null) return super.tokenize(buffer, 0, size)
-      super.tokenize(chars, offset, count)
+      if (chars == null) super.tokenize(buffer, 0, self.size)
+      else super.tokenize(chars, offset, count)
     }
 
+    /** {@inheritDoc} */
     override def getContent: String = {
       val str = super.getContent
-      if (str == null) return toString
-      str
+
+      if (str == null) self.toString
+      else str
     }
   }
 
@@ -2605,27 +2617,27 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     override def flush(): Unit = {}
 
     override def write(c: Int): Unit = {
-      append(c.toChar)
+      self.append(c.toChar)
       ()
     }
 
     override def write(cbuf: Array[Char]): Unit = {
-      append(cbuf)
+      self.append(cbuf)
       ()
     }
 
     override def write(cbuf: Array[Char], off: Int, len: Int): Unit = {
-      append(cbuf, off, len)
+      self.append(cbuf, off, len)
       ()
     }
 
     override def write(str: String): Unit = {
-      append(str)
+      self.append(str)
       ()
     }
 
     override def write(str: String, off: Int, len: Int): Unit = {
-      append(str, off, len)
+      self.append(str, off, len)
       ()
     }
   }
