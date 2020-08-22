@@ -218,7 +218,7 @@ import scala.util.control.Breaks
   /** Whether to return empty tokens as null */
   private var emptyAsNull = false
   /** Whether to ignore empty tokens */
-  private var ignoreEmptyTokens = true
+  private var ignoreEmptyTokens: Boolean = true
 
   /**
     * Constructs a tokenizer splitting on space, tab, newline and formfeed
@@ -543,12 +543,14 @@ import scala.util.control.Breaks
     * Checks if tokenization has been done, and if not then do it.
     */
   private def checkTokenized(): Unit = {
-    if (tokens == null) if (chars == null) { // still call tokenize as subclass may do some work
-      val split = tokenize(null, 0, 0)
-      tokens = split.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
-    } else {
-      val split = tokenize(chars, 0, chars.length)
-      tokens = split.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
+    if (tokens == null) {
+      if (chars == null) { // still call tokenize as subclass may do some work
+        val split = tokenize(null, 0, 0)
+        tokens = split.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
+      } else {
+        val split = tokenize(chars, 0, chars.length)
+        tokens = split.toArray(ArrayUtils.EMPTY_STRING_ARRAY)
+      }
     }
   }
 
@@ -597,7 +599,9 @@ import scala.util.control.Breaks
   private def addToken(list: util.List[String], tok: String): Unit = {
     if (StringUtils.isEmpty(tok)) {
       if (isIgnoreEmptyTokens) return
+
       if (isEmptyTokenAsNull) list.add(null)
+      else list.add(tok)
     } else {
       list.add(tok)
     }
@@ -967,7 +971,7 @@ import scala.util.control.Breaks
     * @throws CloneNotSupportedException if there is a problem cloning
     */
   @throws[CloneNotSupportedException]
-  private[text] def cloneReset = { // this method exists to enable 100% test coverage
+  private[text] def cloneReset: StrTokenizer = { // this method exists to enable 100% test coverage
     val cloned = super.clone.asInstanceOf[StrTokenizer]
     if (cloned.chars != null) cloned.chars = cloned.chars.clone
     cloned.reset
@@ -975,7 +979,7 @@ import scala.util.control.Breaks
   }
 
   override def toString: String = {
-    if (tokens == null) return "StrTokenizer[not tokenized yet]"
-    "StrTokenizer" + getTokenList
+    if (tokens == null) "StrTokenizer[not tokenized yet]"
+    else "StrTokenizer" + getTokenList
   }
 }
