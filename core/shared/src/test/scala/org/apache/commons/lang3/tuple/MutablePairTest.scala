@@ -17,7 +17,7 @@
 
 package org.apache.commons.lang3.tuple
 
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
+//import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 import java.util
 import org.junit.Assert.{assertEquals, assertNotEquals, assertNull}
 import org.junit.Test
@@ -110,22 +110,22 @@ class MutablePairTest {
     assertNull(pair3.right)
   }
 
-  @Test
-  @SuppressWarnings(Array("unchecked"))
-  @throws[Exception]
-  def testSerialization(): Unit = {
-    val origPair: MutablePair[Integer, String] = MutablePair.of(0, "foo")
-    val baos = new ByteArrayOutputStream
-    val out = new ObjectOutputStream(baos)
-    out.writeObject(origPair)
-
-    val deserializedPair =
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray)).readObject
-        .asInstanceOf[MutablePair[Integer, String]]
-
-    assertEquals(origPair, deserializedPair)
-    assertEquals(origPair.hashCode, deserializedPair.hashCode)
-  }
+//  @Test
+//  @SuppressWarnings(Array("unchecked"))
+//  @throws[Exception]
+//  def testSerialization(): Unit = {
+//    val origPair: MutablePair[Integer, String] = MutablePair.of(0, "foo")
+//    val baos = new ByteArrayOutputStream
+//    val out = new ObjectOutputStream(baos)
+//    out.writeObject(origPair)
+//
+//    val deserializedPair =
+//      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray)).readObject
+//        .asInstanceOf[MutablePair[Integer, String]]
+//
+//    assertEquals(origPair, deserializedPair)
+//    assertEquals(origPair.hashCode, deserializedPair.hashCode)
+//  }
 
   @Test def testToString(): Unit = {
     assertEquals("(null,null)", MutablePair.of(null, null).toString)

@@ -307,9 +307,17 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
       "org.scalatestplus" %%% "scalacheck-1-14" % ScalaTestPlusVersion % Test,
       "org.scalacheck"    %%% "scalacheck"      % ScalaCheckVersion    % Test,
     ),
-  ).jvmSettings(
+  )
+  .jvmSettings(
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test,
-  ).jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
+  )
+  .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
+  .jsSettings(
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time" % "2.0.0"
+    )
+  )
+
 
 
 lazy val coreJVM = core.jvm
