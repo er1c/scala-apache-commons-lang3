@@ -19,13 +19,13 @@ package org.apache.commons.lang3.text.translate
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.NumericEntityUnescaper}.
   */
 @deprecated
-class NumericEntityUnescaperTest extends JUnitSuite {
+class NumericEntityUnescaperTest {
   @Test def testSupplementaryUnescaping(): Unit = {
     val neu = new NumericEntityUnescaper
     val input = "&#68642;"

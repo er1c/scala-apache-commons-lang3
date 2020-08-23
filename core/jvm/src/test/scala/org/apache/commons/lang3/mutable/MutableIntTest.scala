@@ -21,14 +21,14 @@ import org.apache.commons.lang3.TestHelpers
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
   *
   * @see MutableInt
   */
-class MutableIntTest extends JUnitSuite with TestHelpers {
+class MutableIntTest extends TestHelpers {
   @Test def testConstructors(): Unit = {
     assertEquals(0, new MutableInt().intValue)
     assertEquals(1, new MutableInt(1).intValue)

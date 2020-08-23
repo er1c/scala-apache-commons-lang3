@@ -17,12 +17,12 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
 //
-//class ReflectionToStringBuilderSummaryTest extends JUnitSuite {
+//class ReflectionToStringBuilderSummaryTest {
 //  @SuppressWarnings(Array("unused"))
 //  final private val stringField = "string"
 //

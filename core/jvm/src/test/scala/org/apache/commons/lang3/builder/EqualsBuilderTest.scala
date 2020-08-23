@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
@@ -206,7 +206,7 @@
 //
 //}
 //
-//class EqualsBuilderTest extends JUnitSuite {
+//class EqualsBuilderTest {
 //  @Test def testReflectionEquals(): Unit = {
 //    val o1 = new EqualsBuilderTest.TestObject(4)
 //    val o2 = new EqualsBuilderTest.TestObject(5)

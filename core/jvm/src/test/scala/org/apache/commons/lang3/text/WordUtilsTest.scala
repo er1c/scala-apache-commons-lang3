@@ -19,13 +19,12 @@ package org.apache.commons.lang3.text
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for WordUtils class.
   */
 @deprecated
-class WordUtilsTest extends JUnitSuite {
+class WordUtilsTest {
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new WordUtils.type)
 //    val cons = classOf[WordUtils.type].getDeclaredConstructors

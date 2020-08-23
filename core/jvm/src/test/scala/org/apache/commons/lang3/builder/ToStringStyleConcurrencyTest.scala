@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import java.util
 //import java.util.{ArrayList, Collection, LinkedList, List}
 //import java.util.concurrent.Callable
@@ -60,7 +60,7 @@
 //
 //}
 //
-//class ToStringStyleConcurrencyTest extends JUnitSuite {
+//class ToStringStyleConcurrencyTest {
 //  @Test
 //  @throws[InterruptedException]
 //  @throws[ExecutionException]

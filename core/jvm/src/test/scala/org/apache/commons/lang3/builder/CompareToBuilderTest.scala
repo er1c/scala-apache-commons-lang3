@@ -20,7 +20,7 @@ package org.apache.commons.lang3.builder
 import java.math.BigInteger
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link org.apache.commons.lang3.builder.CompareToBuilder}.
@@ -72,7 +72,7 @@ object CompareToBuilderTest {
 
 }
 
-class CompareToBuilderTest extends JUnitSuite {
+class CompareToBuilderTest {
   @Test def testReflectionCompare(): Unit = {
     val o1 = new CompareToBuilderTest.TestObject(4)
     val o2 = new CompareToBuilderTest.TestObject(4)

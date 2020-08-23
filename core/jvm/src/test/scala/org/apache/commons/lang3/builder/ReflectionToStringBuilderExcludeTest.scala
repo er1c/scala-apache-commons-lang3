@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
@@ -34,7 +34,7 @@
 //  private val SECRET_VALUE = "secret value"
 //}
 //
-//class ReflectionToStringBuilderExcludeTest extends JUnitSuite {
+//class ReflectionToStringBuilderExcludeTest {
 //
 //  private[builder] class TestFixture {
 //    @SuppressWarnings(Array("unused")) final private val secretField = ReflectionToStringBuilderExcludeTest.SECRET_VALUE

@@ -19,13 +19,12 @@ package org.apache.commons.lang3.text.translate
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.NumericEntityEscaper}.
   */
 @deprecated
-class NumericEntityEscaperTest extends JUnitSuite {
+class NumericEntityEscaperTest {
   @Test def testBelow(): Unit = {
     val nee = NumericEntityEscaper.below('F')
     val input = "ADFGZ"

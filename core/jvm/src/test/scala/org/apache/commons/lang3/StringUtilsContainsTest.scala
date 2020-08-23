@@ -20,7 +20,6 @@ package org.apache.commons.lang3
 import java.util.Locale
 import org.junit.Assert.{assertEquals, assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - Contains methods
@@ -48,7 +47,7 @@ object StringUtilsContainsTest {
   private val CharUSuppCharLow = "\uD840"
 }
 
-class StringUtilsContainsTest extends JUnitSuite {
+class StringUtilsContainsTest {
   @Test def testContains_Char(): Unit = {
     assertFalse(StringUtils.contains(null, ' '))
     assertFalse(StringUtils.contains("", ' '))

@@ -19,14 +19,13 @@ package org.apache.commons.lang3
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Tests {@link StringUtils}'s valueOf() methods.
   *
   * @since 3.9
   */
-class StringUtilsValueOfTest extends JUnitSuite {
+class StringUtilsValueOfTest {
   @Test def testValueOfChar(): Unit = {
     assertEquals("ABC", StringUtils.valueOf(Array[Char]('A', 'B', 'C')))
   }

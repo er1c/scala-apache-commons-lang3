@@ -19,7 +19,6 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertEquals, assertNull, assertSame}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - Substring methods
@@ -32,7 +31,7 @@ object StringUtilsSubstringTest {
   private val SENTENCE = "foo bar baz"
 }
 
-class StringUtilsSubstringTest extends JUnitSuite {
+class StringUtilsSubstringTest {
   @Test def testSubstring_StringInt(): Unit = {
     assertNull(StringUtils.substring(null, 0))
     assertEquals("", StringUtils.substring("", 0))

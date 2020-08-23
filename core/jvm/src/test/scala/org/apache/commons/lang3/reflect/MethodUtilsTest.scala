@@ -46,7 +46,7 @@
 //import org.apache.commons.lang3.reflect.testbed.StringParameterizedChild
 //import org.apache.commons.lang3.tuple.ImmutablePair
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests MethodUtils
@@ -228,7 +228,7 @@
 //
 //}
 //
-//class MethodUtilsTest extends JUnitSuite {
+//class MethodUtilsTest {
 //  private var testBean = null
 //  final private val classCache = new (util.HashMap[Class[_$1], Array[Class[_]]])
 //  forSome

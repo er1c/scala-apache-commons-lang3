@@ -17,7 +17,6 @@
 
 package org.apache.commons.lang3.builder
 
-import org.scalatestplus.junit.JUnitSuite
 import org.junit.Assert._
 import org.junit.Test
 import org.junit.{After, Before}
@@ -27,7 +26,7 @@ import org.apache.commons.lang3.builder.ToStringStyleTest.Person
 /**
   * Unit tests {@link org.apache.commons.lang3.builder.DefaultToStringStyleTest}.
   */
-class DefaultToStringStyleTest extends JUnitSuite {
+class DefaultToStringStyleTest {
   final private val base = Integer.valueOf(5)
   final private val baseStr = base.getClass.getName + "@" + Integer.toHexString(System.identityHashCode(base))
 

@@ -21,13 +21,13 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, 
 import java.util
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+
 import scala.collection.JavaConverters._
 
 /**
   * Test the Pair class.
   */
-class ImmutablePairTest extends JUnitSuite {
+class ImmutablePairTest {
   @Test def testEmptyArrayLength(): Unit = {
     @SuppressWarnings(Array("unchecked")) val empty =
       ImmutablePair.EMPTY_ARRAY.asInstanceOf[Array[ImmutablePair[Integer, String]]]

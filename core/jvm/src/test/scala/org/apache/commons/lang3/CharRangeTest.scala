@@ -27,12 +27,12 @@
 //import java.util
 //import java.util.NoSuchElementException
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.CharRange}.
 //  */
-//class CharRangeTest extends JUnitSuite {
+//class CharRangeTest {
 //  //-----------------------------------------------------------------------
 //  @Test def testClass() = { // class changed to non-public in 3.0
 //    assertFalse(Modifier.isPublic(classOf[Nothing].getModifiers))

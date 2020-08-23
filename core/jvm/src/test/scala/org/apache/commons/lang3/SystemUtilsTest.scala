@@ -22,14 +22,13 @@ import java.util.Locale
 import org.apache.commons.lang3.JavaVersion._
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.SystemUtils}.
   *
   * Only limited testing can be performed.
   */
-class SystemUtilsTest extends JUnitSuite {
+class SystemUtilsTest {
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new SystemUtils.type)
 //    val cons = classOf[SystemUtils.type].getDeclaredConstructors

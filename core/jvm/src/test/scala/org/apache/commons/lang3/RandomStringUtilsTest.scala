@@ -34,12 +34,12 @@
 //import java.nio.charset.StandardCharsets
 //import java.util.Random
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.RandomStringUtils}.
 //  */
-//class RandomStringUtilsTest extends JUnitSuite {
+//class RandomStringUtilsTest {
 ////  @Test def testConstructor() = {
 ////    assertNotNull(new Nothing)
 ////    val cons = classOf[Nothing].getDeclaredConstructors

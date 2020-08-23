@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.hamcrest.MatcherAssert.assertThat
 //import org.hamcrest.core.IsEqual.equalTo
 //import org.junit.Assert._
@@ -82,7 +82,7 @@
 //  private val SHORT_STYLE = ToStringStyle.SHORT_PREFIX_STYLE
 //}
 //
-//class DiffBuilderTest extends JUnitSuite {
+//class DiffBuilderTest {
 //  @Test def testBoolean(): Unit = {
 //    val class1 = new DiffBuilderTest.TypeTestClass
 //    val class2 = new DiffBuilderTest.TypeTestClass

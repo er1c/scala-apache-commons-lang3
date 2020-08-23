@@ -22,13 +22,13 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, 
 import java.util
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+
 import scala.collection.JavaConverters._
 
 /**
   * Test the Triple class.
   */
-class ImmutableTripleTest extends JUnitSuite {
+class ImmutableTripleTest {
   @Test def testEmptyArrayLength(): Unit = {
     @SuppressWarnings(Array("unchecked")) val empty =
       ImmutableTriple.EMPTY_ARRAY.asInstanceOf[Array[ImmutableTriple[Integer, String, Boolean]]]

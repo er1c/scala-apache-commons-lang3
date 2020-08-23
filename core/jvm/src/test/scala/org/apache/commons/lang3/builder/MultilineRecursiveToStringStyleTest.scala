@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import java.util
 //import org.junit.Assert._
 //import org.junit.Test
@@ -53,7 +53,7 @@
 //
 //}
 //
-//class MultilineRecursiveToStringStyleTest extends JUnitSuite {
+//class MultilineRecursiveToStringStyleTest {
 //  final private val BR = System.lineSeparator
 //
 //  @Test def simpleObject(): Unit = {

@@ -19,7 +19,7 @@ package org.apache.commons.lang3
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Tests for {@link RandomUtils}
@@ -31,7 +31,7 @@ object RandomUtilsTest {
   private val DELTA = 1e-5
 }
 
-class RandomUtilsTest extends JUnitSuite {
+class RandomUtilsTest {
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new RandomUtils.type)
 //    val cons = classOf[RandomUtils.type].getDeclaredConstructors

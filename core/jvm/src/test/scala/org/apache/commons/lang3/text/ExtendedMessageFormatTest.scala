@@ -32,7 +32,7 @@
 //import org.junit.Assert._
 //import org.junit.Before
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import scala.collection.JavaConverters._
 //
 ///**
@@ -109,7 +109,7 @@
 //
 //}
 //
-//@deprecated class ExtendedMessageFormatTest extends JUnitSuite {
+//@deprecated class ExtendedMessageFormatTest {
 //  final private val registry = new util.HashMap[String, FormatFactory]
 //
 //  @Before def setUp(): Unit = {

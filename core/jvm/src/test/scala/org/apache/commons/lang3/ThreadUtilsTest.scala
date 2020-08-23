@@ -29,7 +29,7 @@
 //import java.util
 //import java.util.concurrent.CountDownLatch
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.ThreadUtils}.
@@ -70,7 +70,7 @@
 //
 //}
 //
-//class ThreadUtilsTest extends JUnitSuite {
+//class ThreadUtilsTest {
 //  @Test def testNullThreadName() = assertThrows(classOf[NullPointerException], () => ThreadUtils.findThreadsByName(null))
 //
 //  @Test def testNullThreadGroupName() = assertThrows(classOf[NullPointerException], () => ThreadUtils.findThreadGroupsByName(null))

@@ -25,11 +25,11 @@ import java.lang.{
   Long => JavaLong,
   Short => JavaShort
 }
-import org.scalatestplus.junit.JUnitSuite
 import org.junit.Assert.{assertEquals, _}
 import org.junit.Test
 import java.util
 import java.util.{Collections, Comparator, Date, Random}
+import org.scalatest.Assertions.assertThrows
 import scala.reflect.ClassTag
 
 /**
@@ -39,8 +39,6 @@ import scala.reflect.ClassTag
 object ArrayUtilsTest {
   /** A predefined seed used to initialize {@link java.util.Random} in order to get predictable results */
   private val SEED: Long = 16111981L
-  private val DoubleDelta: Double = 1e-9d
-  private val FloatDelta: Float = 1e-9f
 
   private def assertTrue(condition: Boolean, message: String) =
     org.junit.Assert.assertTrue(message, condition)
@@ -60,7 +58,7 @@ object ArrayUtilsTest {
 }
 
 @SuppressWarnings(Array("deprecation"))
-class ArrayUtilsTest extends JUnitSuite {
+class ArrayUtilsTest extends TestHelpers {
   import ArrayUtilsTest._
 
   private class TestClass {}
@@ -149,7 +147,7 @@ class ArrayUtilsTest extends JUnitSuite {
     assertNull(ArrayUtils.clone(null.asInstanceOf[Array[Double]]))
     val original = Array[Double](2.4d, 5.7d)
     val cloned = ArrayUtils.clone(original)
-    assertArrayEquals(original, cloned, DoubleDelta)
+    assertArrayEquals(original, cloned)
     assertNotSame(original, cloned)
   }
 
@@ -157,7 +155,7 @@ class ArrayUtilsTest extends JUnitSuite {
     assertNull(ArrayUtils.clone(null.asInstanceOf[Array[Float]]))
     val original = Array[Float](2.6f, 6.4f)
     val cloned = ArrayUtils.clone(original)
-    assertArrayEquals(original, cloned, FloatDelta)
+    assertArrayEquals(original, cloned)
     assertNotSame(original, cloned)
   }
 
@@ -5720,8 +5718,7 @@ class ArrayUtilsTest extends JUnitSuite {
         Array[JavaDouble](
           JavaDouble.valueOf(Double.MinValue),
           JavaDouble.valueOf(Double.MaxValue),
-          JavaDouble.valueOf(9999999))),
-      DoubleDelta
+          JavaDouble.valueOf(9999999)))
     )
     assertThrows[NullPointerException](
       ArrayUtils.toPrimitive(Array[JavaFloat](JavaFloat.valueOf(Float.MinValue), null.asInstanceOf[JavaFloat])))
@@ -5739,8 +5736,7 @@ class ArrayUtilsTest extends JUnitSuite {
           JavaDouble.valueOf(Double.MinValue),
           JavaDouble.valueOf(Double.MaxValue),
           JavaDouble.valueOf(9999999)),
-        1),
-      DoubleDelta
+        1)
     )
     assertArrayEquals(
       Array[Double](Double.MinValue, Double.MaxValue, 9999999),
@@ -5749,8 +5745,7 @@ class ArrayUtilsTest extends JUnitSuite {
           JavaDouble.valueOf(Double.MinValue),
           null.asInstanceOf[JavaDouble],
           JavaDouble.valueOf(9999999)),
-        Double.MaxValue),
-      DoubleDelta
+        Double.MaxValue)
     )
   }
 
@@ -5765,8 +5760,7 @@ class ArrayUtilsTest extends JUnitSuite {
         Array[JavaFloat](
           JavaFloat.valueOf(Float.MinValue),
           JavaFloat.valueOf(Float.MaxValue),
-          JavaFloat.valueOf(9999999))),
-      FloatDelta
+          JavaFloat.valueOf(9999999)))
     )
     assertThrows[NullPointerException](
       ArrayUtils.toPrimitive(Array[JavaFloat](JavaFloat.valueOf(Float.MinValue), null.asInstanceOf[JavaFloat])))
@@ -5784,15 +5778,13 @@ class ArrayUtilsTest extends JUnitSuite {
           JavaFloat.valueOf(Float.MinValue),
           JavaFloat.valueOf(Float.MaxValue),
           JavaFloat.valueOf(9999999)),
-        1),
-      FloatDelta
+        1)
     )
     assertArrayEquals(
       Array[Float](Float.MinValue, Float.MaxValue, 9999999),
       ArrayUtils.toPrimitive(
         Array[JavaFloat](JavaFloat.valueOf(Float.MinValue), null.asInstanceOf[JavaFloat], JavaFloat.valueOf(9999999)),
-        Float.MaxValue),
-      FloatDelta
+        Float.MaxValue)
     )
   }
 

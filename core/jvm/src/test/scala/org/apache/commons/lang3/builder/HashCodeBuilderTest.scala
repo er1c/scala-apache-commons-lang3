@@ -19,7 +19,7 @@
 //
 //import java.lang.{Double => JavaDouble, Float => JavaFloat}
 //import org.apache.commons.lang3.void
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //
@@ -112,7 +112,7 @@
 //
 //}
 //
-//class HashCodeBuilderTest extends JUnitSuite {
+//class HashCodeBuilderTest {
 //  @Test def testConstructorExZero(): Unit = {
 //    assertThrows[IllegalArgumentException](new HashCodeBuilder(0, 0))
 //    ()

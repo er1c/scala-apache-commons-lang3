@@ -19,12 +19,11 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - IsX methods
   */
-class StringUtilsIsTest extends JUnitSuite {
+class StringUtilsIsTest {
   @Test def testIsAlpha(): Unit = {
     assertFalse(StringUtils.isAlpha(null))
     assertFalse(StringUtils.isAlpha(""))

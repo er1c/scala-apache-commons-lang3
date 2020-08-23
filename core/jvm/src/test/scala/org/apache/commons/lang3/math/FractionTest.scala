@@ -22,7 +22,7 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 object FractionTest {
   private val SKIP = 500 //53
@@ -31,7 +31,7 @@ object FractionTest {
 /**
   * Test cases for the {@link Fraction} class
   */
-class FractionTest extends JUnitSuite {
+class FractionTest {
   @Test def testConstants(): Unit = {
     assertEquals(0, Fraction.ZERO.getNumerator)
     assertEquals(1, Fraction.ZERO.getDenominator)

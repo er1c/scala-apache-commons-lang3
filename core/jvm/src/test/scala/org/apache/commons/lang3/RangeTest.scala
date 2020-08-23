@@ -26,7 +26,7 @@
 //import org.junit.Assert.assertTrue
 //import java.util.Comparator
 //import org.junit.{Before, Test}
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * <p>
@@ -34,7 +34,7 @@
 //  * </p>
 //  */
 //@SuppressWarnings(Array("boxing"))
-//class RangeTest extends JUnitSuite {
+//class RangeTest {
 //  private var byteRange = null
 //  private var byteRange2 = null
 //  private var byteRange3 = null

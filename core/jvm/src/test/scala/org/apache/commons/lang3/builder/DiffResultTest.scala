@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 //
 //import org.junit.jupiter.api.Assertions.assertTrue
@@ -48,7 +48,7 @@
 //
 //}
 //
-//class DiffResultTest extends JUnitSuite {
+//class DiffResultTest {
 //  @Test def testListIsNonModifiable(): Unit = {
 //    val lhs = new DiffResultTest.SimpleClass(true)
 //    val rhs = new DiffResultTest.SimpleClass(false)

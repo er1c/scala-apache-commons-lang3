@@ -19,17 +19,16 @@ package org.apache.commons.lang3.mutable
 
 import java.lang.{Short => JavaShort}
 import org.apache.commons.lang3.TestHelpers
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
   *
   * @see MutableShort
   */
-class MutableShortTest extends JUnitSuite with TestHelpers {
+class MutableShortTest extends TestHelpers {
   @Test def testConstructors(): Unit = {
     assertEquals(0.toShort, new MutableShort().shortValue)
     assertEquals(1.toShort, new MutableShort(1.toShort).shortValue)

@@ -20,9 +20,8 @@ package org.apache.commons.lang3
 import java.io._
 import java.util
 import org.junit.Assert._
-import org.junit.function.ThrowingRunnable
 import org.junit.{Before, Test}
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.{assertThrows, intercept}
 
 /**
   * Unit tests {@link org.apache.commons.lang3.SerializationUtils}.
@@ -32,7 +31,7 @@ object SerializationUtilsTest {
   protected val SERIALIZE_IO_EXCEPTION_MESSAGE = "Anonymous OutputStream I/O exception"
 }
 
-class SerializationUtilsTest extends JUnitSuite {
+class SerializationUtilsTest {
   private var iString: String = null
   private var iInteger: Integer = null
   private var iMap: util.HashMap[AnyRef, AnyRef] = null
@@ -130,17 +129,8 @@ class SerializationUtilsTest extends JUnitSuite {
       @throws[IOException]
       override def write(arg0: Int): Unit = throw new IOException(SerializationUtilsTest.SERIALIZE_IO_EXCEPTION_MESSAGE)
     }
-    val e = org.junit.Assert.assertThrows(
-      classOf[SerializationException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          SerializationUtils.serialize(iMap, streamTest)
-          ()
-        }
-      }
-    )
 
+    val e = intercept[SerializationException](SerializationUtils.serialize(iMap, streamTest))
     assertEquals("java.io.IOException: " + SerializationUtilsTest.SERIALIZE_IO_EXCEPTION_MESSAGE, e.getMessage)
   }
 
@@ -205,17 +195,8 @@ class SerializationUtilsTest extends JUnitSuite {
     oos.flush()
     oos.close()
     val inTest = new ByteArrayInputStream(streamReal.toByteArray)
-    val se = org.junit.Assert.assertThrows(
-      classOf[SerializationException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          SerializationUtils.deserialize[ClassNotFoundSerialization](inTest)
-          ()
-        }
-      }
-    )
 
+    val se = intercept[SerializationException](SerializationUtils.deserialize[ClassNotFoundSerialization](inTest))
     assertEquals("java.lang.ClassNotFoundException: " + SerializationUtilsTest.CLASS_NOT_FOUND_MESSAGE, se.getMessage)
   }
 

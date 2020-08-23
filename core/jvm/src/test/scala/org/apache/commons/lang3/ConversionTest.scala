@@ -18,15 +18,15 @@
 package org.apache.commons.lang3
 
 import java.util.UUID
-import org.junit.Assert.{assertArrayEquals, assertEquals}
+import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link Conversion}.
   */
 object ConversionTest {
-  private[lang3] def dbgPrint(src: Array[Boolean]): Unit = {
+  private[lang3] def dbgPrint(src: Array[Boolean]): String = {
     val sb = new StringBuilder
     for (e <- src) {
       if (e) sb.append("1, ")
@@ -34,11 +34,10 @@ object ConversionTest {
     }
     val out = sb.toString
     out.substring(0, out.length - 1)
-    ()
   }
 }
 
-class ConversionTest extends JUnitSuite {
+class ConversionTest extends TestHelpers {
   /**
     * Tests {@link Conversion#hexDigitToInt}.
     */

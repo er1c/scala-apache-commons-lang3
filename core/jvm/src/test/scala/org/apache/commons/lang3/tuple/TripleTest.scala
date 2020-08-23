@@ -22,12 +22,11 @@ import java.util
 import java.util.Calendar
 import org.junit.Assert.{assertEquals, assertNull, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Test the Triple class.
   */
-class TripleTest extends JUnitSuite {
+class TripleTest {
   @Test def testEmptyArrayLength() = {
     @SuppressWarnings(Array("unchecked")) val empty =
       Triple.EMPTY_ARRAY.asInstanceOf[Array[Triple[Integer, String, Boolean]]]

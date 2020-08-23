@@ -36,7 +36,7 @@
 //import org.apache.commons.lang3.LocaleUtils
 //import org.apache.commons.lang3.SerializationUtils
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.time.FastDateParser}.
@@ -100,7 +100,7 @@
 //
 //}
 //
-//class FastDateParserTest extends JUnitSuite {
+//class FastDateParserTest {
 //  private[time] def getInstance(format: String) = getInstance(format, TimeZone.getDefault, Locale.getDefault)
 //
 //  private def getDateInstance(dateStyle: Int, locale: Locale) = getInstance(FormatCache.getPatternForStyle(Integer.valueOf(dateStyle), null, locale), TimeZone.getDefault, Locale.getDefault)

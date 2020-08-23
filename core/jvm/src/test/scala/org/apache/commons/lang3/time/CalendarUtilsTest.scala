@@ -20,9 +20,9 @@
 //import org.junit.Assert.assertEquals
 //import java.util.Calendar
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
 //
-//class CalendarUtilsTest extends JUnitSuite {
+//
+//class CalendarUtilsTest {
 //  @Test def testGetYear() = assertEquals(Calendar.getInstance.get(Calendar.YEAR), CalendarUtils.INSTANCE.getYear)
 //
 //  @Test def testGetMonth() = assertEquals(Calendar.getInstance.get(Calendar.MONTH), CalendarUtils.INSTANCE.getMonth)

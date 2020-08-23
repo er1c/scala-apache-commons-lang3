@@ -19,7 +19,7 @@ package org.apache.commons.lang3
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 object CharUtilsTest {
   private val CHAR_COPY = '\u00a9'
@@ -30,7 +30,7 @@ object CharUtilsTest {
 /**
   * Unit tests {@link org.apache.commons.lang3.CharUtils}.
   */
-class CharUtilsTest extends JUnitSuite {
+class CharUtilsTest {
   @Test def testCompare(): Unit = {
     assertTrue(CharUtils.compare('a', 'b') < 0)
     assertEquals(0, CharUtils.compare('c', 'c'))

@@ -23,7 +23,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
@@ -31,7 +31,7 @@ import org.scalatestplus.junit.JUnitSuite
   * @since 2.2
   * @see MutableBoolean
   */
-class MutableBooleanTest extends JUnitSuite {
+class MutableBooleanTest {
   @Test def testCompareTo(): Unit = {
     val mutBool = new MutableBoolean(false)
     assertEquals(0, mutBool.compareTo(new MutableBoolean(false)))

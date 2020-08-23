@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.hamcrest.MatcherAssert.assertThat
 //import org.hamcrest.Matchers.containsString
 //import org.hamcrest.Matchers.not
@@ -35,7 +35,7 @@
 //  private val EXCLUDED_FIELD_VALUE = "excluded field value"
 //}
 //
-//class ReflectionToStringBuilderExcludeWithAnnotationTest extends JUnitSuite {
+//class ReflectionToStringBuilderExcludeWithAnnotationTest {
 //
 //  private[builder] class TestFixture {
 //    @ToStringExclude final private val excludedField =

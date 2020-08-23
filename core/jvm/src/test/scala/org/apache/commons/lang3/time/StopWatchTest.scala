@@ -26,7 +26,7 @@
 //import java.util.concurrent.TimeUnit
 //import org.apache.commons.lang3.reflect.FieldUtils
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * TestCase for StopWatch.
@@ -38,7 +38,7 @@
 //  private val ZERO_TIME_ELAPSED = "00:00:00.000"
 //}
 //
-//class StopWatchTest extends JUnitSuite {
+//class StopWatchTest {
 //  /**
 //    * <p>
 //    * Creates a suspended StopWatch object which appears to have elapsed

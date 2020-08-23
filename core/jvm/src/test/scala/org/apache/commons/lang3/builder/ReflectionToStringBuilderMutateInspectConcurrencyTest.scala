@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import java.util
 //import java.util.{LinkedList, Random}
 //import org.junit.jupiter.api.Disabled
@@ -35,7 +35,7 @@
 //  *      and ToStringBuilder for collections that are not thread safe</a>
 //  * @since 3.1
 //  */
-//class ReflectionToStringBuilderMutateInspectConcurrencyTest extends JUnitSuite {
+//class ReflectionToStringBuilderMutateInspectConcurrencyTest {
 //
 //  private[builder] class TestFixture private[builder]() {
 //    this synchronized

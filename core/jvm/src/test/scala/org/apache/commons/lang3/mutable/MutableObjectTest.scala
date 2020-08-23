@@ -23,14 +23,13 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * JUnit tests.
   *
   * @see MutableShort
   */
-class MutableObjectTest extends JUnitSuite {
+class MutableObjectTest {
   @Test def testConstructors(): Unit = {
     assertNull(new MutableObject[String]().getValue)
     val i = Integer.valueOf(6)

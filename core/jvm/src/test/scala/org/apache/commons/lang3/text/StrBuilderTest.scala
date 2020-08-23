@@ -24,7 +24,7 @@ import java.io.StringWriter
 import java.nio.CharBuffer
 import org.apache.commons.lang3.ArrayUtils
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 @deprecated
 object StrBuilderTest {
@@ -56,7 +56,7 @@ object StrBuilderTest {
   * Unit tests for {@link org.apache.commons.lang3.text.StrBuilder}.
   */
 @deprecated
-class StrBuilderTest extends JUnitSuite {
+class StrBuilderTest {
 //  @Test def testConstructors(): Unit = {
 //    val sb0 = new StrBuilder
 //    assertEquals(32, sb0.capacity)
@@ -233,9 +233,8 @@ class StrBuilderTest extends JUnitSuite {
     assertEquals(33, sb.length)
     assertEquals(33, sb.size)
     assertFalse(sb.isEmpty)
-    assertThrows[IndexOutOfBoundsException](
-      sb.setLength(-1)
-    ) //, "setLength(-1) expected StringIndexOutOfBoundsException")
+    assertThrows[IndexOutOfBoundsException](sb.setLength(-1))
+    //("setLength(-1) expected StringIndexOutOfBoundsException")
     sb.setLength(33)
     assertEquals(33, sb.capacity)
     assertEquals(33, sb.length)

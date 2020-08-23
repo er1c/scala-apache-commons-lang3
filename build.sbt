@@ -297,27 +297,22 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .configureCross(defaultCrossProjectConfiguration)
   .settings(
     name := "scala-apache-commons-lang3",
+    scalacOptions in Test --= Seq(
+      "-Ywarn-numeric-widen",
+      "-Wnumeric-widen"
+    ),
     libraryDependencies ++= Seq(
       // For testing
       "org.scalatest"     %%% "scalatest"       % ScalaTestVersion     % Test,
       "org.scalatestplus" %%% "scalacheck-1-14" % ScalaTestPlusVersion % Test,
       "org.scalacheck"    %%% "scalacheck"      % ScalaCheckVersion    % Test,
     ),
-  )
+  ).jvmSettings(
+    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test,
+  ).jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
 
 
 lazy val coreJVM = core.jvm
-  .settings(
-    scalacOptions in Test --= Seq(
-      "-Ywarn-numeric-widen",
-      "-Wnumeric-widen"
-    ),
-    libraryDependencies ++= Seq(
-      "org.scalatestplus" %% "junit-4-12" % ScalaTestPlusVersion % Test,
-      "junit"             %  "junit"      % "4.13"               % Test
-    )
-  )
-
 lazy val coreJS  = core.js
 
 // Reloads build.sbt changes whenever detected

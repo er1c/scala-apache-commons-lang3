@@ -17,8 +17,6 @@
 
 package org.apache.commons.lang3.builder
 
-import org.scalatestplus.junit.JUnitSuite
-
 import java.util
 import org.apache.commons.lang3.builder.ToStringStyleTest.Person
 import org.junit.Assert._
@@ -47,7 +45,7 @@ object StandardToStringStyleTest {
   }
 }
 
-class StandardToStringStyleTest extends JUnitSuite {
+class StandardToStringStyleTest {
   final private val base = Integer.valueOf(5)
   final private val baseStr = "Integer"
 

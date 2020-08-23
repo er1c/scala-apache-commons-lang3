@@ -29,7 +29,7 @@
 //import java.util.Calendar
 //import java.util.TimeZone
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * TestCase for DurationFormatUtils.
@@ -38,7 +38,7 @@
 //  private val FOUR_YEARS = 365 * 3 + 366
 //}
 //
-//class DurationFormatUtilsTest extends JUnitSuite {
+//class DurationFormatUtilsTest {
 //  @Test def testConstructor() = {
 //    assertNotNull(new Nothing)
 //    val cons = classOf[Nothing].getDeclaredConstructors

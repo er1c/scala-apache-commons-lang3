@@ -18,12 +18,12 @@
 //package org.apache.commons.lang3.concurrent
 //
 //import org.junit.Before
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Test class for {@code LazyInitializer}.
 //  */
-//object LazyInitializerTest extends JUnitSuite {
+//object LazyInitializerTest {
 //
 //  /**
 //    * A test implementation of LazyInitializer. This class creates a plain

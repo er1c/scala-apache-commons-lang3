@@ -17,15 +17,14 @@
 
 package org.apache.commons.lang3
 
-//import java.lang.{Boolean => JavaBoolean, Byte => JavaByte, Double => JavaDouble, Float => JavaFloat, Long => JavaLong, Short => JavaShort}
-import org.scalatestplus.junit.JUnitSuite
 import org.junit.Assert._
 import org.junit.Test
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Tests ArrayUtils insert methods.
   */
-class ArrayUtilsInsertTest extends JUnitSuite {
+class ArrayUtilsInsertTest extends TestHelpers {
   @Test def testInsertBooleans(): Unit = {
     val array: Array[Boolean] = Array(true, false, true)
     val values: Array[Boolean] = Array(false, true, false)
@@ -88,41 +87,39 @@ class ArrayUtilsInsertTest extends JUnitSuite {
   @Test def testInsertDoubles(): Unit = {
     val array: Array[Double] = Array(1d, 2d, 3d)
     val values: Array[Double] = Array(4d, 5d, 6d)
-    val delta = 0.000001d
     val result: Array[Double] = ArrayUtils.insert(42, array, null)
-    assertArrayEquals(array, result, delta)
+    assertArrayEquals(array, result)
     assertNotSame(array, result)
     assertNull(ArrayUtils.insert(42, null, array))
-    assertArrayEquals(new Array[Double](0), ArrayUtils.insert(0, new Array[Double](0), null), delta)
+    assertArrayEquals(new Array[Double](0), ArrayUtils.insert(0, new Array[Double](0), null))
     assertNull(ArrayUtils.insert(42, null.asInstanceOf[Array[Double]], null))
     assertThrows[IndexOutOfBoundsException](ArrayUtils.insert(-1, array, array))
     assertThrows[IndexOutOfBoundsException](ArrayUtils.insert(array.length + 1, array, array))
-    assertArrayEquals(Array[Double](0, 1, 2, 3), ArrayUtils.insert(0, array, 0), delta)
-    assertArrayEquals(Array[Double](1, 0, 2, 3), ArrayUtils.insert(1, array, 0), delta)
-    assertArrayEquals(Array[Double](1, 2, 3, 0), ArrayUtils.insert(array.length, array, 0), delta)
-    assertArrayEquals(Array[Double](4, 5, 6, 1, 2, 3), ArrayUtils.insert(0, array, values), delta)
-    assertArrayEquals(Array[Double](1, 4, 5, 6, 2, 3), ArrayUtils.insert(1, array, values), delta)
-    assertArrayEquals(Array[Double](1, 2, 3, 4, 5, 6), ArrayUtils.insert(array.length, array, values), delta)
+    assertArrayEquals(Array[Double](0, 1, 2, 3), ArrayUtils.insert(0, array, 0))
+    assertArrayEquals(Array[Double](1, 0, 2, 3), ArrayUtils.insert(1, array, 0))
+    assertArrayEquals(Array[Double](1, 2, 3, 0), ArrayUtils.insert(array.length, array, 0))
+    assertArrayEquals(Array[Double](4, 5, 6, 1, 2, 3), ArrayUtils.insert(0, array, values))
+    assertArrayEquals(Array[Double](1, 4, 5, 6, 2, 3), ArrayUtils.insert(1, array, values))
+    assertArrayEquals(Array[Double](1, 2, 3, 4, 5, 6), ArrayUtils.insert(array.length, array, values))
   }
 
   @Test def testInsertFloats(): Unit = {
     val array: Array[Float] = Array(1f, 2f, 3f)
     val values: Array[Float] = Array(4f, 5f, 6f)
-    val delta = 0.000001f
     val result: Array[Float] = ArrayUtils.insert(42, array, null)
-    assertArrayEquals(array, result, delta)
+    assertArrayEquals(array, result)
     assertNotSame(array, result)
     assertNull(ArrayUtils.insert(42, null, array))
-    assertArrayEquals(new Array[Float](0), ArrayUtils.insert(0, new Array[Float](0), null), delta)
+    assertArrayEquals(new Array[Float](0), ArrayUtils.insert(0, new Array[Float](0), null))
     assertNull(ArrayUtils.insert(42, null.asInstanceOf[Array[Float]], null))
     assertThrows[IndexOutOfBoundsException](ArrayUtils.insert(-1, array, array))
     assertThrows[IndexOutOfBoundsException](ArrayUtils.insert(array.length + 1, array, array))
-    assertArrayEquals(Array[Float](0, 1, 2, 3), ArrayUtils.insert(0, array, 0), delta)
-    assertArrayEquals(Array[Float](1, 0, 2, 3), ArrayUtils.insert(1, array, 0), delta)
-    assertArrayEquals(Array[Float](1, 2, 3, 0), ArrayUtils.insert(array.length, array, 0), delta)
-    assertArrayEquals(Array[Float](4, 5, 6, 1, 2, 3), ArrayUtils.insert(0, array, values), delta)
-    assertArrayEquals(Array[Float](1, 4, 5, 6, 2, 3), ArrayUtils.insert(1, array, values), delta)
-    assertArrayEquals(Array[Float](1, 2, 3, 4, 5, 6), ArrayUtils.insert(array.length, array, values), delta)
+    assertArrayEquals(Array[Float](0, 1, 2, 3), ArrayUtils.insert(0, array, 0))
+    assertArrayEquals(Array[Float](1, 0, 2, 3), ArrayUtils.insert(1, array, 0))
+    assertArrayEquals(Array[Float](1, 2, 3, 0), ArrayUtils.insert(array.length, array, 0))
+    assertArrayEquals(Array[Float](4, 5, 6, 1, 2, 3), ArrayUtils.insert(0, array, values))
+    assertArrayEquals(Array[Float](1, 4, 5, 6, 2, 3), ArrayUtils.insert(1, array, values))
+    assertArrayEquals(Array[Float](1, 2, 3, 4, 5, 6), ArrayUtils.insert(array.length, array, values))
   }
 
 //  @Test def testInsertGenericArray(): Unit = {

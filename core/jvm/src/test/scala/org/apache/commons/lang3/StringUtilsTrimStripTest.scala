@@ -19,7 +19,6 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertArrayEquals, assertEquals, assertNull}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - Trim/Strip methods
@@ -28,7 +27,7 @@ object StringUtilsTrimStripTest {
   private val FOO = "foo"
 }
 
-class StringUtilsTrimStripTest extends JUnitSuite {
+class StringUtilsTrimStripTest {
   @Test def testTrim(): Unit = {
     assertEquals(StringUtilsTrimStripTest.FOO, StringUtils.trim(StringUtilsTrimStripTest.FOO + "  "))
     assertEquals(StringUtilsTrimStripTest.FOO, StringUtils.trim(" " + StringUtilsTrimStripTest.FOO + "  "))

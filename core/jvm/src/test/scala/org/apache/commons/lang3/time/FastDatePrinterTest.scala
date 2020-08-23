@@ -33,7 +33,7 @@
 //import org.junit.Test
 //import org.junitpioneer.jupiter.DefaultLocale
 //import org.junitpioneer.jupiter.DefaultTimeZone
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.time.FastDatePrinter}.
@@ -84,7 +84,7 @@
 //
 //}
 //
-//class FastDatePrinterTest extends JUnitSuite {
+//class FastDatePrinterTest {
 //  private[time] def getInstance(format: String) = getInstance(format, TimeZone.getDefault, Locale.getDefault)
 //
 //  private def getDateInstance(dateStyle: Int, locale: Locale) = getInstance(FormatCache.getPatternForStyle(Integer.valueOf(dateStyle), null, locale), TimeZone.getDefault, Locale.getDefault)

@@ -28,12 +28,12 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import org.apache.commons.lang3.{void, TestHelpers}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link org.apache.commons.lang3.math.NumberUtils}.
   */
-class NumberUtilsTest extends JUnitSuite with TestHelpers {
+class NumberUtilsTest extends TestHelpers {
   //  @Test def testConstructor(): Unit = {
   //    assertNotNull(new NumberUtils.type)
   //    val cons = classOf[NumberUtils.type].getDeclaredConstructors
