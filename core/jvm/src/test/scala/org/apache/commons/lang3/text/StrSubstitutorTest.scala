@@ -17,89 +17,89 @@
 
 //package org.apache.commons.lang3.text
 //
-//import org.junit.Assert.assertEquals
-//import org.junit.Assert.assertFalse
-//import org.junit.Assert.assertNull
-//import org.junit.Assert.assertSame
-//import org.junit.Assert.assertThrows
-//import org.junit.Assert.assertTrue
 //import java.util
 //import java.util.Properties
 //import org.apache.commons.lang3.mutable.MutableObject
 //import org.junit.{After, Before, Test}
+//import org.junit.Assert._
 //import org.scalatestplus.junit.JUnitSuite
 //
 ///**
 //  * Test class for StrSubstitutor.
 //  */
 //@deprecated class StrSubstitutorTest extends JUnitSuite {
-//  private var values = null
+//  private var values: util.Map[String, String] = null
 //
-//  @Before def setUp() = {
+//  @Before def setUp(): Unit = {
 //    values = new util.HashMap[String, String]
 //    values.put("animal", "quick brown fox")
 //    values.put("target", "lazy dog")
+//    ()
 //  }
 //
-//  @After def tearDown() = values = null
+//  @After def tearDown(): Unit = values = null
 //
 //  /**
 //    * Tests simple key replace.
 //    */
-//  @Test def testReplaceSimple() = doTestReplace("The quick brown fox jumps over the lazy dog.", "The ${animal} jumps over the ${target}.", true)
+//  @Test def testReplaceSimple(): Unit =
+//    doTestReplace("The quick brown fox jumps over the lazy dog.", "The ${animal} jumps over the ${target}.", true)
 //
-//  @Test def testReplaceSolo() = doTestReplace("quick brown fox", "${animal}", false)
+//  @Test def testReplaceSolo(): Unit = doTestReplace("quick brown fox", "${animal}", false)
 //
 //  /**
 //    * Tests replace with no variables.
 //    */
-//  @Test def testReplaceNoVariables() = doTestNoReplace("The balloon arrived.")
+//  @Test def testReplaceNoVariables(): Unit = doTestNoReplace("The balloon arrived.")
 //
 //  /**
 //    * Tests replace with null.
 //    */
-//  @Test def testReplaceNull() = doTestNoReplace(null)
+//  @Test def testReplaceNull(): Unit = doTestNoReplace(null)
 //
-//  @Test def testReplaceEmpty() = doTestNoReplace("")
+//  @Test def testReplaceEmpty(): Unit = doTestNoReplace("")
 //
 //  /**
 //    * Tests key replace changing map after initialization (not recommended).
 //    */
-//  @Test def testReplaceChangedMap() = {
-//    val sub = new Nothing(values)
+//  @Test def testReplaceChangedMap(): Unit = {
 //    values.put("target", "moon")
+//    val sub = new StrSubstitutor(values)
 //    assertEquals("The quick brown fox jumps over the moon.", sub.replace("The ${animal} jumps over the ${target}."))
 //  }
 //
 //  /**
 //    * Tests unknown key replace.
 //    */
-//  @Test def testReplaceUnknownKey() = {
-//    doTestReplace("The ${person} jumps over the lazy dog.", "The ${person} jumps over the ${target}.", true)
-//    doTestReplace("The ${person} jumps over the lazy dog. 1234567890.", "The ${person} jumps over the ${target}. ${undefined.number:-1234567890}.", true)
+//  @Test def testReplaceUnknownKey(): Unit = {
+//    doTestReplace(f"The $${person} jumps over the lazy dog.", f"The $${person} jumps over the $${target}.", true)
+//    doTestReplace(
+//      f"The $${person} jumps over the lazy dog. 1234567890.",
+//      f"The $${person} jumps over the $${target}. $${undefined.number:-1234567890}.",
+//      true)
 //  }
 //
 //  /**
 //    * Tests adjacent keys.
 //    */
-//  @Test def testReplaceAdjacentAtStart() = {
+//  @Test def testReplaceAdjacentAtStart(): Unit = {
 //    values.put("code", "GBP")
 //    values.put("amount", "12.50")
-//    val sub = new Nothing(values)
+//    val sub = new StrSubstitutor(values)
 //    assertEquals("GBP12.50 charged", sub.replace("${code}${amount} charged"))
 //  }
 //
-//  @Test def testReplaceAdjacentAtEnd() = {
+//  @Test def testReplaceAdjacentAtEnd(): Unit = {
 //    values.put("code", "GBP")
 //    values.put("amount", "12.50")
-//    val sub = new Nothing(values)
+//    val sub = new StrSubstitutor(values)
 //    assertEquals("Amount is GBP12.50", sub.replace("Amount is ${code}${amount}"))
 //  }
 //
 //  /**
 //    * Tests simple recursive replace.
 //    */
-//  @Test def testReplaceRecursive() = {
+//  @Test def testReplaceRecursive(): Unit = {
 //    values.put("animal", "${critter}")
 //    values.put("target", "${pet}")
 //    values.put("pet", "${petCharacteristic} dog")
@@ -108,184 +108,252 @@
 //    values.put("critterSpeed", "quick")
 //    values.put("critterColor", "brown")
 //    values.put("critterType", "fox")
-//    doTestReplace("The quick brown fox jumps over the lazy dog.", "The ${animal} jumps over the ${target}.", true)
-//    values.put("pet", "${petCharacteristicUnknown:-lazy} dog")
-//    doTestReplace("The quick brown fox jumps over the lazy dog.", "The ${animal} jumps over the ${target}.", true)
+//    doTestReplace("The quick brown fox jumps over the lazy dog.", f"The $${animal} jumps over the $${target}.", true)
+//    values.put("pet", f"$${petCharacteristicUnknown:-lazy} dog")
+//    doTestReplace("The quick brown fox jumps over the lazy dog.", f"The $${animal} jumps over the $${target}.", true)
 //  }
 //
 //  /**
 //    * Tests escaping.
 //    */
-//  @Test def testReplaceEscaping() = doTestReplace("The ${animal} jumps over the lazy dog.", "The $${animal} jumps over the ${target}.", true)
+//  @Test def testReplaceEscaping(): Unit =
+//    doTestReplace(f"The $${animal} jumps over the lazy dog.", f"The $$$${animal} jumps over the $${target}.", true)
 //
-//  @Test def testReplaceSoloEscaping() = doTestReplace("${animal}", "$${animal}", false)
+//  @Test def testReplaceSoloEscaping(): Unit = doTestReplace(f"$${animal}", f"$$$${animal}", false)
 //
 //  /**
 //    * Tests complex escaping.
 //    */
-//  @Test def testReplaceComplexEscaping() = {
-//    doTestReplace("The ${quick brown fox} jumps over the lazy dog.", "The $${${animal}} jumps over the ${target}.", true)
-//    doTestReplace("The ${quick brown fox} jumps over the lazy dog. ${1234567890}.", "The $${${animal}} jumps over the ${target}. $${${undefined.number:-1234567890}}.", true)
+//  @Test def testReplaceComplexEscaping(): Unit = {
+//    doTestReplace(
+//      f"The $${quick brown fox} jumps over the lazy dog.",
+//      f"The $$$${$${animal}} jumps over the $${target}.",
+//      true)
+//    doTestReplace(
+//      f"The $${quick brown fox} jumps over the lazy dog. $${1234567890}.",
+//      f"The $$$${$${animal}} jumps over the $${target}. $$$${$${undefined.number:-1234567890}}.",
+//      true
+//    )
 //  }
 //
 //  /**
 //    * Tests when no prefix or suffix.
 //    */
-//  @Test def testReplaceNoPrefixNoSuffix() = doTestReplace("The animal jumps over the lazy dog.", "The animal jumps over the ${target}.", true)
+//  @Test def testReplaceNoPrefixNoSuffix(): Unit =
+//    doTestReplace("The animal jumps over the lazy dog.", f"The animal jumps over the $${target}.", true)
 //
 //  /**
 //    * Tests when no incomplete prefix.
 //    */
-//  @Test def testReplaceIncompletePrefix() = doTestReplace("The {animal} jumps over the lazy dog.", "The {animal} jumps over the ${target}.", true)
+//  @Test def testReplaceIncompletePrefix(): Unit =
+//    doTestReplace("The {animal} jumps over the lazy dog.", f"The {animal} jumps over the $${target}.", true)
 //
 //  /**
 //    * Tests when prefix but no suffix.
 //    */
-//  @Test def testReplacePrefixNoSuffix() = doTestReplace("The ${animal jumps over the ${target} lazy dog.", "The ${animal jumps over the ${target} ${target}.", true)
+//  @Test def testReplacePrefixNoSuffix(): Unit =
+//    doTestReplace(
+//      f"The $${animal jumps over the $${target} lazy dog.",
+//      f"The $${animal jumps over the $${target} $${target}.",
+//      true)
 //
 //  /**
 //    * Tests when suffix but no prefix.
 //    */
-//  @Test def testReplaceNoPrefixSuffix() = doTestReplace("The animal} jumps over the lazy dog.", "The animal} jumps over the ${target}.", true)
+//  @Test def testReplaceNoPrefixSuffix(): Unit =
+//    doTestReplace("The animal} jumps over the lazy dog.", f"The animal} jumps over the $${target}.", true)
 //
 //  /**
 //    * Tests when no variable name.
 //    */
-//  @Test def testReplaceEmptyKeys() = {
-//    doTestReplace("The ${} jumps over the lazy dog.", "The ${} jumps over the ${target}.", true)
-//    doTestReplace("The animal jumps over the lazy dog.", "The ${:-animal} jumps over the ${target}.", true)
+//  @Test def testReplaceEmptyKeys(): Unit = {
+//    doTestReplace(f"The $${} jumps over the lazy dog.", f"The $${} jumps over the $${target}.", true)
+//    doTestReplace("The animal jumps over the lazy dog.", f"The $${:-animal} jumps over the $${target}.", true)
 //  }
 //
 //  /**
 //    * Tests replace creates output same as input.
 //    */
-//  @Test def testReplaceToIdentical() = {
-//    values.put("animal", "$${${thing}}")
+//  @Test def testReplaceToIdentical(): Unit = {
+//    values.put("animal", f"$$$${$${thing}}")
 //    values.put("thing", "animal")
-//    doTestReplace("The ${animal} jumps.", "The ${animal} jumps.", true)
+//    doTestReplace(f"The $${animal} jumps.", f"The $${animal} jumps.", true)
 //  }
 //
 //  /**
 //    * Tests a cyclic replace operation.
 //    * The cycle should be detected and cause an exception to be thrown.
 //    */
-//  @Test def testCyclicReplacement() = {
+//  @Test def testCyclicReplacement(): Unit = {
 //    val map = new util.HashMap[String, String]
-//    map.put("animal", "${critter}")
-//    map.put("target", "${pet}")
-//    map.put("pet", "${petCharacteristic} dog")
+//    map.put("animal", f"$${critter}")
+//    map.put("target", f"$${pet}")
+//    map.put("pet", f"$${petCharacteristic} dog")
 //    map.put("petCharacteristic", "lazy")
-//    map.put("critter", "${critterSpeed} ${critterColor} ${critterType}")
+//    map.put("critter", f"$${critterSpeed} $${critterColor} $${critterType}")
 //    map.put("critterSpeed", "quick")
 //    map.put("critterColor", "brown")
-//    map.put("critterType", "${animal}")
-//    val sub = new Nothing(map)
-//    assertThrows(classOf[IllegalStateException], () => sub.replace("The ${animal} jumps over the ${target}."), "Cyclic replacement was not detected!")
+//    map.put("critterType", f"$${animal}")
+//    val sub = new StrSubstitutor(map)
+//    assertThrows[IllegalStateException](
+//      sub.replace(f"The $${animal} jumps over the $${target}.")
+//    ) //, "Cyclic replacement was not detected!")
+//
 //    // also check even when default value is set.
-//    map.put("critterType", "${animal:-fox}")
-//    val sub2 = new Nothing(map)
-//    assertThrows(classOf[IllegalStateException], () => sub2.replace("The ${animal} jumps over the ${target}."), "Cyclic replacement was not detected!")
+//    map.put("critterType", f"$${animal:-fox}")
+//    val sub2 = new StrSubstitutor(map)
+//    assertThrows[IllegalStateException](
+//      sub2.replace(f"The $${animal} jumps over the $${target}.")
+//    ) //, "Cyclic replacement was not detected!")
+//    ()
 //  }
 //
 //  /**
 //    * Tests interpolation with weird boundary patterns.
 //    */
-//  @Test def testReplaceWeirdPattens() = {
+//  @Test def testReplaceWeirdPattens(): Unit = {
 //    doTestNoReplace("")
-//    doTestNoReplace("${}")
-//    doTestNoReplace("${ }")
-//    doTestNoReplace("${\t}")
-//    doTestNoReplace("${\n}")
-//    doTestNoReplace("${\b}")
-//    doTestNoReplace("${")
-//    doTestNoReplace("$}")
+//    doTestNoReplace(f"$${}")
+//    doTestNoReplace(f"$${ }")
+//    doTestNoReplace(f"$${\t}")
+//    doTestNoReplace(f"$${\n}")
+//    doTestNoReplace(f"$${\b}")
+//    doTestNoReplace(f"$${")
+//    doTestNoReplace(f"$$}")
 //    doTestNoReplace("}")
-//    doTestNoReplace("${}$")
-//    doTestNoReplace("${${")
-//    doTestNoReplace("${${}}")
-//    doTestNoReplace("${$${}}")
-//    doTestNoReplace("${$$${}}")
-//    doTestNoReplace("${$$${$}}")
-//    doTestNoReplace("${${}}")
-//    doTestNoReplace("${${ }}")
+//    doTestNoReplace(f"$${}$$")
+//    doTestNoReplace(f"$${$${")
+//    doTestNoReplace(f"$${$${}}")
+//    doTestNoReplace(f"$${$$$${}}")
+//    doTestNoReplace(f"$${$$$$$${}}")
+//    doTestNoReplace(f"$${$$$$$${$$}}")
+//    doTestNoReplace(f"$${$${}}")
+//    doTestNoReplace(f"$${$${ }}")
 //  }
 //
-//  @Test def testReplacePartialString_noReplace() = {
-//    val sub = new Nothing
+//  @Test def testReplacePartialString_noReplace(): Unit = {
+//    val sub = new StrSubstitutor
 //    assertEquals("${animal} jumps", sub.replace("The ${animal} jumps over the ${target}.", 4, 15))
 //  }
 //
 //  /**
 //    * Tests whether a variable can be replaced in a variable name.
 //    */
-//  @Test def testReplaceInVariable() = {
+//  @Test def testReplaceInVariable(): Unit = {
 //    values.put("animal.1", "fox")
 //    values.put("animal.2", "mouse")
 //    values.put("species", "2")
-//    val sub = new Nothing(values)
+//    var sub = new StrSubstitutor(values)
 //    sub.setEnableSubstitutionInVariables(true)
-//    assertEquals("The mouse jumps over the lazy dog.", sub.replace("The ${animal.${species}} jumps over the ${target}."), "Wrong result (1)")
+//    assertEquals(
+//      "Wrong result (1)",
+//      "The mouse jumps over the lazy dog.",
+//      sub.replace(f"The $${animal.$${species}} jumps over the $${target}.")
+//    )
 //    values.put("species", "1")
-//    assertEquals("The fox jumps over the lazy dog.", sub.replace("The ${animal.${species}} jumps over the ${target}."), "Wrong result (2)")
-//    assertEquals("The fox jumps over the lazy dog.", sub.replace("The ${unknown.animal.${unknown.species:-1}:-fox} jumps over the ${unknown.target:-lazy dog}."), "Wrong result (3)")
+//    sub = new StrSubstitutor(values)
+//    assertEquals(
+//      "Wrong result (2)",
+//      "The fox jumps over the lazy dog.",
+//      sub.replace(f"The $${animal.$${species}} jumps over the $${target}.")
+//    )
+//    assertEquals(
+//      "Wrong result (3)",
+//      "The fox jumps over the lazy dog.",
+//      sub.replace(f"The $${unknown.animal.$${unknown.species:-1}:-fox} jumps over the $${unknown.target:-lazy dog}.")
+//    )
 //  }
 //
 //  /**
 //    * Tests whether substitution in variable names is disabled per default.
 //    */
-//  @Test def testReplaceInVariableDisabled() = {
+//  @Test def testReplaceInVariableDisabled(): Unit = {
 //    values.put("animal.1", "fox")
 //    values.put("animal.2", "mouse")
 //    values.put("species", "2")
-//    val sub = new Nothing(values)
-//    assertEquals("The ${animal.${species}} jumps over the lazy dog.", sub.replace("The ${animal.${species}} jumps over the ${target}."), "Wrong result (1)")
-//    assertEquals("The ${animal.${species:-1}} jumps over the lazy dog.", sub.replace("The ${animal.${species:-1}} jumps over the ${target}."), "Wrong result (2)")
+//    val sub = new StrSubstitutor(values)
+//    assertEquals(
+//      "Wrong result (1)",
+//      f"The $${animal.$${species}} jumps over the lazy dog.",
+//      sub.replace(f"The $${animal.$${species}} jumps over the $${target}.")
+//    )
+//    assertEquals(
+//      "Wrong result (2)",
+//      f"The $${animal.$${species:-1}} jumps over the lazy dog.",
+//      sub.replace(f"The $${animal.$${species:-1}} jumps over the $${target}.")
+//    )
 //  }
 //
 //  /**
 //    * Tests complex and recursive substitution in variable names.
 //    */
-//  @Test def testReplaceInVariableRecursive() = {
+//  @Test def testReplaceInVariableRecursive(): Unit = {
 //    values.put("animal.2", "brown fox")
 //    values.put("animal.1", "white mouse")
 //    values.put("color", "white")
 //    values.put("species.white", "1")
 //    values.put("species.brown", "2")
-//    val sub = new Nothing(values)
+//    val sub = new StrSubstitutor(values)
 //    sub.setEnableSubstitutionInVariables(true)
-//    assertEquals("The white mouse jumps over the lazy dog.", sub.replace("The ${animal.${species.${color}}} jumps over the ${target}."), "Wrong result (1)")
-//    assertEquals("The brown fox jumps over the lazy dog.", sub.replace("The ${animal.${species.${unknownColor:-brown}}} jumps over the ${target}."), "Wrong result (2)")
+//    assertEquals(
+//      "Wrong result (1)",
+//      "The white mouse jumps over the lazy dog.",
+//      sub.replace(f"The $${animal.$${species.$${color}}} jumps over the $${target}.")
+//    )
+//    assertEquals(
+//      "Wrong result (2)",
+//      "The brown fox jumps over the lazy dog.",
+//      sub.replace(f"The $${animal.$${species.$${unknownColor:-brown}}} jumps over the $${target}.")
+//    )
 //  }
 //
-//  @Test def testDefaultValueDelimiters() = {
+//  @Test def testDefaultValueDelimiters(): Unit = {
 //    val map = new util.HashMap[String, String]
 //    map.put("animal", "fox")
 //    map.put("target", "dog")
-//    var sub = new Nothing(map, "${", "}", '$')
-//    assertEquals("The fox jumps over the lazy dog. 1234567890.", sub.replace("The ${animal} jumps over the lazy ${target}. ${undefined.number:-1234567890}."))
-//    sub = new Nothing(map, "${", "}", '$', "?:")
-//    assertEquals("The fox jumps over the lazy dog. 1234567890.", sub.replace("The ${animal} jumps over the lazy ${target}. ${undefined.number?:1234567890}."))
-//    sub = new Nothing(map, "${", "}", '$', "||")
-//    assertEquals("The fox jumps over the lazy dog. 1234567890.", sub.replace("The ${animal} jumps over the lazy ${target}. ${undefined.number||1234567890}."))
-//    sub = new Nothing(map, "${", "}", '$', "!")
-//    assertEquals("The fox jumps over the lazy dog. 1234567890.", sub.replace("The ${animal} jumps over the lazy ${target}. ${undefined.number!1234567890}."))
-//    sub = new Nothing(map, "${", "}", '$', "")
+//    var sub = new StrSubstitutor(map, "${", "}", '$')
+//    assertEquals(
+//      "The fox jumps over the lazy dog. 1234567890.",
+//      sub.replace(f"The $${animal} jumps over the lazy $${target}. $${undefined.number:-1234567890}."))
+//    sub = new StrSubstitutor(map, "${", "}", '$', "?:")
+//    assertEquals(
+//      "The fox jumps over the lazy dog. 1234567890.",
+//      sub.replace(f"The $${animal} jumps over the lazy $${target}. $${undefined.number?:1234567890}."))
+//    sub = new StrSubstitutor(map, "${", "}", '$', "||")
+//    assertEquals(
+//      "The fox jumps over the lazy dog. 1234567890.",
+//      sub.replace(f"The $${animal} jumps over the lazy $${target}. $${undefined.number||1234567890}."))
+//    sub = new StrSubstitutor(map, "${", "}", '$', "!")
+//    assertEquals(
+//      "The fox jumps over the lazy dog. 1234567890.",
+//      sub.replace(f"The $${animal} jumps over the lazy $${target}. $${undefined.number!1234567890}."))
+//    sub = new StrSubstitutor(map, "${", "}", '$', "")
 //    sub.setValueDelimiterMatcher(null)
-//    assertEquals("The fox jumps over the lazy dog. ${undefined.number!1234567890}.", sub.replace("The ${animal} jumps over the lazy ${target}. ${undefined.number!1234567890}."))
-//    sub = new Nothing(map, "${", "}", '$')
+//    assertEquals(
+//      f"The fox jumps over the lazy dog. $${undefined.number!1234567890}.",
+//      sub.replace(f"The $${animal} jumps over the lazy $${target}. $${undefined.number!1234567890}.")
+//    )
+//    sub = new StrSubstitutor(map, "${", "}", '$')
 //    sub.setValueDelimiterMatcher(null)
-//    assertEquals("The fox jumps over the lazy dog. ${undefined.number!1234567890}.", sub.replace("The ${animal} jumps over the lazy ${target}. ${undefined.number!1234567890}."))
+//    assertEquals(
+//      f"The fox jumps over the lazy dog. $${undefined.number!1234567890}.",
+//      sub.replace(f"The $${animal} jumps over the lazy $${target}. $${undefined.number!1234567890}.")
+//    )
 //  }
 //
 //  /**
 //    * Tests protected.
 //    */
-//  @Test def testResolveVariable() = {
+//  @Test def testResolveVariable(): Unit = {
 //    val builder = new StrBuilder("Hi ${name}!")
 //    val map = new util.HashMap[String, String]
 //    map.put("name", "commons")
-//    val sub = new Nothing(map) {
-//      protected def resolveVariable(variableName: String, buf: StrBuilder, startPos: Int, endPos: Int) = {
+//    val sub = new StrSubstitutor(map) {
+//      override protected def resolveVariable(
+//        variableName: String,
+//        buf: StrBuilder,
+//        startPos: Int,
+//        endPos: Int): String = {
 //        assertEquals("name", variableName)
 //        assertSame(builder, buf)
 //        assertEquals(3, startPos)
@@ -300,71 +368,71 @@
 //  /**
 //    * Tests constructor.
 //    */
-//  @Test def testConstructorNoArgs() = {
-//    val sub = new Nothing
+//  @Test def testConstructorNoArgs(): Unit = {
+//    val sub = new StrSubstitutor
 //    assertEquals("Hi ${name}", sub.replace("Hi ${name}"))
 //  }
 //
-//  @Test def testConstructorMapPrefixSuffix() = {
+//  @Test def testConstructorMapPrefixSuffix(): Unit = {
 //    val map = new util.HashMap[String, String]
 //    map.put("name", "commons")
-//    val sub = new Nothing(map, "<", ">")
+//    val sub = new StrSubstitutor(map, "<", ">")
 //    assertEquals("Hi < commons", sub.replace("Hi $< <name>"))
 //  }
 //
-//  @Test def testConstructorMapFull() = {
+//  @Test def testConstructorMapFull(): Unit = {
 //    val map = new util.HashMap[String, String]
 //    map.put("name", "commons")
-//    var sub = new Nothing(map, "<", ">", '!')
+//    var sub = new StrSubstitutor(map, "<", ">", '!')
 //    assertEquals("Hi < commons", sub.replace("Hi !< <name>"))
-//    sub = new Nothing(map, "<", ">", '!', "||")
+//    sub = new StrSubstitutor(map, "<", ">", '!', "||")
 //    assertEquals("Hi < commons", sub.replace("Hi !< <name2||commons>"))
 //  }
 //
 //  /**
 //    * Tests get set.
 //    */
-//  @Test def testGetSetEscape() = {
-//    val sub = new Nothing
+//  @Test def testGetSetEscape(): Unit = {
+//    val sub = new StrSubstitutor
 //    assertEquals('$', sub.getEscapeChar)
 //    sub.setEscapeChar('<')
 //    assertEquals('<', sub.getEscapeChar)
 //  }
 //
-//  @Test def testGetSetPrefix() = {
-//    val sub = new Nothing
+//  @Test def testGetSetPrefix(): Unit = {
+//    val sub = new StrSubstitutor
 //    assertTrue(sub.getVariablePrefixMatcher.isInstanceOf[StrMatcher.StringMatcher])
 //    sub.setVariablePrefix('<')
 //    assertTrue(sub.getVariablePrefixMatcher.isInstanceOf[StrMatcher.CharMatcher])
 //    sub.setVariablePrefix("<<")
 //    assertTrue(sub.getVariablePrefixMatcher.isInstanceOf[StrMatcher.StringMatcher])
-//    assertThrows(classOf[IllegalArgumentException], () => sub.setVariablePrefix(null))
+//    assertThrows[IllegalArgumentException](sub.setVariablePrefix(null))
 //    assertTrue(sub.getVariablePrefixMatcher.isInstanceOf[StrMatcher.StringMatcher])
 //    val matcher = StrMatcher.commaMatcher
 //    sub.setVariablePrefixMatcher(matcher)
 //    assertSame(matcher, sub.getVariablePrefixMatcher)
-//    assertThrows(classOf[IllegalArgumentException], () => sub.setVariablePrefixMatcher(null))
+//    assertThrows[IllegalArgumentException](sub.setVariablePrefixMatcher(null))
 //    assertSame(matcher, sub.getVariablePrefixMatcher)
 //  }
 //
-//  @Test def testGetSetSuffix() = {
-//    val sub = new Nothing
+//  @Test def testGetSetSuffix(): Unit = {
+//    val sub = new StrSubstitutor
 //    assertTrue(sub.getVariableSuffixMatcher.isInstanceOf[StrMatcher.StringMatcher])
 //    sub.setVariableSuffix('<')
 //    assertTrue(sub.getVariableSuffixMatcher.isInstanceOf[StrMatcher.CharMatcher])
 //    sub.setVariableSuffix("<<")
 //    assertTrue(sub.getVariableSuffixMatcher.isInstanceOf[StrMatcher.StringMatcher])
-//    assertThrows(classOf[IllegalArgumentException], () => sub.setVariableSuffix(null))
+//    assertThrows[IllegalArgumentException](sub.setVariableSuffix(null))
 //    assertTrue(sub.getVariableSuffixMatcher.isInstanceOf[StrMatcher.StringMatcher])
 //    val matcher = StrMatcher.commaMatcher
 //    sub.setVariableSuffixMatcher(matcher)
 //    assertSame(matcher, sub.getVariableSuffixMatcher)
-//    assertThrows(classOf[IllegalArgumentException], () => sub.setVariableSuffixMatcher(null))
+//    assertThrows[IllegalArgumentException](sub.setVariableSuffixMatcher(null))
 //    assertSame(matcher, sub.getVariableSuffixMatcher)
 //  }
 //
-//  @Test def testGetSetValueDelimiter() = {
-//    val sub = new Nothing
+//  @Test def testGetSetValueDelimiter(): Unit = {
+//    val sub = new StrSubstitutor
 //    assertTrue(sub.getValueDelimiterMatcher.isInstanceOf[StrMatcher.StringMatcher])
 //    sub.setValueDelimiter(':')
 //    assertTrue(sub.getValueDelimiterMatcher.isInstanceOf[StrMatcher.CharMatcher])
@@ -382,13 +450,13 @@
 //  /**
 //    * Tests static.
 //    */
-//  @Test def testStaticReplace() = {
+//  @Test def testStaticReplace(): Unit = {
 //    val map = new util.HashMap[String, String]
 //    map.put("name", "commons")
 //    assertEquals("Hi commons!", StrSubstitutor.replace("Hi ${name}!", map))
 //  }
 //
-//  @Test def testStaticReplacePrefixSuffix() = {
+//  @Test def testStaticReplacePrefixSuffix(): Unit = {
 //    val map = new util.HashMap[String, String]
 //    map.put("name", "commons")
 //    assertEquals("Hi commons!", StrSubstitutor.replace("Hi <name>!", map, "<", ">"))
@@ -397,20 +465,24 @@
 //  /**
 //    * Tests interpolation with system properties.
 //    */
-//  @Test def testStaticReplaceSystemProperties() = {
+//  @Test def testStaticReplaceSystemProperties(): Unit = {
 //    val buf = new StrBuilder
 //    buf.append("Hi ").append(System.getProperty("user.name"))
 //    buf.append(", you are working with ")
 //    buf.append(System.getProperty("os.name"))
 //    buf.append(", your home directory is ")
 //    buf.append(System.getProperty("user.home")).append('.')
-//    assertEquals(buf.toString, StrSubstitutor.replaceSystemProperties("Hi ${user.name}, you are " + "working with ${os.name}, your home " + "directory is ${user.home}."))
+//    assertEquals(
+//      buf.toString,
+//      StrSubstitutor.replaceSystemProperties(
+//        f"Hi $${user.name}, you are " + f"working with $${os.name}, your home " + f"directory is $${user.home}.")
+//    )
 //  }
 //
 //  /**
 //    * Test for LANG-1055: StrSubstitutor.replaceSystemProperties does not work consistently
 //    */
-//  @Test def testLANG1055() = {
+//  @Test def testLANG1055(): Unit = {
 //    System.setProperty("test_key", "test_value")
 //    val expected = StrSubstitutor.replace("test_key=${test_key}", System.getProperties)
 //    val actual = StrSubstitutor.replaceSystemProperties("test_key=${test_key}")
@@ -420,7 +492,7 @@
 //  /**
 //    * Test the replace of a properties object
 //    */
-//  @Test def testSubstituteDefaultProperties() = {
+//  @Test def testSubstituteDefaultProperties(): Unit = {
 //    val org = "${doesnotwork}"
 //    System.setProperty("doesnotwork", "It works!")
 //    // create a new Properties object with the System.getProperties as default
@@ -428,7 +500,7 @@
 //    assertEquals("It works!", StrSubstitutor.replace(org, props))
 //  }
 //
-//  @Test def testSamePrefixAndSuffix() = {
+//  @Test def testSamePrefixAndSuffix(): Unit = {
 //    val map = new util.HashMap[String, String]
 //    map.put("greeting", "Hello")
 //    map.put(" there ", "XXX")
@@ -437,22 +509,22 @@
 //    assertEquals("Hello there commons!", StrSubstitutor.replace("@greeting@ there @name@!", map, "@", "@"))
 //  }
 //
-//  @Test def testSubstitutePreserveEscape() = {
-//    val org = "${not-escaped} $${escaped}"
+//  @Test def testSubstitutePreserveEscape(): Unit = {
+//    val org = f"$${not-escaped} $$$${escaped}"
 //    val map = new util.HashMap[String, String]
 //    map.put("not-escaped", "value")
-//    val sub = new Nothing(map, "${", "}", '$')
+//    val sub = new StrSubstitutor(map, "${", "}", '$')
 //    assertFalse(sub.isPreserveEscapes)
-//    assertEquals("value ${escaped}", sub.replace(org))
+//    assertEquals(f"value $${escaped}", sub.replace(org))
 //    sub.setPreserveEscapes(true)
 //    assertTrue(sub.isPreserveEscapes)
-//    assertEquals("value $${escaped}", sub.replace(org))
+//    assertEquals(f"value $$$${escaped}", sub.replace(org))
 //  }
 //
 //  //-----------------------------------------------------------------------
-//  private def doTestReplace(expectedResult: String, replaceTemplate: String, substring: Boolean) = {
+//  private def doTestReplace(expectedResult: String, replaceTemplate: String, substring: Boolean): Unit = {
 //    val expectedShortResult = expectedResult.substring(1, expectedResult.length - 1)
-//    val sub = new Nothing(values)
+//    val sub = new StrSubstitutor(values)
 //    // replace using String
 //    assertEquals(expectedResult, sub.replace(replaceTemplate))
 //    if (substring) assertEquals(expectedShortResult, sub.replace(replaceTemplate, 1, replaceTemplate.length - 2))
@@ -504,8 +576,8 @@
 //    }
 //  }
 //
-//  private def doTestNoReplace(replaceTemplate: String) = {
-//    val sub = new Nothing(values)
+//  private def doTestNoReplace(replaceTemplate: String): Unit = {
+//    val sub = new StrSubstitutor(values)
 //    if (replaceTemplate == null) {
 //      assertNull(sub.replace(null.asInstanceOf[String]))
 //      assertNull(sub.replace(null.asInstanceOf[String], 0, 100))
@@ -520,8 +592,7 @@
 //      assertFalse(sub.replaceIn(null.asInstanceOf[StringBuffer], 0, 100))
 //      assertFalse(sub.replaceIn(null.asInstanceOf[StrBuilder]))
 //      assertFalse(sub.replaceIn(null.asInstanceOf[StrBuilder], 0, 100))
-//    }
-//    else {
+//    } else {
 //      assertEquals(replaceTemplate, sub.replace(replaceTemplate))
 //      val bld = new StrBuilder(replaceTemplate)
 //      assertFalse(sub.replaceIn(bld))

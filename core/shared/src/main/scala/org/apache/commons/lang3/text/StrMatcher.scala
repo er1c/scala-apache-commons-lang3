@@ -147,6 +147,11 @@ import org.apache.commons.lang3.StringUtils
     * @return a new matcher for the given char[]
     */
   def charSetMatcher(chars: Char*): StrMatcher = {
+    if (chars == null) NONE_MATCHER
+    else charSetMatcher(chars.toArray)
+  }
+
+  def charSetMatcher(chars: Array[Char]): StrMatcher = {
     if (chars == null || chars.length == 0) return NONE_MATCHER
     if (chars.length == 1) return new StrMatcher.CharMatcher(chars(0))
     new StrMatcher.CharSetMatcher(chars.toArray)

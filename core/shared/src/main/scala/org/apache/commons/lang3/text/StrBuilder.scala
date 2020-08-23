@@ -29,6 +29,7 @@ import org.apache.commons.lang3.ArrayUtils
 import org.apache.commons.lang3.CharUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.builder.Builder
+import scala.collection.JavaConverters._
 
 /**
   * Builds a string from constituent parts providing a more flexible and powerful API
@@ -543,7 +544,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @see String#format(String, Object...)
     * @since 3.2
     */
-  def append(format: String, objs: Any*): StrBuilder = append(String.format(format, objs))
+  def append(format: String, objs: AnyRef*): StrBuilder = append(String.format(format, objs: _*))
 
   /**
     * Appends the contents of a char buffer to this string builder.
@@ -873,7 +874,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     */
   def appendln(str: String, startIndex: Int, length: Int): StrBuilder = append(str, startIndex, length).appendNewLine
 
-  def appendln(format: String, objs: Any*): StrBuilder = append(format, objs).appendNewLine
+  def appendln(format: String, objs: AnyRef*): StrBuilder = append(format, objs: _*).appendNewLine
 
   /**
     * Appends a string buffer followed by a new line to this string builder.
@@ -1054,6 +1055,13 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @return this, to enable chaining
     * @since 2.3
     */
+  def appendAll(iterable: java.lang.Iterable[_]): StrBuilder = {
+    if (iterable != null) {
+      val scalaIt = iterable.asScala.toSeq
+      appendAll(scalaIt: _*)
+    } else this
+  }
+
   def appendAll(iterable: Iterable[_]): StrBuilder = {
     if (iterable != null) {
       for (o <- iterable) append(o)
@@ -1109,6 +1117,11 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * @param separator the separator to use, null means no separator
     * @return this, to enable chaining
     */
+  def appendWithSeparators(iterable: java.lang.Iterable[_], separator: String): StrBuilder = {
+    if (iterable != null) appendWithSeparators(iterable.asScala, separator)
+    else this
+  }
+
   def appendWithSeparators(iterable: Iterable[_], separator: String): StrBuilder = {
     if (iterable != null) {
       val sep = Objects.toString(separator, "")
@@ -1160,7 +1173,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * }
     * </pre>
     * Note that for this simple example, you should use
-    * {@link #appendWithSeparators(iterable:Iterable[_],separator:String)*}.
+    * {@code #appendWithSeparators(iterable:java.lang.Iterable[_],separator:String)*}.
     *
     * @param separator the separator to use, null means no separator
     * @return this, to enable chaining
@@ -1216,7 +1229,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * }
     * </pre>
     * Note that for this simple example, you should use
-    * {@link #appendWithSeparators(iterable:Iterable[_],separator:String)*}.
+    * {@code #appendWithSeparators(iterable:java.lang.Iterable[_],separator:String)*}.
     *
     * @param separator the separator to use
     * @return this, to enable chaining
@@ -1261,7 +1274,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * }
     * </pre>
     * Note that for this simple example, you should use
-    * {@link #appendWithSeparators(iterable:Iterable[_],separator:String)*}.
+    * {@code #appendWithSeparators(iterable:java.lang.Iterable[_],separator:String)*}.
     *
     * @param separator the separator to use, null means no separator
     * @param loopIndex the loop index
@@ -1287,7 +1300,7 @@ class StrBuilder() extends CharSequence with Appendable with Serializable with B
     * }
     * </pre>
     * Note that for this simple example, you should use
-    * {@link #appendWithSeparators(iterable:Iterable[_],separator:String)*}.
+    * {@code #appendWithSeparators(iterable:java.lang.Iterable[_],separator:String)*}.
     *
     * @param separator the separator to use
     * @param loopIndex the loop index

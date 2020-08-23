@@ -140,15 +140,15 @@ The first milestone is `StringUtils` tests and dependency-libraries passing.
     - [x] [mutable.MutableObjectTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableObjectTest.scala)
     - [x] [mutable.MutableShortTest](./core/jvm/src/test/scala/org/apache/commons/lang3/mutable/MutableShortTest.scala)
   - text
-    - [ ] [text.CompositeFormatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/CompositeFormatTest.scala)
-    - [ ] [text.ExtendedMessageFormatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/ExtendedMessageFormatTest.scala)
-    - [ ] [text.FormattableUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/FormattableUtilsTest.scala)
-    - [ ] [text.StrBuilderAppendInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.scala)
-    - [ ] [text.StrBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrBuilderTest.scala)
-    - [ ] [text.StrLookupTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrLookupTest.scala)
-    - [ ] [text.StrMatcherTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrMatcherTest.scala)
+    - [x] [text.CompositeFormatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/CompositeFormatTest.scala)
+    - [x] [text.ExtendedMessageFormatTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/ExtendedMessageFormatTest.scala)
+    - [x] [text.FormattableUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/FormattableUtilsTest.scala)
+    - [x] [text.StrBuilderAppendInsertTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.scala)
+    - [x] [text.StrBuilderTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrBuilderTest.scala)
+    - [x] [text.StrLookupTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrLookupTest.scala)
+    - [x] [text.StrMatcherTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrMatcherTest.scala)
     - [ ] [text.StrSubstitutorTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrSubstitutorTest.scala)
-    - [ ] [text.StrTokenizerTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrTokenizerTest.scala)
+    - [x] [text.StrTokenizerTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/StrTokenizerTest.scala)
     - [x] [text.WordUtilsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/WordUtilsTest.scala)
     - translate :white_check_mark:
       - [x] [text.translate.EntityArraysTest](./core/jvm/src/test/scala/org/apache/commons/lang3/text/translate/EntityArraysTest.scala)
@@ -179,8 +179,6 @@ All except `reflect`, `function`, `concurrent`
   - event
   - stream
     - [ ] [stream.StreamsTest](./core/jvm/src/test/scala/org/apache/commons/lang3/stream/StreamsTest.scala)
-  - text
-    - **TODO**
   - time 
     - **TODO**
 
