@@ -23,14 +23,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
   *
   * @see MutableDouble
   */
-class MutableDoubleTest extends JUnitSuite with TestHelpers {
+class MutableDoubleTest extends TestHelpers {
   @Test def testConstructors(): Unit = {
     assertEquals(0d, new MutableDouble().doubleValue, 0.0001d)
     assertEquals(1d, new MutableDouble(1d).doubleValue, 0.0001d)

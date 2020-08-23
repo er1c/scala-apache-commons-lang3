@@ -21,7 +21,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.StrMatcher}.
@@ -31,7 +30,7 @@ import org.scalatestplus.junit.JUnitSuite
   private val BUFFER2 = "abcdef".toCharArray
 }
 
-@deprecated class StrMatcherTest extends JUnitSuite {
+@deprecated class StrMatcherTest {
   @Test def testCommaMatcher() = {
     val matcher = StrMatcher.commaMatcher
     assertSame(matcher, StrMatcher.commaMatcher)

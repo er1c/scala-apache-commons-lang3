@@ -19,13 +19,12 @@ package org.apache.commons.lang3.text.translate
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.UnicodeEscaper}.
   */
 @deprecated
-class UnicodeEscaperTest extends JUnitSuite {
+class UnicodeEscaperTest {
   @Test def testBelow(): Unit = {
     val ue = UnicodeEscaper.below('F')
     val input = "ADFGZ"

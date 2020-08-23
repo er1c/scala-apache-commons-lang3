@@ -19,13 +19,12 @@ package org.apache.commons.lang3.text.translate
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.OctalUnescaper}.
   */
 @deprecated
-class OctalUnescaperTest extends JUnitSuite {
+class OctalUnescaperTest {
   @Test def testBetween(): Unit = {
     val oue = new OctalUnescaper //.between("1", "377");
     var input = "\\45"

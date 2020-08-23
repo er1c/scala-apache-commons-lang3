@@ -20,7 +20,6 @@ package org.apache.commons.lang3.compare
 import org.junit.Assert.assertEquals
 import java.util
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 object ObjectToStringComparatorTest {
   private class Thing private[compare] (val string: String) {
@@ -31,7 +30,7 @@ object ObjectToStringComparatorTest {
 /**
   * Tests {@link ObjectToStringComparator}.
   */
-class ObjectToStringComparatorTest extends JUnitSuite {
+class ObjectToStringComparatorTest {
   @Test def testNull(): Unit = {
     val things = util.Arrays.asList(null, new ObjectToStringComparatorTest.Thing("y"), null)
     things.sort(ObjectToStringComparator.INSTANCE)

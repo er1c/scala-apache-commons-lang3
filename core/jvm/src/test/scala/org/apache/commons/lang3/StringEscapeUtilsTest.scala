@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 import org.apache.commons.lang3.text.translate.NumericEntityEscaper
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 @deprecated object StringEscapeUtilsTest {
   private val FOO = "foo"
@@ -50,7 +50,7 @@ import org.scalatestplus.junit.JUnitSuite
   * Unit tests for {@link StringEscapeUtils}.
   */
 @deprecated
-class StringEscapeUtilsTest extends JUnitSuite {
+class StringEscapeUtilsTest {
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new StringEscapeUtils.type)
 //    val cons = classOf[StringEscapeUtils.type].getDeclaredConstructors

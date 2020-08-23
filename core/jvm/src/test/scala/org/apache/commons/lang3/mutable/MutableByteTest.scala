@@ -22,14 +22,14 @@ import org.apache.commons.lang3.TestHelpers
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
   *
   * @see MutableByte
   */
-class MutableByteTest extends JUnitSuite with TestHelpers {
+class MutableByteTest extends TestHelpers {
   @Test def testConstructors(): Unit = {
     assertEquals(0.toByte, new MutableByte().byteValue)
     assertEquals(1.toByte, new MutableByte(1.toByte).byteValue)

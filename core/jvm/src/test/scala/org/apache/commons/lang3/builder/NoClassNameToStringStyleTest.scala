@@ -17,8 +17,6 @@
 
 package org.apache.commons.lang3.builder
 
-import org.scalatestplus.junit.JUnitSuite
-
 import java.util
 import org.apache.commons.lang3.builder.ToStringStyleTest.Person
 import org.junit.Assert._
@@ -28,7 +26,7 @@ import org.junit.{After, Before}
 /**
   * Unit tests {@link ToStringStyle# NO_CLASS_NAME_STYLE}.
   */
-class NoClassNameToStringStyleTest extends JUnitSuite {
+class NoClassNameToStringStyleTest {
   final private val base = Integer.valueOf(5)
 
   @Before def setUp(): Unit = {

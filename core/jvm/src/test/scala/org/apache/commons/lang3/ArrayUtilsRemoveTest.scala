@@ -25,20 +25,14 @@ import java.lang.{
   Long => JavaLong,
   Short => JavaShort
 }
-import org.scalatestplus.junit.{AssertionsForJUnit, JUnitSuite}
 import org.junit.Assert._
 import org.junit.Test
-
-object ArrayUtilsRemoveTest {
-  private val DoubleDelta: Double = 1e-9d
-  private val FloatDelta: Float = 1e-9f
-}
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Tests ArrayUtils remove and removeElement methods.
   */
-class ArrayUtilsRemoveTest extends JUnitSuite with AssertionsForJUnit {
-  import ArrayUtilsRemoveTest._
+class ArrayUtilsRemoveTest extends TestHelpers {
   @Test def testRemoveAllBooleanOccurences(): Unit = {
     var a: Array[Boolean] = null
     assertNull(ArrayUtils.removeAllOccurences(a, true))
@@ -133,60 +127,60 @@ class ArrayUtilsRemoveTest extends JUnitSuite with AssertionsForJUnit {
     var a: Array[Double] = null
     assertNull(ArrayUtils.removeAllOccurences(a, 2))
     a = new Array[Double](0)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurences(a, 2), DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Double](2)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurences(a, 2), DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Double](2, 2)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurences(a, 2), DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Double](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Double](1, 3), ArrayUtils.removeAllOccurences(a, 2), DoubleDelta)
+    assertArrayEquals(Array[Double](1, 3), ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Double](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Double](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurences(a, 4), DoubleDelta)
+    assertArrayEquals(Array[Double](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurences(a, 4))
   }
 
   @Test def testRemoveAllDoubleOccurrences(): Unit = {
     var a: Array[Double] = null
     assertNull(ArrayUtils.removeAllOccurrences(a, 2))
     a = new Array[Double](0)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurrences(a, 2), DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Double](2)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurrences(a, 2), DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Double](2, 2)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurrences(a, 2), DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Double](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Double](1, 3), ArrayUtils.removeAllOccurrences(a, 2), DoubleDelta)
+    assertArrayEquals(Array[Double](1, 3), ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Double](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Double](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurrences(a, 4), DoubleDelta)
+    assertArrayEquals(Array[Double](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurrences(a, 4))
   }
 
   @Test def testRemoveAllFloatOccurences(): Unit = {
     var a: Array[Float] = null
     assertNull(ArrayUtils.removeAllOccurences(a, 2))
     a = new Array[Float](0)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurences(a, 2), FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Float](2)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurences(a, 2), FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Float](2, 2)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurences(a, 2), FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Float](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Float](1, 3), ArrayUtils.removeAllOccurences(a, 2), FloatDelta)
+    assertArrayEquals(Array[Float](1, 3), ArrayUtils.removeAllOccurences(a, 2))
     a = Array[Float](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Float](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurences(a, 4), FloatDelta)
+    assertArrayEquals(Array[Float](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurences(a, 4))
   }
 
   @Test def testRemoveAllFloatOccurrences(): Unit = {
     var a: Array[Float] = null
     assertNull(ArrayUtils.removeAllOccurrences(a, 2))
     a = new Array[Float](0)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurrences(a, 2), FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Float](2)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurrences(a, 2), FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Float](2, 2)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurrences(a, 2), FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Float](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Float](1, 3), ArrayUtils.removeAllOccurrences(a, 2), FloatDelta)
+    assertArrayEquals(Array[Float](1, 3), ArrayUtils.removeAllOccurrences(a, 2))
     a = Array[Float](1, 2, 2, 3, 2)
-    assertArrayEquals(Array[Float](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurrences(a, 4), FloatDelta)
+    assertArrayEquals(Array[Float](1, 2, 2, 3, 2), ArrayUtils.removeAllOccurrences(a, 4))
   }
 
   @Test def testRemoveAllIntOccurences(): Unit = {
@@ -372,16 +366,16 @@ class ArrayUtilsRemoveTest extends JUnitSuite with AssertionsForJUnit {
   @Test def testRemoveDoubleArray(): Unit = {
     var array: Array[Double] = null
     array = ArrayUtils.remove(Array[Double](1), 0)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, array, DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.remove(Array[Double](1, 2), 0)
-    assertArrayEquals(Array[Double](2), array, DoubleDelta)
+    assertArrayEquals(Array[Double](2), array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.remove(Array[Double](1, 2), 1)
-    assertArrayEquals(Array[Double](1), array, DoubleDelta)
+    assertArrayEquals(Array[Double](1), array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.remove(Array[Double](1, 2, 1), 1)
-    assertArrayEquals(Array[Double](1, 1), array, DoubleDelta)
+    assertArrayEquals(Array[Double](1, 1), array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     assertThrows[IndexOutOfBoundsException](ArrayUtils.remove(Array[Double](1, 2), -1))
     assertThrows[IndexOutOfBoundsException](ArrayUtils.remove(Array[Double](1, 2), 2))
@@ -449,16 +443,16 @@ class ArrayUtilsRemoveTest extends JUnitSuite with AssertionsForJUnit {
     array = ArrayUtils.removeElement(null, 1.toDouble)
     assertNull(array)
     array = ArrayUtils.removeElement(ArrayUtils.EMPTY_DOUBLE_ARRAY, 1.toDouble)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, array, DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.removeElement(Array[Double](1), 1.toDouble)
-    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, array, DoubleDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_DOUBLE_ARRAY, array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.removeElement(Array[Double](1, 2), 1.toDouble)
-    assertArrayEquals(Array[Double](2), array, DoubleDelta)
+    assertArrayEquals(Array[Double](2), array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.removeElement(Array[Double](1, 2, 1), 1.toDouble)
-    assertArrayEquals(Array[Double](2, 1), array, DoubleDelta)
+    assertArrayEquals(Array[Double](2, 1), array)
     assertEquals(JavaDouble.TYPE, array.getClass.getComponentType)
   }
 
@@ -468,16 +462,16 @@ class ArrayUtilsRemoveTest extends JUnitSuite with AssertionsForJUnit {
     array = ArrayUtils.removeElement(null.asInstanceOf[Array[Float]], 1.toFloat)
     assertNull(array)
     array = ArrayUtils.removeElement(ArrayUtils.EMPTY_FLOAT_ARRAY, 1.toFloat)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, array, FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.removeElement(Array[Float](1), 1.toFloat)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, array, FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.removeElement(Array[Float](1, 2), 1.toFloat)
-    assertArrayEquals(Array[Float](2), array, FloatDelta)
+    assertArrayEquals(Array[Float](2), array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.removeElement(Array[Float](1, 2, 1), 1.toFloat)
-    assertArrayEquals(Array[Float](2, 1), array, FloatDelta)
+    assertArrayEquals(Array[Float](2, 1), array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
   }
 
@@ -557,16 +551,16 @@ class ArrayUtilsRemoveTest extends JUnitSuite with AssertionsForJUnit {
   @Test def testRemoveFloatArray(): Unit = {
     var array: Array[Float] = null
     array = ArrayUtils.remove(Array[Float](1), 0)
-    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, array, FloatDelta)
+    assertArrayEquals(ArrayUtils.EMPTY_FLOAT_ARRAY, array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.remove(Array[Float](1, 2), 0)
-    assertArrayEquals(Array[Float](2), array, FloatDelta)
+    assertArrayEquals(Array[Float](2), array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.remove(Array[Float](1, 2), 1)
-    assertArrayEquals(Array[Float](1), array, FloatDelta)
+    assertArrayEquals(Array[Float](1), array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     array = ArrayUtils.remove(Array[Float](1, 2, 1), 1)
-    assertArrayEquals(Array[Float](1, 1), array, FloatDelta)
+    assertArrayEquals(Array[Float](1, 1), array)
     assertEquals(JavaFloat.TYPE, array.getClass.getComponentType)
     assertThrows[IndexOutOfBoundsException](ArrayUtils.remove(Array[Float](1, 2), -1))
     assertThrows[IndexOutOfBoundsException](ArrayUtils.remove(Array[Float](1, 2), 2))

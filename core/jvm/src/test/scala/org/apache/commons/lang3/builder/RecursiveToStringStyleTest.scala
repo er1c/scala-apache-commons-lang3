@@ -21,7 +21,6 @@ import java.util
 import org.junit.Assert._
 import org.junit.Test
 import org.junit.{After, Before}
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.builder.RecursiveToStringStyleTest}.
@@ -53,7 +52,7 @@ object RecursiveToStringStyleTest {
 
 }
 
-class RecursiveToStringStyleTest extends JUnitSuite {
+class RecursiveToStringStyleTest {
   final private val base = Integer.valueOf(5)
   final private val baseStr = base.getClass.getName + "@" + Integer.toHexString(System.identityHashCode(base))
 

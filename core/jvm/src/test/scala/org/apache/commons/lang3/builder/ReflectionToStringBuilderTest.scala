@@ -17,12 +17,12 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
 //
-//class ReflectionToStringBuilderTest extends JUnitSuite {
+//class ReflectionToStringBuilderTest {
 //  @Test def testConstructorWithNullObject(): Unit = {
 //    assertThrows[NullPointerException](
 //      new ReflectionToStringBuilder[ReflectionToStringBuilderTest](null, ToStringStyle.DEFAULT_STYLE, new StringBuffer))

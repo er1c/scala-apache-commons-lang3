@@ -19,13 +19,13 @@ package org.apache.commons.lang3.text.translate
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.UnicodeEscaper}.
   */
 @deprecated
-class UnicodeUnescaperTest extends JUnitSuite {
+class UnicodeUnescaperTest {
   // Requested in LANG-507
   @Test def testUPlus(): Unit = {
     val uu = new UnicodeUnescaper
@@ -43,9 +43,8 @@ class UnicodeUnescaperTest extends JUnitSuite {
   @Test def testLessThanFour(): Unit = {
     val uu = new UnicodeUnescaper
     val input = "\\0047\\u006"
-    assertThrows[IllegalArgumentException](
-      uu.translate(input)
-    ) //, "A lack of digits in a Unicode escape sequence failed to throw an exception")
+    assertThrows[IllegalArgumentException](uu.translate(input))
+    //, "A lack of digits in a Unicode escape sequence failed to throw an exception")
     ()
   }
 }

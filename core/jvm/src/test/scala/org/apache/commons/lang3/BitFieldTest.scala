@@ -19,7 +19,6 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertEquals, assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Class to test BitField functionality
@@ -30,7 +29,7 @@ object BitFieldTest {
   private val bf_zero = new BitField(0)
 }
 
-class BitFieldTest extends JUnitSuite {
+class BitFieldTest {
   /**
     * test the getValue() method
     */

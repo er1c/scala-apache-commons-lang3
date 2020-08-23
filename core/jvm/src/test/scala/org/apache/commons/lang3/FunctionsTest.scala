@@ -42,7 +42,7 @@
 //import org.apache.commons.lang3.Functions.FailableSupplier
 //import org.junit.jupiter.api.DisplayName
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 //object FunctionsTest {
 //
@@ -238,7 +238,7 @@
 //
 //}
 //
-//class FunctionsTest extends JUnitSuite {
+//class FunctionsTest {
 //  @Test def testAcceptBiConsumer() = {
 //    val ise = new IllegalStateException
 //    val testable = new FunctionsTest.Testable[AnyRef, AnyRef](null)

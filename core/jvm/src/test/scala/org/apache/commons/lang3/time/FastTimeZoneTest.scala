@@ -20,7 +20,7 @@
 //import org.junit.Assert.assertEquals
 //import java.util.TimeZone
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Tests for FastTimeZone
@@ -32,7 +32,7 @@
 //  private val MINUTES_5 = 5 * 60 * 1000
 //}
 //
-//class FastTimeZoneTest extends JUnitSuite {
+//class FastTimeZoneTest {
 //  @Test def testGetGmtTimeZone() = assertEquals(0, FastTimeZone.getGmtTimeZone.getRawOffset)
 //
 //  @Test def testBareGmt() = assertEquals(FastTimeZone.getGmtTimeZone, FastTimeZone.getTimeZone("GMT"))

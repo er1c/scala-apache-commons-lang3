@@ -22,12 +22,11 @@ import java.net.URL
 import java.net.URLClassLoader
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Tests {@link ClassLoaderUtils}.
   */
-class ClassLoaderUtilsTest extends JUnitSuite {
+class ClassLoaderUtilsTest {
   @Test
   @throws[IOException]
   def testToString_ClassLoader(): Unit = {

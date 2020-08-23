@@ -22,7 +22,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNot
 import org.junit.Assert.{assertEquals, assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - Equals/IndexOf methods
@@ -68,7 +67,7 @@ object StringUtilsEqualsIndexOfTest {
 
 }
 
-class StringUtilsEqualsIndexOfTest extends JUnitSuite {
+class StringUtilsEqualsIndexOfTest {
   @Test def testCustomCharSequence(): Unit = {
     assertThat(
       new StringUtilsEqualsIndexOfTest.CustomCharSequence(StringUtilsEqualsIndexOfTest.FOO),

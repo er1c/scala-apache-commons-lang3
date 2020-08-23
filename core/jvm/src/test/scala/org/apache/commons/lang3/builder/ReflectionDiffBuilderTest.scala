@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
@@ -64,7 +64,7 @@
 //
 //}
 //
-//class ReflectionDiffBuilderTest extends JUnitSuite {
+//class ReflectionDiffBuilderTest {
 //  @Test def test_no_differences(): Unit = {
 //    val firstObject = new ReflectionDiffBuilderTest.TypeTestClass
 //    val secondObject = new ReflectionDiffBuilderTest.TypeTestClass

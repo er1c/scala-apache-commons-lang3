@@ -28,8 +28,7 @@ import org.apache.commons.lang3.mutable.MutableObject
 import org.apache.commons.lang3.text.StrBuilder
 import org.junit.Assert._
 import org.junit.Test
-import org.junit.function.ThrowingRunnable
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.{assertThrows, intercept}
 
 /**
   * Unit tests {@link org.apache.commons.lang3.ObjectUtils}.
@@ -85,7 +84,7 @@ object ObjectUtilsTest {
 }
 
 @SuppressWarnings(Array("deprecation"))
-class ObjectUtilsTest extends JUnitSuite with TestHelpers {
+class ObjectUtilsTest extends TestHelpers {
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new ObjectUtils.type)
 //    val cons = classOf[ObjectUtils.type].getDeclaredConstructors
@@ -270,7 +269,11 @@ class ObjectUtilsTest extends JUnitSuite with TestHelpers {
             override def get(): String = "123"
           },
           new Supplier[String] {
-            override def get(): String = fail("Supplier after first non-null value should not be evaluated")
+            override def get(): String = {
+              fail("Supplier after first non-null value should not be evaluated")
+              ""
+            }
+
           }
         ): _*
       )
@@ -712,17 +715,8 @@ class ObjectUtilsTest extends JUnitSuite with TestHelpers {
     */
   @Test def testCloneOfUncloneable(): Unit = {
     val string: ObjectUtilsTest.UncloneableString = new ObjectUtilsTest.UncloneableString("apache")
-    val e: CloneFailedException = org.junit.Assert.assertThrows(
-      classOf[CloneFailedException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ObjectUtils.clone(string)
-          ()
-        }
-      }
-    )
 
+    val e = intercept[CloneFailedException](ObjectUtils.clone(string))
     assertEquals(classOf[NoSuchMethodException], e.getCause.getClass)
   }
 
@@ -766,16 +760,8 @@ class ObjectUtilsTest extends JUnitSuite with TestHelpers {
     */
   @Test def testPossibleCloneOfUncloneable(): Unit = {
     val string: ObjectUtilsTest.UncloneableString = new ObjectUtilsTest.UncloneableString("apache")
-    val e: CloneFailedException = org.junit.Assert.assertThrows(
-      classOf[CloneFailedException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ObjectUtils.cloneIfPossible(string)
-          ()
-        }
-      })
 
+    val e = intercept[CloneFailedException](ObjectUtils.cloneIfPossible(string))
     assertEquals(classOf[NoSuchMethodException], e.getCause.getClass)
   }
 

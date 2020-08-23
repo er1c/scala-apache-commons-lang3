@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
@@ -30,7 +30,7 @@
 //  private val STRING_FIELD_NAME = "testStringField"
 //}
 //
-//class ReflectionToStringBuilderExcludeNullValuesTest extends JUnitSuite {
+//class ReflectionToStringBuilderExcludeNullValuesTest {
 //  final private val BOTH_NON_NULL = new ReflectionToStringBuilderExcludeNullValuesTest.TestFixture(0, "str")
 //  final private val FIRST_NULL = new ReflectionToStringBuilderExcludeNullValuesTest.TestFixture(null, "str")
 //  final private val SECOND_NULL = new ReflectionToStringBuilderExcludeNullValuesTest.TestFixture(0, null)

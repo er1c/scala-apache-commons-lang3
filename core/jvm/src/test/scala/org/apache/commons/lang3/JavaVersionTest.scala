@@ -20,12 +20,11 @@ package org.apache.commons.lang3
 import org.apache.commons.lang3.JavaVersion._
 import org.junit.Assert.{assertEquals, assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.JavaVersion}.
   */
-class JavaVersionTest extends JUnitSuite {
+class JavaVersionTest {
   @Test def testGetJavaVersion(): Unit = {
     assertEquals("0.9 failed", JAVA_0_9, get("0.9"))
     assertEquals("1.1 failed", JAVA_1_1, get("1.1"))

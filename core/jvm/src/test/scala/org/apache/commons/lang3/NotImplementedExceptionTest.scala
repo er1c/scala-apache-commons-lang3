@@ -19,12 +19,11 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertEquals, assertNotNull}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.NotImplementedException}.
   */
-class NotImplementedExceptionTest extends JUnitSuite {
+class NotImplementedExceptionTest {
   @Test def testConstructors(): Unit = {
     val nested: Throwable = new RuntimeException
     val message: String = "Not Implemented"

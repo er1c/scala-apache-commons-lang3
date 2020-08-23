@@ -20,12 +20,11 @@ package org.apache.commons.lang3
 import java.nio.charset.{Charset, StandardCharsets}
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Tests {@link Charsets}.
   */
-class CharsetsTest extends JUnitSuite {
+class CharsetsTest {
   @Test def testToCharset_Charset(): Unit = {
     assertEquals(Charset.defaultCharset, Charsets.toCharset(null.asInstanceOf[Charset]))
     assertEquals(Charset.defaultCharset, Charsets.toCharset(Charset.defaultCharset))

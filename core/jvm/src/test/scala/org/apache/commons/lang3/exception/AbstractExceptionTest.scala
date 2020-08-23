@@ -17,8 +17,6 @@
 
 package org.apache.commons.lang3.exception
 
-import org.scalatestplus.junit.JUnitSuite
-
 /**
   * Base class for testing {@link Exception} descendants
   */
@@ -29,6 +27,6 @@ object AbstractExceptionTest {
   protected[exception] val WRONG_CAUSE_MESSAGE = "Wrong cause message"
 }
 
-abstract class AbstractExceptionTest extends JUnitSuite {
+abstract class AbstractExceptionTest {
   protected def generateCause = new Exception(AbstractExceptionTest.CAUSE_MESSAGE)
 }

@@ -25,12 +25,12 @@
 //import org.junit.Assert.assertTrue
 //import java.lang.reflect.Modifier
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.CharSet}.
 //  */
-//class CharSetTest extends JUnitSuite {
+//class CharSetTest {
 //  //-----------------------------------------------------------------------
 //  @Test def testClass() = {
 //    assertTrue(Modifier.isPublic(classOf[Nothing].getModifiers))

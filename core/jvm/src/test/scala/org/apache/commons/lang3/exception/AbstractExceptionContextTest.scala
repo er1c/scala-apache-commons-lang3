@@ -28,7 +28,6 @@ import java.util.Date
 import org.apache.commons.lang3.SerializationUtils
 import org.junit.Before
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Abstract test of an ExceptionContext implementation.
@@ -39,7 +38,7 @@ object AbstractExceptionContextTest {
   protected[exception] class ObjectWithFaultyToString { override def toString = throw new RuntimeException("Crap") }
 }
 
-abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializable] extends JUnitSuite {
+abstract class AbstractExceptionContextTest[T <: ExceptionContext with Serializable] {
   import AbstractExceptionContextTest._
   protected var exceptionContext: T = _
 

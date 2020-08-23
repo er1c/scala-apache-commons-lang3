@@ -31,7 +31,7 @@
 //import org.junit.jupiter.params.ParameterizedTest
 //import org.junit.jupiter.params.provider.Arguments
 //import org.junit.jupiter.params.provider.MethodSource
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Compare FastDateParser with SimpleDateFormat
@@ -50,7 +50,7 @@
 //  private val timeZone = TimeZone.getDefault
 //}
 //
-//class FastDateParserSDFTest extends JUnitSuite {
+//class FastDateParserSDFTest {
 //  @ParameterizedTest
 //  @MethodSource("data") def testOriginal(format: String, input: String, locale: Locale, valid: Boolean) = checkParse(input, format, locale, valid)
 //

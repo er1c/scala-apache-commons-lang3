@@ -32,7 +32,7 @@ import org.apache.commons.lang3.ClassUtils.Interfaces
 import org.apache.commons.lang3.reflect.testbed.{GenericConsumer, GenericParent, StringParameterizedChild}
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 import scala.reflect.ClassTag
 
 // JUnit4 does not support primitive equality testing apart from long
@@ -64,7 +64,7 @@ object ClassUtilsTest {
 /**
   * Unit tests {@link org.apache.commons.lang3.ClassUtils}.
   */
-@SuppressWarnings(Array("boxing")) class ClassUtilsTest extends JUnitSuite {
+@SuppressWarnings(Array("boxing")) class ClassUtilsTest {
   @throws[Exception]
   private def assertGetClassReturnsClass(c: Class[_]): Unit = assertEquals(c, ClassUtils.getClass(c.getName))
 

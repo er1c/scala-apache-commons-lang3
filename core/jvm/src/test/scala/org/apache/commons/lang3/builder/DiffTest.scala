@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import org.junit.Assert._
 //import org.junit.Test
 //import org.junit.{Before, After}
@@ -38,7 +38,7 @@
 //
 //}
 //
-//class DiffTest extends JUnitSuite {
+//class DiffTest {
 //  @Test def testCannotModify(): Unit = {
 //    assertThrows(classOf[UnsupportedOperationException], () => DiffTest.booleanDiff.setValue(Boolean.FALSE))
 //  }

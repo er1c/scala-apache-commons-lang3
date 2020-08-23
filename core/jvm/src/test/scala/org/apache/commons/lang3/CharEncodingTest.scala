@@ -20,14 +20,13 @@ package org.apache.commons.lang3
 import java.nio.charset.StandardCharsets
 import org.junit.Assert.{assertEquals, assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Tests CharEncoding.
   *
   * @see CharEncoding
   */
-@SuppressWarnings(Array("deprecation")) class CharEncodingTest extends JUnitSuite {
+@SuppressWarnings(Array("deprecation")) class CharEncodingTest {
   private def assertSupportedEncoding(name: String): Unit = {
     assertTrue("Encoding should be supported: " + name, CharEncoding.isSupported(name))
     ()

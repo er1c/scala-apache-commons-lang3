@@ -22,12 +22,12 @@
 //import org.apache.commons.lang3.mutable.MutableObject
 //import org.junit.{After, Before, Test}
 //import org.junit.Assert._
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Test class for StrSubstitutor.
 //  */
-//@deprecated class StrSubstitutorTest extends JUnitSuite {
+//@deprecated class StrSubstitutorTest {
 //  private var values: util.Map[String, String] = null
 //
 //  @Before def setUp(): Unit = {

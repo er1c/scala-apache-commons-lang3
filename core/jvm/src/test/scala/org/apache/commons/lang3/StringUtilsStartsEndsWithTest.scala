@@ -19,7 +19,6 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertFalse, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - StartsWith/EndsWith methods
@@ -33,7 +32,7 @@ object StringUtilsStartsEndsWithTest {
   private val FOOBAR = "FOOBAR"
 }
 
-class StringUtilsStartsEndsWithTest extends JUnitSuite {
+class StringUtilsStartsEndsWithTest {
   /**
     * Test StringUtils.startsWith()
     */

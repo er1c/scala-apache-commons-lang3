@@ -21,13 +21,12 @@ import java.io.CharArrayWriter
 import java.io.IOException
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover}.
   */
 @deprecated
-class UnicodeUnpairedSurrogateRemoverTest extends JUnitSuite {
+class UnicodeUnpairedSurrogateRemoverTest {
   final private[translate] val subject = new UnicodeUnpairedSurrogateRemover
   final private[translate] val writer = new CharArrayWriter // nothing is ever written to it
 

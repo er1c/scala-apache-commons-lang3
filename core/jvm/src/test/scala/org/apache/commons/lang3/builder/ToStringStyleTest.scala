@@ -19,7 +19,6 @@ package org.apache.commons.lang3.builder
 
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Test case for ToStringStyle.
@@ -50,7 +49,7 @@ object ToStringStyleTest {
 
 }
 
-class ToStringStyleTest extends JUnitSuite {
+class ToStringStyleTest {
   @Test def testSetArrayStart(): Unit = {
     val style = new ToStringStyleTest.ToStringStyleImpl
     style.setArrayStart(null)

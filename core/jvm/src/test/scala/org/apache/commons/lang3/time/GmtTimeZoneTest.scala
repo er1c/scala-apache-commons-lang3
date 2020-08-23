@@ -21,12 +21,12 @@
 //import org.junit.Assert.assertFalse
 //import org.junit.Assert.assertThrows
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Tests for GmtTimeZone
 //  */
-//class GmtTimeZoneTest extends JUnitSuite {
+//class GmtTimeZoneTest {
 //  @Test def hoursOutOfRange() = assertThrows(classOf[IllegalArgumentException], () => new Nothing(false, 24, 0))
 //
 //  @Test def hoursInRange() = assertEquals(23 * 60 * 60 * 1000, new Nothing(false, 23, 0).getRawOffset)

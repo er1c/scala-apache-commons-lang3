@@ -25,12 +25,12 @@
 //import java.lang.reflect.Constructor
 //import java.lang.reflect.Modifier
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.CharSetUtils}.
 //  */
-//class CharSetUtilsTest extends JUnitSuite {
+//class CharSetUtilsTest {
 //  //-----------------------------------------------------------------------
 //  @Test def testConstructor() = {
 //    assertNotNull(new Nothing)

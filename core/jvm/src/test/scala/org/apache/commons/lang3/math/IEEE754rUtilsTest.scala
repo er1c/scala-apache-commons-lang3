@@ -21,12 +21,12 @@ import java.lang.{Double => JavaDouble, Float => JavaFloat}
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link org.apache.commons.lang3.math.IEEE754rUtils}.
   */
-class IEEE754rUtilsTest extends JUnitSuite {
+class IEEE754rUtilsTest {
   @Test def testLang381(): Unit = {
     assertEquals(1.2, IEEE754rUtils.min(1.2, 2.5, Double.NaN), 0.01)
     assertEquals(2.5, IEEE754rUtils.max(1.2, 2.5, Double.NaN), 0.01)

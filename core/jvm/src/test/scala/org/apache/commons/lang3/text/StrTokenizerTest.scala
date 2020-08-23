@@ -27,7 +27,7 @@ import java.util.Collections
 import java.util.NoSuchElementException
 import org.apache.commons.lang3.ArrayUtils
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 import scala.collection.JavaConverters._
 
 /**
@@ -38,7 +38,7 @@ import scala.collection.JavaConverters._
   private val TSV_SIMPLE_FIXTURE = "A\tb\tc"
 }
 
-@deprecated class StrTokenizerTest extends JUnitSuite {
+@deprecated class StrTokenizerTest {
   private def checkClone(tokenizer: StrTokenizer): Unit = {
     assertNotSame(StrTokenizer.getCSVInstance, tokenizer)
     assertNotSame(StrTokenizer.getTSVInstance, tokenizer)

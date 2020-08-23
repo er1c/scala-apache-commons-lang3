@@ -17,7 +17,7 @@
 
 //package org.apache.commons.lang3.builder
 //
-//import org.scalatestplus.junit.JUnitSuite
+//
 //import java.util
 //import java.util.{ArrayList, Collection, LinkedList, List}
 //import java.util.concurrent.Callable
@@ -53,7 +53,7 @@
 //  private val REPEAT = 100
 //}
 //
-//class ReflectionToStringBuilderConcurrencyTest extends JUnitSuite {
+//class ReflectionToStringBuilderConcurrencyTest {
 //  @Test
 //  @Disabled
 //  @throws[InterruptedException]

@@ -20,12 +20,12 @@ package org.apache.commons.lang3
 import java.util.regex.{Pattern, PatternSyntaxException}
 import org.junit.Assert.{assertEquals, assertNull}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests for methods of {@link org.apache.commons.lang3.RegExUtils} which been moved to their own test classes.
   */
-class RegExUtilsTest extends JUnitSuite {
+class RegExUtilsTest {
   @Test def testRemoveAll_StringPattern(): Unit = {
     assertNull(RegExUtils.removeAll(null, Pattern.compile("")))
     assertEquals("any", RegExUtils.removeAll("any", null.asInstanceOf[Pattern]))

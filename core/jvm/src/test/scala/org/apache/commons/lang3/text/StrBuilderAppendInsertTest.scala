@@ -22,7 +22,7 @@ import java.util
 import java.util.Collections
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 @deprecated
 object StrBuilderAppendInsertTest {
@@ -38,7 +38,7 @@ object StrBuilderAppendInsertTest {
   * Unit tests for {@link org.apache.commons.lang3.text.StrBuilder}.
   */
 @deprecated
-class StrBuilderAppendInsertTest extends JUnitSuite {
+class StrBuilderAppendInsertTest {
 
   @Test def testAppendNewLine(): Unit = {
     var sb = new StrBuilder("---")

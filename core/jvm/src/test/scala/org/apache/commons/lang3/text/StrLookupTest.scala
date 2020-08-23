@@ -21,12 +21,12 @@ import java.util
 import java.util.Properties
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Test class for StrLookup.
   */
-@deprecated class StrLookupTest extends JUnitSuite {
+@deprecated class StrLookupTest {
   @Test def testNoneLookup(): Unit = {
     assertNull(StrLookup.noneLookup.lookup(null))
     assertNull(StrLookup.noneLookup.lookup(""))

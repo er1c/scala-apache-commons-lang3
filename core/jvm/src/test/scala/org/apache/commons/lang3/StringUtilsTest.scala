@@ -29,8 +29,8 @@ import org.apache.commons.lang3.mutable.MutableInt
 import org.apache.commons.lang3.text.WordUtils
 import org.junit.Assert._
 import org.junit.Test
+import org.scalatest.Assertions.assertThrows
 //import org.junit.Disabled
-import org.scalatestplus.junit.JUnitSuite
 
 object StringUtilsTest {
   private val ARRAY_LIST: Array[String] = Array("foo", "bar", "baz")
@@ -115,7 +115,7 @@ object StringUtilsTest {
   * which been moved to their own test classes.
   */
 @SuppressWarnings(Array("deprecation"))
-class StringUtilsTest extends JUnitSuite {
+class StringUtilsTest {
   private def assertAbbreviateWithAbbrevMarkerAndOffset(
     expected: String,
     abbrevMarker: String,

@@ -17,7 +17,6 @@
 
 package org.apache.commons.lang3.builder
 
-import org.scalatestplus.junit.JUnitSuite
 import org.junit.Assert._
 import org.junit.Test
 
@@ -54,7 +53,7 @@ object HashCodeBuilderAndEqualsBuilderTest {
 
 }
 
-class HashCodeBuilderAndEqualsBuilderTest extends JUnitSuite {
+class HashCodeBuilderAndEqualsBuilderTest {
   private def testInteger(testTransients: Boolean): Unit = {
     val i1 = Integer.valueOf(12345)
     val i2 = Integer.valueOf(12345)

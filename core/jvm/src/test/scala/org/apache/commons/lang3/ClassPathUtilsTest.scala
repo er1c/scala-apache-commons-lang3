@@ -17,12 +17,12 @@
 
 package org.apache.commons.lang3
 
-import org.scalatestplus.junit.JUnitSuite
 import org.junit.Assert._
 import org.junit.Test
+import org.scalatest.Assertions.assertThrows
 /**
   */
-class ClassPathUtilsTest extends JUnitSuite {
+class ClassPathUtilsTest {
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new ClassPathUtils.type)
 //    val cons = classOf[ClassPathUtils.type].getDeclaredConstructors

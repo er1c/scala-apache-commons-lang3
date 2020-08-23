@@ -17,13 +17,13 @@
 
 package org.apache.commons.lang3.builder
 
-import org.scalatestplus.junit.JUnitSuite
 import org.junit.Assert._
 import org.junit.Test
 import org.junit.After
 import java.lang.{Boolean => JavaBoolean}
 import java.util
 import org.apache.commons.lang3.void
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.builder.ToStringBuilder}.
@@ -119,7 +119,7 @@ object ToStringBuilderTest {
 
 }
 
-class ToStringBuilderTest extends JUnitSuite {
+class ToStringBuilderTest {
   final private val base: Integer = Integer.valueOf(5)
   final private val baseStr: String = base.getClass.getName + "@" + Integer.toHexString(System.identityHashCode(base))
 

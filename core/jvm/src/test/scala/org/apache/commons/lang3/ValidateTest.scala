@@ -29,12 +29,12 @@
 //import java.util.Collections
 //import org.junit.jupiter.api.Nested
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests {@link org.apache.commons.lang3.Validate}.
 //  */
-//class ValidateTest extends JUnitSuite {
+//class ValidateTest {
 //
 //  @Nested private[lang3] class IsTrue {
 //

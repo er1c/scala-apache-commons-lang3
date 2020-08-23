@@ -19,12 +19,11 @@ package org.apache.commons.lang3
 
 import org.junit.Assert.{assertEquals, assertFalse, assertNull, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests {@link org.apache.commons.lang3.StringUtils} - Empty/Blank methods
   */
-class StringUtilsEmptyBlankTest extends JUnitSuite {
+class StringUtilsEmptyBlankTest {
   @Test def testIsEmpty(): Unit = {
     assertTrue(StringUtils.isEmpty(null))
     assertTrue(StringUtils.isEmpty(""))

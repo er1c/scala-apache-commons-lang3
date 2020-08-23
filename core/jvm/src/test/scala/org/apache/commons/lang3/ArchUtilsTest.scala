@@ -17,7 +17,6 @@
 
 package lang3
 
-import org.scalatestplus.junit.JUnitSuite
 import org.apache.commons.lang3.ArchUtils
 import org.apache.commons.lang3.arch.Processor
 import org.apache.commons.lang3.arch.Processor.Arch
@@ -36,7 +35,7 @@ object ArchUtilsTest {
   private val X86_64 = "x86_64"
 }
 
-class ArchUtilsTest extends JUnitSuite {
+class ArchUtilsTest {
   private def assertEqualsArchNotNull(arch: Processor.Arch, processor: Processor): Unit = {
     assertNotNull(arch)
     assertNotNull(processor)

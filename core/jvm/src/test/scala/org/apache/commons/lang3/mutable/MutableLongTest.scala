@@ -22,14 +22,14 @@ import org.apache.commons.lang3.TestHelpers
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
   *
   * @see MutableLong
   */
-class MutableLongTest extends JUnitSuite with TestHelpers {
+class MutableLongTest extends TestHelpers {
   @Test def testConstructors(): Unit = {
     assertEquals(0, new MutableLong().longValue)
     assertEquals(1, new MutableLong(1).longValue)

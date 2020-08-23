@@ -24,12 +24,11 @@ import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.Locale
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.CompositeFormat}.
   */
-@deprecated class CompositeFormatTest extends JUnitSuite {
+@deprecated class CompositeFormatTest {
   /**
     * Ensures that the parse/format separation is correctly maintained.
     */

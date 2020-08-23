@@ -20,12 +20,12 @@ package org.apache.commons.lang3
 import java.lang.{Boolean => JavaBoolean}
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link org.apache.commons.lang3.BooleanUtils}.
   */
-class BooleanUtilsTest extends JUnitSuite {
+class BooleanUtilsTest {
 
 //  @Test def testConstructor(): Unit = {
 //    assertNotNull(new BooleanUtils.type)

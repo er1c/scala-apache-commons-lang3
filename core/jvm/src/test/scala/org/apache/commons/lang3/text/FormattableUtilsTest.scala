@@ -21,12 +21,12 @@ import java.util.FormattableFlags.LEFT_JUSTIFY
 import java.util.Formatter
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link FormattableUtils}.
   */
-@deprecated class FormattableUtilsTest extends JUnitSuite {
+@deprecated class FormattableUtilsTest {
   @Test def testDefaultAppend(): Unit = {
     assertEquals("foo", FormattableUtils.append("foo", new Formatter, 0, -1, -1).toString)
     assertEquals("fo", FormattableUtils.append("foo", new Formatter, 0, -1, 2).toString)

@@ -23,12 +23,12 @@
 //import org.apache.commons.lang3.reflect.testbed.AnotherParent
 //import org.apache.commons.lang3.reflect.testbed.Grandchild
 //import org.junit.Test
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 ///**
 //  * Unit tests InheritanceUtils
 //  */
-//class InheritanceUtilsTest extends JUnitSuite {
+//class InheritanceUtilsTest {
 //  @Test
 //  @throws[Exception]
 //  def testConstructor() = assertNotNull(classOf[Nothing].newInstance)

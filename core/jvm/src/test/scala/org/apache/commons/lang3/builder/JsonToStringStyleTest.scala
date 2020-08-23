@@ -17,13 +17,13 @@
 
 package org.apache.commons.lang3.builder
 
-import org.scalatestplus.junit.JUnitSuite
 import java.util
 import java.util.{Collections, Date}
 import org.apache.commons.lang3.builder.ToStringStyleTest.Person
 import org.junit.Assert._
 import org.junit.Test
 import org.junit.{After, Before}
+import org.scalatest.Assertions.assertThrows
 
 /**
   * Unit tests {@link org.apache.commons.lang3.builder.JsonToStringStyleTest}.
@@ -107,7 +107,7 @@ object JsonToStringStyleTest {
 
 }
 
-class JsonToStringStyleTest extends JUnitSuite {
+class JsonToStringStyleTest {
   final private val base = Integer.valueOf(5)
 
   @Before def setUp(): Unit = {

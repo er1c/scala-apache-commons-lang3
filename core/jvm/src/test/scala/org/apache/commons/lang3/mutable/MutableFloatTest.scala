@@ -23,14 +23,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.assertThrows
 
 /**
   * JUnit tests.
   *
   * @see MutableFloat
   */
-class MutableFloatTest extends JUnitSuite with TestHelpers {
+class MutableFloatTest extends TestHelpers {
   @Test def testConstructors(): Unit = {
     assertEquals(0f, new MutableFloat().floatValue, 0.0001f)
     assertEquals(1f, new MutableFloat(1f).floatValue, 0.0001f)

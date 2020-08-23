@@ -32,8 +32,7 @@ import org.apache.commons.lang3.test.NotVisibleExceptionFactory
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.function.ThrowingRunnable
-import org.scalatestplus.junit.JUnitSuite
+import org.scalatest.Assertions.{assertThrows, intercept}
 import scala.util.control.Breaks
 
 /**
@@ -98,7 +97,7 @@ object ExceptionUtilsTest {
     }
 }
 
-class ExceptionUtilsTest extends JUnitSuite {
+class ExceptionUtilsTest {
   import ExceptionUtilsTest._
   import ExceptionUtilsTest.breaks._
 
@@ -170,26 +169,10 @@ class ExceptionUtilsTest extends JUnitSuite {
   }
 
   @Test def testCatchTechniques(): Unit = {
-    var ioe = org.junit.Assert.assertThrows(
-      classOf[IOException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          throwsCheckedException
-          ()
-        }
-      })
+    var ioe = intercept[IOException](throwsCheckedException)
     assertEquals(1, ExceptionUtils.getThrowableCount(ioe))
 
-    ioe = org.junit.Assert.assertThrows(
-      classOf[IOException],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          redeclareCheckedException
-          ()
-        }
-      })
+    ioe = intercept[IOException](redeclareCheckedException)
     assertEquals(1, ExceptionUtils.getThrowableCount(ioe))
   }
 
@@ -488,15 +471,7 @@ class ExceptionUtilsTest extends JUnitSuite {
 
   @Test def testThrow(): Unit = {
     val expected: Exception = new InterruptedException
-    val actual: Exception = org.junit.Assert.assertThrows(
-      classOf[Exception],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.rethrow(expected)
-        }
-      })
-
+    val actual: Exception = intercept[Exception](ExceptionUtils.rethrow(expected))
     assertSame(expected, actual)
   }
 
@@ -591,54 +566,22 @@ class ExceptionUtilsTest extends JUnitSuite {
   }
 
   @Test def testWrapAndUnwrapCheckedException(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new IOException)
-        }
-      })
-
+    val t: Throwable = intercept[Throwable](ExceptionUtils.wrapAndThrow(new IOException))
     assertTrue(ExceptionUtils.hasCause(t, classOf[IOException]))
   }
 
   @Test def testWrapAndUnwrapError(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new OutOfMemoryError)
-        }
-      })
-
+    val t: Throwable = intercept[Throwable](ExceptionUtils.wrapAndThrow(new OutOfMemoryError))
     assertTrue(ExceptionUtils.hasCause(t, classOf[Error]))
   }
 
   @Test def testWrapAndUnwrapRuntimeException(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new IllegalArgumentException)
-        }
-      })
-
+    val t: Throwable = intercept[Throwable](ExceptionUtils.wrapAndThrow(new IllegalArgumentException))
     assertTrue(ExceptionUtils.hasCause(t, classOf[RuntimeException]))
   }
 
   @Test def testWrapAndUnwrapThrowable(): Unit = {
-    val t: Throwable = org.junit.Assert.assertThrows(
-      classOf[Throwable],
-      new ThrowingRunnable() {
-        @throws[Throwable]
-        override def run(): Unit = {
-          ExceptionUtils.wrapAndThrow(new TestThrowable)
-        }
-      })
-
+    val t: Throwable = intercept[Throwable](ExceptionUtils.wrapAndThrow(new TestThrowable))
     assertTrue(ExceptionUtils.hasCause(t, classOf[TestThrowable]))
   }
 

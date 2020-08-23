@@ -21,13 +21,12 @@ import java.io.IOException
 import java.io.StringWriter
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.LookupTranslator}.
   */
 @deprecated
-class LookupTranslatorTest extends JUnitSuite {
+class LookupTranslatorTest {
   @Test
   @throws[IOException]
   def testBasicLookup(): Unit = {

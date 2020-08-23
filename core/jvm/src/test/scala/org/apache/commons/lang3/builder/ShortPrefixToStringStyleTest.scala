@@ -18,7 +18,7 @@
 package org.apache.commons.lang3.builder
 
 import java.util
-import org.scalatestplus.junit.JUnitSuite
+
 import org.apache.commons.lang3.builder.ToStringStyleTest.Person
 import org.junit.Assert._
 import org.junit.Test
@@ -27,7 +27,7 @@ import org.junit.{After, Before}
 /**
   * Unit tests {@link org.apache.commons.lang3.builder.ToStringStyle# SHORT_PREFIX_STYLE}.
   */
-class ShortPrefixToStringStyleTest extends JUnitSuite {
+class ShortPrefixToStringStyleTest {
   final private val base = Integer.valueOf(5)
   final private val baseStr = "Integer"
 

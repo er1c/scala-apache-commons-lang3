@@ -20,13 +20,12 @@ package org.apache.commons.lang3.text.translate
 import java.util
 import org.junit.Assert._
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Unit tests for {@link org.apache.commons.lang3.text.translate.EntityArrays}.
   */
 @deprecated
-class EntityArraysTest extends JUnitSuite {
+class EntityArraysTest {
 //  @Test def testConstructorExists(): Unit = {
 //    new EntityArrays.type
 //  }

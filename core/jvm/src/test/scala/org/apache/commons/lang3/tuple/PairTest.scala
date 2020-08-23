@@ -21,12 +21,11 @@ import java.util
 import java.util.Calendar
 import org.junit.Assert.{assertEquals, assertNotEquals, assertNull, assertTrue}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Test the Pair class.
   */
-class PairTest extends JUnitSuite {
+class PairTest {
   @Test def testEmptyArrayLength(): Unit = {
     @SuppressWarnings(Array("unchecked")) val empty = Pair.EMPTY_ARRAY.asInstanceOf[Array[Pair[Integer, String]]]
     assertEquals(0, empty.length)

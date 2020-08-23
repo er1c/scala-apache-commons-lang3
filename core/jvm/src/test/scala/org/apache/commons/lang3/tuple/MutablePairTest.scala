@@ -21,12 +21,11 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, 
 import java.util
 import org.junit.Assert.{assertEquals, assertNotEquals, assertNull}
 import org.junit.Test
-import org.scalatestplus.junit.JUnitSuite
 
 /**
   * Test the MutablePair class.
   */
-class MutablePairTest extends JUnitSuite {
+class MutablePairTest {
   @Test def testEmptyArrayLength(): Unit = {
     @SuppressWarnings(Array("unchecked")) val empty = MutablePair.EMPTY_ARRAY.asInstanceOf[Array[Nothing]]
     assertEquals(0, empty.length)

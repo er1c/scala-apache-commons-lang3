@@ -25,7 +25,7 @@
 //import java.util.stream.Stream
 //import org.junit.jupiter.params.ParameterizedTest
 //import org.junit.jupiter.params.provider.MethodSource
-//import org.scalatestplus.junit.JUnitSuite
+//
 //
 //object FastDatePrinterTimeZonesTest {
 //  private val PATTERN = "h:mma z"
@@ -33,7 +33,7 @@
 //  def data = util.Arrays.stream(TimeZone.getAvailableIDs).map(TimeZone.getTimeZone)
 //}
 //
-//class FastDatePrinterTimeZonesTest extends JUnitSuite {
+//class FastDatePrinterTimeZonesTest {
 //  @ParameterizedTest
 //  @MethodSource("data") def testCalendarTimezoneRespected(timeZone: TimeZone) = {
 //    val cal = Calendar.getInstance(timeZone)
