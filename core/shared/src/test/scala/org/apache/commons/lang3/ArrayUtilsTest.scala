@@ -428,433 +428,433 @@ class ArrayUtilsTest extends TestHelpers {
     assertEquals(ArrayUtils.hashCode(arrayB), ArrayUtils.hashCode(arrayA))
   }
 
-  @Test def testIndexesOf(): Unit = {
-    val array = Array[AnyRef]("0", "1", "2", "3", null, "0")
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(null.asInstanceOf[Array[AnyRef]], null))
-    assertEquals(emptySet, ArrayUtils.indexesOf(new Array[AnyRef](0), "0"))
-    testSet.set(5)
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "0"))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "2"))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "3"))
-    testSet.clear()
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, null))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, "notInArray"))
-  }
-
-  @Test def testIndexesOfBoolean(): Unit = {
-    var array: Array[Boolean] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, true))
-    array = new Array[Boolean](0)
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, true))
-    array = Array[Boolean](true, false, true)
-    testSet.set(0)
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, true))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, false))
-    array = Array[Boolean](true, true)
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, false))
-  }
-
-  @Test def testIndexesOfBooleanWithStartIndex(): Unit = {
-    var array: Array[Boolean] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, true, 0))
-    array = new Array[Boolean](0)
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, true, 0))
-    array = Array[Boolean](true, false, true)
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, true, 1))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, true, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, false, 1))
-    array = Array[Boolean](true, true)
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, false, 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, false, -1))
-  }
-
-  @Test def testIndexesOfByte(): Unit = {
-    var array: Array[Byte] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toByte))
-    array = Array[Byte](0, 1, 2, 3, 0)
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toByte))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toByte))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toByte))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toByte))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toByte))
-  }
-
-  @Test def testIndexesOfByteWithStartIndex(): Unit = {
-    var array: Array[Byte] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toByte, 2))
-    array = Array[Byte](0, 1, 2, 3, 0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toByte, 2))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toByte, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toByte, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toByte, 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toByte, 0))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toByte, -1))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toByte, 0))
-  }
-
-  @Test def testIndexesOfChar(): Unit = {
-    var array: Array[Char] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'a'))
-    array = Array[Char]('a', 'b', 'c', 'd', 'a')
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a'))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'b'))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'c'))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'd'))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'e'))
-  }
-
-  @Test def testIndexesOfCharWithStartIndex(): Unit = {
-    var array: Array[Char] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'a', 0))
-    array = Array[Char]('a', 'b', 'c', 'd', 'a')
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a', 2))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a', 0))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a', -1))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'b', 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'c', 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 'd', 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'd', 5))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'e', 0))
-  }
-
-  @SuppressWarnings(Array("cast"))
-  @Test def testIndexesOfDouble(): Unit = {
-    var array: Array[Double] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0))
-    array = Array[Double](0, 1, 2, 3, 0)
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99))
-  }
-
-  @SuppressWarnings(Array("cast"))
-  @Test def testIndexesOfDoubleTolerance(): Unit = {
-    var array: Array[Double] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0.toDouble))
-    array = new Array[Double](0)
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0.toDouble))
-    array = Array[Double](0, 1, 2, 3, 0)
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toDouble, 0.3))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 4.15, 2.0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.00001324, 0.0001))
-  }
-
-  @SuppressWarnings(Array("cast"))
-  @Test def testIndexesOfDoubleWithStartIndex(): Unit = {
-    var array: Array[Double] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2))
-    array = Array[Double](0, 1, 2, 3, 0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 2))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, -1))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99, 0))
-  }
-
-  @SuppressWarnings(Array("cast"))
-  @Test def testIndexesOfDoubleWithStartIndexTolerance(): Unit = {
-    var array: Array[Double] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0, 0.toDouble))
-    array = new Array[Double](0)
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0, 0.toDouble))
-    array = Array[Double](0, 1, 2, 3, 0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toDouble, 1, 0.3))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toDouble, 0, 0.3))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0, 0.35))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 2, 0.35))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, -1, 0.35))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 2, 3, 0.35))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 4.15, 0, 2.0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.00001324, 0, 0.0001))
-  }
-
-  @SuppressWarnings(Array("cast"))
-  @Test def testIndexesOfFloat(): Unit = {
-    var array: Array[Float] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0))
-    array = Array[Float](0, 1, 2, 3, 0)
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99))
-  }
-
-  @SuppressWarnings(Array("cast"))
-  @Test def testIndexesOfFloatWithStartIndex(): Unit = {
-    var array: Array[Float] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2))
-    array = Array[Float](0f, 1f, 2f, 3f, 0f)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 2))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, -1))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99, 0))
-  }
-
-  @Test def testIndexesOfIntWithStartIndex(): Unit = {
-    var array: Array[Int] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2))
-    array = Array[Int](0, 1, 2, 3, 0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 2))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, -1))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99, 0))
-  }
-
-  @Test def testIndexesOfLong(): Unit = {
-    val array = Array[Long](0, 1, 2, 3)
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(null.asInstanceOf[Array[Long]], 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 4))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
-  }
-
-  @Test def testIndexesOfLongWithStartIndex(): Unit = {
-    val array = Array[Long](0, 1, 2, 3, 2, 1, 0, 1)
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(null.asInstanceOf[Array[Long]], 0, 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 4, 0))
-    testSet.set(6)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 1))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
-    testSet.clear()
-    testSet.set(1)
-    testSet.set(5)
-    testSet.set(7)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 0))
-    testSet.clear()
-    testSet.set(2)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 3, 8))
-  }
-
-  @Test def testIndexesOfShort(): Unit = {
-    var array: Array[Short] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toShort))
-    array = Array[Short](0, 1, 2, 3, 0)
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toShort))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toShort))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toShort))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toShort))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toShort))
-  }
-
-  @Test def testIndexesOfShortWithStartIndex(): Unit = {
-    var array: Array[Short] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toShort, 2))
-    array = Array[Short](0, 1, 2, 3, 0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toShort, 2))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toShort, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toShort, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toShort, 0))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toShort, 0))
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toShort, -1))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toShort, 0))
-  }
-
-  @Test def testIndexesOfWithStartIndex(): Unit = {
-    val array = Array[AnyRef]("0", "1", "2", "3", "2", "3", "1", null, "0")
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(null, null, 2))
-    assertEquals(emptySet, ArrayUtils.indexesOf(new Array[AnyRef](0), "0", 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(null, "0", 2))
-    testSet.set(8)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "0", 8))
-    testSet.set(0)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "0", 0))
-    testSet.clear()
-    testSet.set(6)
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "1", 0))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, "1", 9))
-    testSet.clear()
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "2", 3))
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "2", 0))
-    testSet.clear()
-    testSet.set(3)
-    testSet.set(5)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, "3", 0))
-    testSet.clear()
-    testSet.set(7)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, null, 0))
-  }
+//  @Test def testIndexesOf(): Unit = {
+//    val array = Array[AnyRef]("0", "1", "2", "3", null, "0")
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(null.asInstanceOf[Array[AnyRef]], null))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(new Array[AnyRef](0), "0"))
+//    testSet.set(5)
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "0"))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "2"))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "3"))
+//    testSet.clear()
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, null))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, "notInArray"))
+//  }
+//
+//  @Test def testIndexesOfBoolean(): Unit = {
+//    var array: Array[Boolean] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, true))
+//    array = new Array[Boolean](0)
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, true))
+//    array = Array[Boolean](true, false, true)
+//    testSet.set(0)
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, true))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, false))
+//    array = Array[Boolean](true, true)
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, false))
+//  }
+//
+//  @Test def testIndexesOfBooleanWithStartIndex(): Unit = {
+//    var array: Array[Boolean] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, true, 0))
+//    array = new Array[Boolean](0)
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, true, 0))
+//    array = Array[Boolean](true, false, true)
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, true, 1))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, true, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, false, 1))
+//    array = Array[Boolean](true, true)
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, false, 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, false, -1))
+//  }
+//
+//  @Test def testIndexesOfByte(): Unit = {
+//    var array: Array[Byte] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toByte))
+//    array = Array[Byte](0, 1, 2, 3, 0)
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toByte))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toByte))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toByte))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toByte))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toByte))
+//  }
+//
+//  @Test def testIndexesOfByteWithStartIndex(): Unit = {
+//    var array: Array[Byte] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toByte, 2))
+//    array = Array[Byte](0, 1, 2, 3, 0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toByte, 2))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toByte, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toByte, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toByte, 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toByte, 0))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toByte, -1))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toByte, 0))
+//  }
+//
+//  @Test def testIndexesOfChar(): Unit = {
+//    var array: Array[Char] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'a'))
+//    array = Array[Char]('a', 'b', 'c', 'd', 'a')
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a'))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'b'))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'c'))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'd'))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'e'))
+//  }
+//
+//  @Test def testIndexesOfCharWithStartIndex(): Unit = {
+//    var array: Array[Char] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'a', 0))
+//    array = Array[Char]('a', 'b', 'c', 'd', 'a')
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a', 2))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a', 0))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'a', -1))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'b', 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'c', 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 'd', 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'd', 5))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 'e', 0))
+//  }
+//
+//  @SuppressWarnings(Array("cast"))
+//  @Test def testIndexesOfDouble(): Unit = {
+//    var array: Array[Double] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0))
+//    array = Array[Double](0, 1, 2, 3, 0)
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99))
+//  }
+//
+//  @SuppressWarnings(Array("cast"))
+//  @Test def testIndexesOfDoubleTolerance(): Unit = {
+//    var array: Array[Double] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0.toDouble))
+//    array = new Array[Double](0)
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0.toDouble))
+//    array = Array[Double](0, 1, 2, 3, 0)
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toDouble, 0.3))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 4.15, 2.0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.00001324, 0.0001))
+//  }
+//
+//  @SuppressWarnings(Array("cast"))
+//  @Test def testIndexesOfDoubleWithStartIndex(): Unit = {
+//    var array: Array[Double] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2))
+//    array = Array[Double](0, 1, 2, 3, 0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 2))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, -1))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99, 0))
+//  }
+//
+//  @SuppressWarnings(Array("cast"))
+//  @Test def testIndexesOfDoubleWithStartIndexTolerance(): Unit = {
+//    var array: Array[Double] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0, 0.toDouble))
+//    array = new Array[Double](0)
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toDouble, 0, 0.toDouble))
+//    array = Array[Double](0, 1, 2, 3, 0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toDouble, 1, 0.3))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toDouble, 0, 0.3))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0, 0.35))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 2, 0.35))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, -1, 0.35))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 2, 3, 0.35))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 4.15, 0, 2.0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.00001324, 0, 0.0001))
+//  }
+//
+//  @SuppressWarnings(Array("cast"))
+//  @Test def testIndexesOfFloat(): Unit = {
+//    var array: Array[Float] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0))
+//    array = Array[Float](0, 1, 2, 3, 0)
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99))
+//  }
+//
+//  @SuppressWarnings(Array("cast"))
+//  @Test def testIndexesOfFloatWithStartIndex(): Unit = {
+//    var array: Array[Float] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2))
+//    array = Array[Float](0f, 1f, 2f, 3f, 0f)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 2))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, -1))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99, 0))
+//  }
+//
+//  @Test def testIndexesOfIntWithStartIndex(): Unit = {
+//    var array: Array[Int] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2))
+//    array = Array[Int](0, 1, 2, 3, 0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 2))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, -1))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99, 0))
+//  }
+//
+//  @Test def testIndexesOfLong(): Unit = {
+//    val array = Array[Long](0, 1, 2, 3)
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(null.asInstanceOf[Array[Long]], 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 4))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
+//  }
+//
+//  @Test def testIndexesOfLongWithStartIndex(): Unit = {
+//    val array = Array[Long](0, 1, 2, 3, 2, 1, 0, 1)
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(null.asInstanceOf[Array[Long]], 0, 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 4, 0))
+//    testSet.set(6)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 1))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    testSet.set(5)
+//    testSet.set(7)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1, 0))
+//    testSet.clear()
+//    testSet.set(2)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2, 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3, 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 3, 8))
+//  }
+//
+//  @Test def testIndexesOfShort(): Unit = {
+//    var array: Array[Short] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toShort))
+//    array = Array[Short](0, 1, 2, 3, 0)
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toShort))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toShort))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toShort))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toShort))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toShort))
+//  }
+//
+//  @Test def testIndexesOfShortWithStartIndex(): Unit = {
+//    var array: Array[Short] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0.toShort, 2))
+//    array = Array[Short](0, 1, 2, 3, 0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toShort, 2))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0.toShort, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1.toShort, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2.toShort, 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toShort, 0))
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3.toShort, -1))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99.toShort, 0))
+//  }
+//
+//  @Test def testIndexesOfWithStartIndex(): Unit = {
+//    val array = Array[AnyRef]("0", "1", "2", "3", "2", "3", "1", null, "0")
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(null, null, 2))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(new Array[AnyRef](0), "0", 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(null, "0", 2))
+//    testSet.set(8)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "0", 8))
+//    testSet.set(0)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "0", 0))
+//    testSet.clear()
+//    testSet.set(6)
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "1", 0))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, "1", 9))
+//    testSet.clear()
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "2", 3))
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "2", 0))
+//    testSet.clear()
+//    testSet.set(3)
+//    testSet.set(5)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, "3", 0))
+//    testSet.clear()
+//    testSet.set(7)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, null, 0))
+//  }
 
   @Test def testIndexOf(): Unit = {
     val array = Array[AnyRef]("0", "1", "2", "3", null, "0")
@@ -5932,24 +5932,24 @@ class ArrayUtilsTest extends TestHelpers {
       ArrayUtils.toStringArray(array, "valueForNullElements"))
   }
 
-  @Test def textIndexesOfInt(): Unit = {
-    var array: Array[Int] = null
-    val emptySet = new util.BitSet
-    val testSet = new util.BitSet
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0))
-    array = Array[Int](0, 1, 2, 3, 0)
-    testSet.set(0)
-    testSet.set(4)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
-    testSet.clear()
-    testSet.set(1)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
-    testSet.clear()
-    testSet.set(2)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
-    testSet.clear()
-    testSet.set(3)
-    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
-    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99))
-  }
+//  @Test def textIndexesOfInt(): Unit = {
+//    var array: Array[Int] = null
+//    val emptySet = new util.BitSet
+//    val testSet = new util.BitSet
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 0))
+//    array = Array[Int](0, 1, 2, 3, 0)
+//    testSet.set(0)
+//    testSet.set(4)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 0))
+//    testSet.clear()
+//    testSet.set(1)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 1))
+//    testSet.clear()
+//    testSet.set(2)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 2))
+//    testSet.clear()
+//    testSet.set(3)
+//    assertEquals(testSet, ArrayUtils.indexesOf(array, 3))
+//    assertEquals(emptySet, ArrayUtils.indexesOf(array, 99))
+//  }
 }

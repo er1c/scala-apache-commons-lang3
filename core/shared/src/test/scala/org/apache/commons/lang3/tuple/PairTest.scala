@@ -18,7 +18,7 @@
 package org.apache.commons.lang3.tuple
 
 import java.util
-import java.util.Calendar
+//import java.util.Calendar
 import org.junit.Assert.{assertEquals, assertNotEquals, assertNull, assertTrue}
 import org.junit.Test
 
@@ -114,10 +114,11 @@ class PairTest {
     assertEquals("(Key,Value)", pair.toString)
   }
 
-  @Test def testToStringCustom(): Unit = {
-    val date = Calendar.getInstance
-    date.set(2011, Calendar.APRIL, 25)
-    val pair = Pair.of("DOB", date)
-    assertEquals("Test created on " + "04-25-2011", pair.toString("Test created on %2$tm-%2$td-%2$tY"))
-  }
+//  TODO: scala.js calendar
+//  @Test def testToStringCustom(): Unit = {
+//    val date = Calendar.getInstance
+//    date.set(2011, Calendar.APRIL, 25)
+//    val pair = Pair.of("DOB", date)
+//    assertEquals("Test created on " + "04-25-2011", pair.toString("Test created on %2$tm-%2$td-%2$tY"))
+//  }
 }
