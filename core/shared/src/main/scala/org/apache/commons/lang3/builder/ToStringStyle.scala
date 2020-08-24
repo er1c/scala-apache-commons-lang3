@@ -69,7 +69,7 @@ import scala.collection.JavaConverters._
   * @since 1.0
   */
 @SuppressWarnings(Array("deprecation")) // StringEscapeUtils @SerialVersionUID(-(2587890625525655916L))
-object ToStringStyle {
+object ToStringStyle extends ToStringStylePlatformObj {
   /**
     * The default toString style. Using the {@code Person}
     * example from {@link ToStringBuilder}, the output would look like this:
@@ -157,7 +157,7 @@ object ToStringStyle {
     * to detect cyclical object references and avoid infinite loops.
     * </p>
     */
-  private val REGISTRY = new ThreadLocal[util.WeakHashMap[Any, Any]]
+  private val REGISTRY = new ThreadLocal[util.Map[Any, Any]]
 
   /**
     * <p>
@@ -167,7 +167,7 @@ object ToStringStyle {
     *
     * @return Set the registry of objects being traversed
     */
-  private[builder] def getRegistry = REGISTRY.get
+  private[builder] def getRegistry: util.Map[Any,Any] = REGISTRY.get
 
   /**
     * <p>
@@ -197,7 +197,7 @@ object ToStringStyle {
   private[builder] def register(value: Any): Unit = {
     if (value != null) {
       val m = getRegistry
-      if (m == null) REGISTRY.set(new util.WeakHashMap[Any, Any])
+      if (m == null) REGISTRY.set(makeMap())
       getRegistry.put(value, null)
     }
     ()

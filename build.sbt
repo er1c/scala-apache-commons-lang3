@@ -314,7 +314,8 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
   .jsSettings(
     libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time" % "2.0.0"
+      "io.github.cquiroz" %%% "scala-java-time" % "2.0.0",
+      "io.github.cquiroz" %%% "scala-java-locales" % "1.0.0"
     )
   )
 

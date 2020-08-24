@@ -22,10 +22,10 @@ import java.lang.{Long => JavaLong}
 import java.nio.CharBuffer
 import java.nio.charset.{Charset, StandardCharsets}
 import java.util
-import java.util.function.Supplier
+//import java.util.function.Supplier
 import java.util.{Collections, Locale, Objects}
 import java.util.regex.PatternSyntaxException
-import org.apache.commons.lang3.mutable.MutableInt
+//import org.apache.commons.lang3.mutable.MutableInt
 import org.apache.commons.lang3.text.WordUtils
 import org.junit.Assert._
 import org.junit.Test
@@ -652,44 +652,44 @@ class StringUtilsTest {
     assertEquals("abc", s)
   }
 
-  private def nullSupplier: Supplier[String] =
-    new Supplier[String] {
-      override def get(): String = null.asInstanceOf[String]
-    }
-
-  private def nullStringSupplier: Supplier[String] =
-    new Supplier[String] {
-      override def get(): String = "NULL"
-    }
-
-  @Test def testGetIfBlank_StringStringSupplier(): Unit = {
-    assertEquals("NULL", StringUtils.getIfBlank(null, nullStringSupplier))
-    assertEquals("NULL", StringUtils.getIfBlank("", nullStringSupplier))
-    assertEquals("NULL", StringUtils.getIfBlank(" ", nullStringSupplier))
-    assertEquals("abc", StringUtils.getIfBlank("abc", nullStringSupplier))
-    assertNull(StringUtils.getIfBlank("", nullSupplier))
-    assertNull(StringUtils.defaultIfBlank("", null.asInstanceOf[String]))
-    val s = StringUtils.getIfBlank("abc", nullStringSupplier)
-    assertEquals("abc", s)
-
-    //Checking that default value supplied only on demand
-    val numberOfCalls = new MutableInt(0)
-    val countingDefaultSupplier: Supplier[String] = new Supplier[String] {
-      override def get(): String = {
-        numberOfCalls.increment()
-        "NULL"
-      }
-    }
-
-    StringUtils.getIfBlank("abc", countingDefaultSupplier)
-    assertEquals(0, numberOfCalls.getValue)
-    StringUtils.getIfBlank("", countingDefaultSupplier)
-    assertEquals(1, numberOfCalls.getValue)
-    StringUtils.getIfBlank(" ", countingDefaultSupplier)
-    assertEquals(2, numberOfCalls.getValue)
-    StringUtils.getIfBlank(null, countingDefaultSupplier)
-    assertEquals(3, numberOfCalls.getValue)
-  }
+//  private def nullSupplier: Supplier[String] =
+//    new Supplier[String] {
+//      override def get(): String = null.asInstanceOf[String]
+//    }
+//
+//  private def nullStringSupplier: Supplier[String] =
+//    new Supplier[String] {
+//      override def get(): String = "NULL"
+//    }
+//
+//  @Test def testGetIfBlank_StringStringSupplier(): Unit = {
+//    assertEquals("NULL", StringUtils.getIfBlank(null, nullStringSupplier))
+//    assertEquals("NULL", StringUtils.getIfBlank("", nullStringSupplier))
+//    assertEquals("NULL", StringUtils.getIfBlank(" ", nullStringSupplier))
+//    assertEquals("abc", StringUtils.getIfBlank("abc", nullStringSupplier))
+//    assertNull(StringUtils.getIfBlank("", nullSupplier))
+//    assertNull(StringUtils.defaultIfBlank("", null.asInstanceOf[String]))
+//    val s = StringUtils.getIfBlank("abc", nullStringSupplier)
+//    assertEquals("abc", s)
+//
+//    //Checking that default value supplied only on demand
+//    val numberOfCalls = new MutableInt(0)
+//    val countingDefaultSupplier: Supplier[String] = new Supplier[String] {
+//      override def get(): String = {
+//        numberOfCalls.increment()
+//        "NULL"
+//      }
+//    }
+//
+//    StringUtils.getIfBlank("abc", countingDefaultSupplier)
+//    assertEquals(0, numberOfCalls.getValue)
+//    StringUtils.getIfBlank("", countingDefaultSupplier)
+//    assertEquals(1, numberOfCalls.getValue)
+//    StringUtils.getIfBlank(" ", countingDefaultSupplier)
+//    assertEquals(2, numberOfCalls.getValue)
+//    StringUtils.getIfBlank(null, countingDefaultSupplier)
+//    assertEquals(3, numberOfCalls.getValue)
+//  }
 
   @Test def testDefaultIfEmpty_CharBuffers(): Unit = {
     assertEquals("NULL", StringUtils.defaultIfEmpty(CharBuffer.wrap(""), CharBuffer.wrap("NULL")).toString)
@@ -724,31 +724,31 @@ class StringUtilsTest {
     assertEquals("abc", s)
   }
 
-  @Test def testGetIfEmpty_StringStringSupplier(): Unit = {
-    assertEquals("NULL", StringUtils.getIfEmpty(null.asInstanceOf[String], nullStringSupplier))
-    assertEquals("NULL", StringUtils.getIfEmpty("", nullStringSupplier))
-    assertEquals("abc", StringUtils.getIfEmpty("abc", nullStringSupplier))
-    assertNull(StringUtils.getIfEmpty("", nullSupplier))
-    assertNull(StringUtils.defaultIfEmpty("", null.asInstanceOf[String]))
-    val s = StringUtils.getIfEmpty("abc", nullStringSupplier)
-    assertEquals("abc", s)
-    val numberOfCalls = new MutableInt(0)
-
-    val countingDefaultSupplier: Supplier[String] = new Supplier[String] {
-      override def get(): String = {
-        numberOfCalls.increment()
-        "NULL"
-
-      }
-    }
-
-    StringUtils.getIfEmpty("abc", countingDefaultSupplier)
-    assertEquals(0, numberOfCalls.getValue)
-    StringUtils.getIfEmpty("", countingDefaultSupplier)
-    assertEquals(1, numberOfCalls.getValue)
-    StringUtils.getIfEmpty(null, countingDefaultSupplier)
-    assertEquals(2, numberOfCalls.getValue)
-  }
+//  @Test def testGetIfEmpty_StringStringSupplier(): Unit = {
+//    assertEquals("NULL", StringUtils.getIfEmpty(null.asInstanceOf[String], nullStringSupplier))
+//    assertEquals("NULL", StringUtils.getIfEmpty("", nullStringSupplier))
+//    assertEquals("abc", StringUtils.getIfEmpty("abc", nullStringSupplier))
+//    assertNull(StringUtils.getIfEmpty("", nullSupplier))
+//    assertNull(StringUtils.defaultIfEmpty("", null.asInstanceOf[String]))
+//    val s = StringUtils.getIfEmpty("abc", nullStringSupplier)
+//    assertEquals("abc", s)
+//    val numberOfCalls = new MutableInt(0)
+//
+//    val countingDefaultSupplier: Supplier[String] = new Supplier[String] {
+//      override def get(): String = {
+//        numberOfCalls.increment()
+//        "NULL"
+//
+//      }
+//    }
+//
+//    StringUtils.getIfEmpty("abc", countingDefaultSupplier)
+//    assertEquals(0, numberOfCalls.getValue)
+//    StringUtils.getIfEmpty("", countingDefaultSupplier)
+//    assertEquals(1, numberOfCalls.getValue)
+//    StringUtils.getIfEmpty(null, countingDefaultSupplier)
+//    assertEquals(2, numberOfCalls.getValue)
+//  }
 
   @Test def testDeleteWhitespace_String(): Unit = {
     assertNull(StringUtils.deleteWhitespace(null))
@@ -2750,48 +2750,48 @@ class StringUtilsTest {
     }
   }
 
-  // Methods on StringUtils that are immutable in spirit (i.e. calculate the length)
-  // should take a CharSequence parameter. Methods that are mutable in spirit (i.e. capitalize)
-  // should take a String or String[] parameter and return String or String[].
-  // This test enforces that this is done.
-  @Test def testStringUtilsCharSequenceContract(): Unit = {
-    val c: Class[_] = StringUtils.getClass
-    // Methods that are expressly excluded from testStringUtilsCharSequenceContract()
-    val excludeMethods = Array(
-      "public int org.apache.commons.lang3.StringUtils$.compare(java.lang.String,java.lang.String)",
-      "public int org.apache.commons.lang3.StringUtils$.compare(java.lang.String,java.lang.String,boolean)",
-      "public int org.apache.commons.lang3.StringUtils$.compareIgnoreCase(java.lang.String,java.lang.String)",
-      "public int org.apache.commons.lang3.StringUtils$.compareIgnoreCase(java.lang.String,java.lang.String,boolean)",
-      "public byte[] org.apache.commons.lang3.StringUtils$.getBytes(java.lang.String,java.nio.charset.Charset)",
-      "public byte[] org.apache.commons.lang3.StringUtils$.getBytes(java.lang.String,java.lang.String) throws java.io.UnsupportedEncodingException"
-    )
-
-    val methods = c.getMethods
-    for {
-      m <- methods
-      methodStr = m.toString
-      if !methodStr.contains("$anonfun$")
-    } {
-      if ((m.getReturnType eq classOf[String]) || (m.getReturnType eq classOf[Array[String]])) { // Assume this is mutable and ensure the first parameter is not CharSequence.
-        // It may be String or it may be something else (String[], Object, Object[]) so
-        // don't actively test for that.
-        val params = m.getParameterTypes
-        if (params.length > 0 && ((params(0) eq classOf[CharSequence]) || (params(0) eq classOf[Array[CharSequence]])))
-          assertTrue(
-            "The method \"" + methodStr + "\" appears to be mutable in spirit and therefore must not accept a CharSequence",
-            !ArrayUtils.contains(excludeMethods, methodStr)
-          )
-      } else { // Assume this is immutable in spirit and ensure the first parameter is not String.
-        // As above, it may be something other than CharSequence.
-        val params = m.getParameterTypes
-        if (params.length > 0 && ((params(0) eq classOf[String]) || (params(0) eq classOf[Array[String]])))
-          assertTrue(
-            "The method \"" + methodStr + "\" appears to be immutable in spirit and therefore must not accept a String",
-            ArrayUtils.contains(excludeMethods, methodStr)
-          )
-      }
-    }
-  }
+//  // Methods on StringUtils that are immutable in spirit (i.e. calculate the length)
+//  // should take a CharSequence parameter. Methods that are mutable in spirit (i.e. capitalize)
+//  // should take a String or String[] parameter and return String or String[].
+//  // This test enforces that this is done.
+//  @Test def testStringUtilsCharSequenceContract(): Unit = {
+//    val c: Class[_] = StringUtils.getClass
+//    // Methods that are expressly excluded from testStringUtilsCharSequenceContract()
+//    val excludeMethods = Array(
+//      "public int org.apache.commons.lang3.StringUtils$.compare(java.lang.String,java.lang.String)",
+//      "public int org.apache.commons.lang3.StringUtils$.compare(java.lang.String,java.lang.String,boolean)",
+//      "public int org.apache.commons.lang3.StringUtils$.compareIgnoreCase(java.lang.String,java.lang.String)",
+//      "public int org.apache.commons.lang3.StringUtils$.compareIgnoreCase(java.lang.String,java.lang.String,boolean)",
+//      "public byte[] org.apache.commons.lang3.StringUtils$.getBytes(java.lang.String,java.nio.charset.Charset)",
+//      "public byte[] org.apache.commons.lang3.StringUtils$.getBytes(java.lang.String,java.lang.String) throws java.io.UnsupportedEncodingException"
+//    )
+//
+//    val methods = c.getMethods
+//    for {
+//      m <- methods
+//      methodStr = m.toString
+//      if !methodStr.contains("$anonfun$")
+//    } {
+//      if ((m.getReturnType eq classOf[String]) || (m.getReturnType eq classOf[Array[String]])) { // Assume this is mutable and ensure the first parameter is not CharSequence.
+//        // It may be String or it may be something else (String[], Object, Object[]) so
+//        // don't actively test for that.
+//        val params = m.getParameterTypes
+//        if (params.length > 0 && ((params(0) eq classOf[CharSequence]) || (params(0) eq classOf[Array[CharSequence]])))
+//          assertTrue(
+//            "The method \"" + methodStr + "\" appears to be mutable in spirit and therefore must not accept a CharSequence",
+//            !ArrayUtils.contains(excludeMethods, methodStr)
+//          )
+//      } else { // Assume this is immutable in spirit and ensure the first parameter is not String.
+//        // As above, it may be something other than CharSequence.
+//        val params = m.getParameterTypes
+//        if (params.length > 0 && ((params(0) eq classOf[String]) || (params(0) eq classOf[Array[String]])))
+//          assertTrue(
+//            "The method \"" + methodStr + "\" appears to be immutable in spirit and therefore must not accept a String",
+//            ArrayUtils.contains(excludeMethods, methodStr)
+//          )
+//      }
+//    }
+//  }
 
   @Test def testSwapCase_String(): Unit = {
     assertNull(StringUtils.swapCase(null))
@@ -2819,44 +2819,44 @@ class StringUtilsTest {
     assertNull(StringUtils.toCodePoints(null))
     assertArrayEquals(ArrayUtils.EMPTY_INT_ARRAY, StringUtils.toCodePoints(""))
   }
-
-  /**
-    * Tests {@link StringUtils# toEncodedString ( byte[ ], Charset)}
-    *
-    * @see StringUtils#toEncodedString(byte[], Charset)
-    */
-  @Test def testToEncodedString(): Unit = {
-    val expectedString = "The quick brown fox jumps over the lazy dog."
-    var encoding = SystemUtils.FILE_ENCODING
-    var expectedBytes = expectedString.getBytes(Charset.defaultCharset)
-    // sanity check start
-    assertArrayEquals(expectedBytes, expectedString.getBytes)
-    // sanity check end
-    assertEquals(expectedString, StringUtils.toEncodedString(expectedBytes, Charset.defaultCharset))
-    assertEquals(expectedString, StringUtils.toEncodedString(expectedBytes, Charset.forName(encoding)))
-    encoding = "UTF-16"
-    expectedBytes = expectedString.getBytes(Charset.forName(encoding))
-    assertEquals(expectedString, StringUtils.toEncodedString(expectedBytes, Charset.forName(encoding)))
-  }
-
-  /**
-    * Tests {@link StringUtils# toString ( byte[ ], String)}
-    *
-    * @throws java.io.UnsupportedEncodingException because the method under test max throw it
-    * @see StringUtils#toString(byte[], String)
-    */
-  @Test
-  @throws[UnsupportedEncodingException]
-  def testToString(): Unit = {
-    val expectedString = "The quick brown fox jumps over the lazy dog."
-    var expectedBytes = expectedString.getBytes(Charset.defaultCharset)
-    assertArrayEquals(expectedBytes, expectedString.getBytes)
-    assertEquals(expectedString, StringUtils.toString(expectedBytes, null))
-    assertEquals(expectedString, StringUtils.toString(expectedBytes, SystemUtils.FILE_ENCODING))
-    val encoding = "UTF-16"
-    expectedBytes = expectedString.getBytes(Charset.forName(encoding))
-    assertEquals(expectedString, StringUtils.toString(expectedBytes, encoding))
-  }
+//
+//  /**
+//    * Tests {@link StringUtils# toEncodedString ( byte[ ], Charset)}
+//    *
+//    * @see StringUtils#toEncodedString(byte[], Charset)
+//    */
+//  @Test def testToEncodedString(): Unit = {
+//    val expectedString = "The quick brown fox jumps over the lazy dog."
+//    var encoding = SystemUtils.FILE_ENCODING
+//    var expectedBytes = expectedString.getBytes(Charset.defaultCharset)
+//    // sanity check start
+//    assertArrayEquals(expectedBytes, expectedString.getBytes)
+//    // sanity check end
+//    assertEquals(expectedString, StringUtils.toEncodedString(expectedBytes, Charset.defaultCharset))
+//    assertEquals(expectedString, StringUtils.toEncodedString(expectedBytes, Charset.forName(encoding)))
+//    encoding = "UTF-16"
+//    expectedBytes = expectedString.getBytes(Charset.forName(encoding))
+//    assertEquals(expectedString, StringUtils.toEncodedString(expectedBytes, Charset.forName(encoding)))
+//  }
+//
+//  /**
+//    * Tests {@link StringUtils# toString ( byte[ ], String)}
+//    *
+//    * @throws java.io.UnsupportedEncodingException because the method under test max throw it
+//    * @see StringUtils#toString(byte[], String)
+//    */
+//  @Test
+//  @throws[UnsupportedEncodingException]
+//  def testToString(): Unit = {
+//    val expectedString = "The quick brown fox jumps over the lazy dog."
+//    var expectedBytes = expectedString.getBytes(Charset.defaultCharset)
+//    assertArrayEquals(expectedBytes, expectedString.getBytes)
+//    assertEquals(expectedString, StringUtils.toString(expectedBytes, null))
+//    assertEquals(expectedString, StringUtils.toString(expectedBytes, SystemUtils.FILE_ENCODING))
+//    val encoding = "UTF-16"
+//    expectedBytes = expectedString.getBytes(Charset.forName(encoding))
+//    assertEquals(expectedString, StringUtils.toString(expectedBytes, encoding))
+//  }
 
   @Test def testTruncate_StringInt(): Unit = {
     assertNull(StringUtils.truncate(null, 12))
@@ -3087,37 +3087,37 @@ class StringUtilsTest {
     assertSame("//x//", StringUtils.wrapIfMissing("//x//", "//"))
   }
 
-  @Test def testToRootLowerCase(): Unit = {
-    assertEquals(null, StringUtils.toRootLowerCase(null))
-    assertEquals("a", StringUtils.toRootLowerCase("A"))
-    assertEquals("a", StringUtils.toRootLowerCase("a"))
-    val TURKISH = Locale.forLanguageTag("tr")
-    // Sanity checks:
-    assertNotEquals("title", "TITLE".toLowerCase(TURKISH))
-    assertEquals("title", "TITLE".toLowerCase(Locale.ROOT))
-    assertEquals("title", StringUtils.toRootLowerCase("TITLE"))
-    // Make sure we are not using the default Locale:
-    val defaultLocale = Locale.getDefault
-    try {
-      Locale.setDefault(TURKISH)
-      assertEquals("title", StringUtils.toRootLowerCase("TITLE"))
-    } finally Locale.setDefault(defaultLocale)
-  }
+//  @Test def testToRootLowerCase(): Unit = {
+//    assertEquals(null, StringUtils.toRootLowerCase(null))
+//    assertEquals("a", StringUtils.toRootLowerCase("A"))
+//    assertEquals("a", StringUtils.toRootLowerCase("a"))
+//    val TURKISH = Locale.forLanguageTag("tr")
+//    // Sanity checks:
+//    assertNotEquals("title", "TITLE".toLowerCase(TURKISH))
+//    assertEquals("title", "TITLE".toLowerCase(Locale.ROOT))
+//    assertEquals("title", StringUtils.toRootLowerCase("TITLE"))
+//    // Make sure we are not using the default Locale:
+//    val defaultLocale = Locale.getDefault
+//    try {
+//      Locale.setDefault(TURKISH)
+//      assertEquals("title", StringUtils.toRootLowerCase("TITLE"))
+//    } finally Locale.setDefault(defaultLocale)
+//  }
 
-  @Test def testToRootUpperCase(): Unit = {
-    assertEquals(null, StringUtils.toRootUpperCase(null))
-    assertEquals("A", StringUtils.toRootUpperCase("a"))
-    assertEquals("A", StringUtils.toRootUpperCase("A"))
-    val TURKISH = Locale.forLanguageTag("tr")
-    assertNotEquals("TITLE", "title".toUpperCase(TURKISH))
-    assertEquals("TITLE", "title".toUpperCase(Locale.ROOT))
-    assertEquals("TITLE", StringUtils.toRootUpperCase("title"))
-    val defaultLocale = Locale.getDefault
-    try {
-      Locale.setDefault(TURKISH)
-      assertEquals("TITLE", StringUtils.toRootUpperCase("title"))
-    } finally Locale.setDefault(defaultLocale)
-  }
+//  @Test def testToRootUpperCase(): Unit = {
+//    assertEquals(null, StringUtils.toRootUpperCase(null))
+//    assertEquals("A", StringUtils.toRootUpperCase("a"))
+//    assertEquals("A", StringUtils.toRootUpperCase("A"))
+//    val TURKISH = Locale.forLanguageTag("tr")
+//    assertNotEquals("TITLE", "title".toUpperCase(TURKISH))
+//    assertEquals("TITLE", "title".toUpperCase(Locale.ROOT))
+//    assertEquals("TITLE", StringUtils.toRootUpperCase("title"))
+//    val defaultLocale = Locale.getDefault
+//    try {
+//      Locale.setDefault(TURKISH)
+//      assertEquals("TITLE", StringUtils.toRootUpperCase("title"))
+//    } finally Locale.setDefault(defaultLocale)
+//  }
 
   @Test def testGeorgianSample(): Unit = {
     val arrayI = Array[Char]( //Latin Small Letter dotless I
